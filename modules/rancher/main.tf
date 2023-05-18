@@ -11,6 +11,7 @@ locals {
     "startupapicheck.image.repository: ${var.default_registry}/quay.io/jetstack/cert-manager-ctl"
   ] : []
   cert_manager_default_helm_values = [
+    "startupapicheck.timeout: 10m",
     "installCRDs: true"
   ]
   rancher_default_helm_values = [
