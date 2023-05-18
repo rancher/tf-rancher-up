@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 module "upstream-cluster" {
-  source = "../../terraform-infra-aws"
+  source = "../../modules/infra/aws"
   providers = {
     aws = aws
   }
@@ -18,7 +18,7 @@ module "upstream-cluster" {
 }
 
 module "rke" {
-  source = "../../terraform-rke-cluster"
+  source = "../../modules/distribution/rke-module"
   depends_on = [module.upstream-cluster]
 
   node_username = "ubuntu"
@@ -46,7 +46,7 @@ provider "kubernetes" {
 }
 
 module "rancher_install" {
-  source = "../../terraform-rancher-install"
+  source = "../../modules/rancher"
   depends_on = [module.rke]
 
   rancher_hostname = join(".", ["rancher", module.upstream-cluster.instances_public_ip[0], "sslip.io"])
