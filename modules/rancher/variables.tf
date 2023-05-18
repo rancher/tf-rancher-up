@@ -1,9 +1,3 @@
-variable "kubeconfig_file" {
-  description = "The kubeconfig to use to interact with the cluster"
-  default     = "~/.kube/config"
-  type        = string
-}
-
 variable "airgap" {
   description = "Enable airgap options for the Rancher environment, requires default_registry to be set"
   default     = false
