@@ -9,3 +9,8 @@
 aws_access_key = "ACCESS_KEY_HERE"
 aws_secret_key = "SECRET_KEY_HERE"
 prefix = "prefix_for_cluster"
+aws_region = "region"
+instance_ssh_key_name = "aws_keypair_name"
+ssh_private_key_path = "key_path"
+
+
