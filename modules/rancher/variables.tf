@@ -3,6 +3,13 @@ variable "airgap" {
   default     = false
   type        = bool
 }
+
+variable "bootstrap_rancher" {
+  description = "Bootstrap the Rancher installation"
+  default     = true
+  type        = bool
+}
+
 variable "cert_manager_namespace" {
   description = "Namesapce to install cert-manager"
   default     = "cert-manager"
@@ -32,6 +39,7 @@ variable "helm_repository" {
   default     = null
   type        = string
 }
+
 variable "rancher_additional_helm_values" {
   description = "Helm options to provide to the Rancher helm chart"
   default     = []
@@ -45,9 +53,14 @@ variable "rancher_antiaffinity" {
 }
 
 variable "rancher_bootstrap_password" {
-  description = "Password to use for bootstrapping Rancher"
-  default     = "admin"
+  description = "Password to use for bootstrapping Rancher (min 12 characters)"
+  default     = "initial-admin-password"
   type        = string
+
+  validation {
+    condition     = length(var.rancher_bootstrap_password) > 4
+    error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
+  }
 }
 
 variable "rancher_hostname" {

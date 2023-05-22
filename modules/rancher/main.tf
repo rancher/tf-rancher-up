@@ -27,7 +27,7 @@ locals {
   rancher_registry_pull_secret = var.registry_username != null ? [
     "imagePullSecrets[0].name: rancher-pull-secret"
   ] : []
-  rancher_helm_values = distinct(flatten([var.rancher_additional_helm_values, local.rancher_airgap_helm_values, local.rancher_registry_pull_secret, local.rancher_private_ca_values, local.rancher_default_helm_values]))
+  rancher_helm_values      = distinct(flatten([var.rancher_additional_helm_values, local.rancher_airgap_helm_values, local.rancher_registry_pull_secret, local.rancher_private_ca_values, local.rancher_default_helm_values]))
   cert_manager_helm_values = distinct(flatten([local.cert_manager_default_helm_values, local.cert_manager_airgap_helm_values]))
 }
 
@@ -122,7 +122,12 @@ resource "helm_release" "rancher" {
     content {
       name  = split(":", set.value)[0]
       value = trimspace(replace(set.value, "${split(":", set.value)[0]}:", ""))
-      type  = trimspace(replace(set.value, "${split(":", set.value)[0]}:", "")) == "true" || trimspace(replace(set.value, "${split(":", set.value)[0]}:", "")) == "false" ? "string" : null
     }
   }
+}
+
+resource "rancher2_bootstrap" "admin" {
+  depends_on = [helm_release.rancher]
+  count      = var.bootstrap_rancher ? 1 : 0
+  password   = var.rancher_bootstrap_password
 }
