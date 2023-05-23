@@ -31,6 +31,7 @@ resource "rke_cluster" "this" {
   kubernetes_version = var.kubernetes_version
   ssh_agent_auth     = var.ssh_agent_auth
   addon_job_timeout  = 120
+  enable_cri_dockerd = true
 
   dynamic "private_registries" {
     for_each = var.private_registry_url != null ? [1] : []
