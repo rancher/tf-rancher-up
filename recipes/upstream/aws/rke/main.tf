@@ -45,6 +45,13 @@ provider "kubernetes" {
   insecure    = true
 }
 
+provider "rancher2" {
+  api_url   = "https://${join(".", ["rancher", module.upstream-cluster.instances_public_ip[0], "sslip.io"])}"
+  bootstrap = true
+  timeout   = "240s"
+  insecure  = true
+}
+
 module "rancher_install" {
   source = "../../modules/rancher"
   depends_on = [module.rke]
