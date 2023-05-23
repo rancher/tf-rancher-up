@@ -32,7 +32,8 @@ locals {
 }
 
 resource "kubernetes_secret" "tls_rancher_ingress" {
-  count = var.tls_source == "secret" ? 1 : 0
+  depends_on = [var.dependency]
+  count      = var.tls_source == "secret" ? 1 : 0
   metadata {
     name      = "tls-rancher-ingress"
     namespace = helm_release.rancher.namespace
@@ -50,7 +51,8 @@ resource "kubernetes_secret" "tls_rancher_ingress" {
 }
 
 resource "kubernetes_secret" "tls_ca" {
-  count = var.tls_source == "secret" && var.cacerts_path != null ? 1 : 0
+  depends_on = [var.dependency]
+  count      = var.tls_source == "secret" && var.cacerts_path != null ? 1 : 0
   metadata {
     name      = "tls-ca"
     namespace = helm_release.rancher.namespace
@@ -66,7 +68,8 @@ resource "kubernetes_secret" "tls_ca" {
 }
 
 resource "kubernetes_secret" "image_pull_secret" {
-  count = var.registry_username != null ? 1 : 0
+  depends_on = [var.dependency]
+  count      = var.registry_username != null ? 1 : 0
   metadata {
     name      = "rancher-pull-secret"
     namespace = helm_release.rancher.namespace
@@ -84,6 +87,7 @@ resource "kubernetes_secret" "image_pull_secret" {
 }
 
 resource "helm_release" "cert_manager" {
+  depends_on          = [var.dependency]
   count               = var.tls_source == "rancher" || var.tls_source == "letsEncrypt" || var.cert_manager_enable ? 1 : 0
   name                = "cert-manager"
   repository          = var.helm_repository != null ? var.helm_repository : "https://charts.jetstack.io"
@@ -92,7 +96,7 @@ resource "helm_release" "cert_manager" {
   version             = var.cert_manager_version
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
-  wait                = true
+  wait                = false
   create_namespace    = true
 
   dynamic "set" {
@@ -126,8 +130,31 @@ resource "helm_release" "rancher" {
   }
 }
 
-resource "rancher2_bootstrap" "admin" {
+resource "null_resource" "wait_for_rancher" {
   depends_on = [helm_release.rancher]
   count      = var.bootstrap_rancher ? 1 : 0
-  password   = var.rancher_bootstrap_password
+  provisioner "local-exec" {
+    command     = <<-EOF
+    count=0
+    while [ "$${count}" -lt 5 ]; do
+      resp=$(curl -s -o /dev/null -w "%%{http_code}" https://$${RANCHER_HOSTNAME}/ping)
+      echo "Waiting for https://$${RANCHER_HOSTNAME}/ping - response: $${resp}"
+      if [ "$${resp}" = "200" ]; then
+        ((count++))
+      fi
+      sleep 2
+    done
+    EOF
+    interpreter = ["/bin/bash", "-c"]
+    environment = {
+      RANCHER_HOSTNAME = var.rancher_hostname
+    }
+  }
+}
+
+resource "rancher2_bootstrap" "admin" {
+  depends_on       = [null_resource.wait_for_rancher[0]]
+  count            = var.bootstrap_rancher ? 1 : 0
+  initial_password = var.rancher_bootstrap_password
+  password         = var.rancher_bootstrap_password
 }

@@ -1,13 +1,13 @@
 variable "aws_access_key" {
   type        = string
   description = "AWS access key used to create infrastructure"
-  default = ""
+  default     = null
 }
 
 variable "aws_secret_key" {
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
-  default = ""
+  default     = null
 }
 
 variable "aws_region" {
@@ -16,10 +16,10 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-# Required
 variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
+  default     = "rancher-terraform"
 }
 
 variable "instance_type" {
@@ -29,39 +29,51 @@ variable "instance_type" {
 }
 
 variable "instance_disk_size" {
-  type = string
-  description = "Specify root disk size"
-  default = "80"
+  type        = string
+  description = "Specify root disk size (GB)"
+  default     = "80"
 }
 
 variable "instance_count" {
-  type    = number
+  type        = number
   description = "Number of EC2 instances to create"
-  default = 3
+  default     = 3
 }
 
-variable "should_create_ssh_key_pair" {
-  type = bool
-  description = "Specify if a new temporary SSH key pair needs to be created for the instances"
-  default = false
+variable "subnet_id" {
+  type        = string
+  description = "VPC Subnet ID to create the instance(s) in"
+  default     = null
 }
 
-# TODO: Add a check based on above value
-variable "instance_ssh_key_name" {
-  type = string
+variable "create_ssh_key_pair" {
+  type        = bool
+  description = "Specify if a new SSH key pair needs to be created for the instances"
+  default     = false
+}
+
+variable "ssh_key_pair_name" {
+  type        = string
   description = "Specify the SSH key name to use (that's already present in AWS)"
-  default = ""
+  default     = null
 }
 
-# TODO: Add a check for existence
+variable "ssh_key_pair_path" {
+  type        = string
+  description = "Path to the SSH private key used as the key pair (that's already present in AWS)"
+  default     = null
+}
+
 variable "ssh_private_key_path" {
-  default = "~/.ssh/id_rsa"
+  type        = string
+  description = "Path to write the generated SSH private key"
+  default     = null
 }
 
-variable "should_install_docker" {
-  type = bool
+variable "install_docker" {
+  type        = bool
   description = "Should install docker while creating the instance"
-  default = true
+  default     = true
 }
 
 variable "docker_version" {
@@ -70,20 +82,21 @@ variable "docker_version" {
   default     = "20.10"
 }
 
-variable "should_create_security_group" {
-  type = bool
+variable "create_security_group" {
+  type        = bool
   description = "Should create the security group associated with the instance(s)"
-  default = true
+  default     = true
 }
 
 # TODO: Add a check based on above value
 variable "instance_security_group" {
-  type = string
+  type        = string
   description = "If chosen to not create security group, this should be provided"
-  default = ""
+  default     = null
 }
 
-# Local variables used to reduce repetition
-locals {
-  node_username = "ubuntu"
+variable "ssh_username" {
+  type        = string
+  description = "Username used for SSH with sudo access"
+  default     = "ubuntu"
 }
