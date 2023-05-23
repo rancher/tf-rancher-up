@@ -88,13 +88,15 @@ module "rancher_install" {
 }
 ```
 
+---
+
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.16.1 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | 3.0.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.0.0 |
 
 ## Providers
 
@@ -102,7 +104,8 @@ module "rancher_install" {
 |------|---------|
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.8.0 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.16.1 |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | 3.0.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 3.0.0 |
 
 ## Modules
 
@@ -117,7 +120,8 @@ No modules.
 | [kubernetes_secret.image_pull_secret](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) | resource |
 | [kubernetes_secret.tls_ca](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) | resource |
 | [kubernetes_secret.tls_rancher_ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) | resource |
-| [rancher2_bootstrap.admin](https://registry.terraform.io/providers/rancher/rancher2/3.0.0/docs/resources/bootstrap) | resource |
+| [null_resource.wait_for_rancher](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [rancher2_bootstrap.admin](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/bootstrap) | resource |
 
 ## Inputs
 
@@ -130,9 +134,11 @@ No modules.
 | <a name="input_cert_manager_namespace"></a> [cert\_manager\_namespace](#input\_cert\_manager\_namespace) | Namesapce to install cert-manager | `string` | `"cert-manager"` | no |
 | <a name="input_cert_manager_version"></a> [cert\_manager\_version](#input\_cert\_manager\_version) | Version of cert-manager to install | `string` | `"v1.5.1"` | no |
 | <a name="input_default_registry"></a> [default\_registry](#input\_default\_registry) | Default container image registry to pull images in the format of registry.domain.com:port (systemDefaultRegistry helm value) | `string` | `null` | no |
+| <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | n/a | yes |
 | <a name="input_helm_password"></a> [helm\_password](#input\_helm\_password) | Private helm repository password | `string` | `null` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm repository for Rancher and cert-manager charts | `string` | `null` | no |
 | <a name="input_helm_username"></a> [helm\_username](#input\_helm\_username) | Private helm repository username | `string` | `null` | no |
+| <a name="input_kubeconfig_file"></a> [kubeconfig\_file](#input\_kubeconfig\_file) | The kubeconfig to use to interact with the cluster | `string` | `"~/.kube/config"` | no |
 | <a name="input_rancher_additional_helm_values"></a> [rancher\_additional\_helm\_values](#input\_rancher\_additional\_helm\_values) | Helm options to provide to the Rancher helm chart | `list(string)` | `[]` | no |
 | <a name="input_rancher_antiaffinity"></a> [rancher\_antiaffinity](#input\_rancher\_antiaffinity) | Value for antiAffinity when installing the Rancher helm chart (required/preferred) | `string` | `"required"` | no |
 | <a name="input_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#input\_rancher\_bootstrap\_password) | Password to use for bootstrapping Rancher (min 12 characters) | `string` | `"initial-admin-password"` | no |

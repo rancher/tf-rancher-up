@@ -1,3 +1,9 @@
+variable "kubeconfig_file" {
+  description = "The kubeconfig to use to interact with the cluster"
+  default     = "~/.kube/config"
+  type        = string
+}
+
 variable "airgap" {
   description = "Enable airgap options for the Rancher environment, requires default_registry to be set"
   default     = false
@@ -58,7 +64,7 @@ variable "rancher_bootstrap_password" {
   type        = string
 
   validation {
-    condition     = length(var.rancher_bootstrap_password) > 4
+    condition     = length(var.rancher_bootstrap_password) > 12
     error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
   }
 }
@@ -126,4 +132,8 @@ variable "tls_source" {
   description = "Value for ingress.tls.source when installing the Rancher helm chart"
   default     = "rancher"
   type        = string
+}
+
+variable "dependency" {
+  description = "An optional variable to add a dependency from another resource (not used)"
 }
