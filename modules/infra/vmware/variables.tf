@@ -20,17 +20,14 @@ variable "vsphere_password" {
 }
 
 variable "vsphere_datacenter" {
-  default = "rancherdc"
   description = "vSphere Datacenter details."
 }
 
 variable "vsphere_datastore" {
-  default = "rancherDatastore01"
   description = "Datastore used for storing VM data."
 }
 
 variable "vsphere_resource_pool" {
-  default = "resource-pool-1"
   description = "Available resourcepool on the host."
 }
 
@@ -40,16 +37,14 @@ variable "vsphere_network" {
 
 variable "vsphere_virtual_machine" {
   description = "Virtual Machine template name"
-  default = "rke-template"
 }
 
 variable "prefix" {
   description = "Prefix to use for various resources"
-  default = "vm"
+  default = []
 }
 
 variable "ssh_private_key_path" {
-  default = ""
   description = "Add your SSH private key path here."
 }
 
