@@ -15,26 +15,20 @@ resource "vsphere_virtual_machine" "instance" {
   memory    = var.vm_memory
   guest_id  = data.vsphere_virtual_machine.template.guest_id
   scsi_type = data.vsphere_virtual_machine.template.scsi_type
+
   network_interface {
     network_id   = data.vsphere_network.network.id
     adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
   }
+
   cdrom {
     client_device = true
   }
+  
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
   }
-  vapp {
-    properties = {
-      user-data = base64encode(templatefile("${path.module}/cloud-init.template", {
-          node_name = "${var.prefix}-rke-h${count.index + 1}",
-          authorized_keys = var.authorized_keys
-        }
-      ))
-      hostname = "${var.prefix}-rke-h${count.index + 1}"
-    }
-  }
+
   disk {
     label            = "disk0"
     size             = 80
@@ -43,17 +37,29 @@ resource "vsphere_virtual_machine" "instance" {
     thin_provisioned = data.vsphere_virtual_machine.template.disks[0].thin_provisioned
   }
 
-  connection {
-    host = self.default_ip_address
-    type     = "ssh"
-    user     = var.vm_username
-    private_key = file(pathexpand(var.ssh_private_key_path))
-  }
-
   provisioner "remote-exec" {
+    connection {
+     host = self.default_ip_address
+     type     = "ssh"
+     user     = var.vm_username
+     private_key = file(pathexpand(var.ssh_private_key_path))
+
+   }
     inline = [
-      "export DEBIAN_FRONTEND=noninteractive;curl -sSL https://raw.githubusercontent.com/rancher/install-docker/master/${var.docker_version}.sh | sh -",
+      "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
       "sudo usermod -aG docker ubuntu"
     ]
   }
+
+  extra_config = {
+      "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tpl", {
+        node_hostname = "${var.prefix}${count.index + 1}"
+      }))
+      "guestinfo.metadata.encoding" = "base64"
+      "guestinfo.userdata" = base64encode(templatefile("${path.module}/cloud-init.template", {
+        vm_ssh_user = var.vm_username,
+        vm_ssh_key = var.vm_ssh_key
+        }))
+      "guestinfo.userdata.encoding" = "base64"
+        }
 }

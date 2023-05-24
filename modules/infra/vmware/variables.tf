@@ -1,43 +1,56 @@
 # TODO: Add description for the variables
 # TODO: Remove any unused variables
 variable "vsphere_server" {
+  default = "ranchervcenter.sup.scz.suse.com"
+  description = "Add the vSphere hostname."
 }
 
 variable "vsphere_server_allow_unverified_ssl" {
   description = "Allow use of unverified SSL certificates (Ex: Self signed)"
-  default = false
+  default = true
 }
 variable "vsphere_user" {
+  default = "" 
+  description = "Add your vSphere username."
 }
 
 variable "vsphere_password" {
+  default = ""
+  description = "Add your vSphere password for the above mentioned username."
 }
 
 variable "vsphere_datacenter" {
+  default = "rancherdc"
+  description = "vSphere Datacenter details."
 }
 
 variable "vsphere_datastore" {
+  default = "rancherDatastore01"
+  description = "Datastore used for storing VM data."
 }
 
 variable "vsphere_resource_pool" {
+  default = "resource-pool-1"
+  description = "Available resourcepool on the host."
 }
 
 variable "vsphere_network" {
+  default = "VM Network"
 }
 
 variable "vsphere_virtual_machine" {
   description = "Virtual Machine template name"
+  default = "rke-template"
 }
 
 variable "prefix" {
   description = "Prefix to use for various resources"
-}
-
-variable "authorized_keys" {
+  default = "vm"
 }
 
 variable "ssh_private_key_path" {
-  default = "~/.ssh/id_rsa"
+  default = ""
+  description = "Add your SSH private key path here."
 }
 
 variable "docker_version" {
@@ -45,7 +58,7 @@ variable "docker_version" {
 }
 
 variable "vm_username" {
-  default = "root"
+  default = "ubuntu"
 }
 
 variable "vm_cpus" {
@@ -64,4 +77,9 @@ variable "instance_count" {
   type    = number
   description = "Number of instances to create"
   default = 3
+}
+
+variable "vm_ssh_key" {
+  default = ""
+  description = "Add in your SSH public key. This will be added to the VMs by cloud-init in the authorized_keys file under ~/.ssh"
 }
