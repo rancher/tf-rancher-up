@@ -9,16 +9,16 @@ git clone https://github.com/rancherlabs/tf-rancher-up.git
 cd recipes/upstream/aws/rke
 ```
 
-- Edit terraform.tfvars
-  - As a minimum update the AWS region and prefix varaibles
-- Check your AWS credentials are configured in ~/.aws/credentials, terraform will use these by default
+- Edit `terraform.tfvars`
+  - As a minimum update the required variables `aws_region` and `prefix`
+- Check your AWS credentials are configured in `~/.aws/credentials`, terraform will use these by default. See [the `aws configure` command](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) on how to do this
 
 ```bash
 terraform init
 terraform apply
 ```
 
-- If using multiple AWS credentials, set the profile when running terraform:
+- If storing multiple AWS credentials in `~/.aws/credentials`, set the profile when running terraform:
 ```bash
 AWS_PROFILE=<profile name> terraform apply
 ```
