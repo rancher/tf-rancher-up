@@ -137,7 +137,7 @@ resource "null_resource" "wait_for_rancher" {
     command     = <<-EOF
     count=0
     while [ "$${count}" -lt 5 ]; do
-      resp=$(curl -s -o /dev/null -w "%%{http_code}" https://$${RANCHER_HOSTNAME}/ping)
+      resp=$(curl -k -s -o /dev/null -w "%%{http_code}" https://$${RANCHER_HOSTNAME}/ping)
       echo "Waiting for https://$${RANCHER_HOSTNAME}/ping - response: $${resp}"
       if [ "$${resp}" = "200" ]; then
         ((count++))
