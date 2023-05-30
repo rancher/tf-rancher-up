@@ -97,7 +97,7 @@ resource "helm_release" "cert_manager" {
   version             = var.cert_manager_version
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
-  wait                = false
+  wait                = true
   create_namespace    = true
 
   dynamic "set" {
