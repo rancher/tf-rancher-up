@@ -1,0 +1,11 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: terraform-lint
+  image: hashicorp/terraform:1.4
+  when:
+    branch: drone-lint
+  commands:
+    - "terraform fmt -diff -check -recursive"
