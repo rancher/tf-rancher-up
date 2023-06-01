@@ -24,7 +24,7 @@ variable "cert_manager_namespace" {
 
 variable "cert_manager_version" {
   description = "Version of cert-manager to install"
-  default     = "v1.5.1"
+  default     = "v1.11.0"
   type        = string
 }
 

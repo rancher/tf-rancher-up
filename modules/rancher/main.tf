@@ -97,7 +97,7 @@ resource "helm_release" "cert_manager" {
   version             = var.cert_manager_version
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
-  wait                = true
+  wait                = false
   create_namespace    = true
 
   dynamic "set" {
@@ -110,8 +110,13 @@ resource "helm_release" "cert_manager" {
   }
 }
 
+resource "time_sleep" "sleep-for-ingress-webhook" {
+  depends_on      = [helm_release.cert_manager]
+  create_duration = "20s"
+}
+
 resource "helm_release" "rancher" {
-  depends_on          = [helm_release.cert_manager]
+  depends_on          = [time_sleep.sleep-for-ingress-webhook]
   name                = "rancher"
   repository          = var.helm_repository != null ? var.helm_repository : "https://releases.rancher.com/server-charts/stable"
   chart               = "rancher"
