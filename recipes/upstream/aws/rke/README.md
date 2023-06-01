@@ -9,8 +9,11 @@ git clone https://github.com/rancherlabs/tf-rancher-up.git
 cd recipes/upstream/aws/rke
 ```
 
+- Copy `terraform.tfvars.exmaple` to `terraform.tfvars`
 - Edit `terraform.tfvars`
-  - As a minimum update the required variables `aws_region` and `prefix`
+  - Update the required variables:
+    -  `aws_region` to suit your region
+    -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
 - Check your AWS credentials are configured in `~/.aws/credentials`, terraform will use these by default. See [the `aws configure` command](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) on how to do this
 
 ```bash

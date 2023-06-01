@@ -31,4 +31,4 @@ override.tf.json
 .idea
 
 # This file has personal secrets, so don't add
-myvalues.tfvars
+terraform.tfvars

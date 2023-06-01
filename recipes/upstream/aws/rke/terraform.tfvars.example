@@ -3,10 +3,17 @@
 ## -- Terraform will use the default ~/.aws/credentials file or environment variables to determine the access/secret keys. Uncomment the below only if necessary.
 # aws_access_key = "ACCESS_KEY_HERE"
 # aws_secret_key = "SECRET_KEY_HERE"
-aws_region = "ap-southeast-2"
+
+## -- AWS region to create the resources, uncomment one or adjust as needed
+# aws_region = "us-east-1"         # US, Virginia
+# aws_region = "us-west-2"         # US, Oregon
+# aws_region = "eu-west-1"         # EU, Ireland
+# aws_region = "eu-west-1"         # EU, Frankfurt
+# aws_region = "ap-southeast-2"    # AU, Sydney
+# aws_region = "ap-south-1"        # IN, Mumbai
 
 ## -- Set the prefix for the name tag on instancrease created. A default prefix (rancher-terraform) if not provided.
-prefix = "prefix_for_cluster"
+prefix = "my-name-here"
 
 ###### !! Optional variables !! ######
 
