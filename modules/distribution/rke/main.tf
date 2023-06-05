@@ -9,22 +9,22 @@ resource "rke_cluster" "this" {
   dynamic "nodes" {
     for_each = var.rancher_nodes == null ? [1] : []
     content {
-      address          = var.node_public_ip
+      address = var.node_public_ip
       #internal_address = var.node_internal_ip
-      user             = var.node_username
-      role             = ["controlplane", "etcd", "worker"]
-      ssh_key          = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
+      user    = var.node_username
+      role    = ["controlplane", "etcd", "worker"]
+      ssh_key = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
     }
   }
 
   dynamic "nodes" {
     for_each = var.rancher_nodes != null ? var.rancher_nodes : []
     content {
-      address          = nodes.value.public_ip
+      address = nodes.value.public_ip
       #internal_address = nodes.value.private_ip
-      role             = nodes.value.roles
-      user             = var.node_username
-      ssh_key          = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
+      role    = nodes.value.roles
+      user    = var.node_username
+      ssh_key = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
     }
   }
 

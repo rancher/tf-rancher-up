@@ -8,12 +8,12 @@ variable "vsphere_server_allow_unverified_ssl" {
   description = "Allow use of unverified SSL certificates (Ex: Self signed)"
 }
 variable "vsphere_user" {
-  type = string
+  type        = string
   description = "Add your vSphere username."
 }
 
 variable "vsphere_password" {
-  type = string
+  type        = string
   description = "Add your vSphere password for the above mentioned username."
 }
 
