@@ -1,21 +1,19 @@
 # TODO: Add description for the variables
 # TODO: Remove any unused variables
 variable "vsphere_server" {
-  default     = "ranchervcenter.sup.scz.suse.com"
   description = "Add the vSphere hostname."
 }
 
 variable "vsphere_server_allow_unverified_ssl" {
   description = "Allow use of unverified SSL certificates (Ex: Self signed)"
-  default     = true
 }
 variable "vsphere_user" {
-  default     = "#"
+  type = string
   description = "Add your vSphere username."
 }
 
 variable "vsphere_password" {
-  default     = "#"
+  type = string
   description = "Add your vSphere password for the above mentioned username."
 }
 
@@ -32,7 +30,6 @@ variable "vsphere_resource_pool" {
 }
 
 variable "vsphere_network" {
-  default = "VM Network"
 }
 
 variable "vsphere_virtual_machine" {
@@ -41,11 +38,10 @@ variable "vsphere_virtual_machine" {
 
 variable "prefix" {
   description = "Prefix to use for various resources"
-  default     = []
 }
 
 variable "ssh_private_key_path" {
-  description = "Add your SSH private key path here."
+  description = "Add your Private Key"
 }
 
 variable "docker_version" {
@@ -53,7 +49,6 @@ variable "docker_version" {
 }
 
 variable "vm_username" {
-  default = "ubuntu"
 }
 
 variable "vm_cpus" {
@@ -75,6 +70,5 @@ variable "instance_count" {
 }
 
 variable "authorized_keys" {
-  default     = ""
   description = "Add in your SSH public key. This will be added to the VMs by cloud-init in the authorized_keys file under ~/.ssh"
 }
