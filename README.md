@@ -87,7 +87,7 @@ Terraform should be installed on your local or remote computer where the reposit
 
 ### Whats next
 
-_Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the README under [recipes](./recipes) for details._
+_Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the README under [recipes](./recipes) for details about how to start provisioning._
 
 
 
