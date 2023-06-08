@@ -47,7 +47,7 @@
 ## About The Project
 
 
-This repository comprises reusable terraform [modules](./modules) to deploy Rancher, a complete software stack for teams adopting containers, on a Kubernetes cluster provisioned in any of the infrastructure/cloud platforms(AWS/VMware/Azure/GCP/DigitalOcean). Provisioning can be customized using different Kubernetes distributions(RKE/RKE2/K3S/EKS/AKS/GKE) and will be here by referred to as [recipes](./recipes). We can deploy upstream Kubernetes (cluster used only for running Rancher) and Downstream Kubernetes (cluster used for workloads) using these terraform modules by stitching together various recipes.
+This repository comprises reusable terraform [modules](./modules) to deploy Rancher, a complete software stack for teams adopting containers, on a Kubernetes cluster provisioned in any of the infrastructure/cloud platforms(AWS/VMware/Azure/GCP/DigitalOcean). Provisioning can be customized using different Kubernetes distributions(RKE/RKE2/K3S/EKS/AKS/GKE) and will be here by referred to as [recipes](./recipes). We can deploy upstream Kubernetes (cluster used only for running Rancher), deploy Rancher and Downstream Kubernetes (cluster used for workloads) using these terraform modules by stitching together various recipes.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
