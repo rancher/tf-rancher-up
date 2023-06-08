@@ -142,6 +142,8 @@ Don't forget to give the project a star! Thanks again!
  terraform fmt -recursive .
 ```
 - If the changes relate to the README, update the content for changed modules with `terraform-docs`:
+
+   Please refer [here](https://github.com/terraform-docs/terraform-docs) for installation of `terraform-docs`
 ```bash
  terraform-docs markdown .
 ```
