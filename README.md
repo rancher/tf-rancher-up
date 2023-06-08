@@ -124,7 +124,7 @@ Don't forget to give the project a star! Thanks again!
   ```
      This step internally does: git remote add origin https://github.com/rancherlabs/tf-rancher-up.git
 
-- Fork the project from [here](https://github.com/ajithijk/tf-rancher-up/fork)
+- Fork the project from [here](https://github.com/rancherlabs/tf-rancher-up/fork)
 
 ```sh
  cd <cloned directory path>
