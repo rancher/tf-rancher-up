@@ -7,7 +7,7 @@ Choose a recipe for deployment from here.
 
 Select the infrastructure/cloud provider, Kubernetes distribution and go through the README.
 
-   Example: Upstream | AWS | RKE | [README](./recipes/upstream/aws/rke/README.md)
+   Example: Upstream | AWS | RKE | [README](./upstream/aws/rke/README.md)
 
 
 
