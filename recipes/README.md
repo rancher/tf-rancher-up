@@ -1,7 +1,7 @@
 
 # Recipes
 
-Choose a recipe for deployment from here.
+Choose a recipe for deployment.
 
 ## To deploy upstream cluster with Rancher
 
