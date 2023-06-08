@@ -124,28 +124,53 @@ Don't forget to give the project a star! Thanks again!
 
 
 - Clone or pull all changes
-```bash
-git pull --all
+
+ ```sh
+  git clone  git@github.com:rancherlabs/tf-rancher-up.git
+
+  OR
+
+  git pull --all (if already cloned)
+  ```
+     This step internally does: git remote add origin https://github.com/rancherlabs/tf-rancher-up.git
+
+- Fork the project from [here](https://github.com/ajithijk/tf-rancher-up/fork)
+
+```sh
+ cd <cloned directory path>
+ git remote add mycopy <forked-url>
+ ```
+     Example: git remote add mycopy git@github.com:<your_github_id>/tf-rancher-up.git`
+
+- Create your Feature Branch
+```sh
+ git checkout -b <feature-branch-name>
 ```
-- Checkout the `main` branch if not already
-```bash
-git checkout main
-```
-- Create a feature branch to commit your changes
-```bash
-git checkout -b <branch name>
-```
-- Use concise but meaningful commit messages about what is changing
-- Use `terraform fmt` to lint and format any changes that occured
-```bash
-terraform fmt -recursive .
+- Make changes you wanted in the code.
+
+- Use `terraform fmt` to lint and format any changes that occured.
+```sh
+ terraform fmt -recursive .
 ```
 - If the changes relate to the README, update the content for changed modules with `terraform-docs`:
 ```bash
-terraform-docs markdown .
+ terraform-docs markdown .
 ```
-- Once ready, create a PR providing any testing and change details
+- Commit your Changes
 
+```sh
+ git commit -m "concise and meaningful commit messages about what is changing"
+```
+- Push to the Branch
+
+```sh
+ git push mycopy <feature-branch-name>
+```
+- Open a Pull Request providing any testing and change details from [here](https://github.com/rancherlabs/tf-rancher-up/compare)
+
+- After the PR is merged, delete the branch `<feature-branch-name>`
+
+- Dont push a branch to origin/main repository. Push only to forks.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -176,37 +201,3 @@ Project Link: [https://github.com/rancherlabs/tf-rancher-up](https://github.com/
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/rancherlabs/tf-rancher-up/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[HCL]:68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d5465727261666f726d26636f6c6f723d374234324243266c6f676f3d5465727261666f726d266c6f676f436f6c6f723d464646464646266c6162656c3d
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
