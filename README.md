@@ -8,8 +8,6 @@
     <a href="https://github.com/rancherlabs/tf-rancher-up/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/rancherlabs/tf-rancher-up/blob/main/README.md">View Demo</a>
-    ·
     <a href="https://github.com/rancherlabs/tf-rancher-up/issues">Report Bug</a>
     ·
     <a href="https://github.com/rancherlabs/tf-rancher-up/issues">Request Feature</a>
@@ -87,7 +85,7 @@ Terraform should be installed on your local or remote computer where the reposit
 
 ### Whats next
 
-_Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](https://github.com/ajithijk/tf-rancher-up/blob/docs-update/recipes/README.md) under [recipes](./recipes) for details about how to start provisioning._
+Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](https://github.com/ajithijk/tf-rancher-up/blob/docs-update/recipes/README.md) under [recipes](./recipes) for details about how to start provisioning.
 
 
 
@@ -112,13 +110,6 @@ Contributions are what make the open source community such an amazing place to l
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 
 #### Workflow for working with repos on GitHub:
 
