@@ -84,7 +84,7 @@ Terraform should be installed on your local or remote computer where the reposit
 
 ### Whats next
 
-Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](https://github.com/ajithijk/tf-rancher-up/blob/docs-update/recipes/README.md) under [recipes](./recipes) for details about how to start provisioning.
+Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](./README.md) under [recipes](./recipes) for details about how to start provisioning.
 
 
 
