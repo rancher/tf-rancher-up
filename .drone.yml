@@ -2,10 +2,17 @@ kind: pipeline
 type: docker
 name: default
 
+trigger:
+  event:
+    include:
+    - push
+    - pull_request
+  branch:
+    - main
+
 steps:
 - name: terraform-lint
   image: hashicorp/terraform:1.4
   when:
-    branch: drone-lint
   commands:
     - "terraform fmt -diff -check -recursive"
