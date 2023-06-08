@@ -30,10 +30,8 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -52,7 +50,7 @@ This repository comprises reusable terraform [modules](./modules) to deploy Ranc
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Built With
+## Built With
 
 Most of the codebase is using HCL(Hashicorp Configuration Language) and some portion is using cloud-init and bash scripts.
 
