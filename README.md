@@ -129,13 +129,13 @@ Don't forget to give the project a star! Thanks again!
  cd <cloned directory path>
  git remote add mycopy <forked-url>
  ```
-     Example: git remote add mycopy git@github.com:<your_github_id>/tf-rancher-up.git`
+     Example: git remote add mycopy git@github.com:<your_github_id>/tf-rancher-up.git
 
 - Create your Feature Branch
 ```sh
  git checkout -b <feature-branch-name>
 ```
-- Make changes you wanted in the code.
+- Make changes in the code.
 
 - Use `terraform fmt` to lint and format any changes that occured.
 ```sh
@@ -155,7 +155,7 @@ Don't forget to give the project a star! Thanks again!
 ```sh
  git push mycopy <feature-branch-name>
 ```
-- Open a Pull Request providing any testing and change details from [here](https://github.com/rancherlabs/tf-rancher-up/compare)
+- Open a Pull Request(PR) providing any testing and change details from [here](https://github.com/rancherlabs/tf-rancher-up/compare)
 
 - After the PR is merged, delete the branch `<feature-branch-name>`
 
