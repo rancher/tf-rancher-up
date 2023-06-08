@@ -71,8 +71,7 @@ To get started you can clone the git repository to a desired location in your lo
 
 #### Git
 
-Git should be installed on the local or remote computer which is used for cloning the repository as mentioned above. Git comes installed by default on most Mac and Linux machines . Please refer the git installation guide [here]
-(https://github.com/git-guides/install-git) if you need help.
+Git should be installed on the local or remote computer which is used for cloning the repository as mentioned above. Git comes installed by default on most Mac and Linux machines . Please refer the git installation guide [here](https://github.com/git-guides/install-git) if you need help.
 
 Git clone can be performed only after setting up the required ssh keys. Please refer [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) if you need help on this.
 
