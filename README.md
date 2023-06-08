@@ -5,7 +5,7 @@
   <p align="center">
     Deploy Rancher in your desired Kubernetes distribution
     <br />
-    <a href="https://github.com/rancherlabs/tf-rancher-up/blob/main/README.md"><strong>Explore the docs »</strong></a>
+    <a href="./README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/rancherlabs/tf-rancher-up/issues">Report Bug</a>
