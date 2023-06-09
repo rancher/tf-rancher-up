@@ -8,7 +8,7 @@
     <a href="./README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://..../actions/new">Report Bug</a>
+    <a href="https://../../actions/new">Report Bug</a>
     ·
     <a href="https://github.com/rancherlabs/tf-rancher-up/issues">Request Feature</a>
   </p>
