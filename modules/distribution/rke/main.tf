@@ -51,7 +51,7 @@ resource "local_file" "kube_config_yaml" {
 }
 
 resource "local_file" "kube_config_yaml_backup" {
-  filename        = "${local.kube_config_file}.bkp"
+  filename        = "${local.kube_config_file}.backup"
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"
 

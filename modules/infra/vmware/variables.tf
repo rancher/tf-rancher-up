@@ -1,66 +1,65 @@
-# TODO: Add description for the variables
-# TODO: Remove any unused variables
-variable "vsphere_server" {
-  description = "Add the vSphere hostname."
-}
-
-variable "vsphere_server_allow_unverified_ssl" {
-  description = "Allow use of unverified SSL certificates (Ex: Self signed)"
-}
-variable "vsphere_user" {
-  type        = string
-  description = "Add your vSphere username."
-}
-
-variable "vsphere_password" {
-  type        = string
-  description = "Add your vSphere password for the above mentioned username."
-}
-
 variable "vsphere_datacenter" {
-  description = "vSphere Datacenter details."
+  type        = string
+  description = "Vsphere datacenter name"
 }
 
 variable "vsphere_datastore" {
-  description = "Datastore used for storing VM data."
+  type        = string
+  description = "Vsphere datastore name"
 }
 
 variable "vsphere_resource_pool" {
-  description = "Available resourcepool on the host."
+  type        = string
+  description = "Vsphere resource pool name"
 }
 
 variable "vsphere_network" {
+  type        = string
+  description = "Vsphere network name"
 }
 
-variable "vsphere_virtual_machine" {
-  description = "Virtual Machine template name"
+variable "vsphere_virtual_machine_template" {
+  type        = string
+  description = "Name of the virtual machine template to use for new VM creation"
 }
 
 variable "prefix" {
+  type        = string
   description = "Prefix to use for various resources"
 }
 
 variable "ssh_private_key_path" {
-  description = "Add your Private Key"
+  type        = string
+  description = "SSH private key path"
 }
 
 variable "docker_version" {
-  default = "20.10"
+  type        = string
+  description = "Docker version"
+  default     = "20.10"
 }
 
 variable "vm_username" {
+  type        = string
+  description = "Username used to connect to the VM"
 }
 
 variable "vm_cpus" {
-  default = 2
+  type        = number
+  description = "CPU sizing for the VM"
+  default     = 2
 }
 
 variable "vm_memory" {
-  default = 4096
+  type        = number
+  description = "Memory sizing for the VM"
+  default     = 4096
 }
 
 variable "vm_disk" {
-  default = 80
+  type        = number
+  description = "Disk sizing for the VM"
+  default     = 80
 }
 
 variable "instance_count" {
@@ -70,5 +69,5 @@ variable "instance_count" {
 }
 
 variable "authorized_keys" {
-  description = "Add in your SSH public key. This will be added to the VMs by cloud-init in the authorized_keys file under ~/.ssh"
+  description = "Authorized keys to be added to the newly created VM"
 }

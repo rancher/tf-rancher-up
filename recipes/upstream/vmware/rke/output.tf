@@ -19,5 +19,5 @@
 # }
 
 output "rancher_url" {
-  value = join(".", ["rancher", module.upstream-cluster.rancher_ip, "sslip.io"])
+  value = join(".", ["rancher", module.upstream-cluster.ip_addresses[0], "sslip.io"])
 }

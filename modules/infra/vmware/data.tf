@@ -18,6 +18,6 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = var.vsphere_virtual_machine
+  name          = var.vsphere_virtual_machine_template
   datacenter_id = data.vsphere_datacenter.dc.id
 }

@@ -1,10 +1,3 @@
-provider "vsphere" {
-  user                 = var.vsphere_user
-  password             = var.vsphere_password
-  vsphere_server       = var.vsphere_server
-  allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
-}
-
 resource "vsphere_virtual_machine" "instance" {
   count = var.instance_count
 
@@ -31,7 +24,7 @@ resource "vsphere_virtual_machine" "instance" {
 
   disk {
     label            = "disk0"
-    size             = 80
+    size             = var.vm_disk
     unit_number      = 0
     eagerly_scrub    = data.vsphere_virtual_machine.template.disks[0].eagerly_scrub
     thin_provisioned = data.vsphere_virtual_machine.template.disks[0].thin_provisioned
@@ -47,12 +40,12 @@ resource "vsphere_virtual_machine" "instance" {
     }
     inline = [
       "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
-      "sudo usermod -aG docker ubuntu"
+      "sudo usermod -aG docker ${var.vm_username}"
     ]
   }
 
   extra_config = {
-    "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tpl", {
+    "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tmpl", {
       node_hostname = "${var.prefix}${count.index + 1}"
     }))
     "guestinfo.metadata.encoding" = "base64"

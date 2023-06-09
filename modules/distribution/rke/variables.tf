@@ -1,7 +1,6 @@
 variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
-  default     = null
 }
 
 variable "node_public_ip" {
@@ -29,13 +28,12 @@ variable "rancher_nodes" {
 variable "node_username" {
   type        = string
   description = "Username used for SSH access to the Rancher server cluster node"
-  default     = "ubuntu"
 }
 
 variable "ssh_private_key_path" {
   type        = string
   description = "Private key used for SSH access to the Rancher server cluster node(s)"
-  default     = null
+  default     = "~/.ssh/id_rsa"
 }
 
 variable "ssh_agent_auth" {
@@ -47,7 +45,6 @@ variable "ssh_agent_auth" {
 variable "kubernetes_version" {
   type        = string
   description = "Kubernetes version to use for the RKE cluster"
-  default     = null
 }
 
 variable "private_registry_url" {
@@ -71,13 +68,6 @@ variable "private_registry_password" {
 variable "cluster_name" {
   type        = string
   description = "Name for the RKE cluster"
-  default     = "rke-demo"
-}
-
-variable "cluster_yaml" {
-  type        = string
-  description = "cluster.yaml configuration file to apply to the cluster"
-  default     = null
 }
 
 variable "kube_config_path" {
@@ -87,6 +77,7 @@ variable "kube_config_path" {
 }
 
 variable "dependency" {
+  type        = string
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
