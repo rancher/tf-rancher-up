@@ -6,21 +6,25 @@ Terraform module to create an RKE cluster. It supports single and HA cluster con
 
 #### Single node cluster
 
+Example uses a specific key file for SSH access
+
 ```hcl
 module "rke" {
-  source = "github.com/terraform-rancher-modules/terraform-rke-cluster"
+  source = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/distribution/rke"
 
   node_public_ip = "192.168.236.121"
   node_username = "ubuntu"
-  ssh_private_key_pem = "~/.ssh/id_rsa"
+  ssh_private_key_path = "~/.ssh/id_rsa"
 }
 ```
 
 #### HA cluster
 
+Example uses the ssh agent for SSH access
+
 ```hcl
 module "rke" {
-  source = "github.com/terraform-rancher-modules/terraform-rke-cluster"
+  source = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/distribution/rke"
 
   rancher_nodes = [
     {
@@ -40,7 +44,7 @@ module "rke" {
     }
   ]
 
-  cluster_yaml = "./cluster.yaml"
+  ssh_agent_auth = true
 }
 ```
 
@@ -88,7 +92,7 @@ No modules.
 | <a name="input_private_registry_password"></a> [private\_registry\_password](#input\_private\_registry\_password) | Specify private registry's password | `string` | `null` | no |
 | <a name="input_private_registry_url"></a> [private\_registry\_url](#input\_private\_registry\_url) | Specify the private registry where kubernetes images are hosted. Ex: artifactory.company.com/docker | `string` | `null` | no |
 | <a name="input_private_registry_username"></a> [private\_registry\_username](#input\_private\_registry\_username) | Specify private registry's username | `string` | `null` | no |
-| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br>    public_ip  = string<br>    private_ip = string<br>    roles      = list(string)<br>  }))</pre> | `null` | no |
+| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br>    public_ip = string<br>    #private_ip = string<br>    roles = list(string)<br>  }))</pre> | `null` | no |
 | <a name="input_ssh_agent_auth"></a> [ssh\_agent\_auth](#input\_ssh\_agent\_auth) | Enable SSH agent authentication | `bool` | `false` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Private key used for SSH access to the Rancher server cluster node(s) | `string` | `null` | no |
 
