@@ -18,9 +18,9 @@ variable "node_internal_ip" {
 
 variable "rancher_nodes" {
   type = list(object({
-    public_ip = string
+    public_ip  = string
     private_ip = string
-    roles = list(string)
+    roles      = list(string)
   }))
   default     = null
   description = "List of compute nodes for Rancher cluster"
@@ -88,5 +88,5 @@ variable "kube_config_path" {
 
 variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
-  default = null
+  default     = null
 }
