@@ -16,7 +16,7 @@ module "rke" {
   kube_config_path     = var.kube_config_path
   kubernetes_version   = var.kubernetes_version
 
-  rancher_nodes = [for instance_ips in module.upstream-cluster.instances_ips :
+  rancher_nodes = [for instance_ips in module.upstream-cluster.instance_ips :
     {
       public_ip  = instance_ips.public_ip,
       private_ip = instance_ips.private_ip,

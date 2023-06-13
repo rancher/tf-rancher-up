@@ -10,7 +10,7 @@ output "instances_private_ip" {
   value = aws_instance.instance.*.private_ip
 }
 
-output "instances_ips" {
+output "instance_ips" {
   value = [
     for i in aws_instance.instance[*] :
     {
