@@ -13,7 +13,7 @@ resource "rke_cluster" "this" {
       internal_address = var.node_internal_ip
       user             = var.node_username
       role             = ["controlplane", "etcd", "worker"]
-      ssh_key          = file(pathexpand(var.ssh_private_key_path))
+      ssh_key          = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
     }
   }
 
@@ -24,7 +24,7 @@ resource "rke_cluster" "this" {
       internal_address = nodes.value.private_ip
       role             = nodes.value.roles
       user             = var.node_username
-      ssh_key          = file(pathexpand(var.ssh_private_key_path))
+      ssh_key          = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
     }
   }
 
