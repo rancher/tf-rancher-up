@@ -93,6 +93,10 @@ resource "aws_instance" "instance" {
     volume_size = var.instance_disk_size
   }
 
+  instance_market_options {
+    market_type = var.spot_instances ? "spot" : null
+  }
+
   user_data = templatefile("${path.module}/user_data.sh",
     {
       install_docker = var.install_docker

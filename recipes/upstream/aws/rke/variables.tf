@@ -68,3 +68,9 @@ variable "ssh_key_pair_path" {
   description = "Path to the SSH private key used as the key pair (that's already present in AWS)"
   default     = null
 }
+
+variable "spot_instances" {
+  type        = bool
+  description = "Use spot instances"
+  default     = false
+}

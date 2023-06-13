@@ -29,6 +29,9 @@ prefix = "my-name-here"
 ## -- Number of EC2 instances to launch
 instance_count = 1
 
+## -- Use spot instances
+# spot_instances = false
+
 ##### SSH
 ## -- (A) Create a new keypair in AWS
 create_ssh_key_pair = true
