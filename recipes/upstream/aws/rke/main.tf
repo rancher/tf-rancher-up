@@ -5,6 +5,7 @@ module "upstream-cluster" {
   create_ssh_key_pair = var.create_ssh_key_pair
   ssh_key_pair_name   = var.ssh_key_pair_name
   ssh_key_pair_path   = var.ssh_key_pair_path
+  spot_instances      = var.spot_instances
   aws_region          = var.aws_region
 }
 

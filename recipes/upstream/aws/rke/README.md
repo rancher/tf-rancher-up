@@ -14,17 +14,20 @@ cd recipes/upstream/aws/rke
   - Update the required variables:
     -  `aws_region` to suit your region
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
+    -  Recommended: `spot_instances` can be set to `true` to use spot instances
 - Check your AWS credentials are configured in `~/.aws/credentials`, terraform will use these by default. See [the `aws configure` command](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) on how to do this
+
+  > If storing multiple AWS credentials in `~/.aws/credentials`, set the profile when running terraform:
+  ```bash
+  AWS_PROFILE=<profile name> terraform apply
+  ```
 
 ```bash
 terraform init
 terraform apply
 ```
 
-- If storing multiple AWS credentials in `~/.aws/credentials`, set the profile when running terraform:
-```bash
-AWS_PROFILE=<profile name> terraform apply
-```
+**Note** you may need to use ` terraform init -upgrade` to upgrade provider versions
 
 - Destroy the resources when finished
 ```bash

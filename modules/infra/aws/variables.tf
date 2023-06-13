@@ -91,7 +91,7 @@ variable "create_security_group" {
 # TODO: Add a check based on above value
 variable "instance_security_group" {
   type        = string
-  description = "If chosen to not create security group, this should be provided"
+  description = "Provide a pre-existing security group ID"
   default     = null
 }
 
@@ -99,4 +99,10 @@ variable "ssh_username" {
   type        = string
   description = "Username used for SSH with sudo access"
   default     = "ubuntu"
+}
+
+variable "spot_instances" {
+  type        = bool
+  description = "Use spot instances"
+  default     = false
 }
