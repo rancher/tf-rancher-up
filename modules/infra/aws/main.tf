@@ -88,6 +88,7 @@ resource "aws_instance" "instance" {
 
   key_name        = local.create_new_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
   security_groups = [var.create_security_group ? aws_security_group.sg_allowall[0].name : var.instance_security_group]
+  user_data       = var.user_data
 
   root_block_device {
     volume_size = var.instance_disk_size
@@ -96,13 +97,6 @@ resource "aws_instance" "instance" {
   instance_market_options {
     market_type = var.spot_instances ? "spot" : null
   }
-
-  user_data = templatefile("${path.module}/user_data.sh",
-    {
-      install_docker = var.install_docker
-      username       = var.ssh_username
-    }
-  )
 
   provisioner "remote-exec" {
     inline = flatten([
