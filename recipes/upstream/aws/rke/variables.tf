@@ -39,6 +39,18 @@ variable "kubernetes_version" {
   default     = null
 }
 
+variable "install_docker" {
+  type        = bool
+  description = "Should install docker while creating the instance"
+  default     = true
+}
+
+variable "docker_version" {
+  type        = string
+  description = "Docker version to install on nodes"
+  default     = "20.10"
+}
+
 variable "rancher_password" {
   description = "Password to use for bootstrapping Rancher (min 12 characters)"
   default     = "initial-admin-password"
@@ -67,6 +79,12 @@ variable "ssh_key_pair_path" {
   type        = string
   description = "Path to the SSH private key used as the key pair (that's already present in AWS)"
   default     = null
+}
+
+variable "ssh_username" {
+  type        = string
+  description = "Username used for SSH with sudo access"
+  default     = "ubuntu"
 }
 
 variable "spot_instances" {
