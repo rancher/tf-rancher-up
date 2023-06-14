@@ -70,18 +70,6 @@ variable "ssh_private_key_path" {
   default     = null
 }
 
-variable "install_docker" {
-  type        = bool
-  description = "Should install docker while creating the instance"
-  default     = true
-}
-
-variable "docker_version" {
-  type        = string
-  description = "Docker version to install on nodes"
-  default     = "20.10"
-}
-
 variable "create_security_group" {
   type        = bool
   description = "Should create the security group associated with the instance(s)"
@@ -105,4 +93,10 @@ variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
   default     = false
+}
+
+variable "user_data" {
+  type        = string
+  description = "User data content for EC2 instance(s)"
+  default     = null
 }

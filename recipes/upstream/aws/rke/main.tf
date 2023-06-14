@@ -5,8 +5,15 @@ module "upstream-cluster" {
   create_ssh_key_pair = var.create_ssh_key_pair
   ssh_key_pair_name   = var.ssh_key_pair_name
   ssh_key_pair_path   = var.ssh_key_pair_path
+  ssh_username        = var.ssh_username
   spot_instances      = var.spot_instances
   aws_region          = var.aws_region
+  user_data = templatefile("${path.module}/user_data.sh",
+    {
+      install_docker = var.install_docker
+      username       = var.ssh_username
+    }
+  )
 }
 
 module "rke" {
