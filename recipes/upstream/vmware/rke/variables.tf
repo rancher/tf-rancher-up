@@ -104,8 +104,3 @@ variable "rancher_bootstrap_password" {
     error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
   }
 }
-
-#variable "vsphere_provider" {
-#  description = "VSphere provider configuration"
-#  type        = object
-#}

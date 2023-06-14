@@ -28,6 +28,7 @@ variable "rancher_nodes" {
 variable "node_username" {
   type        = string
   description = "Username used for SSH access to the Rancher server cluster node"
+  default     = "ubuntu"
 }
 
 variable "ssh_private_key_path" {
@@ -45,6 +46,7 @@ variable "ssh_agent_auth" {
 variable "kubernetes_version" {
   type        = string
   description = "Kubernetes version to use for the RKE cluster"
+  default     = null
 }
 
 variable "private_registry_url" {
@@ -68,6 +70,7 @@ variable "private_registry_password" {
 variable "cluster_name" {
   type        = string
   description = "Name for the RKE cluster"
+  default     = "rke-demo"
 }
 
 variable "kube_config_path" {
