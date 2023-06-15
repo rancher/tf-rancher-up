@@ -7,7 +7,7 @@ module "rke2_first" {
 
 module "rke2_first_server" {
   source                  = "../../../../modules/infra/aws"
-  prefix                  = "${var.prefix}"
+  prefix                  = var.prefix
   instance_count          = 1
   create_ssh_key_pair     = var.create_ssh_key_pair
   instance_security_group = var.ssh_key_pair_name
@@ -42,13 +42,13 @@ module "rke2_additional_servers" {
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
-  depends_on = [module.rke2_additional_servers.dependency]
+ # depends_on = [module.rke2_additional_servers.dependency]
   host       = module.rke2_first_server.instances_public_ip[0]
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.instances_public_ip[0]}/g' /etc/rancher/rke2/rke2.yaml"
   ]
   user        = var.ssh_username
-  private_key = module.rke2_first_server.ssh_key_path
+  private_key = file("${module.rke2_first_server.ssh_key_path}")
 }
 
 resource "local_file" "kube_config_server_yaml" {
