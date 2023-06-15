@@ -1,11 +1,13 @@
 variable "aws_access_key" {
   type        = string
   description = "AWS access key used to create infrastructure"
+  default     = null
 }
 
 variable "aws_secret_key" {
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
+  default     = null
 }
 
 variable "aws_region" {
@@ -13,17 +15,11 @@ variable "aws_region" {
   description = "AWS region used for all resources"
 }
 
-# Required
 variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
+  default     = null
 }
-
-#variable "kubeconfig_file" {
-#  description = "The kubeconfig to use to interact with the cluster"
-#  default     = "~/.kube/config"
-#  type        = string
-#}
 
 variable "instance_count" {
   type        = number
@@ -31,31 +27,20 @@ variable "instance_count" {
   default     = 3
 }
 
-variable "node_username" {
+variable "rke2_version" {
   type        = string
-  default     = "ubuntu"
-  description = "node username"
-}
-
-variable "instance_ssh_key_name" {
-  type        = string
-  description = "Specify the SSH key name to use (that's already present in AWS)"
-  default     = ""
-}
-
-variable "rancher_kubernetes_version" {
-  type        = string
-  description = "specify the kubernetes version"
+  description = "Kubernetes version to use for the RKE2 cluster"
+  default     = null
 }
 
 variable "rke2_token" {
-  type    = string
-  default = "demo"
+  description = "Token to use when configuring RKE2 nodes"
+  default     = null
 }
 
-# TODO: Add a check for existence
-variable "ssh_private_key_path" {
- type = string
+variable "rke2_config" {
+  description = "Additional RKE2 configuration to add to the config.yaml file"
+  default     = null
 }
 
 variable "kube_config_path" {
@@ -63,6 +48,7 @@ variable "kube_config_path" {
   type        = string
   default     = null
 }
+
 variable "rancher_password" {
   description = "Password to use for bootstrapping Rancher (min 12 characters)"
   default     = "initial-admin-password"
@@ -93,3 +79,14 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
+variable "ssh_username" {
+  type        = string
+  description = "Username used for SSH with sudo access"
+  default     = "ubuntu"
+}
+
+variable "spot_instances" {
+  type        = bool
+  description = "Use spot instances"
+  default     = false
+}
