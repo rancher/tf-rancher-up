@@ -1,6 +1,13 @@
 output "rke2_user_data" {
   description = "RKE2 server user data"
-  value       = data.template_file.rke2_server_yaml.rendered
+  value       = templatefile("${path.module}/server_config.yaml.tpl",
+    {
+      rke2_config  = var.rke2_config == null ? "false" : var.rke2_config,
+      rke2_token   = local.rke2_token,
+      rke2_version = var.rke2_version == null ? "false" : var.rke2_version,
+      server_ip    = var.first_server_ip == null ? "false" : var.first_server_ip
+    }
+  )
 }
 
 output "rke2_token" {
