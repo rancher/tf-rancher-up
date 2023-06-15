@@ -19,7 +19,7 @@ resource "local_file" "private_key_pem" {
   count           = local.create_new_key_pair ? 1 : 0
   filename        = local.new_key_pair_path
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
-  file_permission = "0400"
+  file_permission = "0600"
 }
 
 resource "aws_key_pair" "key_pair" {
@@ -87,7 +87,7 @@ resource "aws_instance" "instance" {
   subnet_id     = var.subnet_id
 
   key_name        = local.create_new_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
-  security_groups = [var.create_security_group ? aws_security_group.sg_allowall[0].name : var.instance_security_group]
+  vpc_security_group_ids = [var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group]
   user_data       = var.user_data
 
   root_block_device {

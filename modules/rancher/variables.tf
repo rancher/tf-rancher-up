@@ -136,4 +136,5 @@ variable "tls_source" {
 
 variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
+  default     = null
 }
