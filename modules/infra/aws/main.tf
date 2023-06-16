@@ -1,8 +1,6 @@
-# Condition to use an existing keypair if a keypair file is also provided
+# Condition to use an existing keypair if a keypair name and file is also provided
 locals {
-  use_existing_key_pair = var.ssh_key_pair_name != null && var.ssh_key_pair_path != null ? true : false
-  create_new_key_pair   = var.create_ssh_key_pair || !local.use_existing_key_pair ? true : false
-  new_key_pair_path     = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
 }
 
 data "aws_subnet" "subnet" {
@@ -11,19 +9,19 @@ data "aws_subnet" "subnet" {
 }
 
 resource "tls_private_key" "ssh_private_key" {
-  count     = local.create_new_key_pair ? 1 : 0
+  count     = var.create_ssh_key_pair ? 1 : 0
   algorithm = "ED25519"
 }
 
 resource "local_file" "private_key_pem" {
-  count           = local.create_new_key_pair ? 1 : 0
+  count           = var.create_ssh_key_pair ? 1 : 0
   filename        = local.new_key_pair_path
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
   file_permission = "0600"
 }
 
 resource "aws_key_pair" "key_pair" {
-  count           = local.create_new_key_pair ? 1 : 0
+  count           = var.create_ssh_key_pair ? 1 : 0
   key_name_prefix = "${var.prefix}-"
   public_key      = tls_private_key.ssh_private_key[0].public_key_openssh
 }
@@ -86,9 +84,9 @@ resource "aws_instance" "instance" {
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
 
-  key_name        = local.create_new_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
+  key_name               = var.create_ssh_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
   vpc_security_group_ids = [var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group]
-  user_data       = var.user_data
+  user_data              = var.user_data
 
   root_block_device {
     volume_size = var.instance_disk_size
@@ -109,12 +107,16 @@ resource "aws_instance" "instance" {
       type        = "ssh"
       host        = self.public_ip
       user        = var.ssh_username
-      private_key = local.create_new_key_pair ? tls_private_key.ssh_private_key[0].private_key_pem : file(pathexpand(var.ssh_key_pair_path))
+      private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_pem : file(pathexpand(var.ssh_key_pair_path))
     }
   }
 
   tags = {
-    Name    = "${var.prefix}-${count.index + 1}"
+    Name    = "${var.prefix}-${count.index + var.tag-begin}"
     Creator = var.prefix
+  }
+
+  lifecycle {
+    ignore_changes = [instance_market_options, user_data]
   }
 }

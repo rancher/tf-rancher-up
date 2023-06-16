@@ -22,6 +22,12 @@ variable "prefix" {
   default     = "rancher-terraform"
 }
 
+variable "tag-begin" {
+  type        = number
+  description = "When module is being called mode than once, begin tagging from this number"
+  default     = 1
+}
+
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
