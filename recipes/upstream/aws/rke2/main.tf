@@ -34,21 +34,27 @@ module "rke2_additional_servers" {
   create_ssh_key_pair     = false
   create_security_group   = false
   instance_security_group = module.rke2_first_server.sg-id
-  ssh_key_pair_name       = var.ssh_key_pair_name
+  ssh_key_pair_name       = module.rke2_first_server.ssh_key_pair_name
+  ssh_key_pair_path       = module.rke2_first_server.ssh_key_path
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
+  tag-begin               = 2
   aws_region              = var.aws_region
   user_data               = module.rke2_additional.rke2_user_data
 }
 
+data "local_file" "ssh_private_key" {
+  depends_on = [module.rke2_first_server]
+  filename   = module.rke2_first_server.ssh_key_path
+}
+
 resource "ssh_resource" "retrieve_kubeconfig" {
- # depends_on = [module.rke2_additional_servers.dependency]
-  host       = module.rke2_first_server.instances_public_ip[0]
+  host = module.rke2_first_server.instances_public_ip[0]
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.instances_public_ip[0]}/g' /etc/rancher/rke2/rke2.yaml"
   ]
   user        = var.ssh_username
-  private_key = file("${module.rke2_first_server.ssh_key_path}")
+  private_key = data.local_file.ssh_private_key.content
 }
 
 resource "local_file" "kube_config_server_yaml" {
@@ -63,4 +69,5 @@ module "rancher_install" {
   rancher_replicas           = var.instance_count
   rancher_bootstrap_password = var.rancher_password
   rancher_version            = var.rancher_version
+  dependency                 = local_file.kube_config_server_yaml.filename
 }

@@ -21,8 +21,11 @@ output "instance_ips" {
 }
 
 output "ssh_key_path" {
-  depends_on = [aws_instance.instance[0]]
-  value      = local.create_new_key_pair ? local_file.private_key_pem[0].filename : var.ssh_key_pair_path
+  value = var.create_ssh_key_pair ? local_file.private_key_pem[0].filename : var.ssh_key_pair_path
+}
+
+output "ssh_key_pair_name" {
+  value = var.create_ssh_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
 }
 
 output "sg-id" {

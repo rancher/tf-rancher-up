@@ -19,7 +19,8 @@ locals {
     "ingress.tls.source: ${var.tls_source}",
     "hostname: ${var.rancher_hostname}",
     "bootstrapPassword: ${var.rancher_bootstrap_password}",
-    "replicas: ${var.rancher_replicas}"
+    "replicas: ${var.rancher_replicas}",
+    "global.cattle.psp.enabled: false"
   ]
   rancher_private_ca_values = var.tls_source == "secret" && var.cacerts_path != null ? [
     "privateCA: true"
