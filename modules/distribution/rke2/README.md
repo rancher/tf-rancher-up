@@ -1,18 +1,12 @@
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_vsphere"></a> [vsphere](#requirement\_vsphere) | 2.0.2 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_external"></a> [external](#provider\_external) | n/a |
-| <a name="provider_local"></a> [local](#provider\_local) | n/a |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_template"></a> [template](#provider\_template) | n/a |
-| <a name="provider_time"></a> [time](#provider\_time) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -22,35 +16,21 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [local_file.script_kubeconfig](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [null_resource.deploy_rancher](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.rke2_common](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.rke2_server1_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.rke2_servers_others_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.rke2_workers_provisioning](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [time_sleep.sleep_between_first_server_and_others](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
-| [external_external.kubeconfig](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) | data source |
-| [template_file.config_other_yaml](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
-| [template_file.config_server_yaml](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
-| [template_file.rancher_manifest](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+| [random_password.token](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cp_vm_count"></a> [cp\_vm\_count](#input\_cp\_vm\_count) | Number of VMs to spin up for RKE | `any` | n/a | yes |
-| <a name="input_do_deploy_rancher"></a> [do\_deploy\_rancher](#input\_do\_deploy\_rancher) | Variable to decide if Rancher will be deployed. | `bool` | `false` | no |
-| <a name="input_public_key_path"></a> [public\_key\_path](#input\_public\_key\_path) | path of public key for nodes | `string` | `"~/.ssh/id_rsa.pub"` | no |
-| <a name="input_rancher_hostname"></a> [rancher\_hostname](#input\_rancher\_hostname) | Desired Hostname for Rancher App | `string` | `""` | no |
-| <a name="input_rke2_token"></a> [rke2\_token](#input\_rke2\_token) | Desired RKE2 token | `any` | n/a | yes |
-| <a name="input_ssh_password"></a> [ssh\_password](#input\_ssh\_password) | SSH Password to connect to VM with | `string` | n/a | yes |
-| <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | SSH Username to connect to VM with | `string` | n/a | yes |
-| <a name="input_vm_ips"></a> [vm\_ips](#input\_vm\_ips) | List of IP Addresses for all VMs to use deploy Rancher on. | `list(string)` | n/a | yes |
-| <a name="input_vm_name_prefix"></a> [vm\_name\_prefix](#input\_vm\_name\_prefix) | Prefix for the VM name in vSphere | `string` | `"rancher-ha"` | no |
-| <a name="input_wk_vm_count"></a> [wk\_vm\_count](#input\_wk\_vm\_count) | Number of VMs to spin up for RKE | `any` | n/a | yes |
+| <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
+| <a name="input_first_server_ip"></a> [first\_server\_ip](#input\_first\_server\_ip) | Internal IP address for the first rke2-server node | `string` | `null` | no |
+| <a name="input_rke2_config"></a> [rke2\_config](#input\_rke2\_config) | Additional RKE2 configuration to add to the config.yaml file | `any` | `null` | no |
+| <a name="input_rke2_token"></a> [rke2\_token](#input\_rke2\_token) | Token to use when configuring RKE2 nodes | `any` | `null` | no |
+| <a name="input_rke2_version"></a> [rke2\_version](#input\_rke2\_version) | Kubernetes version to use for the RKE2 cluster | `string` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_kubeconfig"></a> [kubeconfig](#output\_kubeconfig) | n/a |
+| <a name="output_rke2_token"></a> [rke2\_token](#output\_rke2\_token) | Token generated for RKE2 |
+| <a name="output_rke2_user_data"></a> [rke2\_user\_data](#output\_rke2\_user\_data) | RKE2 server user data |

@@ -98,14 +98,17 @@ No modules.
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Path to write the generated SSH private key | `string` | `null` | no |
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | Username used for SSH with sudo access | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID to create the instance(s) in | `string` | `null` | no |
-| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | User data content for EC2 instance(s) | `string` | `null` | no |
+| <a name="input_tag-begin"></a> [tag-begin](#input\_tag-begin) | When module is being called mode than once, begin tagging from this number | `number` | `1` | no |
+| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | User data content for EC2 instance(s) | `any` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_dependency"></a> [dependency](#output\_dependency) | n/a |
-| <a name="output_instances_ips"></a> [instances\_ips](#output\_instances\_ips) | n/a |
+| <a name="output_instance_ips"></a> [instance\_ips](#output\_instance\_ips) | n/a |
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |
 | <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
+| <a name="output_sg-id"></a> [sg-id](#output\_sg-id) | n/a |
+| <a name="output_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#output\_ssh\_key\_pair\_name) | n/a |
 | <a name="output_ssh_key_path"></a> [ssh\_key\_path](#output\_ssh\_key\_path) | n/a |
