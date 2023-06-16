@@ -69,5 +69,5 @@ module "rancher_install" {
   rancher_replicas           = var.instance_count
   rancher_bootstrap_password = var.rancher_password
   rancher_version            = var.rancher_version
-  dependency                 = local_file.kube_config_server_yaml.filename
+  dependency                 = module.rke2_first_server.dependency
 }
