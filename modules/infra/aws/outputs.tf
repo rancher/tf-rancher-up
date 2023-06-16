@@ -1,5 +1,5 @@
 output "dependency" {
-  value = aws_instance.instance[0].arn
+  value = var.instance_count != 0 ? aws_instance.instance[0].arn : null
 }
 
 output "instances_public_ip" {
