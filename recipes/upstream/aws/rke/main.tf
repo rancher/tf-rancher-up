@@ -21,6 +21,7 @@ module "rke" {
   prefix               = var.prefix
   dependency           = module.upstream-cluster.dependency
   ssh_private_key_path = module.upstream-cluster.ssh_key_path
+  node_username        = var.ssh_username
   kube_config_path     = var.kube_config_path
   kubernetes_version   = var.kubernetes_version
 
