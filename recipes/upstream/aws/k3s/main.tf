@@ -2,6 +2,7 @@ module "k3s_first" {
   source      = "../../../../modules/distribution/k3s"
   k3s_token   = var.k3s_token
   k3s_version = var.k3s_version
+  k3s_channel = var.k3s_channel
   k3s_config  = var.k3s_config
 }
 
@@ -23,6 +24,7 @@ module "k3s_additional" {
   source          = "../../../../modules/distribution/k3s"
   k3s_token       = module.k3s_first.k3s_token
   k3s_version     = var.k3s_version
+  k3s_channel     = var.k3s_channel
   k3s_config      = var.k3s_config
   first_server_ip = module.k3s_first_server.instances_private_ip[0]
 }

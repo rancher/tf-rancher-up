@@ -7,8 +7,7 @@ token: ${rke2_token}
 %{ if server_ip != "false" }
 server: https://${server_ip}:9345
 %{ endif }
-node-external-ip:
-  - $PUBLIC_IP
+node-external-ip: $PUBLIC_IP
 tls-san:
   - "$PUBLIC_IP"
   - "$PUBLIC_IP.sslip.io"
