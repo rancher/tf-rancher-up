@@ -69,5 +69,5 @@ module "rancher_install" {
   rancher_replicas           = var.instance_count
   rancher_bootstrap_password = var.rancher_password
   rancher_version            = var.rancher_version
-  dependency                 = module.rke2_first_server.dependency
+  dependency                 = var.instance_count > 1 ? module.rke2_additional_servers.dependency : module.rke2_first_server.dependency
 }
