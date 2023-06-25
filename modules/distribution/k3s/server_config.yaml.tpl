@@ -5,9 +5,11 @@ PUBLIC_IP=$(curl ifconfig.io)
 cat > /tmp/config.yaml <<EOF
 token: ${k3s_token}
 %{ if server_ip != "false" }
-server: https://${server_ip}:9345
+server: https://${server_ip}:6443
+%{ else }
+cluster-init: true
 %{ endif }
-
+node-external-ip: $PUBLIC_IP
 tls-san:
   - "$PUBLIC_IP"
   - "$PUBLIC_IP.sslip.io"
@@ -20,15 +22,10 @@ EOF
 export INSTALL_K3S_VERSION=${k3s_version}
 %{ endif }
 
-curl https://get.k3s.io | INSTALL_K3S_EXEC="server --node-external-ip=$PUBLIC_IP" sh -
 mkdir -p /etc/rancher/k3s
 cp /tmp/config.yaml /etc/rancher/k3s
-#systemctl enable k3s-server
-#systemctl start k3s-server
+curl https://get.k3s.io | INSTALL_K3S_CHANNEL=${k3s_channel} sh -
 
 cat >> /etc/profile <<EOF
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-export CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
-PATH="$PATH:/var/lib/rancher/k3s/bin"
 alias k=kubectl
 EOF

@@ -1,5 +1,4 @@
 locals {
-  # create_token = var.rke2_token == null && var.first_server_ip == null ? true : false
   rke2_token = var.rke2_token == null && var.first_server_ip == null ? random_password.token.result : var.rke2_token
 }
 

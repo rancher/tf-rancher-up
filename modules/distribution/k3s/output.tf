@@ -4,6 +4,7 @@ output "k3s_user_data" {
   value = templatefile("${path.module}/server_config.yaml.tpl",
     {
       k3s_config  = var.k3s_config == null ? "false" : var.k3s_config,
+      k3s_channel = var.k3s_channel == null ? "stable" : var.k3s_channel,
       k3s_token   = local.k3s_token,
       k3s_version = var.k3s_version == null ? "false" : var.k3s_version,
       server_ip   = var.first_server_ip == null ? "false" : var.first_server_ip

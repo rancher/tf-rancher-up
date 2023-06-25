@@ -15,6 +15,12 @@ variable "k3s_token" {
   default     = null
 }
 
+variable "k3s_channel" {
+  type        = string
+  description = "K3s channel to use, the latest patch version for the provided minor version will be used"
+  default     = null
+}
+
 variable "k3s_config" {
   description = "Additional k3s configuration to add to the config.yaml file"
   default     = null

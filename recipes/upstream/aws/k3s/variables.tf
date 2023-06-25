@@ -33,6 +33,12 @@ variable "k3s_version" {
   default     = null
 }
 
+variable "k3s_channel" {
+  type        = string
+  description = "K3s channel to use, the latest patch version for the provided minor version will be used"
+  default     = null
+}
+
 variable "k3s_token" {
   description = "Token to use when configuring k3s nodes"
   default     = null

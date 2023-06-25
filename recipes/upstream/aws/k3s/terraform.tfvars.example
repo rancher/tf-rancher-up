@@ -23,8 +23,9 @@ prefix = "my-name-here"
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
 
-## -- Override the default k8s version used by K3S
+## -- Override the default k8s version or channel used by K3S
 # k3s_version = "v1.24.14+k3s1"
+k3s_channel = "v1.25"
 
 ## -- Number of EC2 instances to launch
 instance_count = 1
