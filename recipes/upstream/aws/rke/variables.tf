@@ -30,7 +30,7 @@ variable "instance_count" {
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = null
+  default     = ""
 }
 
 variable "kube_config_path" {
