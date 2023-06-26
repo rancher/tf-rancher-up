@@ -33,6 +33,12 @@ variable "instance_type" {
   default     = ""
 }
 
+variable "instance_disk_size" {
+  type        = string
+  description = "Specify root disk size (GB)"
+  default     = "80"
+}
+
 variable "kube_config_path" {
   description = "The path to write the kubeconfig for the RKE cluster"
   type        = string
@@ -97,4 +103,23 @@ variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
   default     = false
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "VPC Subnet ID to create the instance(s) in"
+  default     = null
+}
+
+variable "create_security_group" {
+  type        = bool
+  description = "Should create the security group associated with the instance(s)"
+  default     = true
+}
+
+# TODO: Add a check based on above value
+variable "instance_security_group" {
+  type        = string
+  description = "Provide a pre-existing security group ID"
+  default     = null
 }

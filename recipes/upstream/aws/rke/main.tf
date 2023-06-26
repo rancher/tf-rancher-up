@@ -1,14 +1,17 @@
 module "upstream-cluster" {
-  source              = "../../../../modules/infra/aws"
-  prefix              = var.prefix
-  instance_count      = var.instance_count
-  instance_type       = var.instance_type
-  create_ssh_key_pair = var.create_ssh_key_pair
-  ssh_key_pair_name   = var.ssh_key_pair_name
-  ssh_key_pair_path   = var.ssh_key_pair_path
-  ssh_username        = var.ssh_username
-  spot_instances      = var.spot_instances
-  aws_region          = var.aws_region
+  source                  = "../../../../modules/infra/aws"
+  prefix                  = var.prefix
+  instance_count          = var.instance_count
+  instance_type           = var.instance_type
+  create_ssh_key_pair     = var.create_ssh_key_pair
+  ssh_key_pair_name       = var.ssh_key_pair_name
+  ssh_key_pair_path       = var.ssh_key_pair_path
+  ssh_username            = var.ssh_username
+  spot_instances          = var.spot_instances
+  aws_region              = var.aws_region
+  create_security_group   = var.create_security_group
+  instance_security_group = var.instance_security_group
+  subnet_id               = var.subnet_id
   user_data = templatefile("${path.module}/user_data.sh",
     {
       install_docker = var.install_docker
