@@ -27,6 +27,12 @@ variable "instance_count" {
   default     = 3
 }
 
+variable "instance_type" {
+  type        = string
+  description = "Instance type used for all EC2 instances"
+  default     = null
+}
+
 variable "k3s_version" {
   type        = string
   description = "Kubernetes version to use for the k3s cluster"

@@ -9,6 +9,7 @@ module "k3s_first_server" {
   source                  = "../../../../modules/infra/aws"
   prefix                  = var.prefix
   instance_count          = 1
+  instance_type           = var.instance_type
   create_ssh_key_pair     = var.create_ssh_key_pair
   instance_security_group = var.ssh_key_pair_name
   ssh_key_pair_name       = var.ssh_key_pair_name
@@ -31,6 +32,7 @@ module "k3s_additional_servers" {
   source                  = "../../../../modules/infra/aws"
   prefix                  = var.prefix
   instance_count          = var.instance_count - 1
+  instance_type           = var.instance_type
   create_ssh_key_pair     = false
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
