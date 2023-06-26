@@ -68,8 +68,10 @@ Terraform should be installed on your local or remote computer where the reposit
 
 ### Whats next
 
-Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](./README.md) under [recipes](./recipes) for details about how to start provisioning.
+Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](./recipes/README.md) under [recipes](./recipes) for details about how to start provisioning.
 
+
+**IMPORTANT**: Please retire the services which are deployed using these terraform modules within 48 hours. Soon there will be automation to retire the service automatically after 48 hours but till that is in place it will be the users responsibility to not keep it running more than 48 hours.
 
 
 <!-- ROADMAP -->
@@ -80,7 +82,7 @@ Once you clone the repository please go to the desired [recipes](./recipes) path
 - [ ] Option to deploy Rancher Prime
 
 
-See the [open issues](./issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/rancherlabs/tf-rancher-up/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -108,7 +110,7 @@ Don't forget to give the project a star! Thanks again!
   ```
      This step internally does: git remote add origin https://github.com/rancherlabs/tf-rancher-up.git
 
-- Fork the project from [here](./fork)
+- Fork the project from [here](https://github.com/rancherlabs/tf-rancher-up/fork)
 
 ```sh
  cd <cloned directory path>
@@ -142,7 +144,7 @@ Don't forget to give the project a star! Thanks again!
 ```sh
  git push mycopy <feature-branch-name>
 ```
-- Open a Pull Request(PR) providing any testing and change details from [here](./compare)
+- Open a Pull Request(PR) providing any testing and change details from [here](https://github.com/rancherlabs/tf-rancher-up/pulls)
 
 - After the PR is merged, delete the branch `<feature-branch-name>`
 

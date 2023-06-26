@@ -20,6 +20,8 @@ cd recipes/upstream/aws/rke
 - If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.
 - There are more optional variables which can be tweaked under `terraform.tfvars`.
 
+**NOTE** you may need to use ` terraform init -upgrade` to upgrade provider versions
+
 Execute the below commands to start deployment.
 
 ```bash
@@ -28,7 +30,12 @@ terraform plan -var-file terraform.tfvars
 terraform apply -var-file terraform.tfvars
 ```
 
-**Note** you may need to use ` terraform init -upgrade` to upgrade provider versions
+The login details will be displayed in the screen once the deployment is successful. It will have the details as below.
+
+```bash
+rancher_hostname = "https://rancher.<xx.xx.xx.xx>.sslip.io"
+rancher_password = "initial-admin-password"
+```
 
 - If storing multiple AWS credentials in `~/.aws/credentials`, set the profile when running terraform.
 
@@ -41,6 +48,8 @@ AWS_PROFILE=<profile name> terraform apply -var-file terraform.tfvars
 ```bash
 terraform destroy -var-file terraform.tfvars
 ```
+
+**IMPORTANT**: Please retire the services which are deployed using these terraform modules within 48 hours. Soon there will be automation to retire the service automatically after 48 hours but till that is in place it will be the users responsibility to not keep it running more than 48 hours.
 
 ### Advanced
 
@@ -63,6 +72,30 @@ See full argument list for each module in use:
   - [RKE](../../../../modules/distribution/rke)
   - [Rancher](../../../../modules/rancher)
 
+### Known Issues
+- Terraform plan shows below warnings which can be ignored:
+
+```bash
+Warning: Value for undeclared variable
+
+The root module does not declare a variable named "ssh_private_key_path" but a value was found in file "terraform.tfvars". If you meant to use this value, add a "variable" block to the configuration.
+
+Invalid attribute in provider configuration
+
+with module.rancher_install.provider["registry.terraform.io/hashicorp/kubernetes"],
+on ../../../../modules/rancher/provider.tf line 7, in provider "kubernetes":
+7: provider "kubernetes" {
+```
+- Terraform apply shows below warnings and errors. Please rerun the terraform apply again and it will be successful [(Issue #22)](#22).
+
+```bash
+Warning: 
+
+Helm release "rancher" was created but has a failed status. Use the `helm` command to investigate the error, correct it, then run Terraform again.
+
+Error: 1 error occurred:
+* Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": failed to call webhook: Post "https://rke2-ingress-nginx-controller-admission.kube-system.svc:443/networking/v1/ingresses?timeout=10s": no endpoints available for service "rke2-ingress-nginx-controller-admission"
+```
 ---
 
 ## Requirements
