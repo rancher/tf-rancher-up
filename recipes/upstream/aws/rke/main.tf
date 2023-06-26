@@ -2,6 +2,7 @@ module "upstream-cluster" {
   source              = "../../../../modules/infra/aws"
   prefix              = var.prefix
   instance_count      = var.instance_count
+  instance_type       = var.instance_type
   create_ssh_key_pair = var.create_ssh_key_pair
   ssh_key_pair_name   = var.ssh_key_pair_name
   ssh_key_pair_path   = var.ssh_key_pair_path

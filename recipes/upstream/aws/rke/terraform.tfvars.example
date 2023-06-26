@@ -26,8 +26,9 @@ prefix = "my-name-here"
 ## -- Override the default k8s version used by RKE
 # kubernetes_version = "v1.24.10-rancher4-1"
 
-## -- Number of EC2 instances to launch
+## -- Number and type of EC2 instances to launch
 instance_count = 1
+# instance_type = "t3.medium"
 
 ## -- Use spot instances
 # spot_instances = false
