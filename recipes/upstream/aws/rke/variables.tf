@@ -27,6 +27,12 @@ variable "instance_count" {
   default     = 3
 }
 
+variable "instance_type" {
+  type        = string
+  description = "Instance type used for all EC2 instances"
+  default     = null
+}
+
 variable "kube_config_path" {
   description = "The path to write the kubeconfig for the RKE cluster"
   type        = string
