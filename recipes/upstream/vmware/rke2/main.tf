@@ -16,7 +16,7 @@ module "rke2_first_server" {
   vsphere_network         = var.vsphere_network
   vsphere_user            = var.vsphere_user
   authorized_keys         = var.authorized_keys
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-first"
   vsphere_server          = var.vsphere_server
   vsphere_server_allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
   vsphere_password        = var.vsphere_password
@@ -31,6 +31,8 @@ module "rke2_additional" {
   rke2_config     = var.rke2_config
   first_server_ip = module.rke2_first_server.rancher_ip
 }
+
+
 
 module "rke2_additional_servers" {
   source                  = "../../../../modules/infra/vmware"
@@ -50,14 +52,13 @@ module "rke2_additional_servers" {
   vm_username             = var.vm_username
 }
 
-
 resource "ssh_resource" "retrieve_kubeconfig" {
   host = module.rke2_first_server.rancher_ip
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.rancher_ip}/g' /etc/rancher/rke2/rke2.yaml"
   ]
   user        = var.vm_username
-  private_key = var.ssh_private_key_path
+  private_key = file("${var.ssh_private_key_path}")
 }
 
 resource "local_file" "kube_config_server_yaml" {
