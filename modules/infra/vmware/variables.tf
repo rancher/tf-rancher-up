@@ -72,3 +72,14 @@ variable "instance_count" {
 variable "authorized_keys" {
   description = "Add in your SSH public key. This will be added to the VMs by cloud-init in the authorized_keys file under ~/.ssh"
 }
+
+
+variable "run_cmd" {
+  type = bool
+  default = false
+  description = "This is a conditional to spin RKE2 and K3s for vsphere apart from RKE"
+}
+
+variable "user_data" {
+  default = null
+}

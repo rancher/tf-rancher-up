@@ -93,3 +93,7 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+variable "run_cmd" {
+  default = false
+}

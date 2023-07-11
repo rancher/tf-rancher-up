@@ -7,3 +7,9 @@ output "rancher_ip" {
   value       = vsphere_virtual_machine.instance[0].guest_ip_addresses[0]
   description = "This output will get IP from the first VM on which Rancher will be installed."
 }
+
+output "dependency" {
+  description = "A description of this output"
+  value = null
+}
+

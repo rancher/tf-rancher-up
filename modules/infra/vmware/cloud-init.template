@@ -5,3 +5,13 @@ users:
     ssh-authorized-keys:
       - ${vm_ssh_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
+
+    
+%{ if run_cmd }
+write_files: 
+- path : /tmp/rke2-init.sh
+  content: ${user_data}
+runcmd:
+  - chmod +x /tmp/rke2-init.sh
+  - /tmp/rke2-init.sh
+%{ endif }

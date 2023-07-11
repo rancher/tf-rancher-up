@@ -57,8 +57,10 @@ resource "vsphere_virtual_machine" "instance" {
     }))
     "guestinfo.metadata.encoding" = "base64"
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/cloud-init.template", {
+      run_cmd = var.run_cmd,
       vm_ssh_user = var.vm_username,
-      vm_ssh_key  = var.authorized_keys
+      vm_ssh_key  = var.authorized_keys,
+      user_data = var.user_data
     }))
     "guestinfo.userdata.encoding" = "base64"
   }
