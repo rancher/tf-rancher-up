@@ -11,10 +11,9 @@ terraform {
       source = "hashicorp/kubernetes"
     }
     ssh = {
-      source  = "loafoe/ssh"
-      version = "2.6.0"
+      source = "loafoe/ssh"
     }
 
-    }
+  }
   required_version = ">= 0.13"
 }

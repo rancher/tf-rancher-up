@@ -93,3 +93,17 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+# Setting it to true as we don't need docker to install. This setup is temporary as we will remove the docker install part from infra part and inject it as userdata in the recipe directly.
+variable "is_rke2_or_k3s_cluster" {
+  description = "Set it to true only if you intended to use RKE2 and K3S which skips the docker installation."
+  default     = true
+  type        = bool
+}
+
+# Setting it to false for Vsphere infra recipes.
+variable "auto_resolve_public_ip_address" {
+  description = "Set it to true if you are using AWS or any other cloud provider which has both Public and Private IP addresses."
+  default     = false
+  type        = bool
+}

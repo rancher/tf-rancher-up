@@ -96,3 +96,4 @@ variable "spot_instances" {
   description = "Use spot instances"
   default     = false
 }
+

@@ -1,26 +1,29 @@
 module "rke2_first" {
-  source       = "../../../../modules/distribution/rke2"
-  rke2_token   = var.rke2_token
-  rke2_version = var.rke2_version
-  rke2_config  = var.rke2_config
+  source                         = "../../../../modules/distribution/rke2"
+  rke2_token                     = var.rke2_token
+  rke2_version                   = var.rke2_version
+  rke2_config                    = var.rke2_config
+  auto_resolve_public_ip_address = var.auto_resolve_public_ip_address
 }
 
 module "rke2_first_server" {
-  source                  = "../../../../modules/infra/vmware"
-  ssh_private_key_path    = var.ssh_private_key_path
-  instance_count          = 1
-  vsphere_datacenter      = var.vsphere_datacenter
-  vsphere_resource_pool   = var.vsphere_resource_pool
-  vsphere_datastore       = var.vsphere_datastore
-  vsphere_virtual_machine = var.vsphere_virtual_machine
-  vsphere_network         = var.vsphere_network
-  vsphere_user            = var.vsphere_user
-  authorized_keys         = var.authorized_keys
-  prefix                  = "${var.prefix}-first"
-  vsphere_server          = var.vsphere_server
+  source                              = "../../../../modules/infra/vmware"
+  ssh_private_key_path                = var.ssh_private_key_path
+  instance_count                      = 1
+  vsphere_datacenter                  = var.vsphere_datacenter
+  vsphere_resource_pool               = var.vsphere_resource_pool
+  vsphere_datastore                   = var.vsphere_datastore
+  vsphere_virtual_machine             = var.vsphere_virtual_machine
+  vsphere_network                     = var.vsphere_network
+  vsphere_user                        = var.vsphere_user
+  authorized_keys                     = var.authorized_keys
+  prefix                              = "${var.prefix}-first"
+  vsphere_server                      = var.vsphere_server
   vsphere_server_allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
-  vsphere_password        = var.vsphere_password
-  vm_username             = var.vm_username
+  vsphere_password                    = var.vsphere_password
+  vm_username                         = var.vm_username
+  user_data                           = module.rke2_first.rke2_user_data
+  is_rke2_or_k3s_cluster              = var.is_rke2_or_k3s_cluster
 }
 
 
@@ -35,24 +38,30 @@ module "rke2_additional" {
 
 
 module "rke2_additional_servers" {
-  source                  = "../../../../modules/infra/vmware"
-  ssh_private_key_path    = var.ssh_private_key_path
-  instance_count          = var.instance_count - 1
-  vsphere_datacenter      = var.vsphere_datacenter
-  vsphere_resource_pool   = var.vsphere_resource_pool
-  vsphere_datastore       = var.vsphere_datastore
-  vsphere_virtual_machine = var.vsphere_virtual_machine
-  vsphere_network         = var.vsphere_network
-  vsphere_user            = var.vsphere_user
-  authorized_keys         = var.authorized_keys
-  prefix                  = var.prefix
-  vsphere_server          = var.vsphere_server
+  source                              = "../../../../modules/infra/vmware"
+  ssh_private_key_path                = var.ssh_private_key_path
+  instance_count                      = var.instance_count - 1
+  vsphere_datacenter                  = var.vsphere_datacenter
+  vsphere_resource_pool               = var.vsphere_resource_pool
+  vsphere_datastore                   = var.vsphere_datastore
+  vsphere_virtual_machine             = var.vsphere_virtual_machine
+  vsphere_network                     = var.vsphere_network
+  vsphere_user                        = var.vsphere_user
+  authorized_keys                     = var.authorized_keys
+  prefix                              = var.prefix
+  vsphere_server                      = var.vsphere_server
   vsphere_server_allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
-  vsphere_password        = var.vsphere_password
-  vm_username             = var.vm_username
+  vsphere_password                    = var.vsphere_password
+  vm_username                         = var.vm_username
+  user_data                           = module.rke2_additional.rke2_user_data
+  is_rke2_or_k3s_cluster              = var.is_rke2_or_k3s_cluster
 }
 
+
+
+
 resource "ssh_resource" "retrieve_kubeconfig" {
+
   host = module.rke2_first_server.rancher_ip
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.rancher_ip}/g' /etc/rancher/rke2/rke2.yaml"
@@ -62,9 +71,12 @@ resource "ssh_resource" "retrieve_kubeconfig" {
 }
 
 resource "local_file" "kube_config_server_yaml" {
+
   filename = var.kube_config_path != null ? var.kube_config_path : "${path.cwd}/${var.prefix}_kube_config.yml"
   content  = ssh_resource.retrieve_kubeconfig.result
 }
+
+
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
