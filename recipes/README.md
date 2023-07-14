@@ -13,6 +13,8 @@ Select the infrastructure/cloud provider, Kubernetes distribution and go through
 
    Upstream | AWS | RKE2 | [README](./upstream/aws/rke2/README.md)
 
+   Upstream | AWS | K3S | [README](./upstream/aws/k3s/README.md)
+
 
 
 ## Documentation
