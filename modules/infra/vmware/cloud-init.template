@@ -9,9 +9,10 @@ users:
     
 %{ if run_cmd }
 write_files: 
-- path : /tmp/rke2-init.sh
-  content: ${user_data}
+- path : /home/ubuntu/rke2-init.sh
+  encoding: base64
+  permissions: '0755'
+  content: ${base64encode(user_data)}
 runcmd:
-  - chmod +x /tmp/rke2-init.sh
-  - /tmp/rke2-init.sh
+  - /home/ubuntu/rke2-init.sh
 %{ endif }

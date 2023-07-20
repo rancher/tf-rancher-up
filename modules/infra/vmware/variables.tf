@@ -52,11 +52,11 @@ variable "vm_username" {
 }
 
 variable "vm_cpus" {
-  default = 2
+  default = 4
 }
 
 variable "vm_memory" {
-  default = 4096
+  default = 16384
 }
 
 variable "vm_disk" {
@@ -75,11 +75,16 @@ variable "authorized_keys" {
 
 
 variable "run_cmd" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "This is a conditional to spin RKE2 and K3s for vsphere apart from RKE"
 }
 
 variable "user_data" {
   default = null
+}
+
+variable "docker_requirment" {
+  default = false
+  type = bool
 }

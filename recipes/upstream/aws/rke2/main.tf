@@ -18,6 +18,7 @@ module "rke2_first_server" {
   spot_instances          = var.spot_instances
   aws_region              = var.aws_region
   user_data               = module.rke2_first.rke2_user_data
+  run_cmd                 = var.run_cmd
 }
 
 module "rke2_additional" {
@@ -43,6 +44,7 @@ module "rke2_additional_servers" {
   tag-begin               = 2
   aws_region              = var.aws_region
   user_data               = module.rke2_additional.rke2_user_data
+  run_cmd                 = var.run_cmd
 }
 
 data "local_file" "ssh_private_key" {

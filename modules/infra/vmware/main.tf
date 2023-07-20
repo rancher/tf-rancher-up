@@ -5,6 +5,8 @@ provider "vsphere" {
   allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
 }
 
+
+
 resource "vsphere_virtual_machine" "instance" {
   count = var.instance_count
 
@@ -37,19 +39,7 @@ resource "vsphere_virtual_machine" "instance" {
     thin_provisioned = data.vsphere_virtual_machine.template.disks[0].thin_provisioned
   }
 
-  provisioner "remote-exec" {
-    connection {
-      host        = self.default_ip_address
-      type        = "ssh"
-      user        = var.vm_username
-      private_key = file(pathexpand(var.ssh_private_key_path))
-
-    }
-    inline = [
-      "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
-      "sudo usermod -aG docker ubuntu"
-    ]
-  }
+  
 
   extra_config = {
     "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tpl", {
@@ -63,5 +53,25 @@ resource "vsphere_virtual_machine" "instance" {
       user_data = var.user_data
     }))
     "guestinfo.userdata.encoding" = "base64"
+  }
+}
+
+resource "null_resource" "remote_exec" {
+  count = var.docker_requirment ? 1 : 0
+
+  provisioner "remote-exec" {
+    connection {
+      host        = vsphere_virtual_machine.instance[*].guest_ip_addresses
+      type        = "ssh"
+      user        = var.vm_username
+      private_key = file(pathexpand(var.ssh_private_key_path))
+    }
+    inline = [
+      "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
+      "sudo usermod -aG docker ubuntu"
+    ]
+  }
+  triggers = {
+    always_run = timestamp()
   }
 }

@@ -96,4 +96,6 @@ variable "dependency" {
 
 variable "run_cmd" {
   default = false
+  type = bool
 }
+

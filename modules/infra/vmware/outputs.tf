@@ -10,6 +10,6 @@ output "rancher_ip" {
 
 output "dependency" {
   description = "A description of this output"
-  value = null
+  value       = null
 }
 
