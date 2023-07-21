@@ -94,8 +94,12 @@ variable "dependency" {
   default     = null
 }
 
-variable "run_cmd" {
-  default = false
-  type = bool
+variable "rke2_k3s" {
+  default = true
+  type    = bool
 }
 
+variable "public" {
+  default = false
+  type    = bool
+}
