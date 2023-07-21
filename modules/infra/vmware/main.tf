@@ -39,7 +39,22 @@ resource "vsphere_virtual_machine" "instance" {
     thin_provisioned = data.vsphere_virtual_machine.template.disks[0].thin_provisioned
   }
 
-  
+  provisioner "remote-exec" {
+    inline = flatten([
+      "echo 'Waiting for cloud-init to complete...'",
+      "cloud-init status --wait > /dev/null",
+      "echo 'Completed cloud-init!'"
+    ])
+
+    connection {
+      host        = self.guest_ip_addresses[0]
+      type        = "ssh"
+      user        = var.vm_username
+      private_key = file(pathexpand(var.ssh_private_key_path))
+    }
+  }
+
+
 
   extra_config = {
     "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tpl", {
@@ -47,10 +62,10 @@ resource "vsphere_virtual_machine" "instance" {
     }))
     "guestinfo.metadata.encoding" = "base64"
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/cloud-init.template", {
-      run_cmd = var.run_cmd,
+      rke2_k3s    = var.rke2_k3s,
       vm_ssh_user = var.vm_username,
       vm_ssh_key  = var.authorized_keys,
-      user_data = var.user_data
+      user_data   = var.user_data
     }))
     "guestinfo.userdata.encoding" = "base64"
   }

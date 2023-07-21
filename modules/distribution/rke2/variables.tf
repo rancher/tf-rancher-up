@@ -29,3 +29,8 @@ variable "user_data" {
   description = "User data content for EC2 instance(s)"
   default     = null
 }
+
+variable "public" {
+  default = false
+  type    = bool
+}

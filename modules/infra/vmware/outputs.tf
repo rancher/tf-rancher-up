@@ -10,6 +10,6 @@ output "rancher_ip" {
 
 output "dependency" {
   description = "A description of this output"
-  value       = null
+  value       = var.instance_count != 0 ? vsphere_virtual_machine.instance[0].guest_ip_addresses[0] : null
 }
 

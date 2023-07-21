@@ -74,9 +74,9 @@ variable "authorized_keys" {
 }
 
 
-variable "run_cmd" {
+variable "rke2_k3s" {
   type        = bool
-  default     = false
+  default     = true
   description = "This is a conditional to spin RKE2 and K3s for vsphere apart from RKE"
 }
 
@@ -86,5 +86,5 @@ variable "user_data" {
 
 variable "docker_requirment" {
   default = false
-  type = bool
+  type    = bool
 }

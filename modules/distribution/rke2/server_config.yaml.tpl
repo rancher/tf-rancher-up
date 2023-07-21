@@ -1,16 +1,24 @@
 #!/bin/bash
+if [ ${public} ]
+  then
+    IP=$(curl ifconfig.io)
+  else
+    IP=$(ip route get 8.8.8.8 | awk '{print $7}' | head -n 1)
+fi
 
-PUBLIC_IP=$(curl ifconfig.io)
 
 cat > /tmp/config.yaml <<EOF
 token: ${rke2_token}
 %{ if server_ip != "false" }
 server: https://${server_ip}:9345
 %{ endif }
-node-external-ip: $PUBLIC_IP
+
+%{ if public != false}
+node-external-ip: $IP
 tls-san:
-  - "$PUBLIC_IP"
-  - "$PUBLIC_IP.sslip.io"
+  - "$IP"
+  - "$IP.sslip.io"
+%{ endif }
 %{ if rke2_config != "false" }
 ${rke2_config}
 %{ endif }
@@ -18,7 +26,7 @@ EOF
 
 %{ if rke2_version != "false" }
 export INSTALL_RKE2_VERSION=${rke2_version}
-%{ endif }
+%{ endif }  
 
 curl https://get.rke2.io | sh -
 mkdir -p /etc/rancher/rke2

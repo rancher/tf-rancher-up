@@ -7,7 +7,7 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
 
     
-%{ if run_cmd }
+%{ if rke2_k3s }
 write_files: 
 - path : /home/ubuntu/rke2-init.sh
   encoding: base64
