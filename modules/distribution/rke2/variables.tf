@@ -24,3 +24,13 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+variable "user_data" {
+  description = "User data content for EC2 instance(s)"
+  default     = null
+}
+
+variable "auto_resolve_public_ip_address" {
+  default = false
+  type    = bool
+}

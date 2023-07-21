@@ -5,6 +5,8 @@ provider "vsphere" {
   allow_unverified_ssl = var.vsphere_server_allow_unverified_ssl
 }
 
+
+
 resource "vsphere_virtual_machine" "instance" {
   count = var.instance_count
 
@@ -38,18 +40,21 @@ resource "vsphere_virtual_machine" "instance" {
   }
 
   provisioner "remote-exec" {
+    inline = flatten([
+      "echo 'Waiting for cloud-init to complete...'",
+      "cloud-init status --wait > /dev/null",
+      "echo 'Completed cloud-init!'"
+    ])
+
     connection {
-      host        = self.default_ip_address
+      host        = self.guest_ip_addresses[0]
       type        = "ssh"
       user        = var.vm_username
       private_key = file(pathexpand(var.ssh_private_key_path))
-
     }
-    inline = [
-      "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
-      "sudo usermod -aG docker ubuntu"
-    ]
   }
+
+
 
   extra_config = {
     "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yml.tpl", {
@@ -57,9 +62,31 @@ resource "vsphere_virtual_machine" "instance" {
     }))
     "guestinfo.metadata.encoding" = "base64"
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/cloud-init.template", {
-      vm_ssh_user = var.vm_username,
-      vm_ssh_key  = var.authorized_keys
+      is_rke2_or_k3s_cluster = var.is_rke2_or_k3s_cluster,
+      vm_ssh_user            = var.vm_username,
+      vm_ssh_key             = var.authorized_keys,
+      user_data              = var.user_data
     }))
     "guestinfo.userdata.encoding" = "base64"
+  }
+}
+
+resource "null_resource" "remote_exec" {
+  count = var.install_docker ? 1 : 0
+
+  provisioner "remote-exec" {
+    connection {
+      host        = vsphere_virtual_machine.instance[*].guest_ip_addresses
+      type        = "ssh"
+      user        = var.vm_username
+      private_key = file(pathexpand(var.ssh_private_key_path))
+    }
+    inline = [
+      "export DEBIAN_FRONTEND=noninteractive;sudo curl -sSL https://releases.rancher.com/install-docker/${var.docker_version}.sh | sh -",
+      "sudo usermod -aG docker ubuntu"
+    ]
+  }
+  triggers = {
+    always_run = timestamp()
   }
 }

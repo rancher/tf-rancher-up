@@ -5,3 +5,14 @@ users:
     ssh-authorized-keys:
       - ${vm_ssh_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
+
+    
+%{ if is_rke2_or_k3s_cluster }
+write_files: 
+- path : /home/ubuntu/rke2-init.sh
+  encoding: base64
+  permissions: '0755'
+  content: ${base64encode(user_data)}
+runcmd:
+  - /home/ubuntu/rke2-init.sh
+%{ endif }

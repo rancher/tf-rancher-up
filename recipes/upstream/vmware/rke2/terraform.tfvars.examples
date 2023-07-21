@@ -1,0 +1,32 @@
+vsphere_server = ""
+
+vsphere_server_allow_unverified_ssl = true
+
+vsphere_password = ""
+
+instance_count = ""
+
+ssh_private_key_path = ""
+
+vsphere_datacenter = ""
+
+vsphere_datastore = ""
+
+vsphere_resource_pool = ""
+
+vsphere_virtual_machine = ""
+
+vsphere_network = ""
+
+vsphere_user = ""
+
+vm_username = ""
+
+authorized_keys = ""
+
+prefix = ""
+
+rancher_password = ""
+
+rancher_version = ""
+
