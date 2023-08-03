@@ -32,18 +32,21 @@ variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
   default     = "t3.medium"
+  nullable    = false
 }
 
 variable "instance_disk_size" {
   type        = string
   description = "Specify root disk size (GB)"
   default     = "80"
+  nullable    = false
 }
 
 variable "instance_count" {
   type        = number
   description = "Number of EC2 instances to create"
   default     = 3
+  nullable    = false
 }
 
 variable "subnet_id" {
@@ -56,6 +59,7 @@ variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
   default     = false
+  nullable    = false
 }
 
 variable "ssh_key_pair_name" {
@@ -80,6 +84,7 @@ variable "create_security_group" {
   type        = bool
   description = "Should create the security group associated with the instance(s)"
   default     = true
+  nullable    = false
 }
 
 # TODO: Add a check based on above value
@@ -93,12 +98,14 @@ variable "ssh_username" {
   type        = string
   description = "Username used for SSH with sudo access"
   default     = "ubuntu"
+  nullable    = false
 }
 
 variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
   default     = false
+  nullable    = false
 }
 
 variable "user_data" {

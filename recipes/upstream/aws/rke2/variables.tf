@@ -24,13 +24,13 @@ variable "prefix" {
 variable "instance_count" {
   type        = number
   description = "Number of EC2 instances to create"
-  default     = 3
+  default     = null
 }
 
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = ""
+  default     = null
 }
 
 variable "rke2_version" {
@@ -70,7 +70,7 @@ variable "rancher_version" {
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = false
+  default     = null
 }
 
 variable "ssh_key_pair_name" {
@@ -94,5 +94,5 @@ variable "ssh_username" {
 variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
-  default     = false
+  default     = null
 }

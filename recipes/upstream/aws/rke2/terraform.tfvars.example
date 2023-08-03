@@ -24,7 +24,7 @@ prefix = "my-name-here"
 # rancher_version = "2.7.3"
 
 ## -- Override the default k8s version used by RKE2
-# kubernetes_version = "v1.25.10+rke2r1"
+# rke2_version = "v1.25.10+rke2r1"
 
 ## -- Number and type of EC2 instances to launch
 instance_count = 1

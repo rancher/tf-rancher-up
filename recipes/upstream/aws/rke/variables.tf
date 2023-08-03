@@ -24,19 +24,19 @@ variable "prefix" {
 variable "instance_count" {
   type        = number
   description = "Number of EC2 instances to create"
-  default     = 3
+  default     = null
 }
 
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = ""
+  default     = null
 }
 
 variable "instance_disk_size" {
   type        = string
   description = "Specify root disk size (GB)"
-  default     = "80"
+  default     = null
 }
 
 variable "kube_config_path" {
@@ -78,7 +78,7 @@ variable "rancher_version" {
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = false
+  default     = null
 }
 
 variable "ssh_key_pair_name" {
@@ -102,7 +102,7 @@ variable "ssh_username" {
 variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
-  default     = false
+  default     = null
 }
 
 variable "subnet_id" {
@@ -114,7 +114,7 @@ variable "subnet_id" {
 variable "create_security_group" {
   type        = bool
   description = "Should create the security group associated with the instance(s)"
-  default     = true
+  default     = null
 }
 
 # TODO: Add a check based on above value
