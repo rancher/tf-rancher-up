@@ -94,18 +94,19 @@ module "rancher_install" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.8.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.16.1 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.0.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.10.1 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.23.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.1.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.8.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.16.1 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.10.1 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.23.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 3.0.0 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 3.1.1 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -122,6 +123,7 @@ No modules.
 | [kubernetes_secret.tls_rancher_ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) | resource |
 | [null_resource.wait_for_rancher](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [rancher2_bootstrap.admin](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/bootstrap) | resource |
+| [time_sleep.sleep-for-ingress-webhook](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ## Inputs
 
@@ -132,9 +134,9 @@ No modules.
 | <a name="input_cacerts_path"></a> [cacerts\_path](#input\_cacerts\_path) | Private CA certificate to use for Rancher UI/API connectivity | `string` | `null` | no |
 | <a name="input_cert_manager_enable"></a> [cert\_manager\_enable](#input\_cert\_manager\_enable) | Install cert-manager even if not needed for Rancher, useful if migrating to certificates | `string` | `false` | no |
 | <a name="input_cert_manager_namespace"></a> [cert\_manager\_namespace](#input\_cert\_manager\_namespace) | Namesapce to install cert-manager | `string` | `"cert-manager"` | no |
-| <a name="input_cert_manager_version"></a> [cert\_manager\_version](#input\_cert\_manager\_version) | Version of cert-manager to install | `string` | `"v1.5.1"` | no |
+| <a name="input_cert_manager_version"></a> [cert\_manager\_version](#input\_cert\_manager\_version) | Version of cert-manager to install | `string` | `"v1.11.0"` | no |
 | <a name="input_default_registry"></a> [default\_registry](#input\_default\_registry) | Default container image registry to pull images in the format of registry.domain.com:port (systemDefaultRegistry helm value) | `string` | `null` | no |
-| <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | n/a | yes |
+| <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
 | <a name="input_helm_password"></a> [helm\_password](#input\_helm\_password) | Private helm repository password | `string` | `null` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm repository for Rancher and cert-manager charts | `string` | `null` | no |
 | <a name="input_helm_username"></a> [helm\_username](#input\_helm\_username) | Private helm repository username | `string` | `null` | no |
@@ -150,6 +152,7 @@ No modules.
 | <a name="input_tls_crt_path"></a> [tls\_crt\_path](#input\_tls\_crt\_path) | TLS certificate to use for Rancher UI/API connectivity | `string` | `null` | no |
 | <a name="input_tls_key_path"></a> [tls\_key\_path](#input\_tls\_key\_path) | TLS key to use for Rancher UI/API connectivity | `string` | `null` | no |
 | <a name="input_tls_source"></a> [tls\_source](#input\_tls\_source) | Value for ingress.tls.source when installing the Rancher helm chart | `string` | `"rancher"` | no |
+| <a name="input_wait"></a> [wait](#input\_wait) | An optional wait before installing the Rancher helm chart (seconds) | `any` | `null` | no |
 
 ## Outputs
 

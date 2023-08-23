@@ -26,8 +26,8 @@ Execute the below commands to start deployment.
 
 ```bash
 terraform init
-terraform plan -var-file terraform.tfvars
-terraform apply -var-file terraform.tfvars
+terraform plan
+terraform apply
 ```
 The login details will be displayed in the screen once the deployment is successful. It will have the details as below.
 
@@ -39,13 +39,13 @@ rancher_password = "initial-admin-password"
 - If storing multiple AWS credentials in `~/.aws/credentials`, set the profile when running terraform.
 
 ```bash
-AWS_PROFILE=<profile name> terraform plan -var-file terraform.tfvars
-AWS_PROFILE=<profile name> terraform apply -var-file terraform.tfvars
+AWS_PROFILE=<profile name> terraform plan
+AWS_PROFILE=<profile name> terraform apply
 ```
 
 - Destroy the resources when cluster is no more needed.
 ```bash
-terraform destroy -var-file terraform.tfvars
+terraform destroy
 ```
 **IMPORTANT**: Please retire the services which are deployed using these terraform modules within 48 hours. Soon there will be automation to retire the service automatically after 48 hours but till that is in place it will be the users responsibility to not keep it running more than 48 hours.
 

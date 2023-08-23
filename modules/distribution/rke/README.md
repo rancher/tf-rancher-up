@@ -55,14 +55,14 @@ module "rke" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.1.0 |
-| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.4.1 |
+| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.4.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
-| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.4.1 |
+| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.4.2 |
 
 ## Modules
 
@@ -92,7 +92,7 @@ No modules.
 | <a name="input_private_registry_password"></a> [private\_registry\_password](#input\_private\_registry\_password) | Specify private registry's password | `string` | `null` | no |
 | <a name="input_private_registry_url"></a> [private\_registry\_url](#input\_private\_registry\_url) | Specify the private registry where kubernetes images are hosted. Ex: artifactory.company.com/docker | `string` | `null` | no |
 | <a name="input_private_registry_username"></a> [private\_registry\_username](#input\_private\_registry\_username) | Specify private registry's username | `string` | `null` | no |
-| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br>    public_ip = string<br>    #private_ip = string<br>    roles = list(string)<br>  }))</pre> | `null` | no |
+| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br>    public_ip  = string<br>    private_ip = string<br>    roles      = list(string)<br>  }))</pre> | `null` | no |
 | <a name="input_ssh_agent_auth"></a> [ssh\_agent\_auth](#input\_ssh\_agent\_auth) | Enable SSH agent authentication | `bool` | `false` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Private key used for SSH access to the Rancher server cluster node(s) | `string` | `null` | no |
 
