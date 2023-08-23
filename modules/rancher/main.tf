@@ -91,14 +91,14 @@ resource "helm_release" "cert_manager" {
   depends_on          = [var.dependency]
   count               = var.tls_source == "rancher" || var.tls_source == "letsEncrypt" || var.cert_manager_enable ? 1 : 0
   name                = "cert-manager"
-  repository          = var.helm_repository != null ? var.helm_repository : "https://charts.jetstack.io"
   chart               = "cert-manager"
+  create_namespace    = true
   namespace           = var.cert_manager_namespace
-  version             = var.cert_manager_version
+  repository          = var.helm_repository != null ? var.helm_repository : "https://charts.jetstack.io"
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
+  version             = var.cert_manager_version
   wait                = false
-  create_namespace    = true
 
   dynamic "set" {
     for_each = local.cert_manager_helm_values
@@ -112,20 +112,20 @@ resource "helm_release" "cert_manager" {
 
 resource "time_sleep" "sleep-for-ingress-webhook" {
   depends_on      = [helm_release.cert_manager]
-  create_duration = "20s"
+  count           = var.wait != null ? 1 : 0
+  create_duration = var.wait
 }
 
 resource "helm_release" "rancher" {
-  depends_on          = [time_sleep.sleep-for-ingress-webhook]
-  name                = "rancher"
+  depends_on       = [time_sleep.sleep-for-ingress-webhook[0]]
+  name             = "rancher"
+  chart            = "rancher"
+  create_namespace = true
   repository          = var.helm_repository != null ? var.helm_repository : "https://releases.rancher.com/server-charts/stable"
-  chart               = "rancher"
-  namespace           = "cattle-system"
-  version             = var.rancher_version
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
+  version             = var.rancher_version
   wait                = true
-  create_namespace    = true
 
   dynamic "set" {
     for_each = local.rancher_helm_values

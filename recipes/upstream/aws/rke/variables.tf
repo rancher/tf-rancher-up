@@ -123,3 +123,8 @@ variable "instance_security_group" {
   description = "Provide a pre-existing security group ID"
   default     = null
 }
+
+variable "wait" {
+  description = "An optional wait before installing the Rancher helm chart"
+  default     = "20s"
+}
