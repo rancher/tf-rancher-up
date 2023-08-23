@@ -138,3 +138,8 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+variable "wait" {
+  description = "An optional wait before installing the Rancher helm chart (seconds)"
+  default     = null
+}

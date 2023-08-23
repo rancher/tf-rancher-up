@@ -26,6 +26,19 @@ cp /tmp/config.yaml /etc/rancher/rke2
 systemctl enable rke2-server
 systemctl start rke2-server
 
+cat > /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml << EOF
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-ingress-nginx
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    controller:
+      admissionWebhooks:
+        failurePolicy: Ignore
+EOF
+
 cat >> /etc/profile <<EOF
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 export CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml
