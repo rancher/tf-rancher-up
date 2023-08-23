@@ -117,10 +117,10 @@ resource "time_sleep" "sleep-for-ingress-webhook" {
 }
 
 resource "helm_release" "rancher" {
-  depends_on       = [time_sleep.sleep-for-ingress-webhook[0]]
-  name             = "rancher"
-  chart            = "rancher"
-  create_namespace = true
+  depends_on          = [time_sleep.sleep-for-ingress-webhook[0]]
+  name                = "rancher"
+  chart               = "rancher"
+  create_namespace    = true
   repository          = var.helm_repository != null ? var.helm_repository : "https://releases.rancher.com/server-charts/stable"
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
