@@ -8,6 +8,11 @@ variable "vpc" {}
 
 variable "subnet" {}
 
+variable "cluster_version" {
+  default     = "1.26.7-gke.500"
+  description = "Supported Google Kubernetes Engine for Rancher Manager"
+}
+
 variable "node_count" {
   default     = 1
   description = "The number of nodes per instance group"

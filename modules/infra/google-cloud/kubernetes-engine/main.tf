@@ -5,14 +5,18 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
+  min_master_version = var.cluster_version
+
   network    = var.vpc
   subnetwork = var.subnet
 }
 
 resource "google_container_node_pool" "primary_nodes" {
-  name       = "primary-node-pool"
-  location   = var.region
-  cluster    = google_container_cluster.primary.name
+  name     = "primary-node-pool"
+  location = var.region
+  cluster  = google_container_cluster.primary.name
+
+  version    = var.cluster_version
   node_count = var.node_count
 
   node_config {
