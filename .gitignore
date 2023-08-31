@@ -27,3 +27,6 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Allow
+!modules/distribution/gke/template-kube_config.yml
