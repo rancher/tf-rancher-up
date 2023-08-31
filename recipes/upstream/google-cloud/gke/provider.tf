@@ -9,6 +9,11 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.0"
     }
+
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.10.1"
+    }
   }
 
   required_version = ">= 0.14"
@@ -20,5 +25,11 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  config_path = "./${var.prefix}_kube_config.yml"
+  config_path = "${path.cwd}/${var.prefix}_kube_config.yml"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "${path.cwd}/${var.prefix}_kube_config.yml"
+  }
 }

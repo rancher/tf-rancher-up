@@ -1,4 +1,4 @@
-# Terraform | Google Cloud
+# Terraform | GKE
 
 Terraform modules to provide a Google Kubernetes Engine.
 
@@ -13,6 +13,11 @@ terraform {
       source  = "hashicorp/google"
       version = "4.75.0"
     }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
   }
 
   required_version = ">= 0.14"
@@ -23,7 +28,11 @@ provider "google" {
   region  = var.region
 }
 
-variable "resources_prefix" {
+provider "kubernetes" {
+  config_path = "./${var.prefix}_kube_config.yml"
+}
+
+variable "prefix" {
   type    = string
   default = "example-rancher"
 }
@@ -67,12 +76,19 @@ variable "subnet" {
 }
 
 module "google-kubernetes-engine" {
-  source           = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/google-cloud/kubernetes-engine"
-  resources_prefix = var.resources_prefix
-  project_id       = var.project_id
-  region           = var.region
-  vpc              = var.vpc
-  subnet           = var.subnet
+  source     = "../../../../distribution/gke"
+  prefix     = var.prefix
+  project_id = var.project_id
+  region     = var.region
+  vpc        = var.vpc
+  subnet     = var.subnet
+}
+
+resource "null_resource" "first-setup" {
+  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
+  provisioner "local-exec" {
+    command = "sh ./first-setup.sh"
+  }
 }
 ```
 
@@ -85,6 +101,11 @@ terraform {
       source  = "hashicorp/google"
       version = "4.75.0"
     }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
   }
 
   required_version = ">= 0.14"
@@ -95,7 +116,11 @@ provider "google" {
   region  = var.region
 }
 
-variable "resources_prefix" {
+provider "kubernetes" {
+  config_path = "./${var.prefix}_kube_config.yml"
+}
+
+variable "prefix" {
   type    = string
   default = "example-rancher"
 }
@@ -118,23 +143,22 @@ variable "region" {
   }
 }
 
-module "google-network-services" {
-  source           = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/google-cloud/network-services"
-  resources_prefix = var.resources_prefix
-  region           = var.region
+module "google-kubernetes-engine" {
+  source     = "../../../../distribution/gke"
+  prefix     = var.prefix
+  project_id = var.project_id
+  region     = var.region
 }
 
-module "google-kubernetes-engine" {
-  source           = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/google-cloud/kubernetes-engine"
-  resources_prefix = var.resources_prefix
-  project_id       = var.project_id
-  region           = var.region
-  vpc              = module.google-network-services.vpc_name
-  subnet           = module.google-network-services.subnet_name
+resource "null_resource" "first-setup" {
+  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
+  provisioner "local-exec" {
+    command = "sh ./first-setup.sh"
+  }
 }
 ```
 
-Take a look [here](../tests/gke/).
+Take a look [here](../../infra/google-cloud/tests/gke).
 
 ---
 
@@ -148,7 +172,9 @@ Take a look [here](../tests/gke/).
 
 | Name | Version |
 |------|---------|
-| <a name="required_provider_version"></a> [google](#provider\_google) | 4.75.0 |
+| <a name="required_google_provider_version"></a> [google](#provider\_google) | 4.75.0 |
+| <a name="required_k8s_provider_version"></a> [kubernetes](#provider\_kubernetes) | >= 2.0.0 |
+| <a name="required_helm_provider_version"></a> [helm](#provider\_helm) | >= 2.10.1 |
 
 ## Modules
 
@@ -158,32 +184,30 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google\_compute\_network.vpc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) | resource |
-| [google\_compute\_subnetwork.subnet](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_subnetwork) | resource |
 | [google\_container\_cluster.primary](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster) | resource |
 | [google\_container\_node\_pool.primary\_nodes](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_node_pool) | resource |
-| []() | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="resources_prefix"></a> [resources\_prefix](#resources\_prefix) | The prefix used in front of all Google resources | `string` | `null` | yes |
+| <a name="prefix"></a> [prefix](#prefix) | The prefix used in front of all Google resources | `string` | `null` | yes |
 | <a name="region"></a> [region](#region) | Google Region used for all resources | `string` | `null` | yes |
 | <a name="ip_cidr_range"></a> [ip\_cidr\_range](#ip\_cidr\_range) | The IP range used by the Google Subnet | `string` | `"10.10.0.0/24"` | no |
 | <a name="project_id"></a> [project\_id](#project\_id) | The ID of the Google Project that will contain all created resources | `string` | `null` | yes |
 | <a name="vpc"></a> [vpc](#vpc) | Google VPC used for all resources | `string` | `null` | yes |
 | <a name="subnet"></a> [subnet](#subnet) | Google Subnet used for all resources | `string` | `null` | yes |
 | <a name="cluster_version"></a> [cluster\_version](#cluster\_version) | [Supported Google Kubernetes Engine for Rancher Manager](https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-7-5/) | `string` | `"1.26.7-gke.500"` | no |
-| <a name="node_count"></a> [node\_count](#node\_count) | The number of nodes per instance group | `number` | `1` | no |
-| <a name="disk_size_gb"></a> [disk\_size\_gb](#disk\_size\_gb) | Size of the disk attached to each node, specified in GB | `number` | `50` | no |
+| <a name="instance_count"></a> [instance\_count](#instance\_count) | The number of nodes per instance group | `number` | `1` | no |
+| <a name="instance_disk_size"></a> [instance\_disk\_size](#instance\_disk\_size) | Size of the disk attached to each node, specified in GB | `number` | `50` | no |
 | <a name="disk_type"></a> [disk\_type](#disk\_type) | Type of the disk attached to each node (e.g. 'pd-standard', 'pd-ssd' or 'pd-balanced') | `string` | `"pd-balanced"` | no |
 | <a name="image_type"></a> [image\_type](#image\_type) | The default image type used by NAP once a new node pool is being created. The value must be one of the [COS\_CONTAINERD, COS, UBUNTU\_CONTAINERD, UBUNTU]. NOTE: COS AND UBUNTU are deprecated as of GKE 1.24 | `string` | `"cos_containerd"` | no |
-| <a name="machine_type"></a> [machine\_type](#machine\_type) | The name of a Google Compute Engine machine type | `bool` | `false` | no |
+| <a name="instance_type"></a> [instance\_type](#instance\_type) | The name of a Google Compute Engine machine type | `string` | `"e2-highmem-2"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="vpc_name"></a> [vpc\_name](#vpc\_name) | n/a |
-| <a name="subnet_name"></a> [subnet\_name](#subnet\_name) | n/a |
+| <a name="kubernetes_cluster_name"></a> [kubernetes\_cluster\_name](#kubernetes\_cluster\_name) | n/a |
+| <a name="kubernetes_cluster_host"></a> [kubernetes\_cluster\_host](#kubernetes\_cluster\_host) | n/a |
+| <a name="kubernetes_cluster_node_pool"></a> [kubernetes\_cluster\_node\_pool](#kubernetes\_cluster\_node\_pool) | n/a |

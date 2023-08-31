@@ -1,14 +1,13 @@
-module "google-network-services" {
-  source           = "../../network-services"
-  resources_prefix = var.resources_prefix
-  region           = var.region
+module "google-kubernetes-engine" {
+  source     = "../../../../distribution/gke"
+  prefix     = var.prefix
+  project_id = var.project_id
+  region     = var.region
 }
 
-module "google-kubernetes-engine" {
-  source           = "../../kubernetes-engine"
-  resources_prefix = var.resources_prefix
-  project_id       = var.project_id
-  region           = var.region
-  vpc              = module.google-network-services.vpc_name
-  subnet           = module.google-network-services.subnet_name
+resource "null_resource" "first-setup" {
+  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
+  provisioner "local-exec" {
+    command = "sh ./first-setup.sh"
+  }
 }

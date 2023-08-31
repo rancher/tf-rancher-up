@@ -1,4 +1,4 @@
-variable "resources_prefix" {
+variable "prefix" {
   type    = string
   default = "example-rancher"
 }
