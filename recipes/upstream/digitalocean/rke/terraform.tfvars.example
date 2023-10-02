@@ -1,0 +1,13 @@
+# Change the values below to suit your individual needs
+droplet_count        = 3
+droplet_size         = "g-4vcpu-16gb"
+prefix               = ""
+user_tag             = "jhawthorne"
+region               = ""
+kubernetes_version   = "v1.24.10-rancher4-1"
+rancher_password     = "initial-admin-password"
+rancher_version      = "2.7.6"
+kube_config_path     = "~/.kube/rancher-terraform.yml"
+ssh_private_key_path = "~/.ssh/terraform"
+ssh_key_name         = "terraform"
+# do_token             = ""

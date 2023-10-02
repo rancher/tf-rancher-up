@@ -1,0 +1,19 @@
+#cloud-config
+repo_update: true
+repo_upgrade: all
+ 
+bootcmd:
+- install -m 0755 -d /etc/apt/keyrings 
+- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+- chmod a+r /etc/apt/keyrings/docker.gpg
+
+apt:
+  sources:
+    docker-ce:
+      source: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $RELEASE stable"
+
+packages:
+  - ca-certificates
+  - gnupg
+  - curl
+  - docker-ce=5:20.10.24~3-0~ubuntu-jammy 
