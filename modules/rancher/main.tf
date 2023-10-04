@@ -120,6 +120,7 @@ resource "helm_release" "rancher" {
   name                = "rancher"
   chart               = "rancher"
   create_namespace    = true
+  namespace           = var.rancher_namespace
   repository          = var.helm_repository != null ? var.helm_repository : "https://releases.rancher.com/server-charts/stable"
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null

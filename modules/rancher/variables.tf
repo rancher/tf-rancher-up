@@ -74,6 +74,12 @@ variable "rancher_hostname" {
   type        = string
 }
 
+variable "rancher_namespace" {
+  description = "The Rancher release will be deployed to this namespace"
+  type        = string
+  default     = "cattle-system"
+}
+
 variable "rancher_replicas" {
   description = "Value for replicas when installing the Rancher helm chart"
   default     = 3
