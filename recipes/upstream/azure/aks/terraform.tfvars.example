@@ -1,0 +1,9 @@
+###### !! Required variables !! ######
+
+## -- Set the prefix for various resources that are created. A default prefix (rancher-terraform) if not provided.
+prefix = "my-name-here"
+
+###### !! Optional variables !! ######
+
+## -- Azure region to create the resources, adjust as needed
+# azure_region = "westus3"

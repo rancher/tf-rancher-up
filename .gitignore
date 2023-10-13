@@ -30,3 +30,6 @@ override.tf.json
 
 # Allow
 !modules/distribution/gke/template-kube_config.yml
+myvalues.tfvars
+
+.idea
