@@ -149,3 +149,9 @@ variable "wait" {
   description = "An optional wait before installing the Rancher helm chart (seconds)"
   default     = null
 }
+
+variable "helm_timeout" {
+  description = "Specify the timeout value in seconds for helm operation(s)"
+  default     = 600
+  type        = number
+}
