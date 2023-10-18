@@ -44,6 +44,10 @@ resource "rke_cluster" "this" {
       is_default = true
     }
   }
+
+  ingress {
+    provider = var.ingress_provider
+  }
 }
 
 resource "local_file" "kube_config_yaml" {
