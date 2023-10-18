@@ -96,3 +96,8 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+variable "ingress_provider" {
+  description = "Ingress controller provider. nginx (default), and none are supported (string)"
+  default     = "nginx"
+}
