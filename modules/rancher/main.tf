@@ -125,6 +125,7 @@ resource "helm_release" "rancher" {
   repository_username = var.helm_username != null ? var.helm_username : null
   repository_password = var.helm_password != null ? var.helm_password : null
   version             = var.rancher_version
+  timeout             = var.helm_timeout
   wait                = true
 
   dynamic "set" {
