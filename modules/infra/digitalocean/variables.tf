@@ -39,16 +39,10 @@ variable "user_tag" {
   nullable    = false
 }
 
-variable "create_ssh_key_pair" {
-  type        = bool
-  description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = false
-  nullable    = false
-}
-
-variable "ssh_key_pair_name" {
+variable "ssh_public_key_path" {
+  description = "Full path to the public ssh key file"
   type        = string
-  description = "Specify the SSH key name to use (that's already present in DigitalOcean)"
+  default     = null
 }
 
 variable "ssh_key_pair_path" {
@@ -58,8 +52,8 @@ variable "ssh_key_pair_path" {
 }
 
 variable "ssh_private_key_path" {
+  description = "Full path to the private ssh key file"
   type        = string
-  description = "Path to write the generated SSH private key"
   default     = null
 }
 
@@ -74,4 +68,11 @@ variable "region" {
 variable "user_data" {
   description = "User data content for EC2 instance(s)"
   default     = null
+}
+
+variable "create_ssh_key_pair" {
+  type        = bool
+  description = "Specify if a new SSH key pair needs to be created for the instances"
+  default     = false
+  nullable    = false
 }

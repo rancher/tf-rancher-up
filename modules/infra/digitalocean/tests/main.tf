@@ -3,19 +3,12 @@ variable "do_token" {
   sensitive = true
 }
 
-variable "ssh_key" {
-  type = string
-}
-
-variable "private_key" {
-  type = string
-}
-
 module "upstream_cluster" {
   source               = "../"
   do_token             = var.do_token
   user_tag             = "rancherdev"
-  ssh_key_pair_name    = var.ssh_key
   droplet_count        = 2
-  ssh_private_key_path = var.private_key
+  create_ssh_key_pair = false
+  ssh_private_key_path = "~/.ssh/id_ed25519"
+  ssh_public_key_path = "~/.ssh/id_ed25519.pub"
 }
