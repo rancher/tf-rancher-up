@@ -47,7 +47,7 @@ module "k3s_additional_servers" {
   instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
-  ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
+  ssh_key_pair_path       = pathexpand(module.k3s_first_server.ssh_key_path)
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
   tag-begin               = 2
@@ -60,7 +60,7 @@ module "k3s_additional_servers" {
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.k3s_first_server]
-  filename   = module.k3s_first_server.ssh_key_path
+  filename   = pathexpand(module.k3s_first_server.ssh_key_path)
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
@@ -73,13 +73,15 @@ resource "ssh_resource" "retrieve_kubeconfig" {
 }
 
 resource "local_file" "kube_config_yaml" {
-  filename = local.kc_file
-  content  = ssh_resource.retrieve_kubeconfig.result
+  filename        = local.kc_file
+  content         = ssh_resource.retrieve_kubeconfig.result
+  file_permission = "0600"
 }
 
 resource "local_file" "kube_config_yaml_backup" {
-  filename = local.kc_file_backup
-  content  = ssh_resource.retrieve_kubeconfig.result
+  filename        = local.kc_file_backup
+  content         = ssh_resource.retrieve_kubeconfig.result
+  file_permission = "0600"
 }
 
 locals {

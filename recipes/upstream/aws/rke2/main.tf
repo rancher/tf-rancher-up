@@ -71,13 +71,15 @@ resource "ssh_resource" "retrieve_kubeconfig" {
 }
 
 resource "local_file" "kube_config_yaml" {
-  filename = local.kc_file
-  content  = ssh_resource.retrieve_kubeconfig.result
+  filename        = local.kc_file
+  content         = ssh_resource.retrieve_kubeconfig.result
+  file_permission = "0600"
 }
 
 resource "local_file" "kube_config_yaml_backup" {
-  filename = local.kc_file_backup
-  content  = ssh_resource.retrieve_kubeconfig.result
+  filename        = local.kc_file_backup
+  content         = ssh_resource.retrieve_kubeconfig.result
+  file_permission = "0600"
 }
 
 locals {
