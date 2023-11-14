@@ -1,10 +1,33 @@
+# Condition to use an existing keypair if a keypair name and file is also provided
+locals {
+  new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+}
+
+resource "tls_private_key" "ssh_private_key" {
+  count     = var.create_ssh_key_pair ? 1 : 0
+  algorithm = "ED25519"
+}
+
+resource "local_file" "private_key_pem" {
+  count           = var.create_ssh_key_pair ? 1 : 0
+  filename        = local.new_key_pair_path
+  content         = tls_private_key.ssh_private_key[0].private_key_openssh
+  file_permission = "0600"
+}
+
+resource "digitalocean_ssh_key" "key_pair" {
+  count      = var.create_ssh_key_pair ? 1 : 0
+  name       = "tf-rancher-up-${var.prefix}"
+  public_key = tls_private_key.ssh_private_key[0].public_key_openssh
+}
+
 resource "digitalocean_droplet" "droplet" {
   count     = var.droplet_count
   image     = data.digitalocean_image.ubuntu.id
   size      = var.droplet_size
   name      = "${var.prefix}-${count.index + var.tag_begin}"
   tags      = ["user:${var.user_tag}", "creator:${var.prefix}"]
-  ssh_keys  = [data.digitalocean_ssh_key.terraform.id]
+  ssh_keys  = var.create_ssh_key_pair ? [digitalocean_ssh_key.key_pair.id] : [data.digitalocean_ssh_key.terraform.id]
   user_data = var.user_data
   region    = var.region
 

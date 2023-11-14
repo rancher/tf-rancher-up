@@ -1,6 +1,6 @@
 # Upstream | AWS | K3S
 
-This module is used to establish a Rancher (local) managment cluster using AWS and K3S.
+This module is used to establish a Rancher (local) management cluster using AWS and K3S.
 
 ## Usage
 

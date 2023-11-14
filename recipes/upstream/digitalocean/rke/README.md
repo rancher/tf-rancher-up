@@ -1,6 +1,6 @@
 # Upstream | DigitalOcean | RKE
 
-This module is used to establish a Rancher (local) managment cluster using DigitalOcean and RKE.
+This module is used to establish a Rancher (local) management cluster using DigitalOcean and RKE.
 
 ## Usage
 

@@ -86,6 +86,12 @@ variable "kube_config_path" {
   default     = null
 }
 
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
 variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
