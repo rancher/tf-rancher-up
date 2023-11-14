@@ -3,6 +3,7 @@ module "upstream-cluster" {
   prefix                  = var.prefix
   instance_count          = var.instance_count
   instance_type           = var.instance_type
+  instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
@@ -38,13 +39,18 @@ module "rke" {
   ]
 }
 
+locals {
+  rancher_hostname = join(".", ["rancher", module.upstream-cluster.instances_public_ip[0], "sslip.io"])
+}
+
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
   dependency                 = module.rke.dependency
   kubeconfig_file            = module.rke.rke_kubeconfig_filename
-  rancher_hostname           = join(".", ["rancher", module.upstream-cluster.instances_public_ip[0], "sslip.io"])
-  rancher_replicas           = var.instance_count
-  rancher_bootstrap_password = var.rancher_password
+  rancher_hostname           = local.rancher_hostname
+  rancher_replicas           = min(var.rancher_replicas, var.instance_count)
+  rancher_bootstrap_password = var.rancher_bootstrap_password
+  rancher_password           = var.rancher_password
   rancher_version            = var.rancher_version
   wait                       = var.wait
 }

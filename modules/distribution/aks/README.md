@@ -38,7 +38,7 @@ No modules.
 | <a name="input_azure_service_principal_password"></a> [azure\_service\_principal\_password](#input\_azure\_service\_principal\_password) | Azure service principal password | `string` | `null` | no |
 | <a name="input_azure_subscription_id"></a> [azure\_subscription\_id](#input\_azure\_subscription\_id) | Azure subscription id | `string` | `null` | no |
 | <a name="input_azure_subscription_tenant_id"></a> [azure\_subscription\_tenant\_id](#input\_azure\_subscription\_tenant\_id) | Azure subscription tenant id | `string` | `null` | no |
-| <a name="input_default_node_pool_name"></a> [default\_node\_pool\_name](#input\_default\_node\_pool\_name) | Customize the defaul node pool name | `string` | `"defaultnp"` | no |
+| <a name="input_default_node_pool_name"></a> [default\_node\_pool\_name](#input\_default\_node\_pool\_name) | Customize the default node pool name | `string` | `"defaultnp"` | no |
 | <a name="input_kube_config_filename"></a> [kube\_config\_filename](#input\_kube\_config\_filename) | Filename to write the kue config | `string` | `null` | no |
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | The path to write the kubeconfig for the AKS cluster | `string` | `null` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of nodes to create in the default node pool | `number` | `3` | no |

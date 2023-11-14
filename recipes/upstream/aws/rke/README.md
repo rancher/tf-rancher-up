@@ -1,6 +1,6 @@
 # Upstream | AWS | RKE
 
-This module is used to establish a Rancher (local) managment cluster using AWS and RKE.
+This module is used to establish a Rancher (local) management cluster using AWS and RKE.
 
 ## Usage
 

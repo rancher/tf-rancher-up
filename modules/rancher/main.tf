@@ -161,7 +161,17 @@ resource "null_resource" "wait_for_rancher" {
 
 resource "rancher2_bootstrap" "admin" {
   depends_on       = [null_resource.wait_for_rancher[0]]
-  count            = var.bootstrap_rancher ? 1 : 0
+  count            = var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
   initial_password = var.rancher_bootstrap_password
-  password         = var.rancher_bootstrap_password
+  password         = var.rancher_password
+}
+
+locals {
+  bootstrap_message = var.bootstrap_rancher && var.rancher_password != null ? "Rancher will be started with the given password" : "Rancher will be started with only bootstrap password"
+}
+
+resource "null_resource" "bootstrap_message" {
+  provisioner "local-exec" {
+    command = "echo '${local.bootstrap_message}'"
+  }
 }

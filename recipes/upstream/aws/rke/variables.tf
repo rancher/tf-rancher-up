@@ -63,16 +63,33 @@ variable "docker_version" {
   default     = "20.10"
 }
 
-variable "rancher_password" {
+variable "rancher_bootstrap_password" {
   description = "Password to use for bootstrapping Rancher (min 12 characters)"
   default     = "initial-admin-password"
   type        = string
+}
+
+variable "rancher_password" {
+  description = "Password to use for Rancher (min 12 characters)"
+  default     = null
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
+  }
 }
 
 variable "rancher_version" {
   description = "Rancher version to install"
   default     = null
   type        = string
+}
+
+variable "rancher_replicas" {
+  description = "Value for replicas when installing the Rancher helm chart"
+  default     = 3
+  type        = number
 }
 
 variable "create_ssh_key_pair" {

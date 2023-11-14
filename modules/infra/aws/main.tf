@@ -21,9 +21,9 @@ resource "local_file" "private_key_pem" {
 }
 
 resource "aws_key_pair" "key_pair" {
-  count           = var.create_ssh_key_pair ? 1 : 0
-  key_name_prefix = "${var.prefix}-"
-  public_key      = tls_private_key.ssh_private_key[0].public_key_openssh
+  count      = var.create_ssh_key_pair ? 1 : 0
+  key_name   = "tf-rancher-up-${var.prefix}"
+  public_key = tls_private_key.ssh_private_key[0].public_key_openssh
 }
 
 resource "aws_security_group" "sg_allowall" {
@@ -117,6 +117,6 @@ resource "aws_instance" "instance" {
   }
 
   lifecycle {
-    ignore_changes = [instance_market_options, user_data]
+    ignore_changes = [instance_market_options, user_data, tags]
   }
 }

@@ -1,5 +1,7 @@
 locals {
-  kube_config_file = var.kube_config_path != null ? var.kube_config_path : "${path.cwd}/${var.prefix}_kube_config.yml"
+  kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_file_backup = "${local.kc_file}.backup"
 }
 
 resource "rke_cluster" "this" {
@@ -45,13 +47,13 @@ resource "rke_cluster" "this" {
 }
 
 resource "local_file" "kube_config_yaml" {
-  filename        = local.kube_config_file
+  filename        = local.kc_file
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"
 }
 
 resource "local_file" "kube_config_yaml_backup" {
-  filename        = "${local.kube_config_file}.bkp"
+  filename        = local.kc_file_backup
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"
 

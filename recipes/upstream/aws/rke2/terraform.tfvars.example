@@ -33,7 +33,7 @@ instance_count = 1
 ## -- Use spot instances
 # spot_instances = false
 
-## -- RKE2 token, override the programatically generated token
+## -- RKE2 token, override the programmatically generated token
 # rke2_token = "string here"
 
 ##### SSH
