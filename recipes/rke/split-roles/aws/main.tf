@@ -1,5 +1,5 @@
 module "master_nodes" {
-  source = "../../../../modules/infra/aws?ref=tags/0.2.0"
+  source = "../../../../modules/infra/aws"
 
   prefix                  = var.prefix
   instance_count          = var.master_nodes_count
@@ -23,7 +23,7 @@ module "master_nodes" {
 }
 
 module "worker_nodes" {
-  source = "../../../../modules/infra/aws?ref=tags/0.2.0"
+  source = "../../../../modules/infra/aws"
 
   prefix                  = var.prefix
   instance_count          = var.worker_nodes_count
@@ -64,7 +64,7 @@ locals {
 }
 
 module "rke" {
-  source               = "../../../../modules/distribution/rke?ref=tags/0.2.0"
+  source               = "../../../../modules/distribution/rke"
   prefix               = var.prefix
   dependency           = [module.master_nodes.dependency, module.worker_nodes.dependency]
   ssh_private_key_path = module.master_nodes.ssh_key_path
