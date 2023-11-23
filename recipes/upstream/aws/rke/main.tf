@@ -13,10 +13,11 @@ module "upstream-cluster" {
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
   subnet_id               = var.subnet_id
-  user_data = templatefile("${path.module}/user_data.sh",
+  user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
       username       = var.ssh_username
+      docker_version = var.docker_version
     }
   )
 }
