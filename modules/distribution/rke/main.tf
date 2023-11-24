@@ -46,7 +46,10 @@ resource "rke_cluster" "this" {
   }
 
   ingress {
-    provider = var.ingress_provider
+    provider     = var.ingress_provider
+    http_port    = var.ingress_http_port
+    https_port   = var.ingress_https_port
+    network_mode = var.ingress_network_mode
   }
 }
 
