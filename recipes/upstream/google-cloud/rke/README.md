@@ -33,7 +33,7 @@ terraform destroy -target=helm_release.ingress-nginx -target=module.rancher_inst
 ```
 
 See full argument list for each module in use:
-  - Google Compute Engine: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/gke
+  - Google Compute Engine: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/infra/google-cloud/compute-engine
   - RKE: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/rke
   - Rancher: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/rancher
 

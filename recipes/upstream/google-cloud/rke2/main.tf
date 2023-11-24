@@ -64,7 +64,7 @@ module "rke2-additional-servers" {
 resource "null_resource" "customize-rke2-nginx-ingress-controller" {
   depends_on = [module.rke2-additional-servers]
   provisioner "local-exec" {
-    command     = "sh ./rke2-ingress-nginx-setup.sh"
+    command = "sh ./rke2-ingress-nginx-setup.sh"
   }
 }
 
@@ -108,6 +108,7 @@ resource "null_resource" "wait-k8s-services-startup" {
 }
 
 data "kubernetes_service" "rke2-ingress-nginx-controller-svc" {
+  depends_on = [null_resource.wait-k8s-services-startup]
   metadata {
     name      = "rke2-ingress-nginx-controller-admission"
     namespace = "kube-system"
@@ -125,7 +126,7 @@ module "rancher_install" {
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
-  #bootstrap_rancher          = var.bootstrap_rancher
+  bootstrap_rancher          = var.bootstrap_rancher
   #  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
     "replicas: 3",

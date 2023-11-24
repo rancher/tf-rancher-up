@@ -72,6 +72,8 @@ variable "ssh_private_key_path" {
 
 # variable "subnet" {}
 
+# variable "firewall" {}
+
 # variable "instance_count" {}
 
 # variable "instance_disk_size" {}

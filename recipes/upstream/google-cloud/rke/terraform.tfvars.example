@@ -29,6 +29,9 @@ region = "<REGION>"
 ## -- Google Subnet used for all resources
 # subnet = null
 
+## -- Google Firewall used for all resources
+# firewall = null
+
 ## -- The number of nodes
 # instance_count = 1
 
