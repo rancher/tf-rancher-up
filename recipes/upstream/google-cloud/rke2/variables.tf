@@ -94,8 +94,6 @@ variable "ssh_username" {}
 
 # variable "startup_script" {}
 
-# variable "kubernetes_version" {}
-
 variable "rke2_version" {
   type        = string
   description = "Kubernetes version to use for the RKE2 cluster"
