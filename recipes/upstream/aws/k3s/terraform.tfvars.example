@@ -29,6 +29,7 @@ k3s_channel = "v1.25"
 
 ## -- Number and type of EC2 instances to launch
 instance_count = 1
+worker_instance_count = 1
 # instance_type = "t3.medium"
 
 ## -- Use spot instances

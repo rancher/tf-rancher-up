@@ -23,7 +23,13 @@ variable "prefix" {
 
 variable "instance_count" {
   type        = number
-  description = "Number of EC2 instances to create"
+  description = "Number of server EC2 instances to create"
+  default     = null
+}
+
+variable "worker_instance_count" {
+  type        = number
+  description = "Number of worker EC2 instances to create"
   default     = null
 }
 
