@@ -20,8 +20,13 @@ output "droplet_ips" {
   ]
 }
 
+<<<<<<< HEAD:modules/infra/digitalocean/output.tf
 output "ssh_key_path" {
   value = var.create_ssh_key_pair ? local_file.private_key_pem[0].filename : var.ssh_key_pair_path
+=======
+output "ssh_private_keyfile" {
+  value = local.new_key_pair_path
+>>>>>>> 9b664cc (DigitalOcean fully supports auto-generate ssh keys):modules/infra/digitalocean/outputs.tf
 }
 
 output "ssh_key_pair_name" {

@@ -1,13 +1,40 @@
-# Change the values below to suit your individual needs
-droplet_count        = 3
-droplet_size         = "g-4vcpu-16gb"
-prefix               = ""
-user_tag             = "jhawthorne"
-region               = ""
-kubernetes_version   = "v1.24.10-rancher4-1"
-rancher_password     = "initial-admin-password"
-rancher_version      = "2.7.6"
-kube_config_path     = "~/.kube/rancher-terraform.yml"
-ssh_private_key_path = "~/.ssh/terraform"
-ssh_key_name         = "terraform"
+# Uncomment and change the values below to suit your individual needs
+
+# Number of droplets to provision 
+# droplet_count        = 3
+
+# Droplet Machine Type/Size
+# droplet_size         = "g-4vcpu-16gb"
+
+# A string that will prefix the name of all resources 
+# prefix               = "jsmith-rancher-support"
+
+# Tag added to resources to identify your resource in 'FirstInitialLastName' format
+# user_tag             = "jsmith"
+
+# The region that droplets will be deployed to
+# region               = ""
+
+# Desired Kubernetes version
+# kubernetes_version   = "v1.24.10-rancher4-1"
+
+# Initial password for the Rancher Server deployment
+# rancher_password     = "initial-admin-password"
+
+# Desired Rancher version
+# rancher_version      = "2.7.6"
+
+# Filepath for where the new cluster's kubeconfig will be stored 
+# kube_config_path     = "~/.kube/rancher-terraform.yml"
+
+# Switch on/off new ssh keypair generation for droplet/node ssh connections
+# Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
+# create_ssh_key_pair  = "true"
+
+# Filepath to ssh public and private ssh keyfiles.
+# Terraform will expect that pre-existing keys already exist if 'create_ssh_key_pair' is set to 'false'
+# ssh_private_keyfile = "~/.ssh/terraform_id_ed25519"
+# ssh_public_keyfile  = "~/.ssh/terraform_id_ed25519.pub"
+
+# DigitalOcean authentication token 
 # do_token             = ""

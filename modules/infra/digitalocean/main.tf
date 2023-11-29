@@ -1,5 +1,5 @@
 locals {
-  new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  new_key_pair_path = var.ssh_private_keyfile != null ? var.ssh_private_keyfile : "${path.cwd}/${var.prefix}-ssh_key"
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -9,15 +9,21 @@ resource "tls_private_key" "ssh_private_key" {
 
 resource "local_file" "private_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.new_key_pair_path
+  filename        = pathexpand(local.new_key_pair_path)
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
   file_permission = "0600"
 }
 
-# Create a new SSH key
+resource "local_file" "public_key_pem" {
+  count           = var.create_ssh_key_pair ? 1 : 0
+  filename        = "${pathexpand(local.new_key_pair_path)}.pub"
+  content         = tls_private_key.ssh_private_key[0].public_key_openssh
+  file_permission = "0600"
+}
+
 resource "digitalocean_ssh_key" "terraform" {
   name       = "${var.prefix}-terraform-ssh-key"
-  public_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].public_key_openssh : file(pathexpand(var.ssh_public_key_path))
+  public_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].public_key_openssh : file(pathexpand(var.ssh_public_keyfile))
 }
 
 resource "digitalocean_droplet" "droplet" {

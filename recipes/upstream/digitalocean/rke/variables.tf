@@ -29,7 +29,7 @@ variable "prefix" {
 variable "tag_begin" {
   type        = number
   description = "Tag from this number when module is called more than once"
-  default     = 1
+  default     = 0
 }
 
 variable "user_tag" {
@@ -38,13 +38,23 @@ variable "user_tag" {
   nullable    = false
 }
 
-variable "ssh_key_name" {
-  type        = string
-  description = "Name of the public ssh key stored on DigitalOcean"
+variable "create_ssh_key_pair" {
+  type        = bool
+  description = "Specify if a new SSH key pair needs to be created for the droplets"
+  default     = false
+  nullable    = false
 }
 
-variable "ssh_private_key_path" {
-  description = "Path to the private ssh key that matches the public ssh key from DigitalOcean"
+variable "ssh_public_keyfile" {
+  description = "Full path to the public ssh key file"
+  type        = string
+  default     = null
+}
+
+variable "ssh_private_keyfile" {
+  description = "Full path to the private ssh key file"
+  type        = string
+  default     = null
 }
 
 variable "region" {

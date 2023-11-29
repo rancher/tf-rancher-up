@@ -19,14 +19,14 @@ cd recipes/upstream/digitalocean/rke
 export TF_VAR_do_token=dop_v1_xxxxxxxxx
 ```
 - Alternatively, you can uncomment `do_token` in `terraform.tfvars` and input the required auth token there.
-- Modify the `ssh_key_name` variable to contain the name of a public ssh key stored in DigitalOcean and the `ssh_private_key_path` variable to contain the local path to it's private key.
+- Set `create_ssh_key_pair` to `true` to generate a new ssh keypair for ssh connections. Alternatively, specify a pre-existing key pair for ssh connections using the `ssh_private_keyfile` and `ssh_public_keyfile` inputs. 
 - If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.
 - Modify the `user_tag` variable so that it contains your first initial and last name.
 - There are more optional variables which can be tweaked under `terraform.tfvars`.
 
 **NOTE** you may need to use ` terraform init -upgrade` to upgrade provider versions
 
-Execute the below commands to start deployment.
+- Execute the below commands to start deployment.
 
 ```bash
 terraform init
@@ -34,16 +34,16 @@ terraform plan
 terraform apply
 ```
 
-The login details will be displayed in the screen once the deployment is successful. It will have the details as below.
+- The login details will be displayed in the screen once the deployment is successful. It will have the details as below.
 
 ```bash
 rancher_hostname = "https://rancher.<xx.xx.xx.xx>.sslip.io"
 rancher_password = "initial-admin-password"
 ```
 
-- Destroy the resources when cluster is no more needed.
+- Destroy the resources when cluster is no longer needed.
 ```bash
-terraform destroy
+terraform destroy -auto-approve -target=module.rancher_install && terraform destroy
 ```
 
 **IMPORTANT**: Please retire the services which are deployed using these terraform modules within 48 hours. Soon there will be automation to retire the service automatically after 48 hours but till that is in place it will be the users responsibility to not keep it running more than 48 hours.
@@ -104,8 +104,9 @@ No resources.
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to the names of all resources | `string` | `rancher-terraform` | no |
 | <a name="input_tag_begin"></a> [tag\_begin](#input\_tag\_begin) | Tag from this number when the module is called more than once | `number` | `1` | no |
 | <a name="input_user_tag"></a> [user\_tag](#input\_user\_tag) | User tag in `FirstInitialLastName` format | `string` | `null` | yes |
-| <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | Name of the public ssh key stored on DigitalOcean | `string` | `null` | no |
-| <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Local path to the private ssh key that matches the `ssh_key_name` stored on DigitalOcean | `string` | `null` | yes |
+| <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Specify if a new SSH key pair will be created for ssh connections to droplets. If `ssh_private_keyfile` is specified while this field is set to `true`, a keypair will be generated at the specified location. | `bool` | `false` | no |
+| <a name="input_ssh_private_keyfile"></a> [ssh\_private\_keyfile](#input\_ssh\_private\_key\_path) | Local path to the private ssh key | `string` | `null` | yes |
+| <a name="input_ssh_public_keyfile"></a> [ssh\_public\_keyfile](#input\_ssh\_public\_keyfile) | Local path to the public ssh key | `string` | `null` | yes |
 | <a name="input_region"></a> [region](#input\_region) | Region targeted for droplet deployment | `string` | `sfo3` | no |
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | The user account used to connect to droplets via ssh | `string` | `root` | no |
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | Path to where the RKE cluster's kubeconfig will be stored | `string` | `null` | no |

@@ -39,19 +39,13 @@ variable "user_tag" {
   nullable    = false
 }
 
-variable "ssh_public_key_path" {
+variable "ssh_public_keyfile" {
   description = "Full path to the public ssh key file"
   type        = string
   default     = null
 }
 
-variable "ssh_key_pair_path" {
-  type        = string
-  description = "Path to the SSH private key used as the key pair (that's already present in DigitalOcean)"
-  default     = null
-}
-
-variable "ssh_private_key_path" {
+variable "ssh_private_keyfile" {
   description = "Full path to the private ssh key file"
   type        = string
   default     = null
