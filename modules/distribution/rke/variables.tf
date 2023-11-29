@@ -86,7 +86,36 @@ variable "kube_config_path" {
   default     = null
 }
 
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
 variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
+}
+
+variable "ingress_provider" {
+  description = "Ingress controller provider. nginx (default), and none are supported (string)"
+  default     = "nginx"
+}
+
+variable "ingress_network_mode" {
+  description = "Specify the network mode to use with Ingress"
+  type        = string
+  default     = "hostPort"
+}
+
+variable "ingress_http_port" {
+  description = "Specify the http port number to use with Ingress"
+  type        = number
+  default     = 80
+}
+
+variable "ingress_https_port" {
+  description = "Specify the https port number to use with Ingress"
+  type        = number
+  default     = 443
 }

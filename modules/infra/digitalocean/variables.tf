@@ -39,16 +39,30 @@ variable "user_tag" {
   nullable    = false
 }
 
-variable "ssh_key_name" {
+variable "create_ssh_key_pair" {
+  type        = bool
+  description = "Specify if a new SSH key pair needs to be created for the instances"
+  default     = false
+  nullable    = false
+}
+
+variable "ssh_key_pair_name" {
   type        = string
-  description = "Name of the public ssh key stored on DigitalOcean"
+  description = "Specify the SSH key name to use (that's already present in DigitalOcean)"
+}
+
+variable "ssh_key_pair_path" {
+  type        = string
+  description = "Path to the SSH private key used as the key pair (that's already present in DigitalOcean)"
+  default     = null
 }
 
 variable "ssh_private_key_path" {
-  description = "Path to the private ssh key that matches the public ssh key from DigitalOcean"
   type        = string
-  nullable    = false
+  description = "Path to write the generated SSH private key"
+  default     = null
 }
+
 
 variable "region" {
   description = "Region that droplets will be deployed to"

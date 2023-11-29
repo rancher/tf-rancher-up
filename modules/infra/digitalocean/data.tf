@@ -3,5 +3,5 @@ data "digitalocean_image" "ubuntu" {
 }
 
 data "digitalocean_ssh_key" "terraform" {
-  name = var.ssh_key_name
+  name = var.ssh_key_pair_name
 }

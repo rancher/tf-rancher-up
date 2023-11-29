@@ -33,6 +33,12 @@ variable "instance_type" {
   default     = null
 }
 
+variable "instance_disk_size" {
+  type        = string
+  description = "Specify root disk size (GB)"
+  default     = null
+}
+
 variable "k3s_version" {
   type        = string
   description = "Kubernetes version to use for the k3s cluster"
@@ -61,16 +67,39 @@ variable "kube_config_path" {
   default     = null
 }
 
-variable "rancher_password" {
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
+variable "rancher_bootstrap_password" {
   description = "Password to use for bootstrapping Rancher (min 12 characters)"
   default     = "initial-admin-password"
   type        = string
+}
+
+variable "rancher_password" {
+  description = "Password to use for Rancher (min 12 characters)"
+  default     = null
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
+  }
 }
 
 variable "rancher_version" {
   description = "Rancher version to install"
   default     = null
   type        = string
+}
+
+variable "rancher_replicas" {
+  description = "Value for replicas when installing the Rancher helm chart"
+  default     = 3
+  type        = number
 }
 
 variable "create_ssh_key_pair" {
@@ -101,4 +130,28 @@ variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
   default     = null
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "VPC Subnet ID to create the instance(s) in"
+  default     = null
+}
+
+variable "create_security_group" {
+  type        = bool
+  description = "Should create the security group associated with the instance(s)"
+  default     = null
+}
+
+# TODO: Add a check based on above value
+variable "instance_security_group" {
+  type        = string
+  description = "Provide a pre-existing security group ID"
+  default     = null
+}
+
+variable "wait" {
+  description = "An optional wait before installing the Rancher helm chart"
+  default     = "20s"
 }

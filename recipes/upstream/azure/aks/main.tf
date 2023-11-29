@@ -53,10 +53,14 @@ data "kubernetes_service" "ingress-nginx-controller-svc" {
   }
 }
 
+locals {
+  rancher_hostname = join(".", ["rancher", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
+}
+
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
   kubeconfig_file            = module.aks.kubeconfig_file_location
-  rancher_hostname           = join(".", ["rancher", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
+  rancher_hostname           = local.rancher_hostname
   rancher_replicas           = min(var.rancher_replicas, var.node_count)
   rancher_bootstrap_password = var.rancher_bootstrap_password
   rancher_version            = var.rancher_version

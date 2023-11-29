@@ -17,7 +17,7 @@ variable "bootstrap_rancher" {
 }
 
 variable "cert_manager_namespace" {
-  description = "Namesapce to install cert-manager"
+  description = "Namespace to install cert-manager"
   default     = "cert-manager"
   type        = string
 }
@@ -66,6 +66,17 @@ variable "rancher_bootstrap_password" {
   validation {
     condition     = length(var.rancher_bootstrap_password) >= 12
     error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
+  }
+}
+
+variable "rancher_password" {
+  description = "Password to use for Rancher (min 12 characters)"
+  default     = null
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
   }
 }
 

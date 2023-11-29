@@ -1,9 +1,9 @@
 output "instances_public_ip" {
-  value = concat([module.rke2_first_server.instances_public_ip], [module.rke2_additional_servers.instances_public_ip])
+  value = module.upstream-cluster.instances_public_ip
 }
 
 output "instances_private_ip" {
-  value = concat([module.rke2_first_server.instances_private_ip], [module.rke2_additional_servers.instances_private_ip])
+  value = module.upstream-cluster.instances_private_ip
 }
 
 output "rancher_hostname" {
@@ -14,7 +14,7 @@ output "rancher_url" {
   value = "https://${local.rancher_hostname}"
 }
 
-output "rancher_password" {
+output "rancher_bootstrap_password" {
   value = var.rancher_bootstrap_password
 }
 

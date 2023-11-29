@@ -20,7 +20,7 @@ Table of Contents
 2.  [Built With](#built-with)
 3.  [Getting Started](#getting-started)
     *   [Prerequisites](#prerequisites)
-    *   [Whats next](#whats-next)
+    *   [What's next](#whats-next)
 4.  [Roadmap](#roadmap)
 5.  [Contributing](#contributing)
 6.  [License](#license)
@@ -66,7 +66,7 @@ Git clone can be performed only after setting up the required ssh keys. Please r
 Terraform should be installed on your local or remote computer where the repository is cloned.  Please refer [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for installation instructions.
 
 
-### Whats next
+### What's next
 
 Once you clone the repository please go to the desired [recipes](./recipes) path and start configuring required environmental variables for your platform. Please refer the [README](./recipes/README.md) under [recipes](./recipes) for details about how to start provisioning.
 
@@ -124,7 +124,7 @@ Don't forget to give the project a star! Thanks again!
 ```
 - Make changes in the code.
 
-- Use `terraform fmt` to lint and format any changes that occured.
+- Use `terraform fmt` to lint and format any changes that occurred.
 ```sh
  terraform fmt -recursive .
 ```

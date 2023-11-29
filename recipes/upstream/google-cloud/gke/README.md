@@ -1,6 +1,6 @@
 # Upstream | Google Cloud | GKE
 
-This module is used to establish a Rancher (local) managment cluster using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
+This module is used to establish a Rancher (local) management cluster using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
 
 ## Usage
 
@@ -9,7 +9,7 @@ git clone https://github.com/rancherlabs/tf-rancher-up.git
 cd recipes/upstream/google-cloud/gke
 ```
 
-- Copy `./terraform.tfvars.exmaple` to `./terraform.tfvars`
+- Copy `./terraform.tfvars.example` to `./terraform.tfvars`
 - Edit `./terraform.tfvars`
   - Update the required variables:
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)

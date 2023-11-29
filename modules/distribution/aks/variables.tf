@@ -223,13 +223,13 @@ variable "kube_config_path" {
 }
 
 variable "kube_config_filename" {
-  description = "Filename to write the kue config"
+  description = "Filename to write the kube config"
   type        = string
   default     = null
 }
 
 variable "default_node_pool_name" {
-  description = "Customize the defaul node pool name"
+  description = "Customize the default node pool name"
   type        = string
   default     = "defaultnp"
 }
