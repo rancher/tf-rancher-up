@@ -76,7 +76,7 @@ variable "subnet" {
   default = null
 }
 
-variable "firewall" {
+variable "create_firewall" {
   default = null
 }
 
@@ -93,6 +93,11 @@ variable "instance_count" {}
 variable "ssh_username" {}
 
 # variable "startup_script" {}
+
+variable "waiting_time" {
+  description = "Waiting time (in seconds)"
+  default     = 180
+}
 
 variable "rke2_version" {
   type        = string
@@ -140,3 +145,13 @@ variable "rancher_password" {
 }
 
 # variable "rancher_version" {}
+
+variable "rancher_ingress_class_name" {
+  description = "Rancher ingressClassName value"
+  default     = "nginx"
+}
+
+variable "rancher_service_type" {
+  description = "Rancher serviceType value"
+  default     = "ClusterIP"
+}

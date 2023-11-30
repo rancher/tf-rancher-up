@@ -7,8 +7,8 @@ module "google-compute-engine-upstream-cluster" {
   #  ssh_public_key_path = var.ssh_public_key_path
   #  vpc                 = var.vpc
   #  subnet              = var.subnet
-  #  firewall            = var.firewall
-  #  instance_count      = var.instance_count
+  #  create_firewall     = var.create_firewall
+  instance_count = var.instance_count
   #  instance_disk_size  = var.instance_disk_size
   #  disk_type           = var.disk_type
   #  instance_type       = var.instance_type
@@ -20,7 +20,7 @@ module "google-compute-engine-upstream-cluster" {
 resource "null_resource" "wait-docker-startup" {
   depends_on = [module.google-compute-engine-upstream-cluster.instances_public_ip]
   provisioner "local-exec" {
-    command = "sleep 180"
+    command = "sleep ${var.waiting_time}"
   }
 }
 
@@ -61,7 +61,7 @@ resource "helm_release" "ingress-nginx" {
 
   set {
     name  = "controller.replicaCount"
-    value = "3"
+    value = var.instance_count
   }
 }
 
@@ -73,21 +73,22 @@ data "kubernetes_service" "ingress-nginx-controller-svc" {
 }
 
 locals {
+  kubeconfig_file  = "${path.cwd}/${var.prefix}_kube_config.yml"
   rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", module.google-compute-engine-upstream-cluster.instances_public_ip[0], "sslip.io"]) : join(".", ["rancher", module.google-compute-engine-upstream-cluster.instances_public_ip[0], "sslip.io"])
 }
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
   dependency                 = [data.kubernetes_service.ingress-nginx-controller-svc]
-  kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
+  kubeconfig_file            = local.kubeconfig_file
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   #  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
-    "replicas: 3",
-    "ingress.ingressClassName: nginx",
-    "service.type: ClusterIP"
+    "replicas: ${var.instance_count}",
+    "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
+    "service.type: ${var.rancher_service_type}"
   ]
 }

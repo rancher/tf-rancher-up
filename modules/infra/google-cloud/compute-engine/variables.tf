@@ -89,7 +89,7 @@ variable "subnet" {
   default     = null
 }
 
-variable "firewall" {
+variable "create_firewall" {
   description = "Google Firewall used for all resources"
   default     = true
 }

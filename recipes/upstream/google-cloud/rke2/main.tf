@@ -15,7 +15,7 @@ module "rke2-first-server" {
   #  ssh_public_key_path  = var.ssh_public_key_path
   #  vpc                  = var.vpc
   #  subnet               = var.subnet
-  #  firewall             = var.firewall
+  #  create_firewall      = var.create_firewall
   instance_count = 1
   #  instance_disk_size   = var.instance_disk_size
   #  disk_type            = var.disk_type
@@ -28,7 +28,7 @@ module "rke2-first-server" {
 locals {
   vpc                  = var.vpc == null ? "${var.prefix}-vpc" : var.vpc
   subnet               = var.subnet == null ? "${var.prefix}-subnet" : var.subnet
-  firewall             = var.firewall == null ? false : true
+  create_firewall      = var.create_firewall == null ? false : true
   private_ssh_key_path = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
   public_ssh_key_path  = fileexists("${path.cwd}/${var.prefix}-ssh_public_key.pem") ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
 }
@@ -51,7 +51,7 @@ module "rke2-additional-servers" {
   ssh_public_key_path  = local.public_ssh_key_path
   vpc                  = local.vpc
   subnet               = local.subnet
-  firewall             = local.firewall
+  create_firewall      = local.create_firewall
   instance_count       = var.instance_count - 1
   #  instance_disk_size   = var.instance_disk_size
   #  disk_type            = var.disk_type
@@ -103,7 +103,7 @@ resource "local_file" "kube-config-yaml-backup" {
 resource "null_resource" "wait-k8s-services-startup" {
   depends_on = [null_resource.customize-rke2-nginx-ingress-controller]
   provisioner "local-exec" {
-    command = "sleep 180"
+    command = "sleep ${var.waiting_time}"
   }
 }
 
@@ -122,15 +122,15 @@ locals {
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
   dependency                 = [data.kubernetes_service.rke2-ingress-nginx-controller-svc]
-  kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
+  kubeconfig_file            = local.kc_file
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   #  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
-    "replicas: 3",
-    "ingress.ingressClassName: nginx",
-    "service.type: ClusterIP"
+    "replicas: ${var.instance_count}",
+    "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
+    "service.type: ${var.rancher_service_type}"
   ]
 }
