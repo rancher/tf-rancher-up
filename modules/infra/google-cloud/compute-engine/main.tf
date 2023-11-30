@@ -37,6 +37,7 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_firewall" "default" {
+  count   = var.firewall == true ? 1 : 0
   name    = "${var.prefix}-firewall"
   network = var.vpc == null ? resource.google_compute_network.vpc[0].name : var.vpc
 
@@ -52,7 +53,8 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports    = ["30000-32767"]
+    # https://docs.rke2.io/install/requirements#inbound-network-rules
+    ports = ["30000-32767"]
   }
 
   allow {
@@ -65,6 +67,18 @@ resource "google_compute_firewall" "default" {
     protocol = "udp"
     # https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-requirements/port-requirements
     ports = ["8472"]
+  }
+
+  allow {
+    protocol = "tcp"
+    # https://docs.rke2.io/install/requirements#inbound-network-rules
+    ports = ["9345", "6443", "10250", "2379", "2380", "2381", "9099"]
+  }
+
+  allow {
+    protocol = "udp"
+    # https://docs.rke2.io/install/requirements#inbound-network-rules
+    ports = ["8472", "8472", "51820", "51821"]
   }
 
   source_ranges = ["0.0.0.0/0"]

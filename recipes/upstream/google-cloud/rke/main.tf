@@ -7,6 +7,7 @@ module "google-compute-engine-upstream-cluster" {
   #  ssh_public_key_path = var.ssh_public_key_path
   #  vpc                 = var.vpc
   #  subnet              = var.subnet
+  #  firewall            = var.firewall
   #  instance_count      = var.instance_count
   #  instance_disk_size  = var.instance_disk_size
   #  disk_type           = var.disk_type
@@ -81,8 +82,9 @@ module "rancher_install" {
   kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
+  rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
-  # rancher_version                = var.rancher_version
+  #  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
     "replicas: 3",
     "ingress.ingressClassName: nginx",
