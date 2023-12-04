@@ -24,7 +24,7 @@ cd recipes/upstream/google-cloud/rke2
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
 ```bash
-terraform init -upgrade ; terraform apply -target=module.rke2-first-server.tls_private_key.ssh_private_key -target=module.rke2-first-server.local_file.private_key_pem -target=module.rke2-first-server.local_file.public_key_pem -auto-approve ; terraform apply -auto-approve ; terraform apply -auto-approve
+terraform init -upgrade ; terraform apply -target=module.rke2-first-server.tls_private_key.ssh_private_key -target=module.rke2-first-server.local_file.private_key_pem -target=module.rke2-first-server.local_file.public_key_pem -auto-approve ; terraform apply -auto-approve ; terraform apply -target=module.rancher_install -auto-approve
 ```
 
 - Destroy the resources when finished
@@ -53,7 +53,6 @@ See full argument list for each module in use:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.0.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_null"></a> [null](#provider\_null) | n/a |
 | <a name="provider_ssh"></a> [ssh](#provider\_ssh) | 2.6.0 |
@@ -74,10 +73,8 @@ See full argument list for each module in use:
 |------|------|
 | [local_file.kube-config-yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.kube-config-yaml-backup](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [null_resource.customize-rke2-nginx-ingress-controller](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.wait-k8s-services-startup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [ssh_resource.retrieve-kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
-| [kubernetes_service.rke2-ingress-nginx-controller-svc](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/service) | data source |
 | [local_file.ssh-private-key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
