@@ -21,7 +21,7 @@ variable "prefix" {
   default     = null
 }
 
-variable "instance_count" {
+variable "server_instance_count" {
   type        = number
   description = "Number of server EC2 instances to create"
   default     = null
