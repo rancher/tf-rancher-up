@@ -3,11 +3,6 @@ locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
 }
 
-data "aws_subnet" "subnet" {
-  count = var.subnet_id != null ? 1 : 0
-  id    = var.subnet_id
-}
-
 resource "tls_private_key" "ssh_private_key" {
   count     = var.create_ssh_key_pair ? 1 : 0
   algorithm = "ED25519"
@@ -28,7 +23,7 @@ resource "aws_key_pair" "key_pair" {
 
 resource "aws_security_group" "sg_allowall" {
   count  = var.create_security_group ? 1 : 0
-  vpc_id = var.subnet_id != null ? data.aws_subnet.subnet[0].vpc_id : null
+  vpc_id = var.vpc_id
 
   name        = "${var.prefix}-allow-nodes"
   description = "Allow traffic for nodes in the cluster"
@@ -105,16 +100,25 @@ resource "aws_instance" "instance" {
 
     connection {
       type        = "ssh"
-      host        = self.public_ip
+      host        = var.bastion_host == null ? self.public_ip : self.private_ip
       user        = var.ssh_username
       private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_pem : file(pathexpand(var.ssh_key_pair_path))
+
+      bastion_host        = var.bastion_host != null ? var.bastion_host.address : null
+      bastion_user        = var.bastion_host != null ? var.bastion_host.user : null
+      bastion_private_key = var.bastion_host != null ? file(var.bastion_host.ssh_key_path) : null
     }
   }
 
-  tags = {
-    Name    = "${var.prefix}-${count.index + var.tag-begin}"
-    Creator = var.prefix
-  }
+  tags = merge(
+    {
+      Name    = "${var.prefix}-${count.index + var.tag-begin}"
+      Creator = var.prefix
+    },
+    var.tags
+  )
+
+  iam_instance_profile = var.iam_instance_profile
 
   lifecycle {
     ignore_changes = [instance_market_options, user_data, tags]

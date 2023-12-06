@@ -20,14 +20,26 @@ resource "rke_cluster" "this" {
   }
 
   dynamic "nodes" {
-    for_each = var.rancher_nodes != null ? var.rancher_nodes : []
-    content {
-      address          = nodes.value.public_ip
-      internal_address = nodes.value.private_ip
-      role             = nodes.value.roles
-      user             = var.node_username
-      ssh_key          = var.dependency != null ? file(pathexpand(var.ssh_private_key_path)) : null
+    for_each = {
+      for index, node in var.rancher_nodes :
+      index => node
     }
+    content {
+      hostname_override = nodes.value.hostname_override != null ? nodes.value.hostname_override : null
+      address           = nodes.value.public_ip != null && nodes.value.public_ip != "" ? nodes.value.public_ip : nodes.value.private_ip
+      internal_address  = nodes.value.public_ip != null && nodes.value.public_ip != "" ? nodes.value.private_ip : null
+      role              = nodes.value.roles
+      user              = var.node_username
+      ssh_key           = nodes.value.ssh_key != null ? nodes.value.ssh_key : null
+      ssh_key_path      = nodes.value.ssh_key_path != null ? nodes.value.ssh_key_path : null
+    }
+  }
+
+  bastion_host {
+    address      = var.bastion_host != null ? var.bastion_host.address : ""
+    user         = var.bastion_host != null ? var.bastion_host.user : ""
+    ssh_key_path = var.bastion_host != null ? var.bastion_host.ssh_key_path : ""
+    ssh_key      = var.bastion_host != null ? var.bastion_host.ssh_key : ""
   }
 
   kubernetes_version = var.kubernetes_version
@@ -50,6 +62,13 @@ resource "rke_cluster" "this" {
     http_port    = var.ingress_http_port
     https_port   = var.ingress_https_port
     network_mode = var.ingress_network_mode
+  }
+
+  dynamic "cloud_provider" {
+    for_each = var.cloud_provider != null ? [1] : []
+    content {
+      name = var.cloud_provider
+    }
   }
 }
 

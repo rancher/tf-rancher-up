@@ -33,9 +33,13 @@ module "rke" {
 
   rancher_nodes = [for instance_ips in module.upstream-cluster.instance_ips :
     {
-      public_ip  = instance_ips.public_ip,
-      private_ip = instance_ips.private_ip,
-      roles      = ["etcd", "controlplane", "worker"]
+      public_ip         = instance_ips.public_ip,
+      private_ip        = instance_ips.private_ip,
+      roles             = ["etcd", "controlplane", "worker"],
+      ssh_key_path      = module.upstream-cluster.ssh_key_path
+      ssh_key           = null
+      node_username     = module.upstream-cluster.node_username
+      hostname_override = null
     }
   ]
 }

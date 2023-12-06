@@ -54,7 +54,6 @@ variable "instance_security_group_name" {
 variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
-  default     = null
 }
 
 variable "master_nodes_count" {
@@ -117,6 +116,17 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
+variable "bastion_host" {
+  type = object({
+    address      = string
+    user         = string
+    ssh_key_path = string
+    ssh_key      = string
+  })
+  default     = null
+  description = "Bastion host configuration to access the RKE nodes"
+}
+
 variable "ssh_username" {
   type        = string
   description = "Username used for SSH with sudo access"
@@ -145,4 +155,33 @@ variable "worker_nodes_instance_disk_size" {
   type        = string
   description = "Disk size used for all worker nodes (in GB)"
   default     = "80"
+}
+
+variable "dependency" {
+  description = "An optional variable to add a dependency from another resource (not used)"
+  default     = null
+}
+
+variable "master_nodes_iam_instance_profile" {
+  description = "Specify IAM instance profile to attach to master nodes"
+  default     = null
+  type        = string
+}
+
+variable "worker_nodes_iam_instance_profile" {
+  description = "Specify IAM instance profile to attach to worker nodes"
+  default     = null
+  type        = string
+}
+
+variable "tags" {
+  description = "User-provided tags for the resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "cloud_provider" {
+  description = "Specify the cloud provider name"
+  type        = string
+  default     = null
 }
