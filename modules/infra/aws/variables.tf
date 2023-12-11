@@ -123,6 +123,7 @@ variable "bastion_host" {
   type = object({
     address      = string
     user         = string
+    ssh_key      = string
     ssh_key_path = string
   })
   default     = null

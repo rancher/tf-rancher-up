@@ -106,7 +106,7 @@ resource "aws_instance" "instance" {
 
       bastion_host        = var.bastion_host != null ? var.bastion_host.address : null
       bastion_user        = var.bastion_host != null ? var.bastion_host.user : null
-      bastion_private_key = var.bastion_host != null ? file(var.bastion_host.ssh_key_path) : null
+      bastion_private_key = var.bastion_host != null ? var.bastion_host.ssh_key : null
     }
   }
 
