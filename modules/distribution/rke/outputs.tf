@@ -15,8 +15,8 @@ output "credentials" {
   value = {
     host = rke_cluster.this.api_server_url
 
-    client_certificate = rke_cluster.this.client_cert
-    client_key = rke_cluster.this.client_key
+    client_certificate     = rke_cluster.this.client_cert
+    client_key             = rke_cluster.this.client_key
     cluster_ca_certificate = rke_cluster.this.ca_crt
   }
 }
