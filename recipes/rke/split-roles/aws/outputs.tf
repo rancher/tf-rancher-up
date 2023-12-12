@@ -12,3 +12,7 @@ output "kubeconfig_file" {
 output "kube_config_yaml" {
   value = module.rke.kube_config_yaml
 }
+
+output "credentials" {
+  value = module.rke.credentials
+}
