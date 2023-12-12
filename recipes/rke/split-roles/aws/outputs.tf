@@ -8,3 +8,7 @@ output "dependency" {
 output "kubeconfig_file" {
   value = module.rke.rke_kubeconfig_filename
 }
+
+output "kube_config_yaml" {
+  value = module.rke.kube_config_yaml
+}
