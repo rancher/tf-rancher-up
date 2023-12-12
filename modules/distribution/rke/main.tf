@@ -73,12 +73,14 @@ resource "rke_cluster" "this" {
 }
 
 resource "local_file" "kube_config_yaml" {
+  count           = var.create_kubeconfig_file ? 1 : 0
   filename        = local.kc_file
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"
 }
 
 resource "local_file" "kube_config_yaml_backup" {
+  count           = var.create_kubeconfig_file ? 1 : 0
   filename        = local.kc_file_backup
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"

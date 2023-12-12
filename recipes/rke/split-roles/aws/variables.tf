@@ -185,3 +185,8 @@ variable "cloud_provider" {
   type        = string
   default     = null
 }
+
+variable "create_kubeconfig_file" {
+  description = "Boolean flag to generate a kubeconfig file (mostly used for dev only)"
+  default     = true
+}

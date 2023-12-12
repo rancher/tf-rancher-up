@@ -78,14 +78,15 @@ locals {
 }
 
 module "rke" {
-  source               = "../../../../modules/distribution/rke"
-  prefix               = var.prefix
-  node_username        = var.ssh_username
-  kube_config_path     = var.kube_config_path
-  kube_config_filename = var.kube_config_filename
-  kubernetes_version   = var.kubernetes_version
-  bastion_host         = var.bastion_host
-  cloud_provider       = var.cloud_provider
+  source                 = "../../../../modules/distribution/rke"
+  prefix                 = var.prefix
+  node_username          = var.ssh_username
+  create_kubeconfig_file = var.create_kubeconfig_file
+  kube_config_path       = var.kube_config_path
+  kube_config_filename   = var.kube_config_filename
+  kubernetes_version     = var.kubernetes_version
+  bastion_host           = var.bastion_host
+  cloud_provider         = var.cloud_provider
 
   rancher_nodes = concat(local.master_nodes, local.worker_nodes)
 }
