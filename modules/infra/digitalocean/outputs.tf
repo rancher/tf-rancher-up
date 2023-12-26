@@ -25,5 +25,5 @@ output "ssh_key_path" {
 }
 
 output "ssh_key_pair_name" {
-  value = var.create_ssh_key_pair ? digitalocean_ssh_key.key_pair.name : var.ssh_key_pair_name
+  value = var.create_ssh_key_pair ? digitalocean_ssh_key.key_pair[0].name : var.ssh_key_pair_name
 }

@@ -13,3 +13,11 @@ output "rancher_hostname" {
 output "rancher_password" {
   value = var.rancher_password
 }
+
+output "ssh_key_path" {
+  value = module.upstream-cluster.ssh_key_path
+}
+
+output "ssh_key_pair_name" {
+  value = module.upstream-cluster.ssh_key_pair_name
+}
