@@ -49,6 +49,7 @@ variable "create_ssh_key_pair" {
 variable "ssh_key_pair_name" {
   type        = string
   description = "Specify the SSH key name to use (that's already present in DigitalOcean)"
+  default     = null
 }
 
 variable "ssh_key_pair_path" {
@@ -57,13 +58,11 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
-variable "ssh_private_key_path" {
+variable "generated_ssh_private_key_path" {
   type        = string
   description = "Path to write the generated SSH private key"
   default     = null
 }
-
-
 variable "region" {
   description = "Region that droplets will be deployed to"
   type        = string

@@ -1,6 +1,6 @@
 # Condition to use an existing keypair if a keypair name and file is also provided
 locals {
-  new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  new_key_pair_path = var.generated_ssh_private_key_path != null ? var.generated_ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -22,20 +22,21 @@ resource "digitalocean_ssh_key" "key_pair" {
 }
 
 resource "digitalocean_droplet" "droplet" {
-  count     = var.droplet_count
-  image     = data.digitalocean_image.ubuntu.id
-  size      = var.droplet_size
-  name      = "${var.prefix}-${count.index + var.tag_begin}"
-  tags      = ["user:${var.user_tag}", "creator:${var.prefix}"]
-  ssh_keys  = var.create_ssh_key_pair ? [digitalocean_ssh_key.key_pair.id] : [data.digitalocean_ssh_key.terraform.id]
-  user_data = var.user_data
-  region    = var.region
+  count      = var.droplet_count
+  image      = data.digitalocean_image.ubuntu.id
+  size       = var.droplet_size
+  name       = "${var.prefix}-${count.index + var.tag_begin}"
+  tags       = ["user:${var.user_tag}", "creator:${var.prefix}"]
+  ssh_keys   = var.create_ssh_key_pair ? [digitalocean_ssh_key.key_pair[0].id] : [data.digitalocean_ssh_key.terraform.id]
+  user_data  = var.user_data
+  region     = var.region
+  depends_on = [tls_private_key.ssh_private_key, local_file.private_key_pem, digitalocean_ssh_key.key_pair]
 
   connection {
     host        = self.ipv4_address
     user        = "root"
     type        = "ssh"
-    private_key = file(var.ssh_private_key_path)
+    private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : file(pathexpand(var.ssh_key_pair_path))
     timeout     = "2m"
   }
 
