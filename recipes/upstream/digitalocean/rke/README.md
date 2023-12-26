@@ -21,7 +21,8 @@ cd recipes/upstream/digitalocean/rke
 export TF_VAR_do_token=dop_v1_xxxxxxxxx
 ```
 - Alternatively, you can uncomment `do_token` in `terraform.tfvars` and input the required auth token there.
-- Modify the `ssh_key_name` variable to contain the name of a public ssh key stored in DigitalOcean and the `ssh_private_key_path` variable to contain the local path to it's private key.
+- SSH keys will be automatically created if `create_ssh_key_pair` is set to `true` (default).
+- Modify the `ssh_key_pair_name` variable to contain the name of a public ssh key stored in DigitalOcean and the `ssh_key_pair_path` variable to contain the local path to it's private key when `create_ssh_key_pair` is set to `false`.
 - If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.
 - Modify the `user_tag` variable so that it contains your first initial and last name.
 - There are more optional variables which can be tweaked under `terraform.tfvars`.

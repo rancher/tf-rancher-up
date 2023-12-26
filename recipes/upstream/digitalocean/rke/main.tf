@@ -25,9 +25,12 @@ module "rke" {
 
   rancher_nodes = [for droplet_ips in module.upstream-cluster.droplet_ips :
     {
-      public_ip  = droplet_ips.public_ip,
-      private_ip = droplet_ips.private_ip,
-      roles      = ["etcd", "controlplane", "worker"]
+      public_ip         = droplet_ips.public_ip,
+      private_ip        = droplet_ips.private_ip,
+      roles             = ["etcd", "controlplane", "worker"]
+      ssh_key_path      = module.upstream-cluster.ssh_key_path
+      ssh_key           = null
+      hostname_override = null
     }
   ]
 }
