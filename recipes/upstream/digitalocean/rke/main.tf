@@ -1,14 +1,15 @@
 module "upstream-cluster" {
-  source              = "../../../../modules/infra/digitalocean"
-  prefix              = var.prefix
-  do_token            = var.do_token
-  droplet_count       = var.droplet_count
-  droplet_size        = var.droplet_size
-  user_tag            = var.user_tag
-  ssh_key_pair_name   = var.ssh_key_pair_name
-  ssh_key_pair_path   = var.ssh_key_pair_path
-  region              = var.region
-  create_ssh_key_pair = var.create_ssh_key_pair
+  source               = "../../../../modules/infra/digitalocean"
+  prefix               = var.prefix
+  do_token             = var.do_token
+  droplet_count        = var.droplet_count
+  droplet_size         = var.droplet_size
+  user_tag             = var.user_tag
+  ssh_key_pair_name    = var.ssh_key_pair_name
+  ssh_key_pair_path    = var.ssh_key_pair_path
+  region               = var.region
+  create_ssh_key_pair  = var.create_ssh_key_pair
+  ssh_private_key_path = var.ssh_private_key_path
   user_data = templatefile("${path.module}/cloud-config.yaml",
   {})
 }

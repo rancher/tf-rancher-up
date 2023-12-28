@@ -1,6 +1,6 @@
 # Condition to use an existing keypair if a keypair name and file is also provided
 locals {
-  new_key_pair_path = var.generated_ssh_private_key_path != null ? var.generated_ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -10,7 +10,7 @@ resource "tls_private_key" "ssh_private_key" {
 
 resource "local_file" "private_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.new_key_pair_path
+  filename        = pathexpand(local.new_key_pair_path)
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
   file_permission = "0600"
 }
