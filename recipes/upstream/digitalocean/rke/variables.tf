@@ -56,7 +56,7 @@ variable "ssh_key_pair_path" {
   description = "Path to the SSH private key used as the key pair (that's already present in DigitalOcean)"
   default     = null
 }
-variable "generated_ssh_private_key_path" {
+variable "ssh_private_key_path" {
   type        = string
   description = "Path to write the generated SSH private key"
   default     = null
