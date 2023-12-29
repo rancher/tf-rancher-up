@@ -1,6 +1,8 @@
 # Upstream | Google Cloud | Compute Engine x RKE
 
-This module is used to establish a Rancher (local) managment cluster using [Google Compute Engine](https://cloud.google.com/compute?hl=en) and [RKE](https://rke.docs.rancher.com/).
+This module is used to establish a Rancher (local) management cluster using [Google Compute Engine](https://cloud.google.com/compute?hl=en) and [RKE](https://rke.docs.rancher.com/).
+
+Documentation can be found [here](./docs.md).
 
 ## Usage
 

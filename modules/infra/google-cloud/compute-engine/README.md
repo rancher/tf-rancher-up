@@ -2,6 +2,8 @@
 
 Terraform modules to provide VM instances - Google Compute Engine.
 
+Documentation can be found [here](./docs.md).
+
 ## Example
 
 #### Launch three identical VM instances (one per zone)
