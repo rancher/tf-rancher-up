@@ -72,9 +72,9 @@ variable "ssh_private_key_path" {
 
 # variable "subnet" {}
 
-# variable "firewall" {}
+# variable "create_firewall" {}
 
-# variable "instance_count" {}
+variable "instance_count" {}
 
 # variable "instance_disk_size" {}
 
@@ -89,6 +89,11 @@ variable "ssh_username" {}
 variable "startup_script" {
   description = "Script that will run when the VMs start"
   default     = "export DEBIAN_FRONTEND=noninteractive ; curl -sSL https://releases.rancher.com/install-docker/20.10.sh | sh - ; sudo usermod -aG docker ubuntu ; newgrp docker ; sudo sysctl -w net.bridge.bridge-nf-call-iptables=1 ; sleep 180"
+}
+
+variable "waiting_time" {
+  description = "Waiting time (in seconds)"
+  default     = 180
 }
 
 # variable "kubernetes_version" {}
@@ -116,3 +121,13 @@ variable "rancher_password" {
 }
 
 # variable "rancher_version" {}
+
+variable "rancher_ingress_class_name" {
+  description = "Rancher ingressClassName value"
+  default     = "nginx"
+}
+
+variable "rancher_service_type" {
+  description = "Rancher serviceType value"
+  default     = "ClusterIP"
+}

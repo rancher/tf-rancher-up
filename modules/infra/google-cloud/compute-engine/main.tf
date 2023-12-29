@@ -37,7 +37,7 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_firewall" "default" {
-  count   = var.firewall == true ? 1 : 0
+  count   = var.create_firewall == true ? 1 : 0
   name    = "${var.prefix}-firewall"
   network = var.vpc == null ? resource.google_compute_network.vpc[0].name : var.vpc
 

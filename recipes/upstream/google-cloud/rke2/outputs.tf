@@ -1,9 +1,9 @@
 output "instances_private_ip" {
-  value = concat([module.rke2-first-server.instances_public_ip], [module.rke2-additional-servers.instances_public_ip])
+  value = concat([module.rke2-first-server.instances_private_ip], [module.rke2-additional-servers.instances_private_ip])
 }
 
 output "instances_public_ip" {
-  value = concat([module.rke2-first-server.instances_private_ip], [module.rke2-additional-servers.instances_private_ip])
+  value = concat([module.rke2-first-server.instances_public_ip], [module.rke2-additional-servers.instances_public_ip])
 }
 
 # Uncomment for debugging purposes
@@ -25,8 +25,3 @@ output "rancher_password" {
   description = "Rancher Initial Custom Password"
   value       = var.rancher_password
 }
-
-# Uncomment for debugging purposes
-#output "ingress_nginx_stats" {
-#  value = data.kubernetes_service.ingress-nginx-controller-svc.spec.0.port.1.node_port
-#}

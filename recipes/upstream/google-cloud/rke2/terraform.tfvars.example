@@ -30,7 +30,7 @@ region = "<REGION>"
 # subnet = null
 
 ## -- Google Firewall used for all resources
-# firewall = null
+# create_firewall = null
 
 ## -- The number of nodes
 # instance_count = 1
@@ -56,6 +56,9 @@ ssh_username = "ubuntu"
 
 ## -- Script that will run when the VMs start
 # startup_script = ""
+
+## -- Waiting time (in seconds)
+# waiting_time = 180
 
 ## -- RKE2 version
 # rke2_version = "v1.28.3+rke2r2"
@@ -83,3 +86,9 @@ rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
+
+## -- Rancher ingressClassName value
+# rancher_ingress_class_name = "nginx"
+
+## -- Rancher serviceType value
+# rancher_service_type = "ClusterIP"
