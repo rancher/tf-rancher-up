@@ -14,10 +14,19 @@ output "instance_ips" {
   value = [
     for i in aws_instance.instance[*] :
     {
-      public_ip  = i.public_ip
-      private_ip = i.private_ip
+      public_ip   = i.public_ip
+      private_ip  = i.private_ip
+      private_dns = i.private_dns
     }
   ]
+}
+
+output "node_username" {
+  value = var.ssh_username
+}
+
+output "ssh_key" {
+  value = var.create_ssh_key_pair ? local_file.private_key_pem[0] : file(var.ssh_key_pair_path)
 }
 
 output "ssh_key_path" {

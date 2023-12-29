@@ -1,4 +1,3 @@
-
 # Recipes
 
 Choose a recipe for deployment from here.
@@ -20,5 +19,3 @@ Select the infrastructure/cloud provider, Kubernetes distribution and go through
 ## Documentation
 
 Please refer the project main [Documentation](./../README.md)
-
-

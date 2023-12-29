@@ -1,65 +1,40 @@
-# Terraform | Google Compute Engine
+# Upstream | Google Cloud | Compute Engine x RKE
 
-Terraform modules to provide VM instances - Google Compute Engine.
+This module is used to establish a Rancher (local) management cluster using [Google Compute Engine](https://cloud.google.com/compute?hl=en) and [RKE](https://rke.docs.rancher.com/).
 
 Documentation can be found [here](./docs.md).
 
+## Usage
+
+```bash
+git clone https://github.com/rancherlabs/tf-rancher-up.git
+cd recipes/upstream/google-cloud/rke
 ```
 
-#### Launch two identical VM instances (one per zone) and a dedicated new VPC/Subnet
+- Copy `./terraform.tfvars.exmaple` to `./terraform.tfvars`
+- Edit `./terraform.tfvars`
+  - Update the required variables:
+    -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
+    -  `project_id` to specify in which Project the resources will be created
+    -  `region` to suit your region
+    -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
+    -  `startup_script` for installing Docker if you are not using a ready-made image (only required if the user the VMs were installed under is not "ubuntu")
+    -  `rancher_hostname` in order to reach the Rancher console via DNS name
+    -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
+- Make sure you are logged into your Google Account from your local Terminal. See the preparatory steps [here](../../../../modules/infra/google-cloud/README.md).
 
-```terraform
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "4.75.0"
-    }
-  }
+**NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
-  required_version = ">= 0.14"
-}
-
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
-variable "prefix" {
-  type    = string
-  default = "example-rancher"
-}
-
-variable "project_id" {
-  type    = string
-  default = "<PROJECT_ID>"
-
-  validation {
-    condition     = var.project_id != "<PROJECT_ID>"
-    error_message = "Remember to replace the default value of the variable."
-  }
-}
-
-variable "region" {
-  type    = string
-  default = "<REGION>"
-
-  validation {
-    condition     = var.region != "<REGION>"
-    error_message = "Remember to replace the default value of the variable."
-  }
-}
-
-variable "instance_count" {
-  default     = 3
-  description = "The number of nodes"
-}
-
-module "google-compute-engine" {
-  source         = "../../compute-engine"
-  prefix         = var.prefix
-  project_id     = var.project_id
-  region         = var.region
-  instance_count = var.instance_count
-}
+```bash
+terraform init -upgrade ; terraform apply -target=module.google-compute-engine-upstream-cluster.tls_private_key.ssh_private_key -target=module.google-compute-engine-upstream-cluster.local_file.private_key_pem -target=module.google-compute-engine-upstream-cluster.local_file.public_key_pem -auto-approve ; terraform apply -target=module.google-compute-engine-upstream-cluster -target=helm_release.ingress-nginx -target=module.rke -auto-approve ; terraform state rm module.rke.local_file.kube_config_yaml ; terraform apply -auto-approve
 ```
+
+- Destroy the resources when finished
+```bash
+terraform destroy -target=helm_release.ingress-nginx -target=module.rancher_install -auto-approve ; terraform destroy -auto-approve
+```
+
+See full argument list for each module in use:
+  - Google Compute Engine: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/gke
+  - RKE: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/rke
+  - Rancher: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/rancher

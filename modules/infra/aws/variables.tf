@@ -49,6 +49,12 @@ variable "instance_count" {
   nullable    = false
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID to create the instance(s) in"
+  default     = null
+}
+
 variable "subnet_id" {
   type        = string
   description = "VPC Subnet ID to create the instance(s) in"
@@ -111,4 +117,27 @@ variable "spot_instances" {
 variable "user_data" {
   description = "User data content for EC2 instance(s)"
   default     = null
+}
+
+variable "bastion_host" {
+  type = object({
+    address      = string
+    user         = string
+    ssh_key      = string
+    ssh_key_path = string
+  })
+  default     = null
+  description = "Bastion host configuration to access the instances"
+}
+
+variable "iam_instance_profile" {
+  type        = string
+  description = "Specify IAM Instance Profile to assign to the instances/nodes"
+  default     = null
+}
+
+variable "tags" {
+  description = "User-provided tags for the resources"
+  type        = map(string)
+  default     = {}
 }
