@@ -9,8 +9,8 @@ output "rancher_bootstrap_password" {
   sensitive   = true
 }
 
-#output "rancher_admin_token" {
-#  description = "Rancher API token for the admin user"
-#  value       = rancher2_bootstrap.admin[0].token
-#  sensitive   = true
-#}
+output "rancher_admin_token" {
+  description = "Rancher API token for the admin user"
+  value       = rancher2_bootstrap.admin[0].token
+  sensitive   = true
+}
