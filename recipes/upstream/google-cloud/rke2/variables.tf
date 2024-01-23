@@ -129,8 +129,8 @@ variable "kube_config_filename" {
 
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "rancher_hostname" {}
@@ -144,7 +144,11 @@ variable "rancher_password" {
   }
 }
 
-# variable "rancher_version" {}
+variable "rancher_version" {
+  description = "Rancher version to install"
+  type        = string
+  default     = null
+}
 
 variable "rancher_ingress_class_name" {
   description = "Rancher ingressClassName value"
@@ -155,3 +159,4 @@ variable "rancher_service_type" {
   description = "Rancher serviceType value"
   default     = "ClusterIP"
 }
+
