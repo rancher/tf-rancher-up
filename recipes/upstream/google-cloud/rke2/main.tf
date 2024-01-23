@@ -36,7 +36,7 @@ module "rke2-first-server" {
   startup_script = module.rke2-first.rke2_user_data
 }
 
-# Create the config.yaml for the RKE2 additional servers
+# Create the config.yaml for the RKE2 additional servers
 module "rke2-additional" {
   source          = "../../../../modules/distribution/rke2"
   rke2_token      = module.rke2-first.rke2_token
@@ -121,7 +121,7 @@ module "rancher_install" {
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
-  #  rancher_version            = var.rancher_version
+  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
     "replicas: ${var.instance_count}",
     "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
