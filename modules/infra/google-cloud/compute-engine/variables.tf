@@ -89,6 +89,11 @@ variable "subnet" {
   default     = null
 }
 
+variable "create_firewall" {
+  description = "Google Firewall used for all resources"
+  default     = true
+}
+
 variable "instance_count" {
   default     = 3
   description = "The number of nodes"
