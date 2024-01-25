@@ -33,7 +33,7 @@ region = "<REGION>"
 # create_firewall = null
 
 ## -- The number of nodes
-instance_count = 3
+# instance_count = 1
 
 ## -- Size of the disk attached to each node, specified in GB
 # instance_disk_size = 50
@@ -60,8 +60,23 @@ ssh_username = "ubuntu"
 ## -- Waiting time (in seconds)
 # waiting_time = 180
 
-## -- Override the default k8s version used by RKE
-# kubernetes_version = "v1.24.10-rancher4-1"
+## -- RKE2 version
+# rke2_version = "v1.28.3+rke2r2"
+
+## -- RKE2 token, override the programmatically generated token
+# rke2_token = "string here"
+
+## -- RKE2 custom config file
+# rke2_config = "<RKE2_CONFIG_FILE>"
+
+## -- RKE2 KUBECONFIG file path
+# kube_config_path = "<KUBE_CONFIG_PATH>"
+
+## -- RKE2 KUBECONFIG file
+# kube_config_filename = "<KUBE_CONFIG_FILENAME>"
+
+## -- Bootstrap the Rancher installation
+# bootstrap_rancher = false
 
 ## -- Hostname to set when installing Rancher
 rancher_hostname = "rancher"
