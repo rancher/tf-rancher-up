@@ -98,15 +98,15 @@ variable "waiting_time" {
 
 # variable "kubernetes_version" {}
 
-variable "bootstrap_rancher" {
-  description = "Bootstrap the Rancher installation"
-  default     = false
-  type        = bool
-}
-
 variable "ingress_provider" {
   description = "Ingress controller provider"
-  default     = "none"
+  default     = "nginx"
+}
+
+variable "bootstrap_rancher" {
+  description = "Bootstrap the Rancher installation"
+  type        = bool
+  default     = true
 }
 
 variable "rancher_hostname" {}
@@ -120,14 +120,8 @@ variable "rancher_password" {
   }
 }
 
-# variable "rancher_version" {}
-
-variable "rancher_ingress_class_name" {
-  description = "Rancher ingressClassName value"
-  default     = "nginx"
-}
-
-variable "rancher_service_type" {
-  description = "Rancher serviceType value"
-  default     = "ClusterIP"
+variable "rancher_version" {
+  description = "Rancher version to install"
+  type        = string
+  default     = null
 }

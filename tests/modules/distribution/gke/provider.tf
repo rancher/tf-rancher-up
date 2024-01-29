@@ -20,5 +20,5 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  config_path = "./${var.prefix}_kube_config.yml"
+  config_path = "${path.cwd}/${var.prefix}_kube_config.yml"
 }

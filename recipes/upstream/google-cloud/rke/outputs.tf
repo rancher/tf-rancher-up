@@ -6,13 +6,9 @@ output "instances_public_ip" {
   value = module.google-compute-engine-upstream-cluster.instances_public_ip
 }
 
-locals {
-  rancher_url = var.rancher_hostname != "" ? "https://${module.rancher_install.rancher_hostname}:${data.kubernetes_service.ingress-nginx-controller-svc.spec.0.port.1.node_port}" : "https://rancher:${data.kubernetes_service.ingress-nginx-controller-svc.spec.0.port.1.node_port}"
-}
-
 output "rancher_url" {
   description = "Rancher URL"
-  value       = local.rancher_url
+  value       = "https://${module.rancher_install.rancher_hostname}"
 }
 
 output "rancher_password" {

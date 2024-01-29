@@ -71,9 +71,3 @@ rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
-
-## -- Rancher ingressClassName value
-# rancher_ingress_class_name = "nginx"
-
-## -- Rancher serviceType value
-# rancher_service_type = "ClusterIP"

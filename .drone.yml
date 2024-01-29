@@ -37,5 +37,11 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_key
       AWS_DEFAULT_REGION: us-east-1
+      BASE64_GOOGLE_APPLICATION_CREDENTIALS:
+        from_secret: BASE64_GOOGLE_APPLICATION_CREDENTIALS
+      GOOGLE_PROJECT:
+        from_secret: GOOGLE_PROJECT_ID
     commands:
+      - echo $BASE64_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > $DRONE_WORKSPACE/drone-ci_sa.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$DRONE_WORKSPACE/drone-ci_sa.json"
       - "./scripts/run_sanity_checks.sh tests"
