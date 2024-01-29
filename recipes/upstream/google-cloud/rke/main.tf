@@ -39,56 +39,39 @@ module "rke" {
 
   rancher_nodes = [for instance_ips in module.google-compute-engine-upstream-cluster.instance_ips :
     {
-      public_ip  = instance_ips.public_ip,
-      private_ip = instance_ips.public_ip,
-      roles      = ["etcd", "controlplane", "worker"]
+      public_ip         = instance_ips.public_ip,
+      private_ip        = instance_ips.public_ip,
+      roles             = ["etcd", "controlplane", "worker"],
+      ssh_key_path      = local.ssh_private_key_path,
+      ssh_key           = null,
+      hostname_override = null
     }
   ]
 }
 
-resource "helm_release" "ingress-nginx" {
-  depends_on       = [module.rke]
-  name             = "ingress-nginx"
-  repository       = "https://kubernetes.github.io/ingress-nginx"
-  chart            = "ingress-nginx"
-  create_namespace = true
-  namespace        = "ingress-nginx"
-
-  set {
-    name  = "controller.service.type"
-    value = "NodePort"
-  }
-
-  set {
-    name  = "controller.replicaCount"
-    value = var.instance_count
-  }
-}
-
-data "kubernetes_service" "ingress-nginx-controller-svc" {
-  metadata {
-    name      = "ingress-nginx-controller"
-    namespace = resource.helm_release.ingress-nginx.namespace
+resource "null_resource" "wait-k8s-services-startup" {
+  depends_on = [module.rke]
+  provisioner "local-exec" {
+    command = "sleep ${var.waiting_time}"
   }
 }
 
 locals {
   kubeconfig_file  = "${path.cwd}/${var.prefix}_kube_config.yml"
   rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", module.google-compute-engine-upstream-cluster.instances_public_ip[0], "sslip.io"]) : join(".", ["rancher", module.google-compute-engine-upstream-cluster.instances_public_ip[0], "sslip.io"])
+
 }
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = [data.kubernetes_service.ingress-nginx-controller-svc]
+  dependency                 = [null_resource.wait-k8s-services-startup]
   kubeconfig_file            = local.kubeconfig_file
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
-  #  rancher_version            = var.rancher_version
+  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
-    "replicas: ${var.instance_count}",
-    "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
-    "service.type: ${var.rancher_service_type}"
+    "replicas: ${var.instance_count}"
   ]
 }

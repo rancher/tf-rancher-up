@@ -130,7 +130,7 @@ variable "kube_config_filename" {
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "rancher_hostname" {}

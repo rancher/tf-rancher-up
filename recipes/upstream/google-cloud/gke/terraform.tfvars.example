@@ -46,10 +46,10 @@ region = "<REGION>"
 # instance_type = "e2-highmem-2"
 
 ## -- Hostname to set when installing Rancher
-# rancher_hostname = "rancher"
+rancher_hostname = "rancher"
 
 ## -- Password to set when installing Rancher
-# rancher_password = "at-least-12-characters"
+rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"

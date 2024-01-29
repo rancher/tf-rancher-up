@@ -1,0 +1,12 @@
+###### !! Required variables !! ######
+
+## -- The prefix used in front of all Google resources
+prefix = "<RESOURCES_PREFIX>"
+
+## -- The ID of the Google Project that will contain all created resources
+project_id = "<PROJECT_ID>"
+
+## -- Google Region to create the resources
+region = "<REGION>"
+
+#Ref. https://cloud.google.com/about/locations

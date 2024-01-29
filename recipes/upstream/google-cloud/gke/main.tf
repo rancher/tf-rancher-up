@@ -41,13 +41,18 @@ data "kubernetes_service" "ingress-nginx-controller-svc" {
   }
 }
 
+locals {
+  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"]) : join(".", ["rancher", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
+}
+
 module "rancher_install" {
-  source           = "../../../../modules/rancher"
-  dependency       = [data.kubernetes_service.ingress-nginx-controller-svc]
-  kubeconfig_file  = "${path.cwd}/${var.prefix}_kube_config.yml"
-  rancher_hostname = join(".", ["${var.rancher_hostname}", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
-  #  rancher_bootstrap_password = var.rancher_password
-  #  rancher_version            = var.rancher_version
+  source                     = "../../../../modules/rancher"
+  dependency                 = [data.kubernetes_service.ingress-nginx-controller-svc]
+  kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
+  rancher_hostname           = local.rancher_hostname
+  rancher_bootstrap_password = var.rancher_password
+  rancher_password           = var.rancher_password
+  rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
     "replicas: 3",
     "ingress.ingressClassName: nginx",

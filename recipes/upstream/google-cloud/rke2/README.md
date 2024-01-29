@@ -23,8 +23,6 @@ cd recipes/upstream/google-cloud/rke2
 
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
-**NB: Comment out the `rancher_admin_token` output located at path ../../../../modules/rancher/outputs.tf.**
-
 ```bash
 terraform init -upgrade ; terraform apply -target=module.rke2-first-server.tls_private_key.ssh_private_key -target=module.rke2-first-server.local_file.private_key_pem -target=module.rke2-first-server.local_file.public_key_pem -auto-approve ; terraform apply -auto-approve ; terraform apply -target=module.rancher_install -auto-approve
 ```
