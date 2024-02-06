@@ -102,11 +102,11 @@ resource "aws_instance" "instance" {
       type        = "ssh"
       host        = var.bastion_host == null ? self.public_ip : self.private_ip
       user        = var.ssh_username
-      private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_pem : file(pathexpand(var.ssh_key_pair_path))
+      private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_pem : (var.ssh_key_pair_path ? file(pathexpand(var.ssh_key_pair_path)) : var.ssh_key)
 
       bastion_host        = var.bastion_host != null ? var.bastion_host.address : null
       bastion_user        = var.bastion_host != null ? var.bastion_host.user : null
-      bastion_private_key = var.bastion_host != null ? var.bastion_host.ssh_key : null
+      bastion_private_key = var.bastion_host != null ? (var.bastion_host.ssh_key_path ? file(pathexpand(var.bastion_host.ssh_key_path)) : var.bastion_host.ssh_key) : null
     }
   }
 

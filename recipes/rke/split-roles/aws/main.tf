@@ -8,6 +8,7 @@ module "master_nodes" {
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
+  ssh_key                 = var.ssh_key
   ssh_username            = var.ssh_username
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
@@ -35,6 +36,7 @@ module "worker_nodes" {
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
+  ssh_key                 = var.ssh_key
   ssh_username            = var.ssh_username
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
@@ -58,8 +60,8 @@ locals {
       public_ip         = instance_ips.public_ip,
       private_ip        = instance_ips.private_ip,
       roles             = ["etcd", "controlplane"],
-      ssh_key_path      = module.master_nodes.ssh_key_path,
-      ssh_key           = null
+      ssh_key_path      = var.ssh_key_pair_path,
+      ssh_key           = var.ssh_key
       node_username     = module.master_nodes.node_username,
       hostname_override = instance_ips.private_dns
     }
@@ -69,8 +71,8 @@ locals {
       public_ip         = instance_ips.public_ip,
       private_ip        = instance_ips.private_ip,
       roles             = ["worker"],
-      ssh_key_path      = module.worker_nodes.ssh_key_path,
-      ssh_key           = null
+      ssh_key_path      = var.ssh_key_pair_path,
+      ssh_key           = var.ssh_key
       node_username     = module.worker_nodes.node_username
       hostname_override = instance_ips.private_dns
     }

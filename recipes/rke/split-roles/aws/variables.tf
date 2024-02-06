@@ -116,6 +116,13 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
+variable "ssh_key" {
+  type        = string
+  description = "Contents of the private key to connect to the instances."
+  default     = null
+  sensitive   = true
+}
+
 variable "bastion_host" {
   type = object({
     address      = string
