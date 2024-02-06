@@ -33,5 +33,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_k3s_server_user_data"></a> [k3s\_server\_user\_data](#output\_k3s\_server\_user\_data) | k3s server user data |
 | <a name="output_k3s_token"></a> [k3s\_token](#output\_k3s\_token) | Token generated for k3s |
-| <a name="output_k3s_user_data"></a> [k3s\_user\_data](#output\_k3s\_user\_data) | k3s server user data |
+| <a name="output_k3s_worker_user_data"></a> [k3s\_worker\_user\_data](#output\_k3s\_worker\_user\_data) | k3s worker user data |

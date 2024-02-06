@@ -32,6 +32,7 @@ No modules.
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | Specify the cloud provider name | `string` | `null` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name for the RKE cluster | `string` | `"rke-demo"` | no |
 | <a name="input_cluster_yaml"></a> [cluster\_yaml](#input\_cluster\_yaml) | cluster.yaml configuration file to apply to the cluster | `string` | `null` | no |
+| <a name="input_create_kubeconfig_file"></a> [create\_kubeconfig\_file](#input\_create\_kubeconfig\_file) | Boolean flag to generate a kubeconfig file (mostly used for dev only) | `bool` | `true` | no |
 | <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
 | <a name="input_ingress_http_port"></a> [ingress\_http\_port](#input\_ingress\_http\_port) | Specify the http port number to use with Ingress | `number` | `80` | no |
 | <a name="input_ingress_https_port"></a> [ingress\_https\_port](#input\_ingress\_https\_port) | Specify the https port number to use with Ingress | `number` | `443` | no |
@@ -56,5 +57,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_credentials"></a> [credentials](#output\_credentials) | n/a |
 | <a name="output_dependency"></a> [dependency](#output\_dependency) | n/a |
+| <a name="output_kube_config_yaml"></a> [kube\_config\_yaml](#output\_kube\_config\_yaml) | n/a |
 | <a name="output_rke_kubeconfig_filename"></a> [rke\_kubeconfig\_filename](#output\_rke\_kubeconfig\_filename) | Kubeconfig file location |
