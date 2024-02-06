@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
@@ -6,9 +6,9 @@ src_dirs=$(find modules recipes -type f -name "main.tf" -exec dirname {} \; | so
 
 for src_dir in $src_dirs; do
   echo "Generating docs in dir: $src_dir"
-  pushd "$src_dir" || exit
+  cd "$src_dir" || exit
   terraform-docs markdown . > docs.md
-  popd || exit
+  cd - || exit
 done
 
 echo "Generating docs successful"

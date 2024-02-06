@@ -80,6 +80,16 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
+# Used in CI/CD as we don't store the SSH key local. It would read from a secret and
+# the contents are passed on directly. Used when create_ssh_key_pair is false and
+# ssh_key_pair_name is null
+variable "ssh_key" {
+  type        = string
+  description = "Contents of the private key to connect to the instances."
+  default     = null
+  sensitive   = true
+}
+
 variable "ssh_private_key_path" {
   type        = string
   description = "Path to write the generated SSH private key"
