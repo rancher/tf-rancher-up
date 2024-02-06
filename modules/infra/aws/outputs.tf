@@ -26,7 +26,7 @@ output "node_username" {
 }
 
 output "ssh_key" {
-  value = var.create_ssh_key_pair ? local_file.private_key_pem[0] : file(var.ssh_key_pair_path)
+  value = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : (var.ssh_key_pair_path != null ? file(pathexpand(var.ssh_key_pair_path)) : var.ssh_key)
 }
 
 output "ssh_key_path" {
