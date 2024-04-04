@@ -1,0 +1,70 @@
+#------------- Rancher Server Configuration details -------------
+
+# Enter the Rancher server URL
+#rancher_url = ""
+
+# Enter the Rancher API token
+#rancher_api_key = ""
+
+# Enter the Rancher API secret
+#rancher_secret_key = ""
+
+#------------- AWS specific configuration -------------
+
+# Your AWS access key
+#aws_access_key = ""
+
+# Your AWS secret key
+#aws_secret_key = ""
+
+# Name for AWS credentails in Rancher
+#creds_name = ""
+
+# AWS region where instances will be created
+#aws_region = "" # Replace with the region you want your instance to be in.
+
+# Enter the VPC ID
+#vpc_id = ""
+
+# Enter the VPC zone (a/b/c)
+#vpc_zone = ""
+
+# Enter the subnet ID
+#subnet_id = ""
+
+# Enter the security group name (not ID sg-*)
+#aws_security_group_name = ""
+
+# SSH username
+#ssh_user = "ubuntu" # Replace with your SSH user
+
+# AMI you want to use
+#ami = "ami-03f4878755434977f" # Replace with your desired AMI ID
+
+# Enter the AWS ec2 instance type
+#aws_instance_type = "t3.medium" # Replace as per your requirement
+
+# Enter the AWS ec2 disk size
+#instance_disk_size = "10" # Replace as per your requirement
+
+#------------- Cluster configuration -------------
+
+# Cluster name:
+#cluster_name = ""
+
+# RKE Kubernetes version
+#rke2_kubernetes_version = "v1.25.16+rke2r1" # Replace with your desired RKE Kubernetes version}
+
+#------------- Node pool specific configurations -------------
+
+# Enter the node pool name for worker nodes
+#worker_pool_name = ""
+
+# Enter the node pool name for master nodes
+#master_pool_name = ""
+
+# Enter the number of controlplane / etcd nodes
+#master_quantity = 1
+
+# Enter the number of worker nodes
+#worker_quantity = 1
