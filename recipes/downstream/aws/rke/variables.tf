@@ -1,54 +1,44 @@
 variable "cluster_name" {
-  default = "test-rke-ds"
+  default = "rke-ds"
 }
 
-variable "creds_name" {
-  default = "creds_aws"
+variable "prefix" {
+  type    = string
+  default = "tf"
+}
+
+variable "cloud_credential_id" {
+  default = null
   type    = string
 }
 
 variable "subnet_id" {
-  type = string
+  default = null
+  type    = string
 }
 
-variable "master_quantity" {
+variable "cp_count" {
   default = 1
   type    = number
 }
 
-variable "worker_quantity" {
+variable "worker_count" {
   default = 1
   type    = number
 }
 
-variable "vpc_zone" {
+variable "zone" {
   type    = string
-  default = null
+  default = "a"
 }
 
-variable "master_hostname_prefix" {
-  type    = string
-  default = "tf-master"
-}
-
-variable "worker_hostname_prefix" {
-  type    = string
-  default = "tf-worker"
-}
-
-variable "rancher_api_key" {
+variable "rancher_token" {
   default = null
   type    = string
 }
 
-variable "rancher_secret_key" {
-  default = null
-  type    = string
-}
-
-variable "rancher_api_secret" {
-  default = null
-  type    = string
+variable "rancher_insecure" {
+  default = true
 }
 
 variable "rancher_url" {
@@ -57,7 +47,7 @@ variable "rancher_url" {
 }
 
 variable "node_template_name" {
-  default = "example_template"
+  default = "tf"
   type    = string
 }
 
@@ -71,39 +61,45 @@ variable "aws_secret_key" {
   type    = string
 }
 
-variable "aws_region" {
-  default = "us-west-2" # Replace with your desired AWS region
+variable "region" {
+  default = "us-west-2"
 }
 
-variable "rke_kubernetes_version" {
-  default = "v1.24.17-rancher1-1"
+variable "kubernetes_version" {
+  default = null
 }
 
-variable "master_node_pool_name" {
-  default = "mastertf"
+variable "cni_provider" {
+  default = "canal"
+}
+
+variable "spot_instances" {
+  default = false
+}
+
+variable "cp_node_pool_name" {
+  default = "cp"
 }
 
 variable "worker_node_pool_name" {
-  default = "workertf"
+  default = "w"
 }
 
-variable "aws_instance_type" {
-  default = "t2.medium"
-  type    = string
+variable "instance_type" {
+  default = "t3a.medium"
 }
 
-variable "aws_instance_size" {
-  default = 10
+variable "volume_size" {
+  default = 20
   type    = number
 }
 
-variable "aws_vpc_id" {
-  default = ""
+variable "vpc_id" {
+  default = null
 }
 
-variable "aws_security_group_name" {
-  default = "null"
-  type    = string
+variable "security_group_name" {
+  default = null
 }
 
 variable "ssh_user" {
@@ -112,5 +108,10 @@ variable "ssh_user" {
 }
 
 variable "ami" {
-  default = "ami-xxxxxxxxxxxxxxxx"
+  default = null
+
+  validation {
+    condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))
+    error_message = "The ami value must be a valid AMI id, starting with \"ami-\"."
+  }
 }

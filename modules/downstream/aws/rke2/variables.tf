@@ -1,53 +1,50 @@
 variable "cluster_name" {
-  default = "my-test-cluster"
+  default = "rke2-ds"
 }
 
-variable "creds_name" {
-  default = "creds_aws"
-  type = string
+variable "prefix" {
+  type    = string
+  default = "tf"
+}
+
+variable "cloud_credential_id" {
+  default = null
+  type    = string
 }
 
 variable "subnet_id" {
-  type    = string
   default = null
+  type    = string
 }
 
-variable "master_quantity" {
+variable "cp_count" {
   default = 1
   type    = number
 }
 
-variable "worker_quantity" {
+variable "worker_count" {
   default = 1
   type    = number
 }
 
-variable "vpc_zone" {
+variable "zone" {
   type    = string
-  default = null
+  default = "a"
 }
 
-
-variable "rancher_api_key" {
-  default = null
-  type    = string
-}
-
-variable "rancher_secret_key" {
+variable "rancher_token" {
   default = null
   type    = string
 }
 
-variable "rancher_api_secret" {
-  default = null
-  type    = string
+variable "rancher_insecure" {
+  default = true
 }
 
 variable "rancher_url" {
   default = null
   type    = string
 }
-
 
 variable "aws_access_key" {
   default = null
@@ -63,25 +60,33 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
-variable "rke2_kubernetes_version" {
-  default = "v1.25.16+rke2r1"
+variable "kubernetes_version" {
+  type = string
 }
 
-variable "master_pool_name" {
-  default = "mastertf"
+variable "cp_node_pool_name" {
+  default = "cp"
 }
 
-variable "worker_pool_name" {
-  default = "workertf"
+variable "worker_node_pool_name" {
+  default = "w"
 }
 
-variable "aws_instance_type" {
-  default = "t2.medium"
+variable "instance_type" {
+  default = "t3a.medium"
 }
 
-variable "instance_disk_size" {
-  default = 10
+variable "volume_size" {
+  default = 20
   type    = number
+}
+
+variable "spot_instances" {
+  default = false
+}
+
+variable "cni_provider" {
+  default = "calico"
 }
 
 variable "vpc_id" {
@@ -89,9 +94,8 @@ variable "vpc_id" {
   type    = string
 }
 
-variable "aws_security_group_name" {
-  default = "null"
-  type    = string
+variable "security_group_name" {
+  default = null
 }
 
 variable "ssh_user" {
@@ -100,5 +104,10 @@ variable "ssh_user" {
 }
 
 variable "ami" {
-  default = "ami-xxxxxxxxxxxxxxxx"
+  default = null
+
+  validation {
+    condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))
+    error_message = "The ami value must be a valid AMI id, starting with \"ami-\"."
+  }
 }
