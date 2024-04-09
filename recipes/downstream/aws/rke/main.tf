@@ -4,7 +4,7 @@ module "downstream_rke" {
   aws_access_key      = var.aws_access_key
   aws_secret_key      = var.aws_secret_key
   cloud_credential_id = var.cloud_credential_id
-  region              = var.region
+  aws_region          = var.aws_region
   vpc_id              = var.vpc_id
   zone                = var.zone
   subnet_id           = var.subnet_id

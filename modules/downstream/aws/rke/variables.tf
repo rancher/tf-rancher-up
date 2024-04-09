@@ -2,112 +2,130 @@ variable "cluster_name" {
   default = "rke-ds"
 }
 
-variable "prefix" {
-  type    = string
-  default = "tf"
-}
-
-variable "cloud_credential_id" {
-  default = null
-  type    = string
-}
-
-variable "subnet_id" {
-  default = null
-  type    = string
-}
-
-variable "cp_count" {
-  default = 1
-  type    = number
-}
-
-variable "worker_count" {
-  default = 1
-  type    = number
-}
-
-variable "zone" {
-  type    = string
-  default = "a"
-}
-
 variable "rancher_token" {
-  default = null
-  type    = string
+  description = "Rancher API token"
+  default     = null
+  type        = string
 }
 
 variable "rancher_insecure" {
-  default = true
+  description = "Allow insecure connections to Rancher"
+  default     = true
 }
 
 variable "rancher_url" {
-  default = null
-  type    = string
-}
-
-variable "node_template_name" {
-  default = "tf"
-  type    = string
+  description = "The Rancher server URL"
+  default     = null
+  type        = string
 }
 
 variable "aws_access_key" {
-  default = null
-  type    = string
+  type        = string
+  description = "AWS access key used to create infrastructure"
+  default     = null
 }
 
 variable "aws_secret_key" {
-  default = null
-  type    = string
+  type        = string
+  description = "AWS secret key used to create AWS infrastructure"
+  default     = null
 }
 
-variable "region" {
-  default = "us-west-2"
+variable "aws_region" {
+  type        = string
+  description = "AWS region used for all resources"
+  default     = "us-west-2"
+}
+
+variable "zone" {
+  description = "AWS zone to use for all resources"
+  type        = string
+  default     = "a"
+}
+
+variable "cloud_credential_id" {
+  description = "Rancher cloud credential to use, instead of AWS access/secret key (ex: cattle-global-data:cc-xxx)"
+  default     = null
+  type        = string
+}
+
+variable "subnet_id" {
+  description = "Subnet ID for all resources"
+  default     = null
+  type        = string
+}
+
+variable "cp_count" {
+  description = "Control plane pool node count"
+  default     = 1
+  type        = number
+}
+
+variable "worker_count" {
+  description = "Worker pool node count"
+  default     = 1
+  type        = number
 }
 
 variable "kubernetes_version" {
-  default = null
-}
-
-variable "cni_provider" {
-  default = "canal"
-}
-
-variable "spot_instances" {
-  default = false
+  type        = string
+  description = "Kubernetes version to use for the RKE2/k3s cluster"
+  default     = null
 }
 
 variable "cp_node_pool_name" {
-  default = "cp"
+  description = "Control plane pool name"
+  default     = "cp"
 }
 
 variable "worker_node_pool_name" {
-  default = "w"
+  description = "Worker pool name"
+  default     = "w"
 }
 
 variable "instance_type" {
-  default = "t3a.medium"
+  type        = string
+  description = "Instance type used for all EC2 instances"
+  default     = "t3a.medium"
 }
 
 variable "volume_size" {
-  default = 20
+  description = "Specify root volume size (GB)"
+  default     = 20
+  type        = number
+}
+
+variable "cni_provider" {
+  description = "CNI provider to use"
+  default     = "calico"
 }
 
 variable "vpc_id" {
-  default = null
+  description = "AWS VPC to use, subnet ID and security group must exist in the VPC"
+  default     = null
+  type        = string
 }
 
 variable "security_group_name" {
-  default = null
+  description = "Security Group name for nodes"
+  default     = null
 }
 
 variable "ssh_user" {
-  default = null
-  type    = string
+  type        = string
+  description = "Username used for SSH with sudo access"
+  default     = "ubuntu"
+}
+
+variable "spot_instances" {
+  type        = bool
+  description = "Use spot instances"
+  default     = null
 }
 
 variable "ami" {
-  default = null
+  default     = null
+  description = "AMI to use when launching nodes"
 
   validation {
     condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))

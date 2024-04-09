@@ -1,6 +1,6 @@
 resource "rancher2_cloud_credential" "aws_credential" {
   count       = var.cloud_credential_id != null ? 0 : 1
-  name        = "${var.prefix}-${var.cluster_name}"
+  name        = var.cluster_name
   description = "AWS Credential for Terraform"
   amazonec2_credential_config {
     access_key = var.aws_access_key
@@ -9,7 +9,7 @@ resource "rancher2_cloud_credential" "aws_credential" {
 }
 
 resource "rancher2_machine_config_v2" "machine_config" {
-  generate_name = "${var.prefix}-${var.cluster_name}"
+  generate_name = var.cluster_name
   amazonec2_config {
     ami                   = var.ami
     region                = var.aws_region

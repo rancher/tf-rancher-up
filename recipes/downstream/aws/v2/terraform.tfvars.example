@@ -35,9 +35,10 @@ security_group_name = "rancher-nodes"
 # AMI you want to use
 ami = "ami-03f4878755434977f" # Replace with your desired AMI ID
 
-# Kubernetes version for the RKE cluster
-# https://github.com/rancher/rancher/releases/tag/
-kubernetes_version = "v1.27.11-rancher1-1"
+# Kubernetes version for the RKE2/k3s cluster
+# https://github.com/rancher/rke2/releases/tag
+# https://github.com/k3s-io/k3s/tags
+kubernetes_version = "v1.27.12+rke2r1"
 
 ###### !! Optional variables !! ######
 
