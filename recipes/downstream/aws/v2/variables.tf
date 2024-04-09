@@ -1,6 +1,6 @@
 variable "cluster_name" {
   description = "The cluster name"
-  default     = "rke-ds"
+  default     = "v2-ds"
 }
 
 variable "rancher_token" {

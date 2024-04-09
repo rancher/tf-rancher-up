@@ -1,12 +1,12 @@
-# Downstream | AWS | RKE
+# Downstream | AWS | V2
 
-This module is used to create a rancher-launched RKE downstream cluster.
+This module is used to create a rancher-launched RKE2/k3s downstream cluster.
 
 ## Usage
 
 ```bash
 git clone https://github.com/rancherlabs/tf-rancher-up.git
-cd recipes/downstream/aws/rke
+cd recipes/downstream/aws/v2
 ```
 
 - Copy `terraform.tfvars.example` to `terraform.tfvars`

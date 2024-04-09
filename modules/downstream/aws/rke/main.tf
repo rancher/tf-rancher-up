@@ -1,6 +1,6 @@
 resource "rancher2_cloud_credential" "aws_credential" {
   count       = var.cloud_credential_id != null ? 0 : 1
-  name        = "${var.prefix}-${var.cluster_name}"
+  name        = var.cluster_name
   description = "AWS Credential for Terraform"
   amazonec2_credential_config {
     access_key = var.aws_access_key
@@ -9,7 +9,7 @@ resource "rancher2_cloud_credential" "aws_credential" {
 }
 
 resource "rancher2_node_template" "node_template" {
-  name                = "${var.prefix}-${var.cluster_name}"
+  name                = var.cluster_name
   description         = "RKE Node Template"
   cloud_credential_id = var.cloud_credential_id != null ? var.cloud_credential_id : rancher2_cloud_credential.aws_credential[0].id
   amazonec2_config {
@@ -27,10 +27,10 @@ resource "rancher2_node_template" "node_template" {
 }
 
 resource "rancher2_cluster" "cluster" {
-  name               = var.cluster_name
-  description        = "Managed by Terraform"
-  kubernetes_version = var.kubernetes_version
+  name        = var.cluster_name
+  description = "Managed by Terraform"
   rke_config {
+    kubernetes_version = var.kubernetes_version
     enable_cri_dockerd = true
     network {
       plugin = var.cni_provider
@@ -39,17 +39,17 @@ resource "rancher2_cluster" "cluster" {
 }
 
 resource "rancher2_node_pool" "worker_node_pool" {
-  name             = "${var.prefix}-${var.worker_node_pool_name}"
+  name             = var.worker_node_pool_name
   cluster_id       = rancher2_cluster.cluster.id
-  hostname_prefix  = "${var.prefix}-${var.worker_node_pool_name}-"
+  hostname_prefix  = "${var.cluster_name}-${var.worker_node_pool_name}-"
   node_template_id = rancher2_node_template.node_template.id
   count            = var.worker_count
   worker           = true
 }
 
 resource "rancher2_node_pool" "master_node_pool" {
-  name             = "${var.prefix}-${var.cp_node_pool_name}"
-  hostname_prefix  = "${var.prefix}-${var.cp_node_pool_name}-"
+  name             = var.cp_node_pool_name
+  hostname_prefix  = "${var.cluster_name}-${var.cp_node_pool_name}-"
   cluster_id       = rancher2_cluster.cluster.id
   node_template_id = rancher2_node_template.node_template.id
   count            = var.cp_count
@@ -58,6 +58,6 @@ resource "rancher2_node_pool" "master_node_pool" {
 }
 
 resource "rancher2_cluster_sync" "sync" {
-  depends_on = [rancher2_cluster_v2.cluster]
+  depends_on = [rancher2_cluster.cluster]
   cluster_id = rancher2_cluster.cluster.id
 }

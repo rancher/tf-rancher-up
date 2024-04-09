@@ -110,7 +110,7 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
-variable "ssh_username" {
+variable "ssh_user" {
   type        = string
   description = "Username used for SSH with sudo access"
   default     = "ubuntu"
