@@ -24,8 +24,7 @@ Table of Contents
 4.  [Roadmap](#roadmap)
 5.  [Contributing](#contributing)
 6.  [License](#license)
-7.  [Contact](#contact)
-8.  [Acknowledgments](#acknowledgments)
+7.  [Acknowledgments](#acknowledgments)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -158,17 +157,6 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - ajith.rajan@suse.com
-
-Project Link: [https://github.com/rancherlabs/tf-rancher-up](./)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
