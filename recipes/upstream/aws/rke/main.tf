@@ -29,6 +29,7 @@ module "rke" {
   ssh_private_key_path = module.upstream-cluster.ssh_key_path
   node_username        = var.ssh_username
   kube_config_path     = var.kube_config_path
+  kube_config_filename = var.kube_config_filename
   kubernetes_version   = var.kubernetes_version
 
   rancher_nodes = [for instance_ips in module.upstream-cluster.instance_ips :

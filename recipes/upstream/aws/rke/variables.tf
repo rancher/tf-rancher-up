@@ -45,6 +45,12 @@ variable "kube_config_path" {
   default     = null
 }
 
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
 variable "kubernetes_version" {
   type        = string
   description = "Kubernetes version to use for the RKE cluster"
