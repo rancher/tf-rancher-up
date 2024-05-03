@@ -39,7 +39,7 @@ No modules.
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | The path to write the kubeconfig for the RKE cluster | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix used in front of all Google resources | `any` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the Google Project that will contain all created resources | `any` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | Google Region to create the resources | `any` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | Google Region to create the resources | `string` | `"us-west2"` | no |
 | <a name="input_subnet"></a> [subnet](#input\_subnet) | Google Subnet used for all resources | `any` | `null` | no |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | Google VPC used for all resources | `any` | `null` | no |
 
