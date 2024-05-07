@@ -46,7 +46,7 @@
 | <a name="input_k3s_channel"></a> [k3s\_channel](#input\_k3s\_channel) | K3s channel to use, the latest patch version for the provided minor version will be used | `string` | `null` | no |
 | <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional K3s configuration to add to the config.yaml file | `any` | `null` | no |
 | <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring K3s nodes | `any` | `null` | no |
-| <a name="input_k3s_version"></a> [k3s\_version](#input\_k3s\_version) | Kubernetes version to use for the K3s cluster | `string` | `"v1.26.12+k3s1"` | no |
+| <a name="input_k3s_version"></a> [k3s\_version](#input\_k3s\_version) | Kubernetes version to use for the K3s cluster | `string` | `"v1.28.9+k3s1"` | no |
 | <a name="input_kube_config_filename"></a> [kube\_config\_filename](#input\_kube\_config\_filename) | Filename to write the kube config | `string` | `null` | no |
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | The path to write the kubeconfig for the K3s cluster | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | n/a | `any` | n/a | yes |
@@ -63,7 +63,7 @@
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | n/a | `any` | n/a | yes |
 | <a name="input_subnet"></a> [subnet](#input\_subnet) | n/a | `any` | `null` | no |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | n/a | `any` | `null` | no |
-| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `180` | no |
+| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `300` | no |
 | <a name="input_worker_instance_count"></a> [worker\_instance\_count](#input\_worker\_instance\_count) | n/a | `any` | n/a | yes |
 
 ## Outputs

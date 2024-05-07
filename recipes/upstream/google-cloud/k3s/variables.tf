@@ -110,13 +110,13 @@ variable "ssh_username" {}
 
 variable "waiting_time" {
   description = "Waiting time (in seconds)"
-  default     = 180
+  default     = 300
 }
 
 variable "k3s_version" {
   type        = string
   description = "Kubernetes version to use for the K3s cluster"
-  default     = "v1.26.12+k3s1" #Version compatible with Rancher v2.7.9
+  default     = "v1.28.9+k3s1" #Version compatible with Rancher v2.8.3
 }
 
 variable "k3s_channel" {
