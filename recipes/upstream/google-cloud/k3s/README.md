@@ -30,7 +30,7 @@ terraform init -upgrade ; terraform apply -target=module.k3s-first-server.tls_pr
 
 - Destroy the resources when finished
 ```bash
-terraform destroy -target=module.rancher_install -auto-approve ; terraform destroy -auto-approve
+terraform state rm module.rancher_install ; terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:
