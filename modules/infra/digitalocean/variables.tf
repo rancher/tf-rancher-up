@@ -63,11 +63,28 @@ variable "ssh_private_key_path" {
   description = "Path to write the generated SSH private key"
   default     = null
 }
+
 variable "region" {
-  description = "Region that droplets will be deployed to"
   type        = string
+  description = "Region that droplets will be deployed to"
   default     = "sfo3"
-  nullable    = false
+
+  validation {
+    condition = contains([
+      "nyc1",
+      "nyc3",
+      "ams3",
+      "sfo2",
+      "sfo3",
+      "sgp1",
+      "lon1",
+      "fra1",
+      "tor1",
+      "blr1",
+      "syd1",
+    ], var.region)
+    error_message = "Invalid Region specified!"
+  }
 }
 
 variable "user_data" {
