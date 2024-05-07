@@ -15,7 +15,8 @@ cd recipes/upstream/google-cloud/rke2
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `project_id` to specify in which Project the resources will be created
     -  `region` to suit your region
-    -  `instance_count` to specify the number of instances to create
+    -  `server_instance_count` to specify the number of Server instances to create
+    -  `worker_instance_count` to specify the number of Worker instances to create
     -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
     -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
