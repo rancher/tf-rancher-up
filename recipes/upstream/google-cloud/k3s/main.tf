@@ -91,7 +91,7 @@ module "k3s-additional-workers" {
 
 # Save the private SSH key in the Terraform data source for later use
 data "local_file" "ssh-private-key" {
-  depends_on = [module.k3s-first-server]
+  depends_on = [module.k3s-additional-workers]
   filename   = local.private_ssh_key_path
 }
 
@@ -109,6 +109,7 @@ resource "ssh_resource" "retrieve-kubeconfig" {
   ]
   user        = var.ssh_username
   private_key = data.local_file.ssh-private-key.content
+  retry_delay = "60s"
 }
 
 resource "local_file" "kube-config-yaml" {
@@ -125,7 +126,7 @@ resource "local_file" "kube-config-yaml-backup" {
 
 # Wait for the K3s services startup 
 resource "null_resource" "wait-k8s-services-startup" {
-  depends_on = [module.k3s-first-server]
+  depends_on = [local_file.kube-config-yaml]
   provisioner "local-exec" {
     command = "sleep ${var.waiting_time}"
   }

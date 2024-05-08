@@ -63,7 +63,7 @@
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | n/a | `any` | n/a | yes |
 | <a name="input_subnet"></a> [subnet](#input\_subnet) | n/a | `any` | `null` | no |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | n/a | `any` | `null` | no |
-| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `300` | no |
+| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `180` | no |
 | <a name="input_worker_instance_count"></a> [worker\_instance\_count](#input\_worker\_instance\_count) | n/a | `any` | n/a | yes |
 
 ## Outputs

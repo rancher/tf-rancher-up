@@ -110,7 +110,7 @@ variable "ssh_username" {}
 
 variable "waiting_time" {
   description = "Waiting time (in seconds)"
-  default     = 300
+  default     = 180
 }
 
 variable "k3s_version" {
