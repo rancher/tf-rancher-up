@@ -15,7 +15,7 @@ cd recipes/upstream/google-cloud/k3s
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `project_id` to specify in which Project the resources will be created
     -  `region` to suit your region
-    -  `server_instance_count` to specify the number of Server instances to create
+    -  `server_instance_count` to specify the number of Server instances to create (to maintain ETCD quorum, the value must be 1, 3, or 5)
     -  `worker_instance_count` to specify the number of Worker instances to create
     -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
