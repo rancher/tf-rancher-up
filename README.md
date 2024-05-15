@@ -30,7 +30,6 @@ Table of Contents
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
 This repository comprises reusable terraform [modules](./modules) to deploy Rancher, a complete software stack for teams adopting containers, on a Kubernetes cluster provisioned in any of the infrastructure/cloud platforms(AWS/VMware/Azure/GCP/DigitalOcean). Provisioning can be customized using different Kubernetes distributions(RKE/RKE2/K3S/EKS/AKS/GKE) and will be here by referred to as [recipes](./recipes). We can deploy upstream Kubernetes (cluster used only for running Rancher), deploy Rancher and Downstream Kubernetes (cluster used for workloads) using these terraform modules by stitching together various recipes.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -59,11 +58,9 @@ Git should be installed on the local or remote computer which is used for clonin
 
 Git clone can be performed only after setting up the required ssh keys. Please refer [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) if you need help on this.
 
-
 #### Terraform
 
 Terraform should be installed on your local or remote computer where the repository is cloned.  Please refer [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for installation instructions.
-
 
 ### What's next
 
@@ -77,7 +74,6 @@ Once you clone the repository please go to the desired [recipes](./recipes) path
 - [ ] Add support for DO as infrastructure provider
 - [ ] Option to deploy Rancher Prime
 
-
 See the [open issues](https://github.com/rancherlabs/tf-rancher-up/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -86,64 +82,55 @@ See the [open issues](https://github.com/rancherlabs/tf-rancher-up/issues) for a
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Check out this [file](https://github.com/rancherlabs/tf-rancher-up/blob/main/CONTRIBUTING.md) for all the information about how you can contribute to this project.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+#### Naming convention
 
-#### Workflow to open a Pull Request:
+- Ensure the new names chosen for the variables follow the pattern found in existing modules.
 
+- No abbreviated variable names. 
 
-- Clone or pull all changes
+**Example: tkt vs ticket, ct vs count.**
 
- ```sh
-  git clone  git@github.com:rancherlabs/tf-rancher-up.git
+#### Design/Architecture
 
-  OR
+- Use native Terraform functionality as much as possible.
 
-  git pull --all (if already cloned)
-  ```
-     This step internally does: git remote add origin https://github.com/rancherlabs/tf-rancher-up.git
+- Avoid usage of heavy logic in shell scripts outside of Terraform resources.
 
-- Fork the project from [here](https://github.com/rancherlabs/tf-rancher-up/fork)
+- Use of `null_resources` Tf resource as a last resort, and that too with minimal functionality/logic.
 
-```sh
- cd <cloned directory path>
- git remote add mycopy <forked-url>
- ```
-     Example: git remote add mycopy git@github.com:<your_github_id>/tf-rancher-up.git
+- Use of proper/sane defaults for all the variables.
 
-- Create your Feature Branch
-```sh
- git checkout -b <feature-branch-name>
-```
-- Make changes in the code.
+- Add validation for variables if possible.
 
-- Use `terraform fmt` to lint and format any changes that occurred.
-```sh
- terraform fmt -recursive .
-```
-- If the changes relate to the README, update the content for changed modules with `terraform-docs`:
+**See the example of the Regions.**
 
-   Please refer [here](https://github.com/terraform-docs/terraform-docs) for installation of `terraform-docs`
-```bash
- terraform-docs markdown .
-```
-- Commit your Changes
+- Any Recipe should run with just 1) terraform init 2) terraform apply 3) terraform destroy.
 
-```sh
- git commit -m "concise and meaningful commit messages about what is changing"
-```
-- Push to the Branch
+**Justify the opposite if necessary.**
 
-```sh
- git push mycopy <feature-branch-name>
-```
-- Open a Pull Request(PR) providing any testing and change details from [here](https://github.com/rancherlabs/tf-rancher-up/pulls)
+**Providing just the Cloud credentials.**
 
-- After the PR is merged, delete the branch `<feature-branch-name>`
+- The Recipe should itself be runnable as a Module.
 
-- Dont push a branch to origin/main repository. Push only to forks.
+- No hard-coded values anywhere in the code. Any value used should be via a variable only.
+
+- All configurable values from the modules should be exposed via Recipe. 
+
+**Almost a copy-paste of variables.tf from Module to Recipe.**
+
+- Ensure any timeouts available are exposed via config variables.
+
+- Ensure the code is generic enough that it's reusable elsewhere.
+
+#### Testing
+
+- Add tests where possible with various use cases.
+
+**See existing modules.**
+
+- Ensure they run in the Pipeline.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -151,13 +138,10 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
