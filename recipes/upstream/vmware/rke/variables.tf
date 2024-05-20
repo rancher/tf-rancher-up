@@ -10,12 +10,6 @@ variable "ssh_private_key_path" {
   type        = string
 }
 
-variable "ssh_username" {
-  default     = null
-  description = "Username used for SSH with sudo access"
-  type        = string
-}
-
 variable "vsphere_datacenter" {
   default     = null
   description = "vSphere Datacenter details."
