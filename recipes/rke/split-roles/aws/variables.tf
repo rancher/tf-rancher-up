@@ -108,21 +108,21 @@ variable "worker_nodes_count" {
 }
 
 variable "kube_config_path" {
+  default     = null
   description = "The path to write the kubeconfig for the RKE cluster"
   type        = string
-  default     = null
 }
 
 variable "kube_config_filename" {
+  default     = null
   description = "Filename to write the kube config"
   type        = string
-  default     = null
 }
 
 variable "kubernetes_version" {
-  type        = string
-  description = "Kubernetes version to use for the RKE cluster"
   default     = null
+  description = "Kubernetes version to use for the RKE cluster"
+  type        = string
 }
 
 variable "install_docker" {
