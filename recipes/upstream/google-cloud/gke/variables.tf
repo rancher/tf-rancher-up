@@ -3,8 +3,8 @@ variable "prefix" {}
 variable "project_id" {}
 
 variable "region" {
-  description = "Google Region to create the resources"
   default     = "us-west2"
+  description = "Google Region to create the resources"
 
   validation {
     condition = contains([
@@ -71,9 +71,9 @@ variable "region" {
 # variable "instance_type" {}
 
 variable "bootstrap_rancher" {
+  default     = true
   description = "Bootstrap the Rancher installation"
   type        = bool
-  default     = true
 }
 
 variable "rancher_hostname" {}
@@ -88,7 +88,7 @@ variable "rancher_password" {
 }
 
 variable "rancher_version" {
+  default     = null
   description = "Rancher version to install"
   type        = string
-  default     = null
 }
