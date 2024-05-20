@@ -31,8 +31,8 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
   default     = null
   description = "AWS secret key used to create AWS infrastructure"
-  type        = string
   sensitive   = true
+  type        = string
 }
 
 variable "aws_region" {
