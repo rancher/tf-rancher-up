@@ -1,6 +1,14 @@
-variable "prefix" {}
+variable "prefix" {
+  default     = "rancher-terraform"
+  description = "Prefix added to names of all resources"
+  type        = string
+}
 
-variable "project_id" {}
+variable "project_id" {
+  default     = null
+  description = "Google Cloud project ID"
+  type        = string
+}
 
 variable "region" {
   default     = "us-west2"
@@ -76,10 +84,16 @@ variable "bootstrap_rancher" {
   type        = bool
 }
 
-variable "rancher_hostname" {}
+variable "rancher_hostname" {
+  default     = null
+  description = "Hostname for Rancher server"
+  type        = string
+}
 
 variable "rancher_password" {
-  type = string
+  default     = null
+  description = "Password for accessing Rancher server (minimum 12 characters)"
+  type        = string
 
   validation {
     condition     = length(var.rancher_password) >= 12
