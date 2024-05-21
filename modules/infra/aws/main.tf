@@ -121,6 +121,6 @@ resource "aws_instance" "instance" {
   iam_instance_profile = var.iam_instance_profile
 
   lifecycle {
-    ignore_changes  = [ami, instance_market_options, user_data, tags]
+    ignore_changes = [ami, instance_market_options, user_data, tags]
   }
 }
