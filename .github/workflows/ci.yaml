@@ -1,0 +1,71 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint_terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8"
+
+      - name: Rewrites all Terraform configuration files to a canonical format
+        run: terraform fmt -diff -check -recursive
+
+  generate_docs:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate documentation from Terraform modules
+        run: |
+          brew install terraform-docs
+          terraform-docs --version
+          ./scripts/generate_docs.sh
+
+  check_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check if the documents have been updated
+        run: |
+          git diff
+          git status --porcelain --untracked-files=all
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then echo "Error changes detected ${CHANGES}"; exit 1; fi
+
+  run_sanity_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8"
+
+      - name: Test the Terraform code inside the ./tests folder to make sure the modules/recipes are working
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
+          AWS_DEFAULT_REGION: us-east-1
+          BASE64_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.BASE64_GOOGLE_APPLICATION_CREDENTIALS }}
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
+        run: |
+          echo $BASE64_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > ./gcp-ci_sa.json
+          export GOOGLE_APPLICATION_CREDENTIALS="./gcp-ci_sa.json"
+          ./scripts/run_sanity_checks.sh tests
