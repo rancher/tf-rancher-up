@@ -57,7 +57,7 @@ variable "prefix" {
   default     = "rancher-terraform"
 }
 
-variable "tag-begin" {
+variable "tag_begin" {
   type        = number
   description = "When module is being called mode than once, begin tagging from this number"
   default     = 1

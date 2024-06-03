@@ -48,7 +48,7 @@ module "rke2_additional_servers" {
   ssh_key_pair_path       = module.rke2_first_server.ssh_key_path
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
-  tag-begin               = 2
+  tag_begin               = 2
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.rke2_first_server.sg-id

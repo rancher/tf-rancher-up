@@ -112,7 +112,7 @@ resource "aws_instance" "instance" {
 
   tags = merge(
     {
-      Name    = "${var.prefix}-${count.index + var.tag-begin}"
+      Name    = "${var.prefix}-${count.index + var.tag_begin}"
       Creator = var.prefix
     },
     var.tags
