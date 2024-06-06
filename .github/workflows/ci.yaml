@@ -65,12 +65,9 @@ jobs:
 
       - name: Test the Terraform code inside the ./tests folder to make sure the modules/recipes are working
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
-          AWS_DEFAULT_REGION: us-east-1
-          #BASE64_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.BASE64_GOOGLE_APPLICATION_CREDENTIALS }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
         run: |
-          #echo $BASE64_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > ./gcp-ci_sa.json
-          #export GOOGLE_APPLICATION_CREDENTIALS="./gcp-ci_sa.json"
           ./scripts/run_sanity_checks.sh tests
