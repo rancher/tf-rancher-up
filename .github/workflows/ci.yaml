@@ -58,14 +58,19 @@ jobs:
         with:
           terraform_version: "1.8"
 
+      - name: Google Cloud auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.BASE64_GOOGLE_APPLICATION_CREDENTIALS }}'
+
       - name: Test the Terraform code inside the ./tests folder to make sure the modules/recipes are working
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
           AWS_DEFAULT_REGION: us-east-1
-          BASE64_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.BASE64_GOOGLE_APPLICATION_CREDENTIALS }}
+          #BASE64_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.BASE64_GOOGLE_APPLICATION_CREDENTIALS }}
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
         run: |
-          echo $BASE64_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > ./gcp-ci_sa.json
-          export GOOGLE_APPLICATION_CREDENTIALS="./gcp-ci_sa.json"
+          #echo $BASE64_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > ./gcp-ci_sa.json
+          #export GOOGLE_APPLICATION_CREDENTIALS="./gcp-ci_sa.json"
           ./scripts/run_sanity_checks.sh tests
