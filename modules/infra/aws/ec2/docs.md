@@ -65,9 +65,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dependency"></a> [dependency](#output\_dependency) | n/a |
 | <a name="output_instance_ips"></a> [instance\_ips](#output\_instance\_ips) | n/a |
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |
 | <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
-| <a name="output_node_username"></a> [node\_username](#output\_node\_username) | n/a |
-| <a name="output_sg-id"></a> [sg-id](#output\_sg-id) | n/a |
+| <a name="output_security_group"></a> [security\_group](#output\_security\_group) | n/a |
+| <a name="output_subnet"></a> [subnet](#output\_subnet) | n/a |
+| <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |

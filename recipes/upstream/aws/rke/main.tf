@@ -4,6 +4,7 @@ module "aws-ec2-upstream-cluster" {
   aws_region = var.aws_region
   #  create_ssh_key_pair   = var.create_ssh_key_pair
   #  ssh_key_pair_name     = var.ssh_key_pair_name
+  #  ssh_private_key_path  = var.ssh_private_key_path
   #  ssh_public_key_path   = var.ssh_public_key_path
   #  vpc_id                = var.vpc_id
   #  subnet_id             = var.subnet_id

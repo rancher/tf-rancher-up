@@ -1,4 +1,3 @@
-# Condition to use an existing keypair if a keypair name and file is also provided
 locals {
   new_key_pair_path    = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
   private_ssh_key_path = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
@@ -19,7 +18,7 @@ resource "local_file" "private_key_pem" {
 
 resource "local_file" "public_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = "${path.cwd}/${var.prefix}-ssh_public_key.pem"
+  filename        = var.ssh_public_key_path != null ? var.ssh_public_key_path : "${path.cwd}/${var.prefix}-ssh_public_key.pem"
   content         = tls_private_key.ssh_private_key[0].public_key_openssh
   file_permission = "0600"
 }
@@ -48,7 +47,7 @@ resource "aws_subnet" "subnet" {
   vpc_id                  = var.vpc_id == null ? aws_vpc.vpc[0].id : var.vpc_id
 
   tags = {
-    Name = "${var.prefix}-subnet-${count.index + 1}"
+    Name = "${var.prefix}-subnet"
   }
 }
 
