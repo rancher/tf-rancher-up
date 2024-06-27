@@ -94,9 +94,9 @@ resource "helm_release" "cert_manager" {
   chart               = "cert-manager"
   create_namespace    = true
   namespace           = var.cert_manager_namespace
-  repository          = var.helm_repository != null ? var.helm_repository : "https://charts.jetstack.io"
-  repository_username = var.helm_username != null ? var.helm_username : null
-  repository_password = var.helm_password != null ? var.helm_password : null
+  repository          = var.cert_manager_helm_repository != null ? var.cert_manager_helm_repository : "https://charts.jetstack.io"
+  repository_username = var.cert_manager_helm_repository_username != null ? var.cert_manager_helm_repository_username : null
+  repository_password = var.cert_manager_helm_repository_password != null ? var.cert_manager_helm_repository_password : null
   version             = var.cert_manager_version
   wait                = false
 
@@ -121,9 +121,9 @@ resource "helm_release" "rancher" {
   chart               = "rancher"
   create_namespace    = true
   namespace           = var.rancher_namespace
-  repository          = var.helm_repository != null ? var.helm_repository : "https://releases.rancher.com/server-charts/stable"
-  repository_username = var.helm_username != null ? var.helm_username : null
-  repository_password = var.helm_password != null ? var.helm_password : null
+  repository          = var.rancher_helm_repository != null ? var.rancher_helm_repository : "https://releases.rancher.com/server-charts/stable"
+  repository_username = var.rancher_helm_repository_username != null ? var.rancher_helm_repository_username : null
+  repository_password = var.rancher_helm_repository_password != null ? var.rancher_helm_repository_password : null
   version             = var.rancher_version
   timeout             = var.helm_timeout
   wait                = true
