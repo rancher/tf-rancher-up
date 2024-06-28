@@ -20,6 +20,7 @@
 |------|--------|---------|
 | <a name="module_aws-ec2-upstream-master-nodes"></a> [aws-ec2-upstream-master-nodes](#module\_aws-ec2-upstream-master-nodes) | ../../../../modules/infra/aws/ec2 | n/a |
 | <a name="module_aws-ec2-upstream-worker-nodes"></a> [aws-ec2-upstream-worker-nodes](#module\_aws-ec2-upstream-worker-nodes) | ../../../../modules/infra/aws/ec2 | n/a |
+| <a name="module_rancher_install"></a> [rancher\_install](#module\_rancher\_install) | ../../../../modules/rancher | n/a |
 | <a name="module_rke"></a> [rke](#module\_rke) | ../../../../modules/distribution/rke | n/a |
 
 ## Resources
@@ -42,11 +43,11 @@
 | <a name="input_ingress_provider"></a> [ingress\_provider](#input\_ingress\_provider) | Ingress controller provider | `string` | `"nginx"` | no |
 | <a name="input_install_docker"></a> [install\_docker](#input\_install\_docker) | Install Docker while creating the instances | `bool` | `true` | no |
 | <a name="input_instance_security_group_id"></a> [instance\_security\_group\_id](#input\_instance\_security\_group\_id) | n/a | `any` | `null` | no |
-| <a name="input_master_nodes_count"></a> [master\_nodes\_count](#input\_master\_nodes\_count) | n/a | `any` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | n/a | `any` | n/a | yes |
 | <a name="input_rancher_hostname"></a> [rancher\_hostname](#input\_rancher\_hostname) | n/a | `any` | n/a | yes |
 | <a name="input_rancher_password"></a> [rancher\_password](#input\_rancher\_password) | n/a | `string` | n/a | yes |
 | <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `null` | no |
+| <a name="input_server_nodes_count"></a> [server\_nodes\_count](#input\_server\_nodes\_count) | The number of Server nodes | `number` | `3` | no |
 | <a name="input_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#input\_ssh\_key\_pair\_name) | n/a | `any` | `null` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | n/a | `any` | `null` | no |
 | <a name="input_ssh_public_key_path"></a> [ssh\_public\_key\_path](#input\_ssh\_public\_key\_path) | n/a | `any` | `null` | no |
@@ -61,10 +62,10 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_master_instances_private_ip"></a> [master\_instances\_private\_ip](#output\_master\_instances\_private\_ip) | n/a |
-| <a name="output_master_instances_public_ip"></a> [master\_instances\_public\_ip](#output\_master\_instances\_public\_ip) | n/a |
+| <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |
+| <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
+| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | Rancher Initial Custom Password |
+| <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher URL |
 | <a name="output_security_group"></a> [security\_group](#output\_security\_group) | n/a |
 | <a name="output_subnet"></a> [subnet](#output\_subnet) | n/a |
 | <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |
-| <a name="output_worker_instances_private_ip"></a> [worker\_instances\_private\_ip](#output\_worker\_instances\_private\_ip) | n/a |
-| <a name="output_worker_instances_public_ip"></a> [worker\_instances\_public\_ip](#output\_worker\_instances\_public\_ip) | n/a |
