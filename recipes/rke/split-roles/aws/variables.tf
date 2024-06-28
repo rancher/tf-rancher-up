@@ -69,7 +69,19 @@ variable "create_security_group" {
   default = null
 }
 
-variable "master_nodes_count" {}
+variable "server_nodes_count" {
+  description = "The number of Server nodes"
+  default     = 3
+
+  validation {
+    condition = contains([
+      1,
+      3,
+      5,
+    ], var.server_nodes_count)
+    error_message = "Invalid number of Server nodes specified! The value must be 1, 3 or 5 (ETCD quorum)."
+  }
+}
 
 variable "worker_nodes_count" {}
 
