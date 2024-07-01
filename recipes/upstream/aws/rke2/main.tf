@@ -58,7 +58,7 @@ module "rke2-additional-servers" {
   vpc_id                = local.vpc_id
   subnet_id             = local.subnet_id
   create_security_group = local.create_security_group
-  instance_count        = var.instance_count
+  instance_count        = var.instance_count - 1
   #  instance_type              = var.instance_type
   #  spot_instances             = var.spot_instances
   #  instance_disk_size         = var.instance_disk_size
