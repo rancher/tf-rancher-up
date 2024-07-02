@@ -68,22 +68,22 @@ ssh_username = "ubuntu"
 ## -- Waiting time (in seconds)
 # waiting_time = 180
 
-## -- RKE2 version
+## -- K3S version
 # k3s_version = "v1.28.3+k3sr2"
 
 ## -- K3s channel
 # k3s_channel =
 
-## -- RKE2 token, override the programmatically generated token
+## -- K3S token, override the programmatically generated token
 # k3s_token = "string here"
 
-## -- RKE2 custom config file
-# k3s_config = "<RKE2_CONFIG_FILE>"
+## -- K3S custom config file
+# k3s_config = "<K3S_CONFIG_FILE>"
 
-## -- RKE2 KUBECONFIG file path
+## -- K3S KUBECONFIG file path
 # kube_config_path = "<KUBE_CONFIG_PATH>"
 
-## -- RKE2 KUBECONFIG file
+## -- K3S KUBECONFIG file
 # kube_config_filename = "<KUBE_CONFIG_FILENAME>"
 
 ## -- Bootstrap the Rancher installation
