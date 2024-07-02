@@ -16,8 +16,8 @@ cd recipes/rke/split-roles/aws
   - Update the required variables:
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `aws_region` to suit your region
-    -  `master_node_count` to specify the number of Master nodes to create
-    -  `worker_node_count` to specify the number of Worker nodes to create
+    -  `server_nodes_count` to specify the number of Master nodes to create
+    -  `worker_nodes_count` to specify the number of Worker nodes to create
     -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
     -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
