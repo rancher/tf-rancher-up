@@ -47,9 +47,9 @@
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | n/a | `any` | `null` | no |
 | <a name="input_instance_security_group_id"></a> [instance\_security\_group\_id](#input\_instance\_security\_group\_id) | n/a | `any` | `null` | no |
 | <a name="input_k3s_channel"></a> [k3s\_channel](#input\_k3s\_channel) | K3s channel to use, the latest patch version for the provided minor version will be used | `string` | `null` | no |
-| <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional RKE2 configuration to add to the config.yaml file | `any` | `null` | no |
-| <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring RKE2 nodes | `any` | `null` | no |
-| <a name="input_k3s_version"></a> [k3s\_version](#input\_k3s\_version) | Kubernetes version to use for the RKE2 cluster | `string` | `"v1.28.9+k3s1"` | no |
+| <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional K3S configuration to add to the config.yaml file | `any` | `null` | no |
+| <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring K3S nodes | `any` | `null` | no |
+| <a name="input_k3s_version"></a> [k3s\_version](#input\_k3s\_version) | Kubernetes version to use for the K3S cluster | `string` | `"v1.28.9+k3s1"` | no |
 | <a name="input_kube_config_filename"></a> [kube\_config\_filename](#input\_kube\_config\_filename) | Filename to write the kube config | `string` | `null` | no |
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | The path to write the kubeconfig for the RKE cluster | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | n/a | `any` | n/a | yes |

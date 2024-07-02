@@ -117,7 +117,7 @@ variable "waiting_time" {
 
 variable "k3s_version" {
   type        = string
-  description = "Kubernetes version to use for the RKE2 cluster"
+  description = "Kubernetes version to use for the K3S cluster"
   default     = "v1.28.9+k3s1" #Version compatible with Rancher v2.8.3
 }
 
@@ -128,12 +128,12 @@ variable "k3s_channel" {
 }
 
 variable "k3s_token" {
-  description = "Token to use when configuring RKE2 nodes"
+  description = "Token to use when configuring K3S nodes"
   default     = null
 }
 
 variable "k3s_config" {
-  description = "Additional RKE2 configuration to add to the config.yaml file"
+  description = "Additional K3S configuration to add to the config.yaml file"
   default     = null
 }
 

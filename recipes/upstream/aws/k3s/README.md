@@ -1,4 +1,4 @@
-# Upstream | AWS | EC2 x RKE2
+# Upstream | AWS | EC2 x K3S
 
 This module is used to establish a Rancher (local) management cluster using [AWS EC2](https://aws.amazon.com/ec2/) and [K3s](https://docs.k3s.io/).
 
