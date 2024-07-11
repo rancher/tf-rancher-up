@@ -20,6 +20,17 @@ output "droplet_ips" {
   ]
 }
 
+output "droplet_ids" {
+  value = digitalocean_droplet.droplet[*].id
+}
+output "k8s_api_loadbalancer_ip" {
+  value = var.create_k8s_api_loadbalancer ? digitalocean_loadbalancer.k8s_api_loadbalancer[0].ip : null
+}
+
+output "https_loadbalancer_ip" {
+  value = var.create_https_loadbalancer ? digitalocean_loadbalancer.https_loadbalancer[0].ip : null
+}
+
 output "ssh_key_path" {
   value = var.create_ssh_key_pair ? local_file.private_key_pem[0].filename : var.ssh_key_pair_path
 }
