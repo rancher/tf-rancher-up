@@ -150,3 +150,9 @@ variable "create_kubeconfig_file" {
   description = "Boolean flag to generate a kubeconfig file (mostly used for dev only)"
   default     = true
 }
+
+variable "additional_hostnames" {
+  description = "List of additional hostnames and IPs to include in the api server PKI cert"
+  type        = list(string)
+  default     = null
+}
