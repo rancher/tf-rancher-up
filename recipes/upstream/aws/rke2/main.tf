@@ -49,6 +49,7 @@ module "rke2-additional" {
 
 module "rke2-additional-servers" {
   source                = "../../../../modules/infra/aws/ec2"
+  count                 = 0
   prefix                = var.prefix
   aws_region            = var.aws_region
   create_ssh_key_pair   = local.create_ssh_key_pair

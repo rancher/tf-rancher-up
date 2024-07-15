@@ -51,6 +51,7 @@ module "k3s-additional" {
 
 module "k3s-additional-servers" {
   source                = "../../../../modules/infra/aws/ec2"
+  count                 = 0
   prefix                = "${var.prefix}-additional-server"
   aws_region            = var.aws_region
   create_ssh_key_pair   = local.create_ssh_key_pair
@@ -71,6 +72,7 @@ module "k3s-additional-servers" {
 
 module "k3s-additional-workers" {
   source                = "../../../../modules/infra/aws/ec2"
+  count                 = 0
   prefix                = "${var.prefix}-worker"
   aws_region            = var.aws_region
   create_ssh_key_pair   = local.create_ssh_key_pair

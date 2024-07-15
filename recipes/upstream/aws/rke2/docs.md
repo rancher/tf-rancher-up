@@ -70,10 +70,5 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |
-| <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
 | <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | Rancher Initial Custom Password |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher URL |
-| <a name="output_security_group"></a> [security\_group](#output\_security\_group) | n/a |
-| <a name="output_subnet"></a> [subnet](#output\_subnet) | n/a |
-| <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |
