@@ -158,7 +158,7 @@ resource "aws_instance" "instance" {
       type        = "ssh"
       host        = var.bastion_host == null ? self.public_ip : self.private_ip
       user        = var.ssh_username
-      private_key = data.local_file.ssh-private-key.content
+      private_key = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? file("${path.cwd}/${var.prefix}-ssh_private_key.pem") : local.private_ssh_key_path.private_key_pem
 
       bastion_host        = var.bastion_host != null ? var.bastion_host.address : null
       bastion_user        = var.bastion_host != null ? var.bastion_host.user : null

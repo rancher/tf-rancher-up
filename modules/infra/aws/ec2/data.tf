@@ -16,9 +16,3 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 }
-
-# Save the private SSH key in the Terraform data source for later use
-data "local_file" "ssh-private-key" {
-  depends_on = [local_file.private_key_pem]
-  filename   = local.private_ssh_key_path
-}
