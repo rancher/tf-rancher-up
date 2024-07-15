@@ -3,6 +3,7 @@ locals {
   ssh_key_pair_name          = var.ssh_key_pair_name == null ? "tf-rancher-up-${var.prefix}" : var.ssh_key_pair_name
   local_ssh_private_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
   local_ssh_public_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
+  create_vpc                 = var.create_vpc == null ? false : true
   vpc_id                     = var.vpc_id == null ? module.aws-ec2-upstream-master-nodes.vpc[0].id : var.vpc_id
   subnet_id                  = var.subnet_id == null ? module.aws-ec2-upstream-master-nodes.subnet[0].id : var.subnet_id
   create_security_group      = var.create_security_group == null ? false : true
@@ -32,6 +33,7 @@ module "aws-ec2-upstream-worker-nodes" {
   ssh_key_pair_name          = local.ssh_key_pair_name
   ssh_private_key_path       = local.local_ssh_private_key_path
   ssh_public_key_path        = local.local_ssh_public_key_path
+  create_vpc                 = local.create_vpc
   vpc_id                     = local.vpc_id
   subnet_id                  = local.subnet_id
   create_security_group      = local.create_security_group

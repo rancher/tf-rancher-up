@@ -57,6 +57,10 @@ variable "ssh_public_key_path" {
   default = null
 }
 
+variable "create_vpc" {
+  default = null
+}
+
 variable "vpc_id" {
   default = null
 }
