@@ -61,6 +61,8 @@ variable "ssh_private_key_path" {
 
 # variable "ssh_public_key_path" {}
 
+# variable "create_vpc" {}
+
 # variable "vpc_ip_cidr_range" {}
 
 # variable "vpc_id" {}

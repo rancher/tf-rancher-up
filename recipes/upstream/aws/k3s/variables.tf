@@ -63,6 +63,10 @@ variable "ssh_public_key_path" {
   default = null
 }
 
+variable "create_vpc" {
+  default = null
+}
+
 # variable "vpc_ip_cidr_range" {}
 
 variable "vpc_id" {

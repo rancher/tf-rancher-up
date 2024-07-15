@@ -6,6 +6,7 @@ module "aws-ec2-upstream-cluster" {
   #  ssh_key_pair_name     = var.ssh_key_pair_name
   #  ssh_private_key_path  = var.ssh_private_key_path
   #  ssh_public_key_path   = var.ssh_public_key_path
+  #  create_vpc            = var.create_vpc
   #  vpc_id                = var.vpc_id
   #  subnet_id             = var.subnet_id
   #  create_security_group = var.create_security_group

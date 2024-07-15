@@ -30,7 +30,7 @@ resource "aws_key_pair" "key_pair" {
 }
 
 resource "aws_vpc" "vpc" {
-  count      = var.vpc_id == null ? 1 : 0
+  count      = var.create_vpc ? 1 : 0
   cidr_block = var.vpc_ip_cidr_range
 
   tags = {
@@ -39,7 +39,7 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "subnet" {
-  count             = var.subnet_id == null ? 1 : 0
+  count             = var.create_vpc ? 1 : 0
   availability_zone = data.aws_availability_zones.available.names[count.index]
   # cidr_block = var.subnet_ip_cidr_range[count.index]
   cidr_block              = "10.0.${count.index}.0/24"
@@ -52,7 +52,7 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_internet_gateway" "internet-gateway" {
-  count  = var.vpc_id == null ? 1 : 0
+  count  = var.create_vpc ? 1 : 0
   vpc_id = aws_vpc.vpc[0].id
 
   tags = {
@@ -61,7 +61,7 @@ resource "aws_internet_gateway" "internet-gateway" {
 }
 
 resource "aws_route_table" "route-table" {
-  count  = var.vpc_id == null ? 1 : 0
+  count  = var.create_vpc ? 1 : 0
   vpc_id = aws_vpc.vpc[0].id
 
   route {
@@ -71,7 +71,7 @@ resource "aws_route_table" "route-table" {
 }
 
 resource "aws_route_table_association" "rt-association" {
-  count = var.subnet_id == null ? 1 : 0
+  count = var.create_vpc ? 1 : 0
 
   subnet_id      = var.subnet_id == null ? "${aws_subnet.subnet.*.id[0]}" : var.subnet_id
   route_table_id = aws_route_table.route-table[0].id
@@ -158,7 +158,7 @@ resource "aws_instance" "instance" {
       type        = "ssh"
       host        = var.bastion_host == null ? self.public_ip : self.private_ip
       user        = var.ssh_username
-      private_key = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? file("${path.cwd}/${var.prefix}-ssh_private_key.pem") : local.private_ssh_key_path.private_key_pem
+      private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : file("${local.private_ssh_key_path}")
 
       bastion_host        = var.bastion_host != null ? var.bastion_host.address : null
       bastion_user        = var.bastion_host != null ? var.bastion_host.user : null

@@ -68,6 +68,12 @@ variable "ssh_public_key_path" {
   default     = null
 }
 
+variable "create_vpc" {
+  type        = bool
+  description = "Specify whether VPC / Subnet should be created for the instances"
+  default     = true
+}
+
 variable "vpc_ip_cidr_range" {
   type        = string
   default     = "10.0.0.0/16"
