@@ -24,12 +24,12 @@ cd recipes/upstream/google-cloud/gke
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
 ```bash
-terraform init --upgrade ; terraform apply -target=module.google-kubernetes-engine --auto-approve ; terraform apply --auto-approve
+terraform init -upgrade && terraform apply -auto-approve
 ```
 
 - Destroy the resources when finished
 ```bash
-terraform state rm module.google-kubernetes-engine.local_file.kube_config_yaml ; terraform destroy -target=module.google-kubernetes-engine --auto-approve ; terraform destroy --auto-approve
+terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:

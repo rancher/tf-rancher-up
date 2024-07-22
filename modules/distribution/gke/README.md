@@ -77,7 +77,7 @@ variable "subnet" {
   }
 }
 
-module "google-kubernetes-engine" {
+module "google_kubernetes_engine" {
   source     = "../../../../distribution/gke"
   prefix     = var.prefix
   project_id = var.project_id
@@ -86,10 +86,10 @@ module "google-kubernetes-engine" {
   subnet     = var.subnet
 }
 
-resource "null_resource" "first-setup" {
-  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
+resource "null_resource" "first_setup" {
+  depends_on = [module.google_kubernetes_engine.kubernetes_cluster_node_pool]
   provisioner "local-exec" {
-    command = "sh ./first-setup.sh"
+    command = "sh ./first_setup.sh"
   }
 }
 ```
@@ -145,17 +145,17 @@ variable "region" {
   }
 }
 
-module "google-kubernetes-engine" {
+module "google_kubernetes_engine" {
   source     = "../../../../distribution/gke"
   prefix     = var.prefix
   project_id = var.project_id
   region     = var.region
 }
 
-resource "null_resource" "first-setup" {
-  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
+resource "null_resource" "first_setup" {
+  depends_on = [module.google_kubernetes_engine.kubernetes_cluster_node_pool]
   provisioner "local-exec" {
-    command = "sh ./first-setup.sh"
+    command = "sh ./first_setup.sh"
   }
 }
 ```

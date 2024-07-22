@@ -70,6 +70,23 @@ variable "region" {
 
 # variable "instance_type" {}
 
+variable "kube_config_path" {
+  description = "The path to write the kubeconfig for the RKE cluster"
+  type        = string
+  default     = null
+}
+
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
+variable "waiting_time" {
+  description = "Waiting time (in seconds)"
+  default     = 60
+}
+
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
   type        = bool

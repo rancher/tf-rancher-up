@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Log into the GKE cluster with the credentials used to create it.
-export KUBECONFIG="./$(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"' | sed 's/ //g')_kube_config.yml.backup"
+export KUBECONFIG="./$(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"' | sed 's/ //g')_kube_config.yml"
 gcloud container clusters get-credentials $(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"')-cluster --region $(cat ./terraform.tfvars | grep -v "#" | grep -i region | awk -F= '{print $2}' | tr -d '"')
 
 sleep 10
@@ -25,9 +25,6 @@ EOF
 
 sleep 5
 
-# Backup the KUBECONFIG file and clean up the directory.
-cp "./$(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"' | sed 's/ //g')_kube_config.yml" "./$(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"' | sed 's/ //g')_kube_config.yml.backup"
-
 export KUBECONFIG="./$(cat ./terraform.tfvars | grep -v "#" | grep -i prefix | awk -F= '{print $2}' | tr -d '"' | sed 's/ //g')_kube_config.yml" 
 
 kubectl config view
@@ -37,3 +34,5 @@ helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
 sleep 5
 
 rm ./gke_gcloud_auth_plugin_cache || true
+
+sleep 5
