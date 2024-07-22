@@ -50,59 +50,20 @@ resource "null_resource" "first_setup" {
   }
 }
 
-resource "kubernetes_namespace" "ingress_nginx_namespace" {
+resource "null_resource" "wait_ingress_services_startup" {
   depends_on = [null_resource.first_setup]
 
-  metadata {
-    name = "ingress-nginx"
-  }
-}
-
-resource "helm_release" "ingress_nginx" {
-  depends_on = [kubernetes_namespace.ingress_nginx_namespace]
-  name       = "ingress-nginx"
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
-  namespace  = "ingress-nginx"
-  timeout    = var.waiting_time
-
-  set {
-    name  = "controller.service.type"
-    value = "LoadBalancer"
-  }
-}
-
-resource "null_resource" "wait_ingress_startup" {
-  depends_on = [helm_release.ingress_nginx]
   provisioner "local-exec" {
-    command = <<EOT
-    end=$((SECONDS + ${var.waiting_time}))
-    while [ $SECONDS -lt $end ]; do
-      if kubectl get service ingress-nginx-controller -n ingress-nginx; then
-        echo "Ingress Nginx controller is available"
-        exit 0
-      else
-        echo "Waiting for ingress-nginx-controller to be available..."
-      fi
-      sleep 10
-    done
-    echo "Timeout waiting for ingress-nginx-controller"
-    exit 1
-    EOT
+    command = "sleep ${var.waiting_time}"
   }
 }
 
 data "kubernetes_service" "ingress_nginx_controller_svc" {
-  metadata {
-    name      = "ingress-nginx-controller"
-    namespace = resource.helm_release.ingress_nginx.namespace
-  }
-}
+  depends_on = [null_resource.wait_ingress_services_startup]
 
-resource "null_resource" "wait_ingress_services_startup" {
-  depends_on = [data.kubernetes_service.ingress_nginx_controller_svc]
-  provisioner "local-exec" {
-    command = "sleep ${var.waiting_time}"
+  metadata {
+    name      = "nginx-ingress-nginx-controller"
+    namespace = "ingress-nginx"
   }
 }
 
@@ -112,7 +73,7 @@ locals {
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = [null_resource.wait_ingress_services_startup]
+  dependency                 = [data.kubernetes_service.ingress_nginx_controller_svc]
   kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
