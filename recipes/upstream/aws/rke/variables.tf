@@ -1,3 +1,8 @@
+variable "dependency" {
+  description = "An optional variable to add a dependency from another resource (not used)"
+  default     = null
+}
+
 variable "aws_access_key" {
   type        = string
   description = "AWS access key used to create infrastructure"

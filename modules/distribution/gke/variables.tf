@@ -103,7 +103,7 @@ variable "instance_type" {
 }
 
 variable "kube_config_path" {
-  description = "The path to write the kubeconfig for the RKE cluster"
+  description = "The path to write the kubeconfig for the GKE cluster"
   type        = string
   default     = null
 }

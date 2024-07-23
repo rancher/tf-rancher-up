@@ -85,13 +85,6 @@ module "google-kubernetes-engine" {
   vpc        = var.vpc
   subnet     = var.subnet
 }
-
-resource "null_resource" "first-setup" {
-  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
-  provisioner "local-exec" {
-    command = "sh ./first-setup.sh"
-  }
-}
 ```
 
 #### Launch managed Kubernetes cluster with three worker nodes (one per zone) and a dedicated new VPC/Subnet
@@ -150,13 +143,6 @@ module "google-kubernetes-engine" {
   prefix     = var.prefix
   project_id = var.project_id
   region     = var.region
-}
-
-resource "null_resource" "first-setup" {
-  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
-  provisioner "local-exec" {
-    command = "sh ./first-setup.sh"
-  }
 }
 ```
 
