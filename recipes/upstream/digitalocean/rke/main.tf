@@ -16,7 +16,7 @@ module "upstream-cluster" {
   ssh_private_key_path = var.ssh_private_key_path
   user_data = templatefile("${path.module}/cloud-config.yaml",
   {})
-  create_https_loadbalancer = var.create_https_loadbalancer
+  create_https_loadbalancer   = var.create_https_loadbalancer
   create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
 }
 
