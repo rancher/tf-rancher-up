@@ -1,8 +1,9 @@
 module "google-kubernetes-engine" {
-  source     = "../../../../modules/distribution/gke"
-  prefix     = var.prefix
-  project_id = var.project_id
-  region     = var.region
+  source               = "../../../../modules/distribution/gke"
+  prefix               = var.prefix
+  project_id           = var.project_id
+  region               = var.region
+  kube_config_filename = var.kube_config_filename
   #  vpc        = var.vpc
   #  subnet     = var.subnet
   #  cluster_version    = var.cluster_version
@@ -13,15 +14,7 @@ module "google-kubernetes-engine" {
   #  instance_type      = var.instance_type
 }
 
-resource "null_resource" "first-setup" {
-  depends_on = [module.google-kubernetes-engine.kubernetes_cluster_node_pool]
-  provisioner "local-exec" {
-    command = "sh ./first-setup.sh"
-  }
-}
-
 resource "helm_release" "ingress-nginx" {
-  depends_on       = [resource.null_resource.first-setup]
   name             = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx"
   chart            = "ingress-nginx"
@@ -42,7 +35,7 @@ data "kubernetes_service" "ingress-nginx-controller-svc" {
 }
 
 locals {
-  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"]) : join(".", ["rancher", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
+  rancher_hostname = var.rancher_hostname != null ? join(".", [var.rancher_hostname, data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"]) : join(".", ["rancher", data.kubernetes_service.ingress-nginx-controller-svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
 }
 
 module "rancher_install" {
