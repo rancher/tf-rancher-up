@@ -25,12 +25,12 @@ cd recipes/upstream/google-cloud/k3s
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
 ```bash
-terraform init -upgrade ; terraform apply -target=module.k3s-first-server.tls_private_key.ssh_private_key -target=module.k3s-first-server.local_file.private_key_pem -target=module.k3s-first-server.local_file.public_key_pem -auto-approve ; terraform apply -auto-approve ; terraform apply -target=module.rancher_install -auto-approve
+terraform init -upgrade && terraform apply -auto-approve
 ```
 
 - Destroy the resources when finished
 ```bash
-terraform state rm module.rancher_install ; terraform destroy -auto-approve
+terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:
