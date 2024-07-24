@@ -18,12 +18,6 @@
 |------|--------|---------|
 | <a name="module_google-kubernetes-engine"></a> [google-kubernetes-engine](#module\_google-kubernetes-engine) | ../../../../modules/distribution/gke | n/a |
 
-## Resources
-
-| Name | Type |
-|------|------|
-| [null_resource.first-setup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |

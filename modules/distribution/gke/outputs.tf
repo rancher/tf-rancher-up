@@ -32,3 +32,8 @@ output "kubernetes_cluster_node_pool" {
   value       = google_container_node_pool.primary_nodes.name
   description = "GKE Cluster Node Pool"
 }
+
+output "kubeconfig_filename" {
+  description = "Kubeconfig file location"
+  value       = local.kc_file
+}

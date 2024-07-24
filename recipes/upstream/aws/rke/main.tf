@@ -1,58 +1,42 @@
-module "upstream-cluster" {
-  source                  = "../../../../modules/infra/aws"
-  prefix                  = var.prefix
-  instance_count          = var.instance_count
-  instance_type           = var.instance_type
-  instance_disk_size      = var.instance_disk_size
+module "rke" {
+  source = "../../../../recipes/standalone/aws/rke"
+
+  aws_access_key = var.aws_access_key
+  aws_secret_key = var.aws_secret_key
+  aws_region     = var.aws_region
+
+  dependency         = var.dependency
+  prefix             = var.prefix
+  instance_count     = var.instance_count
+  instance_type      = var.instance_type
+  instance_disk_size = var.instance_disk_size
+  spot_instances     = var.spot_instances
+  install_docker     = var.install_docker
+  docker_version     = var.docker_version
+
+  subnet_id               = var.subnet_id
   create_ssh_key_pair     = var.create_ssh_key_pair
-  ssh_key_pair_name       = var.ssh_key_pair_name
-  ssh_key_pair_path       = var.ssh_key_pair_path
-  ssh_username            = var.ssh_username
-  spot_instances          = var.spot_instances
-  aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
-  subnet_id               = var.subnet_id
-  user_data = templatefile("${path.module}/user_data.tmpl",
-    {
-      install_docker = var.install_docker
-      username       = var.ssh_username
-      docker_version = var.docker_version
-    }
-  )
-}
 
-module "rke" {
-  source               = "../../../../modules/distribution/rke"
-  prefix               = var.prefix
-  dependency           = module.upstream-cluster.dependency
-  ssh_private_key_path = module.upstream-cluster.ssh_key_path
-  node_username        = var.ssh_username
+  ssh_username      = var.ssh_username
+  ssh_key_pair_name = var.ssh_key_pair_name
+  ssh_key_pair_path = var.ssh_key_pair_path
+
   kube_config_path     = var.kube_config_path
   kube_config_filename = var.kube_config_filename
   kubernetes_version   = var.kubernetes_version
 
-  rancher_nodes = [for instance_ips in module.upstream-cluster.instance_ips :
-    {
-      public_ip         = instance_ips.public_ip,
-      private_ip        = instance_ips.private_ip,
-      roles             = ["etcd", "controlplane", "worker"],
-      ssh_key_path      = module.upstream-cluster.ssh_key_path
-      ssh_key           = null
-      node_username     = module.upstream-cluster.node_username
-      hostname_override = null
-    }
-  ]
 }
 
 locals {
-  rancher_hostname = join(".", ["rancher", module.upstream-cluster.instances_public_ip[0], "sslip.io"])
+  rancher_hostname = join(".", ["rancher", module.rke.instances_public_ip[0], "sslip.io"])
 }
 
 module "rancher_install" {
   source                                = "../../../../modules/rancher"
   dependency                            = module.rke.dependency
-  kubeconfig_file                       = module.rke.rke_kubeconfig_filename
+  kubeconfig_file                       = module.rke.kubeconfig_filename
   rancher_hostname                      = local.rancher_hostname
   rancher_replicas                      = min(var.rancher_replicas, var.instance_count)
   rancher_bootstrap_password            = var.rancher_bootstrap_password

@@ -91,3 +91,17 @@ variable "user_data" {
   description = "User data content for EC2 instance(s)"
   default     = null
 }
+
+variable "create_k8s_api_loadbalancer" {
+  type        = bool
+  description = "Specify if a loadbalancer for port 6443 needs to be created for the instances"
+  default     = false
+  nullable    = false
+}
+
+variable "create_https_loadbalancer" {
+  type        = bool
+  description = "Specify if a loadbalancer for port 443 needs to be created for the instances"
+  default     = false
+  nullable    = false
+}

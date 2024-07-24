@@ -122,7 +122,39 @@ variable "rancher_version" {
   type        = string
 }
 
+variable "rancher_helm_repository" {
+  description = "Helm repository for Rancher chart"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_username" {
+  description = "Private Rancher helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_password" {
+  description = "Private Rancher helm repository password"
+  default     = null
+  type        = string
+}
+
 variable "wait" {
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
+}
+
+variable "create_k8s_api_loadbalancer" {
+  type        = bool
+  description = "Specify if a loadbalancer for port 6443 needs to be created for the instances"
+  default     = false
+  nullable    = false
+}
+
+variable "create_https_loadbalancer" {
+  type        = bool
+  description = "Specify if a loadbalancer for port 443 needs to be created for the instances"
+  default     = false
+  nullable    = false
 }

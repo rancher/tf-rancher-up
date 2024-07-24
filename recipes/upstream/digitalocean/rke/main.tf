@@ -1,3 +1,7 @@
+locals {
+  rancher_hostname = var.create_https_loadbalancer ? module.upstream-cluster.https_loadbalancer_ip : module.upstream-cluster.droplets_public_ip[0]
+}
+
 module "upstream-cluster" {
   source               = "../../../../modules/infra/digitalocean"
   prefix               = var.prefix
@@ -12,6 +16,8 @@ module "upstream-cluster" {
   ssh_private_key_path = var.ssh_private_key_path
   user_data = templatefile("${path.module}/cloud-config.yaml",
   {})
+  create_https_loadbalancer   = var.create_https_loadbalancer
+  create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
 }
 
 module "rke" {
@@ -23,6 +29,7 @@ module "rke" {
   kube_config_path     = pathexpand(var.kube_config_path)
   kube_config_filename = var.kube_config_filename
   kubernetes_version   = var.kubernetes_version
+  additional_hostnames = [module.upstream-cluster.k8s_api_loadbalancer_ip]
 
   rancher_nodes = [for droplet_ips in module.upstream-cluster.droplet_ips :
     {
@@ -37,13 +44,16 @@ module "rke" {
 }
 
 module "rancher_install" {
-  source                     = "../../../../modules/rancher"
-  dependency                 = module.rke.dependency
-  kubeconfig_file            = module.rke.rke_kubeconfig_filename
-  rancher_hostname           = join(".", ["rancher", module.upstream-cluster.droplets_public_ip[0], "sslip.io"])
-  rancher_replicas           = var.droplet_count
-  rancher_bootstrap_password = var.rancher_password
-  rancher_password           = var.rancher_password
-  rancher_version            = var.rancher_version
-  wait                       = var.wait
+  source                           = "../../../../modules/rancher"
+  dependency                       = module.rke.dependency
+  kubeconfig_file                  = module.rke.rke_kubeconfig_filename
+  rancher_hostname                 = join(".", ["rancher", local.rancher_hostname, "sslip.io"])
+  rancher_replicas                 = var.droplet_count
+  rancher_bootstrap_password       = var.rancher_password
+  rancher_password                 = var.rancher_password
+  rancher_version                  = var.rancher_version
+  rancher_helm_repository          = var.rancher_helm_repository
+  rancher_helm_repository_username = var.rancher_helm_repository_username
+  rancher_helm_repository_password = var.rancher_helm_repository_password
+  wait                             = var.wait
 }
