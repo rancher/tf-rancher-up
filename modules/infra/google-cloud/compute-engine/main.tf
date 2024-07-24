@@ -1,7 +1,6 @@
 locals {
-  new_key_pair_path    = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  private_ssh_key_path = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
-  public_ssh_key_path  = fileexists("${path.cwd}/${var.prefix}-ssh_public_key.pem") ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
+  private_ssh_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
+  public_ssh_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -11,20 +10,20 @@ resource "tls_private_key" "ssh_private_key" {
 
 resource "local_file" "private_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.new_key_pair_path
+  filename        = local.private_ssh_key_path
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
   file_permission = "0600"
 }
 
 resource "local_file" "public_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = var.ssh_public_key_path != null ? var.ssh_public_key_path : "${path.cwd}/${var.prefix}-ssh_public_key.pem"
+  filename        = local.public_ssh_key_path
   content         = tls_private_key.ssh_private_key[0].public_key_openssh
   file_permission = "0600"
 }
 
 resource "google_compute_network" "vpc" {
-  count                   = var.create_vpc ? 1 : 0
+  count                   = var.create_vpc == true ? 1 : 0
   name                    = "${var.prefix}-vpc"
   auto_create_subnetworks = "false"
 }
@@ -32,7 +31,7 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_subnetwork" "subnet" {
   depends_on = [resource.google_compute_firewall.default[0]]
 
-  count         = var.create_vpc ? 1 : 0
+  count         = var.create_vpc == true ? 1 : 0
   name          = "${var.prefix}-subnet"
   region        = var.region
   network       = var.vpc == null ? resource.google_compute_network.vpc[0].name : var.vpc
@@ -127,7 +126,7 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys       = var.create_ssh_key_pair ? "${var.ssh_username}:${tls_private_key.ssh_private_key[0].public_key_openssh}" : "${var.ssh_username}:${file(local.public_ssh_key_path)}"
+    ssh-keys       = var.create_ssh_key_pair ? "${var.ssh_username}:${tls_private_key.ssh_private_key[0].public_key_openssh}" : "${var.ssh_username}:${local.public_ssh_key_path}"
     startup-script = var.startup_script
   }
 }

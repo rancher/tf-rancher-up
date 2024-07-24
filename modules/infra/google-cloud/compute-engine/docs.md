@@ -56,6 +56,10 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_firewall"></a> [firewall](#output\_firewall) | n/a |
 | <a name="output_instance_ips"></a> [instance\_ips](#output\_instance\_ips) | n/a |
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | Google Compute Engine Intances Private IPs |
 | <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | Google Compute Engine Intances Public IPs |
+| <a name="output_public_ssh_key"></a> [public\_ssh\_key](#output\_public\_ssh\_key) | n/a |
+| <a name="output_subnet"></a> [subnet](#output\_subnet) | n/a |
+| <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |
