@@ -18,10 +18,18 @@ module "google_kubernetes_engine" {
   #  instance_type      = var.instance_type
 }
 
-resource "local_file" "kube_config_yaml" {
+resource "null_resource" "first_setup" {
   depends_on = [module.google_kubernetes_engine.kubernetes_cluster_node_pool]
 
-  content = templatefile("../../../../modules/distribution/gke/template_kube_config.yml", {
+  provisioner "local-exec" {
+    command = "sh ${path.cwd}/first_setup.sh"
+  }
+}
+
+resource "local_file" "kube_config_yaml" {
+  depends_on = [null_resource.first_setup]
+
+  content = templatefile("../../../../modules/distribution/gke/kubeconfig.yml.tmpl", {
     cluster_name    = module.google_kubernetes_engine.cluster_name,
     endpoint        = module.google_kubernetes_engine.cluster_endpoint,
     cluster_ca      = module.google_kubernetes_engine.cluster_ca_certificate,
@@ -42,16 +50,8 @@ provider "helm" {
   }
 }
 
-resource "null_resource" "first_setup" {
-  depends_on = [local_file.kube_config_yaml]
-
-  provisioner "local-exec" {
-    command = "sh ${path.cwd}/first_setup.sh"
-  }
-}
-
 resource "null_resource" "wait_ingress_services_startup" {
-  depends_on = [null_resource.first_setup]
+  depends_on = [local_file.kube_config_yaml]
 
   provisioner "local-exec" {
     command = "sleep ${var.waiting_time}"
@@ -74,7 +74,7 @@ locals {
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
   dependency                 = [data.kubernetes_service.ingress_nginx_controller_svc]
-  kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
+  kubeconfig_file            = local_file.kube_config_yaml.filename
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
