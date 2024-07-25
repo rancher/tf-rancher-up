@@ -1,19 +1,10 @@
-variable "dependency" {
-  description = "An optional variable to add a dependency from another resource (not used)"
-  default     = null
-}
+variable "prefix" {}
 
-variable "aws_access_key" {
-  type        = string
-  description = "AWS access key used to create infrastructure"
-  default     = null
-}
+# variable "aws_access_key" {}
 
-variable "aws_secret_key" {
-  type        = string
-  description = "AWS secret key used to create AWS infrastructure"
-  default     = null
-}
+# variable "aws_secret_key" {}
+
+# variable "aws_session_token" {}
 
 variable "aws_region" {
   type        = string
@@ -56,29 +47,84 @@ variable "aws_region" {
   }
 }
 
-variable "prefix" {
-  type        = string
-  description = "Prefix added to names of all resources"
+variable "create_ssh_key_pair" {
+  default = null
+}
+
+variable "ssh_key_pair_name" {
+  default = null
+}
+
+variable "ssh_private_key_path" {
+  default = null
+}
+
+variable "ssh_public_key_path" {
+  default = null
+}
+
+variable "create_vpc" {
+  default = null
+}
+
+# variable "vpc_ip_cidr_range" {}
+
+# variable "vpc_id" {}
+
+# variable "subnet_id" {}
+
+# variable "create_security_group" {}
+
+variable "instance_count" {}
+
+# variable "instance_type" {}
+
+# variable "spot_instances" {}
+
+# variable "instance_disk_size" {}
+
+# variable "instance_security_group_id" {}
+
+variable "ssh_username" {}
+
+variable "user_data" {
+  description = "User data content for EC2 instance(s)"
   default     = null
 }
 
-variable "instance_count" {
-  type        = number
-  description = "Number of EC2 instances to create"
-  default     = null
+#variable "bastion_host" {
+#  type = object({
+#    address      = string
+#    user         = string
+#    ssh_key      = string
+#    ssh_key_path = string
+#  })
+#  default     = null
+#  description = "Bastion host configuration to access the instances"
+#}
+
+# variable "iam_instance_profile" {}
+
+# variable "tags" {}
+
+variable "install_docker" {
+  type        = bool
+  description = "Install Docker while creating the instances"
+  default     = true
 }
 
-variable "instance_type" {
+variable "docker_version" {
   type        = string
-  description = "Instance type used for all EC2 instances"
-  default     = null
+  description = "Docker version to install on nodes"
+  default     = "20.10"
 }
 
-variable "instance_disk_size" {
-  type        = string
-  description = "Specify root disk size (GB)"
-  default     = null
+variable "waiting_time" {
+  description = "Waiting time (in seconds)"
+  default     = 120
 }
+
+# variable "kubernetes_version" {}
 
 variable "kube_config_path" {
   description = "The path to write the kubeconfig for the RKE cluster"
@@ -89,72 +135,5 @@ variable "kube_config_path" {
 variable "kube_config_filename" {
   description = "Filename to write the kube config"
   type        = string
-  default     = null
-}
-
-variable "kubernetes_version" {
-  type        = string
-  description = "Kubernetes version to use for the RKE cluster"
-  default     = null
-}
-
-variable "install_docker" {
-  type        = bool
-  description = "Should install docker while creating the instance"
-  default     = true
-}
-
-variable "docker_version" {
-  type        = string
-  description = "Docker version to install on nodes"
-  default     = "20.10"
-}
-
-variable "create_ssh_key_pair" {
-  type        = bool
-  description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = null
-}
-
-variable "ssh_key_pair_name" {
-  type        = string
-  description = "Specify the SSH key name to use (that's already present in AWS)"
-  default     = null
-}
-
-variable "ssh_key_pair_path" {
-  type        = string
-  description = "Path to the SSH private key used as the key pair (that's already present in AWS)"
-  default     = null
-}
-
-variable "ssh_username" {
-  type        = string
-  description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
-}
-
-variable "spot_instances" {
-  type        = bool
-  description = "Use spot instances"
-  default     = null
-}
-
-variable "subnet_id" {
-  type        = string
-  description = "VPC Subnet ID to create the instance(s) in"
-  default     = null
-}
-
-variable "create_security_group" {
-  type        = bool
-  description = "Should create the security group associated with the instance(s)"
-  default     = null
-}
-
-# TODO: Add a check based on above value
-variable "instance_security_group" {
-  type        = string
-  description = "Provide a pre-existing security group ID"
   default     = null
 }

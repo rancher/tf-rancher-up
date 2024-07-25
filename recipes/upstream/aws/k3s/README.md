@@ -31,7 +31,7 @@ terraform init -upgrade && terraform apply -auto-approve
 
 - Destroy the resources when finished
 ```bash
-terraform state rm module.rancher_install && terraform destroy -auto-approve
+terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:

@@ -20,22 +20,21 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_k3s-additional"></a> [k3s-additional](#module\_k3s-additional) | ../../../../modules/distribution/k3s | n/a |
-| <a name="module_k3s-additional-servers"></a> [k3s-additional-servers](#module\_k3s-additional-servers) | ../../../../modules/infra/aws/ec2 | n/a |
-| <a name="module_k3s-additional-workers"></a> [k3s-additional-workers](#module\_k3s-additional-workers) | ../../../../modules/infra/aws/ec2 | n/a |
-| <a name="module_k3s-first"></a> [k3s-first](#module\_k3s-first) | ../../../../modules/distribution/k3s | n/a |
-| <a name="module_k3s-first-server"></a> [k3s-first-server](#module\_k3s-first-server) | ../../../../modules/infra/aws/ec2 | n/a |
+| <a name="module_k3s_additional"></a> [k3s\_additional](#module\_k3s\_additional) | ../../../../modules/distribution/k3s | n/a |
+| <a name="module_k3s_additional_servers"></a> [k3s\_additional\_servers](#module\_k3s\_additional\_servers) | ../../../../modules/infra/aws/ec2 | n/a |
+| <a name="module_k3s_additional_workers"></a> [k3s\_additional\_workers](#module\_k3s\_additional\_workers) | ../../../../modules/infra/aws/ec2 | n/a |
+| <a name="module_k3s_first"></a> [k3s\_first](#module\_k3s\_first) | ../../../../modules/distribution/k3s | n/a |
+| <a name="module_k3s_first_server"></a> [k3s\_first\_server](#module\_k3s\_first\_server) | ../../../../modules/infra/aws/ec2 | n/a |
 | <a name="module_rancher_install"></a> [rancher\_install](#module\_rancher\_install) | ../../../../modules/rancher | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [local_file.kube-config-yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [local_file.kube-config-yaml-backup](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [null_resource.wait-k8s-services-startup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [ssh_resource.retrieve-kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
-| [local_file.ssh-private-key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
+| [local_file.kube_config_yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
+| [null_resource.wait_k8s_services_startup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [ssh_resource.retrieve_kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
+| [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
