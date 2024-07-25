@@ -1,6 +1,6 @@
-# Upstream | AWS | EC2 x K3S
+# Upstream | AWS | EC2 x RKE
 
-This module is used to establish a Rancher (local) management cluster using [AWS EC2](https://aws.amazon.com/ec2/) and [K3s](https://docs.k3s.io/).
+This module is used to establish a Rancher (local) management cluster using [AWS EC2](https://aws.amazon.com/ec2/) and [RKE](https://rke.docs.rancher.com/).
 
 Documentation can be found [here](./docs.md).
 
@@ -8,7 +8,7 @@ Documentation can be found [here](./docs.md).
 
 ```bash
 git clone https://github.com/rancherlabs/tf-rancher-up.git
-cd recipes/upstream/aws/k3s
+cd recipes/upstream/aws/rke
 ```
 
 - Copy `./terraform.tfvars.exmaple` to `./terraform.tfvars`
@@ -16,8 +16,7 @@ cd recipes/upstream/aws/k3s
   - Update the required variables:
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `aws_region` to suit your region
-    -  `server_nodes_count` to specify the number of Master nodes to create (to maintain ETCD quorum, the value must be 1, 3, or 5)
-    -  `worker_nodes_count` to specify the number of Worker nodes to create
+    -  `instance_count` to specify the number of instances to create
     -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
     -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
@@ -36,5 +35,5 @@ terraform destroy -auto-approve
 
 See full argument list for each module in use:
   - AWS EC2: https://github.com/rancher/tf-rancher-up/tree/main/modules/infra/aws/ec2
-  - K3s: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/k3s
+  - RKE: https://github.com/rancher/tf-rancher-up/tree/main/modules/distribution/rke
   - Rancher: https://github.com/rancher/tf-rancher-up/tree/main/modules/rancher

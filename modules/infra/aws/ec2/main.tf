@@ -1,7 +1,6 @@
 locals {
-  new_key_pair_path    = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  private_ssh_key_path = fileexists("${path.cwd}/${var.prefix}-ssh_private_key.pem") ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
-  public_ssh_key_path  = fileexists("${path.cwd}/${var.prefix}-ssh_public_key.pem") ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
+  private_ssh_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
+  public_ssh_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -11,14 +10,14 @@ resource "tls_private_key" "ssh_private_key" {
 
 resource "local_file" "private_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.new_key_pair_path
+  filename        = local.private_ssh_key_path
   content         = tls_private_key.ssh_private_key[0].private_key_openssh
   file_permission = "0600"
 }
 
 resource "local_file" "public_key_pem" {
   count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = var.ssh_public_key_path != null ? var.ssh_public_key_path : "${path.cwd}/${var.prefix}-ssh_public_key.pem"
+  filename        = local.public_ssh_key_path
   content         = tls_private_key.ssh_private_key[0].public_key_openssh
   file_permission = "0600"
 }
@@ -39,6 +38,8 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "subnet" {
+  depends_on = [resource.aws_route_table.route_table[0]]
+
   count             = var.create_vpc ? 1 : 0
   availability_zone = data.aws_availability_zones.available.names[count.index]
   # cidr_block = var.subnet_ip_cidr_range[count.index]
@@ -51,7 +52,7 @@ resource "aws_subnet" "subnet" {
   }
 }
 
-resource "aws_internet_gateway" "internet-gateway" {
+resource "aws_internet_gateway" "internet_gateway" {
   count  = var.create_vpc ? 1 : 0
   vpc_id = aws_vpc.vpc[0].id
 
@@ -60,27 +61,25 @@ resource "aws_internet_gateway" "internet-gateway" {
   }
 }
 
-resource "aws_route_table" "route-table" {
+resource "aws_route_table" "route_table" {
   count  = var.create_vpc ? 1 : 0
   vpc_id = aws_vpc.vpc[0].id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.internet-gateway[0].id
+    gateway_id = aws_internet_gateway.internet_gateway[0].id
   }
 }
 
-resource "aws_route_table_association" "rt-association" {
-  count = var.create_vpc ? 1 : 0
-
+resource "aws_route_table_association" "rt_association" {
+  count          = var.create_vpc ? 1 : 0
   subnet_id      = var.subnet_id == null ? "${aws_subnet.subnet.*.id[0]}" : var.subnet_id
-  route_table_id = aws_route_table.route-table[0].id
+  route_table_id = aws_route_table.route_table[0].id
 }
 
 resource "aws_security_group" "sg_allowall" {
-  count  = var.create_security_group == true ? 1 : 0
-  vpc_id = aws_vpc.vpc[0].id
-
+  count       = var.create_security_group ? 1 : 0
+  vpc_id      = aws_vpc.vpc[0].id
   name        = "${var.prefix}-allow-nodes"
   description = "Allow traffic for nodes in the cluster"
 
@@ -130,6 +129,8 @@ resource "aws_security_group" "sg_allowall" {
 }
 
 resource "aws_instance" "instance" {
+  depends_on = [resource.aws_route_table_association.rt_association[0]]
+
   count         = var.instance_count
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
