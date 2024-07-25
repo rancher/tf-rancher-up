@@ -30,7 +30,7 @@ terraform init -upgrade && terraform apply -auto-approve
 
 - Destroy the resources when finished
 ```bash
-terraform destroy -target=helm_release.ingress-nginx -target=module.rancher_install -auto-approve && terraform destroy -auto-approve
+terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:

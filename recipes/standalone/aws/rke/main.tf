@@ -71,28 +71,3 @@ resource "null_resource" "wait_k8s_services_startup" {
     command = "sleep ${var.waiting_time}"
   }
 }
-
-locals {
-  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", module.aws_ec2_upstream_cluster.instances_public_ip[0], "sslip.io"]) : join(".", ["rancher", module.aws_ec2_upstream_cluster.instances_public_ip[0], "sslip.io"])
-
-}
-
-module "rancher_install" {
-  source                                = "../../../../modules/rancher"
-  dependency                            = [null_resource.wait_k8s_services_startup]
-  kubeconfig_file                       = local.kc_file
-  rancher_hostname                      = local.rancher_hostname
-  rancher_bootstrap_password            = var.rancher_password
-  rancher_password                      = var.rancher_password
-  bootstrap_rancher                     = var.bootstrap_rancher
-  rancher_version                       = var.rancher_version
-  rancher_helm_repository               = var.rancher_helm_repository
-  rancher_helm_repository_username      = var.rancher_helm_repository_username
-  rancher_helm_repository_password      = var.rancher_helm_repository_password
-  cert_manager_helm_repository          = var.cert_manager_helm_repository
-  cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
-  cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
-  rancher_additional_helm_values = [
-    "replicas: ${var.instance_count}"
-  ]
-}

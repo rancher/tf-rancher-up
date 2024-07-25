@@ -126,19 +126,6 @@ variable "waiting_time" {
 
 # variable "kubernetes_version" {}
 
-variable "ingress_provider" {
-  description = "Ingress controller provider"
-  default     = "nginx"
-}
-
-variable "bootstrap_rancher" {
-  description = "Bootstrap the Rancher installation"
-  type        = bool
-  default     = true
-}
-
-variable "rancher_hostname" {}
-
 variable "kube_config_path" {
   description = "The path to write the kubeconfig for the RKE cluster"
   type        = string
@@ -149,55 +136,4 @@ variable "kube_config_filename" {
   description = "Filename to write the kube config"
   type        = string
   default     = null
-}
-
-variable "rancher_password" {
-  type = string
-
-  validation {
-    condition     = length(var.rancher_password) >= 12
-    error_message = "The password must be at least 12 characters."
-  }
-}
-
-variable "rancher_version" {
-  description = "Rancher version to install"
-  type        = string
-  default     = null
-}
-
-variable "rancher_helm_repository" {
-  description = "Helm repository for Rancher chart"
-  default     = null
-  type        = string
-}
-
-variable "rancher_helm_repository_username" {
-  description = "Private Rancher helm repository username"
-  default     = null
-  type        = string
-}
-
-variable "rancher_helm_repository_password" {
-  description = "Private Rancher helm repository password"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository" {
-  description = "Helm repository for Cert Manager chart"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository_username" {
-  description = "Private Cert Manager helm repository username"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository_password" {
-  description = "Private Cert Manager helm repository password"
-  default     = null
-  type        = string
 }

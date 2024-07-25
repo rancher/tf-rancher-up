@@ -1,4 +1,4 @@
-# Upstream | AWS | EC2 x RKE
+# Upstream | AWS standalone | EC2 x RKE
 
 This module is used to establish a Rancher (local) management cluster using [AWS EC2](https://aws.amazon.com/ec2/) and [RKE](https://rke.docs.rancher.com/).
 
