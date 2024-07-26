@@ -13,9 +13,13 @@ module "aks" {
   kube_config_filename = var.kube_config_filename
 }
 
+locals {
+  kubeconfig_exists = fileexists(module.aks.kubeconfig_file_location)
+}
+
 provider "helm" {
   kubernetes {
-    config_path = module.aks.kubeconfig_file_location
+    config_path = local.kubeconfig_exists ? module.aks.kubeconfig_file_location : null
   }
 }
 
@@ -43,7 +47,7 @@ resource "helm_release" "ingress-nginx" {
 }
 
 provider "kubernetes" {
-  config_path = module.aks.kubeconfig_file_location
+  config_path = local.kubeconfig_exists ? module.aks.kubeconfig_file_location : null
 }
 
 data "kubernetes_service" "ingress-nginx-controller-svc" {

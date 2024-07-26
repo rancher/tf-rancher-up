@@ -49,6 +49,49 @@ resource "digitalocean_droplet" "droplet" {
   }
 }
 
+resource "digitalocean_loadbalancer" "k8s_api_loadbalancer" {
+  count  = var.create_k8s_api_loadbalancer ? 1 : 0
+  name   = "${var.prefix}-6443-lb"
+  region = var.region
+  forwarding_rule {
+    entry_port     = 443
+    entry_protocol = "https"
+
+    target_port     = 6443
+    target_protocol = "https"
+
+    tls_passthrough = true
+  }
+  healthcheck {
+    port     = 6443
+    protocol = "tcp"
+  }
+
+  droplet_ids = resource.digitalocean_droplet.droplet[*].id
+  depends_on  = [digitalocean_droplet.droplet]
+}
+
+resource "digitalocean_loadbalancer" "https_loadbalancer" {
+  count  = var.create_https_loadbalancer ? 1 : 0
+  name   = "${var.prefix}-443-lb"
+  region = var.region
+  forwarding_rule {
+    entry_port     = 443
+    entry_protocol = "https"
+
+    target_port     = 443
+    target_protocol = "https"
+
+    tls_passthrough = true
+  }
+  healthcheck {
+    port     = 443
+    protocol = "tcp"
+  }
+
+  droplet_ids = resource.digitalocean_droplet.droplet[*].id
+  depends_on  = [digitalocean_droplet.droplet]
+}
 resource "digitalocean_firewall" "k8s_cluster" {
   name = "${var.prefix}-allow-nodes"
 

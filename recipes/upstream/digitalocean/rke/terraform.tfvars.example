@@ -45,3 +45,9 @@
 
 # DigitalOcean authentication token 
 # do_token = ""
+
+# Create a loadbalancer resource to route https traffic across all droplets
+# create_https_loadbalancer = false
+
+# Create a loadbalancer resource to route kubernetes apiserver traffic across all droplets
+# create_k8s_api_loadbalancer = false

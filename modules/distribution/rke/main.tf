@@ -42,6 +42,11 @@ resource "rke_cluster" "this" {
     ssh_key      = var.bastion_host != null ? var.bastion_host.ssh_key : ""
   }
 
+  authentication {
+    sans     = [for hostname in coalesce(var.additional_hostnames, []) : "$hostname"]
+    strategy = "x509"
+  }
+
   kubernetes_version = var.kubernetes_version
   ssh_agent_auth     = var.ssh_agent_auth
   addon_job_timeout  = 120

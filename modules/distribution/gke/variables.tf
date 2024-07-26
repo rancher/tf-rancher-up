@@ -72,8 +72,8 @@ variable "subnet" {
   default     = null
 }
 
-variable "cluster_version" {
-  default     = "1.28.8-gke.1095000"
+variable "cluster_version_prefix" {
+  default     = "1.28."
   description = "Supported Google Kubernetes Engine for Rancher Manager"
 }
 
@@ -103,7 +103,7 @@ variable "instance_type" {
 }
 
 variable "kube_config_path" {
-  description = "The path to write the kubeconfig for the RKE cluster"
+  description = "The path to write the kubeconfig for the GKE cluster"
   type        = string
   default     = null
 }

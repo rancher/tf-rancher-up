@@ -18,21 +18,28 @@ resource "google_compute_subnetwork" "subnet" {
   ip_cidr_range = var.ip_cidr_range
 }
 
+data "google_container_engine_versions" "gke_version" {
+  location       = var.region
+  version_prefix = var.cluster_version_prefix
+}
+
 resource "google_container_cluster" "primary" {
   name     = "${var.prefix}-cluster"
   location = var.region
 
+  deletion_protection = false
+
   remove_default_node_pool = true
   initial_node_count       = 1
 
-  min_master_version = var.cluster_version
+  min_master_version = data.google_container_engine_versions.gke_version.latest_node_version
 
   network    = var.vpc == null ? resource.google_compute_network.vpc[0].name : var.vpc
   subnetwork = var.subnet == null ? resource.google_compute_subnetwork.subnet[0].name : var.subnet
 
   master_auth {
     client_certificate_config {
-      issue_client_certificate = true
+      issue_client_certificate = false
     }
   }
 }
@@ -42,7 +49,7 @@ resource "google_container_node_pool" "primary_nodes" {
   location = var.region
   cluster  = google_container_cluster.primary.name
 
-  version    = var.cluster_version
+  version    = data.google_container_engine_versions.gke_version.latest_node_version
   node_count = var.instance_count
 
   node_config {
@@ -64,25 +71,27 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
+data "google_client_config" "default" {}
+
 resource "local_file" "kube_config_yaml" {
-  content = templatefile("${path.module}/template-kube_config.yml", {
-    cluster_name    = google_container_cluster.primary.name,
-    endpoint        = google_container_cluster.primary.endpoint,
-    cluster_ca      = google_container_cluster.primary.master_auth.0.cluster_ca_certificate,
-    client_cert     = google_container_cluster.primary.master_auth.0.client_certificate,
-    client_cert_key = google_container_cluster.primary.master_auth.0.client_key
+  content = templatefile("${path.module}/kubeconfig.yml.tmpl", {
+    cluster_name = google_container_cluster.primary.name
+    host         = google_container_cluster.primary.endpoint
+    client_token = data.google_client_config.default.access_token
+    # no need to encode in base64
+    ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
   })
   file_permission = "0600"
   filename        = local.kc_file
 }
 
 resource "local_file" "kube_config_yaml_backup" {
-  content = templatefile("${path.module}/template-kube_config.yml", {
-    cluster_name    = google_container_cluster.primary.name,
-    endpoint        = google_container_cluster.primary.endpoint,
-    cluster_ca      = google_container_cluster.primary.master_auth.0.cluster_ca_certificate,
-    client_cert     = google_container_cluster.primary.master_auth.0.client_certificate,
-    client_cert_key = google_container_cluster.primary.master_auth.0.client_key
+  content = templatefile("${path.module}/kubeconfig.yml.tmpl", {
+    cluster_name = google_container_cluster.primary.name
+    host         = google_container_cluster.primary.endpoint
+    client_token = data.google_client_config.default.access_token
+    # no need to encode in base64
+    ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
   })
   file_permission = "0600"
   filename        = local.kc_file_backup

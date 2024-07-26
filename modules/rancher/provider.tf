@@ -1,11 +1,15 @@
+locals {
+  kubeconfig_exists = fileexists(pathexpand(var.kubeconfig_file))
+}
+
 provider "helm" {
   kubernetes {
-    config_path = var.kubeconfig_file
+    config_path = local.kubeconfig_exists ? var.kubeconfig_file : null
   }
 }
 
 provider "kubernetes" {
-  config_path = var.kubeconfig_file
+  config_path = local.kubeconfig_exists ? var.kubeconfig_file : null
 }
 
 provider "rancher2" {

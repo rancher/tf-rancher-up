@@ -1,6 +1,10 @@
-variable "prefix" {}
+variable "prefix" {
+  description = "The prefix used in front of all Google resources"
+}
 
-variable "project_id" {}
+variable "project_id" {
+  description = "The ID of the Google Project that will contain all created resources"
+}
 
 variable "region" {
   description = "Google Region to create the resources"
@@ -52,23 +56,51 @@ variable "region" {
   }
 }
 
-# variable "ip_cidr_range" {}
+variable "ip_cidr_range" {
+  type        = string
+  default     = "10.10.0.0/24"
+  description = "Range of private IPs available for the Google Subnet"
+}
 
-# variable "vpc" {}
+variable "vpc" {
+  description = "Google VPC used for all resources"
+  default     = null
+}
 
-# variable "subnet" {}
+variable "subnet" {
+  description = "Google Subnet used for all resources"
+  default     = null
+}
 
-# variable "cluster_version" {}
+variable "cluster_version_prefix" {
+  default     = "1.28."
+  description = "Supported Google Kubernetes Engine for Rancher Manager"
+}
 
-# variable "instance_count" {}
+variable "instance_count" {
+  default     = 1
+  description = "The number of nodes per instance group"
+}
 
-# variable "instance_disk_size" {}
+variable "instance_disk_size" {
+  default     = 50
+  description = "Size of the disk attached to each node, specified in GB"
+}
 
-# variable "disk_type" {}
+variable "disk_type" {
+  default     = "pd-balanced"
+  description = "Type of the disk attached to each node (e.g. 'pd-standard', 'pd-ssd' or 'pd-balanced')"
+}
 
-# variable "image_type" {}
+variable "image_type" {
+  default     = "cos_containerd"
+  description = "The default image type used by NAP once a new node pool is being created. The value must be one of the [COS_CONTAINERD, COS, UBUNTU_CONTAINERD, UBUNTU]. NOTE: COS AND UBUNTU are deprecated as of GKE 1.24"
+}
 
-# variable "instance_type" {}
+variable "instance_type" {
+  default     = "e2-highmem-2"
+  description = "The name of a Google Compute Engine machine type"
+}
 
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
@@ -76,7 +108,10 @@ variable "bootstrap_rancher" {
   default     = true
 }
 
-variable "rancher_hostname" {}
+variable "rancher_hostname" {
+  description = "Use this variable if you want to use a different hostname for Rancher instead of prefix"
+  default     = null
+}
 
 variable "rancher_password" {
   type = string
@@ -89,6 +124,18 @@ variable "rancher_password" {
 
 variable "rancher_version" {
   description = "Rancher version to install"
+  type        = string
+  default     = null
+}
+
+variable "kube_config_path" {
+  description = "The path to write the kubeconfig for the GKE cluster"
+  type        = string
+  default     = null
+}
+
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
   type        = string
   default     = null
 }
