@@ -18,8 +18,6 @@ cd recipes/upstream/aws/rke
     -  `aws_region` to suit your region
     -  `instance_count` to specify the number of instances to create
     -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
-    -  `rancher_hostname` in order to reach the Rancher console via DNS name
-    -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
 - Make sure you are logged into your AWS Account from your local Terminal. See the preparatory steps [here](../../../../modules/infra/aws/README.md).
 
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
