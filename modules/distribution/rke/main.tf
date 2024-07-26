@@ -43,7 +43,7 @@ resource "rke_cluster" "this" {
   }
 
   authentication {
-    sans     = [for hostname in var.additional_hostnames : "$hostname"]
+    sans     = [for hostname in coalesce(var.additional_hostnames, []) : "$hostname"]
     strategy = "x509"
   }
 
