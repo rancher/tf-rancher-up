@@ -1,9 +1,3 @@
-locals {
-  kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
-  kc_file_backup = "${local.kc_file}.backup"
-}
-
 resource "google_compute_network" "vpc" {
   count                   = var.vpc == null ? 1 : 0
   name                    = "${var.prefix}-vpc"
@@ -39,7 +33,7 @@ resource "google_container_cluster" "primary" {
 
   master_auth {
     client_certificate_config {
-      issue_client_certificate = false
+      issue_client_certificate = true
     }
   }
 }
@@ -69,30 +63,4 @@ resource "google_container_node_pool" "primary_nodes" {
       disable-legacy-endpoints = "true"
     }
   }
-}
-
-data "google_client_config" "default" {}
-
-resource "local_file" "kube_config_yaml" {
-  content = templatefile("${path.module}/kubeconfig.yml.tmpl", {
-    cluster_name = google_container_cluster.primary.name
-    host         = google_container_cluster.primary.endpoint
-    client_token = data.google_client_config.default.access_token
-    # no need to encode in base64
-    ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
-  })
-  file_permission = "0600"
-  filename        = local.kc_file
-}
-
-resource "local_file" "kube_config_yaml_backup" {
-  content = templatefile("${path.module}/kubeconfig.yml.tmpl", {
-    cluster_name = google_container_cluster.primary.name
-    host         = google_container_cluster.primary.endpoint
-    client_token = data.google_client_config.default.access_token
-    # no need to encode in base64
-    ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
-  })
-  file_permission = "0600"
-  filename        = local.kc_file_backup
 }
