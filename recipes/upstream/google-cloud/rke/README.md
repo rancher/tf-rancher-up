@@ -26,12 +26,12 @@ cd recipes/upstream/google-cloud/rke
 **NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
 
 ```bash
-terraform init -upgrade ; terraform apply -target=module.google-compute-engine-upstream-cluster.tls_private_key.ssh_private_key -target=module.google-compute-engine-upstream-cluster.local_file.private_key_pem -target=module.google-compute-engine-upstream-cluster.local_file.public_key_pem -auto-approve ; terraform apply -target=module.google-compute-engine-upstream-cluster -target=helm_release.ingress-nginx -target=module.rke -auto-approve ; terraform state rm module.rke.local_file.kube_config_yaml ; terraform apply -auto-approve
+terraform init -upgrade && terraform apply -auto-approve
 ```
 
 - Destroy the resources when finished
 ```bash
-terraform destroy -target=helm_release.ingress-nginx -target=module.rancher_install -auto-approve ; terraform destroy -auto-approve
+terraform destroy -auto-approve
 ```
 
 See full argument list for each module in use:
