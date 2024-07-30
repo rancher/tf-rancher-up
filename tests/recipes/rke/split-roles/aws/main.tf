@@ -1,21 +1,15 @@
-module "test1_default" {
-  source = "../../../../../recipes/rke/split-roles/aws"
-
-  prefix              = "test1_default"
-  aws_access_key      = var.aws_access_key
-  aws_secret_key      = var.aws_secret_key
-  aws_region          = "us-west-2"
-  create_ssh_key_pair = true
+module "aws-ec2-upstream-master-nodes" {
+  source         = "../../../../../modules/infra/aws/ec2"
+  prefix         = var.prefix
+  aws_region     = var.aws_region
+  instance_count = var.server_nodes_count
+  ssh_username   = var.ssh_username
 }
 
-module "test2_pass_existing_key" {
-  source = "../../../../../recipes/rke/split-roles/aws"
-
-  prefix              = "test1_default"
-  aws_access_key      = var.aws_access_key
-  aws_secret_key      = var.aws_secret_key
-  aws_region          = "us-west-2"
-  create_ssh_key_pair = true
-  ssh_key_pair_name   = "junk"
-  ssh_key_pair_path   = "~/somepath"
+module "aws-ec2-upstream-worker-nodes" {
+  source         = "../../../../../modules/infra/aws/ec2"
+  prefix         = "${var.prefix}-w"
+  aws_region     = var.aws_region
+  instance_count = var.worker_nodes_count
+  ssh_username   = var.ssh_username
 }

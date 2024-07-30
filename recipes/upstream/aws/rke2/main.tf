@@ -1,7 +1,16 @@
 locals {
-  kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
-  kc_file_backup = "${local.kc_file}.backup"
+  create_ssh_key_pair        = var.create_ssh_key_pair == null ? false : true
+  ssh_key_pair_name          = var.ssh_key_pair_name == null ? "tf-rancher-up-${var.prefix}" : var.ssh_key_pair_name
+  local_ssh_private_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
+  local_ssh_public_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
+  create_vpc                 = var.create_vpc == null ? false : true
+  vpc_id                     = var.vpc_id == null ? module.rke2_first_server.vpc[0].id : var.vpc_id
+  subnet_id                  = var.subnet_id == null ? module.rke2_first_server.subnet[0].id : var.subnet_id
+  create_security_group      = var.create_security_group == null ? false : true
+  instance_security_group_id = local.create_security_group == "true" ? null : module.rke2_first_server.security_group[0].id
+  kc_path                    = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file                    = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_file_backup             = "${local.kc_file}.backup"
 }
 
 module "rke2_first" {
@@ -12,21 +21,24 @@ module "rke2_first" {
 }
 
 module "rke2_first_server" {
-  source                  = "../../../../modules/infra/aws"
-  prefix                  = var.prefix
-  instance_count          = 1
-  instance_type           = var.instance_type
-  instance_disk_size      = var.instance_disk_size
-  create_ssh_key_pair     = var.create_ssh_key_pair
-  ssh_key_pair_name       = var.ssh_key_pair_name
-  ssh_key_pair_path       = var.ssh_key_pair_path
-  ssh_username            = var.ssh_username
-  spot_instances          = var.spot_instances
-  aws_region              = var.aws_region
-  create_security_group   = var.create_security_group
-  instance_security_group = var.ssh_key_pair_name
-  subnet_id               = var.subnet_id
-  user_data               = module.rke2_first.rke2_user_data
+  source     = "../../../../modules/infra/aws/ec2"
+  prefix     = var.prefix
+  aws_region = var.aws_region
+  #  create_ssh_key_pair   = var.create_ssh_key_pair
+  ssh_key_pair_name    = local.ssh_key_pair_name
+  ssh_private_key_path = local.local_ssh_private_key_path
+  ssh_public_key_path  = local.local_ssh_public_key_path
+  #  create_vpc            = var.create_vpc
+  #  vpc_id                = var.vpc_id
+  #  subnet_id             = var.subnet_id
+  #  create_security_group = var.create_security_group
+  instance_count = 1
+  #  instance_type              = var.instance_type
+  #  spot_instances             = var.spot_instances
+  #  instance_disk_size         = var.instance_disk_size
+  #  instance_security_group_id = var.instance_security_group_id
+  ssh_username = var.ssh_username
+  user_data    = module.rke2_first.rke2_user_data
 }
 
 module "rke2_additional" {
@@ -38,30 +50,35 @@ module "rke2_additional" {
 }
 
 module "rke2_additional_servers" {
-  source                  = "../../../../modules/infra/aws"
-  prefix                  = var.prefix
-  instance_count          = var.instance_count - 1
-  instance_type           = var.instance_type
-  instance_disk_size      = var.instance_disk_size
-  create_ssh_key_pair     = false
-  ssh_key_pair_name       = module.rke2_first_server.ssh_key_pair_name
-  ssh_key_pair_path       = module.rke2_first_server.ssh_key_path
-  ssh_username            = var.ssh_username
-  spot_instances          = var.spot_instances
-  tag_begin               = 2
-  aws_region              = var.aws_region
-  create_security_group   = false
-  instance_security_group = module.rke2_first_server.sg-id
-  subnet_id               = var.subnet_id
-  user_data               = module.rke2_additional.rke2_user_data
+  source                = "../../../../modules/infra/aws/ec2"
+  prefix                = var.prefix
+  aws_region            = var.aws_region
+  create_ssh_key_pair   = local.create_ssh_key_pair
+  ssh_key_pair_name     = local.ssh_key_pair_name
+  ssh_private_key_path  = local.local_ssh_private_key_path
+  ssh_public_key_path   = local.local_ssh_public_key_path
+  create_vpc            = local.create_vpc
+  vpc_id                = local.vpc_id
+  subnet_id             = local.subnet_id
+  create_security_group = local.create_security_group
+  instance_count        = var.instance_count - 1
+  #  instance_type              = var.instance_type
+  #  spot_instances             = var.spot_instances
+  #  instance_disk_size         = var.instance_disk_size
+  instance_security_group_id = local.instance_security_group_id
+  ssh_username               = var.ssh_username
+  user_data                  = module.rke2_additional.rke2_user_data
 }
 
 data "local_file" "ssh_private_key" {
-  depends_on = [module.rke2_first_server]
-  filename   = module.rke2_first_server.ssh_key_path
+  depends_on = [module.rke2_additional_servers]
+
+  filename = local.local_ssh_private_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
+  depends_on = [data.local_file.ssh_private_key]
+
   host = module.rke2_first_server.instances_public_ip[0]
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.instances_public_ip[0]}/g' /etc/rancher/rke2/rke2.yaml"
@@ -71,29 +88,47 @@ resource "ssh_resource" "retrieve_kubeconfig" {
 }
 
 resource "local_file" "kube_config_yaml" {
+  depends_on = [ssh_resource.retrieve_kubeconfig]
+
   filename        = local.kc_file
-  content         = ssh_resource.retrieve_kubeconfig.result
   file_permission = "0600"
+  content         = ssh_resource.retrieve_kubeconfig.result
 }
 
-resource "local_file" "kube_config_yaml_backup" {
-  filename        = local.kc_file_backup
-  content         = ssh_resource.retrieve_kubeconfig.result
-  file_permission = "0600"
+provider "kubernetes" {
+  config_path = local_file.kube_config_yaml.filename
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = local_file.kube_config_yaml.filename
+  }
+}
+
+resource "null_resource" "wait_k8s_services_startup" {
+  depends_on = [local_file.kube_config_yaml]
+
+  provisioner "local-exec" {
+    command = "sleep ${var.waiting_time}"
+  }
 }
 
 locals {
-  rancher_hostname = join(".", ["rancher", module.rke2_first_server.instances_public_ip[0], "sslip.io"])
+  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", module.rke2_first_server.instances_public_ip[0], "sslip.io"]) : join(".", ["rancher", module.rke2_first_server.instances_public_ip[0], "sslip.io"])
 }
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = var.instance_count > 1 ? module.rke2_additional_servers.dependency : module.rke2_first_server.dependency
+  dependency                 = [null_resource.wait_k8s_services_startup]
   kubeconfig_file            = local_file.kube_config_yaml.filename
   rancher_hostname           = local.rancher_hostname
-  rancher_replicas           = min(var.rancher_replicas, var.instance_count)
-  rancher_bootstrap_password = var.rancher_bootstrap_password
+  rancher_bootstrap_password = var.rancher_password
   rancher_password           = var.rancher_password
+  bootstrap_rancher          = var.bootstrap_rancher
   rancher_version            = var.rancher_version
-  wait                       = var.wait
+  rancher_additional_helm_values = [
+    "replicas: ${var.instance_count}",
+    "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
+    "service.type: ${var.rancher_service_type}"
+  ]
 }
