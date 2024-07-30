@@ -24,7 +24,7 @@ module "rke2_first_server" {
   spot_instances          = var.spot_instances
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
-  instance_security_group = var.ssh_key_pair_name
+  instance_security_group = var.instance_security_group
   subnet_id               = var.subnet_id
   user_data               = module.rke2_first.rke2_user_data
 }
