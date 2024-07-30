@@ -1,19 +1,7 @@
 variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
-  default     = null
-}
-
-variable "aws_access_key" {
-  type        = string
-  description = "AWS access key used to create infrastructure"
-  default     = null
-}
-
-variable "aws_secret_key" {
-  type        = string
-  description = "AWS secret key used to create AWS infrastructure"
-  default     = null
+  default     = "rancher-terraform"
 }
 
 variable "aws_region" {
@@ -84,6 +72,12 @@ variable "create_vpc" {
   type        = bool
   description = "Specify whether VPC / Subnet should be created for the instances"
   default     = true
+}
+
+variable "vpc_ip_cidr_range" {
+  type        = string
+  default     = "10.0.0.0/16"
+  description = "Range of private IPs available for the AWS VPC"
 }
 
 variable "vpc_id" {
@@ -178,107 +172,4 @@ variable "tags" {
   description = "User-provided tags for the resources"
   type        = map(string)
   default     = {}
-}
-
-variable "install_docker" {
-  type        = bool
-  description = "Install Docker while creating the instances"
-  default     = true
-}
-
-variable "docker_version" {
-  type        = string
-  description = "Docker version to install on nodes"
-  default     = "20.10"
-}
-
-variable "waiting_time" {
-  description = "Waiting time (in seconds)"
-  default     = 120
-}
-
-variable "kubernetes_version" {
-  type        = string
-  description = "Kubernetes version to use for the RKE cluster"
-  default     = null
-}
-
-variable "ingress_provider" {
-  description = "Ingress controller provider"
-  default     = "nginx"
-}
-
-variable "bootstrap_rancher" {
-  description = "Bootstrap the Rancher installation"
-  type        = bool
-  default     = true
-}
-
-variable "kube_config_path" {
-  description = "The path to write the kubeconfig for the RKE cluster"
-  type        = string
-  default     = null
-}
-
-variable "kube_config_filename" {
-  description = "Filename to write the kube config"
-  type        = string
-  default     = null
-}
-
-variable "rancher_hostname" {
-  description = "Hostname to set when installing Rancher"
-  type        = string
-  default     = null
-}
-
-variable "rancher_password" {
-  type = string
-
-  validation {
-    condition     = length(var.rancher_password) >= 12
-    error_message = "The password must be at least 12 characters."
-  }
-}
-
-variable "rancher_version" {
-  description = "Rancher version to install"
-  type        = string
-  default     = null
-}
-
-variable "rancher_helm_repository" {
-  description = "Helm repository for Rancher chart"
-  default     = null
-  type        = string
-}
-
-variable "rancher_helm_repository_username" {
-  description = "Private Rancher helm repository username"
-  default     = null
-  type        = string
-}
-
-variable "rancher_helm_repository_password" {
-  description = "Private Rancher helm repository password"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository" {
-  description = "Helm repository for Cert Manager chart"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository_username" {
-  description = "Private Cert Manager helm repository username"
-  default     = null
-  type        = string
-}
-
-variable "cert_manager_helm_repository_password" {
-  description = "Private Cert Manager helm repository password"
-  default     = null
-  type        = string
 }
