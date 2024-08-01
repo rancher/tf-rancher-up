@@ -101,15 +101,3 @@ variable "instance_type" {
   default     = "e2-highmem-2"
   description = "The name of a Google Compute Engine machine type"
 }
-
-variable "kube_config_path" {
-  description = "The path to write the kubeconfig for the GKE cluster"
-  type        = string
-  default     = null
-}
-
-variable "kube_config_filename" {
-  description = "Filename to write the kube config"
-  type        = string
-  default     = null
-}

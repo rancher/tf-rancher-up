@@ -20,22 +20,21 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_k3s-additional"></a> [k3s-additional](#module\_k3s-additional) | ../../../../modules/distribution/k3s | n/a |
-| <a name="module_k3s-additional-servers"></a> [k3s-additional-servers](#module\_k3s-additional-servers) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
-| <a name="module_k3s-additional-workers"></a> [k3s-additional-workers](#module\_k3s-additional-workers) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
-| <a name="module_k3s-first"></a> [k3s-first](#module\_k3s-first) | ../../../../modules/distribution/k3s | n/a |
-| <a name="module_k3s-first-server"></a> [k3s-first-server](#module\_k3s-first-server) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
+| <a name="module_k3s_additional"></a> [k3s\_additional](#module\_k3s\_additional) | ../../../../modules/distribution/k3s | n/a |
+| <a name="module_k3s_additional_servers"></a> [k3s\_additional\_servers](#module\_k3s\_additional\_servers) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
+| <a name="module_k3s_additional_workers"></a> [k3s\_additional\_workers](#module\_k3s\_additional\_workers) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
+| <a name="module_k3s_first"></a> [k3s\_first](#module\_k3s\_first) | ../../../../modules/distribution/k3s | n/a |
+| <a name="module_k3s_first_server"></a> [k3s\_first\_server](#module\_k3s\_first\_server) | ../../../../modules/infra/google-cloud/compute-engine | n/a |
 | <a name="module_rancher_install"></a> [rancher\_install](#module\_rancher\_install) | ../../../../modules/rancher | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [local_file.kube-config-yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [local_file.kube-config-yaml-backup](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [null_resource.wait-k8s-services-startup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [ssh_resource.retrieve-kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
-| [local_file.ssh-private-key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
+| [local_file.kube_config_yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
+| [null_resource.wait_k8s_services_startup](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [ssh_resource.retrieve_kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
+| [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
@@ -43,6 +42,8 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_bootstrap_rancher"></a> [bootstrap\_rancher](#input\_bootstrap\_rancher) | Bootstrap the Rancher installation | `bool` | `true` | no |
 | <a name="input_create_firewall"></a> [create\_firewall](#input\_create\_firewall) | n/a | `any` | `null` | no |
+| <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | n/a | `any` | `null` | no |
+| <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | n/a | `any` | `null` | no |
 | <a name="input_k3s_channel"></a> [k3s\_channel](#input\_k3s\_channel) | K3s channel to use, the latest patch version for the provided minor version will be used | `string` | `null` | no |
 | <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional K3s configuration to add to the config.yaml file | `any` | `null` | no |
 | <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring K3s nodes | `any` | `null` | no |
@@ -63,7 +64,7 @@
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | n/a | `any` | n/a | yes |
 | <a name="input_subnet"></a> [subnet](#input\_subnet) | n/a | `any` | `null` | no |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | n/a | `any` | `null` | no |
-| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `180` | no |
+| <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | Waiting time (in seconds) | `number` | `120` | no |
 | <a name="input_worker_instance_count"></a> [worker\_instance\_count](#input\_worker\_instance\_count) | n/a | `any` | n/a | yes |
 
 ## Outputs

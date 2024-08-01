@@ -68,6 +68,8 @@ variable "ssh_private_key_path" {
 
 # variable "ip_cidr_range" {}
 
+# variable "create_vpc" {}
+
 # variable "vpc" {}
 
 # variable "subnet" {}
@@ -93,7 +95,7 @@ variable "startup_script" {
 
 variable "waiting_time" {
   description = "Waiting time (in seconds)"
-  default     = 180
+  default     = 60
 }
 
 # variable "kubernetes_version" {}

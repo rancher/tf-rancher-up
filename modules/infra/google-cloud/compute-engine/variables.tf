@@ -79,6 +79,12 @@ variable "ip_cidr_range" {
   description = "Range of private IPs available for the Google Subnet"
 }
 
+variable "create_vpc" {
+  type        = bool
+  description = "Specify whether VPC / Subnet should be created for the instances"
+  default     = true
+}
+
 variable "vpc" {
   description = "Google VPC used for all resources"
   default     = null
@@ -90,6 +96,7 @@ variable "subnet" {
 }
 
 variable "create_firewall" {
+  type        = bool
   description = "Google Firewall used for all resources"
   default     = true
 }

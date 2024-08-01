@@ -5,6 +5,7 @@ module "google-compute-engine-upstream-cluster" {
   region     = var.region
   #  create_ssh_key_pair = var.create_ssh_key_pair
   #  ssh_public_key_path = var.ssh_public_key_path
+  #  create_vpc          = var.create_vpc
   #  vpc                 = var.vpc
   #  subnet              = var.subnet
   #  create_firewall     = var.create_firewall
@@ -19,6 +20,7 @@ module "google-compute-engine-upstream-cluster" {
 
 resource "null_resource" "wait-docker-startup" {
   depends_on = [module.google-compute-engine-upstream-cluster.instances_public_ip]
+
   provisioner "local-exec" {
     command = "sleep ${var.waiting_time}"
   }
@@ -31,7 +33,7 @@ locals {
 module "rke" {
   source               = "../../../../modules/distribution/rke"
   prefix               = var.prefix
-  dependency           = [resource.null_resource.wait-docker-startup]
+  dependency           = [null_resource.wait-docker-startup]
   ssh_private_key_path = local.ssh_private_key_path
   node_username        = var.ssh_username
   #  kubernetes_version   = var.kubernetes_version
@@ -51,6 +53,7 @@ module "rke" {
 
 resource "null_resource" "wait-k8s-services-startup" {
   depends_on = [module.rke]
+
   provisioner "local-exec" {
     command = "sleep ${var.waiting_time}"
   }
