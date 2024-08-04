@@ -112,7 +112,9 @@ variable "bootstrap_rancher" {
 variable "rancher_hostname" {}
 
 variable "rancher_password" {
-  type = string
+  description = "Password to use for bootstrapping Rancher (min 12 characters)"
+  default     = "initial-admin-password"
+  type        = string
 
   validation {
     condition     = length(var.rancher_password) >= 12
