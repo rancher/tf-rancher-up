@@ -111,7 +111,7 @@ variable "rancher_bootstrap_password" {
 
 variable "rancher_password" {
   description = "Password to use for Rancher (min 12 characters)"
-  default     = null
+  default     = "initial-admin-password"
   type        = string
 
   validation {
