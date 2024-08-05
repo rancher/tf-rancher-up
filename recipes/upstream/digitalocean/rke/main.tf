@@ -49,7 +49,7 @@ module "rancher_install" {
   kubeconfig_file                  = module.rke.rke_kubeconfig_filename
   rancher_hostname                 = join(".", ["rancher", local.rancher_hostname, "sslip.io"])
   rancher_replicas                 = var.droplet_count
-  rancher_bootstrap_password       = var.rancher_password
+  rancher_bootstrap_password       = var.rancher_bootstrap_password
   rancher_password                 = var.rancher_password
   rancher_version                  = var.rancher_version
   rancher_helm_repository          = var.rancher_helm_repository

@@ -67,7 +67,7 @@ module "rancher_install" {
   dependency                 = [null_resource.wait-k8s-services-startup]
   kubeconfig_file            = local.kubeconfig_file
   rancher_hostname           = local.rancher_hostname
-  rancher_bootstrap_password = var.rancher_password
+  rancher_bootstrap_password = var.rancher_bootstrap_password
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   rancher_version            = var.rancher_version

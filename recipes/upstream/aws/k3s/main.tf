@@ -58,7 +58,6 @@ module "k3s_additional_servers" {
   user_data               = module.k3s_additional.k3s_server_user_data
 }
 
-
 module "k3s_workers" {
   source                  = "../../../../modules/infra/aws"
   prefix                  = var.prefix
@@ -76,7 +75,6 @@ module "k3s_workers" {
   subnet_id               = var.subnet_id
   user_data               = module.k3s_additional.k3s_worker_user_data
 }
-
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.k3s_first_server]

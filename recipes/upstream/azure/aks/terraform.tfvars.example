@@ -3,6 +3,9 @@
 ## -- Set the prefix for various resources that are created. A default prefix (rancher-terraform) if not provided.
 prefix = "my-name-here"
 
+## -- Admin password to set for Rancher
+# rancher_password = "at-least-12-characters"
+
 ###### !! Optional variables !! ######
 
 ## -- Azure region to create the resources, adjust as needed
