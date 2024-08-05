@@ -37,7 +37,7 @@ instance_count = 1
 ## -- (A) Create a new keypair in AWS
 create_ssh_key_pair = true
 ## -- Override the default (./${prefix}_ssh_private_key.pem) path where this SSH key is written
-# ssh_private_key_path = "/path/to/private/key.pem"
+# ssh_key_pair_path = "/path/to/private/key.pem"
 
 ## -- (B) Provide an existing keypair name in AWS to use for nodes, the matching private key file for this keypair also must be provided so RKE can SSH to the launched nodes
 # ssh_key_pair_name = "aws_keypair_name"

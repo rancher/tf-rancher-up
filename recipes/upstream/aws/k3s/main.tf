@@ -47,7 +47,6 @@ module "k3s_additional_servers" {
   instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
-  ssh_key_pair_path       = pathexpand(module.k3s_first_server.ssh_key_path)
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
   tag_begin               = 2
@@ -57,7 +56,6 @@ module "k3s_additional_servers" {
   subnet_id               = var.subnet_id
   user_data               = module.k3s_additional.k3s_server_user_data
 }
-
 
 module "k3s_workers" {
   source                  = "../../../../modules/infra/aws"
