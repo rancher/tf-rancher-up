@@ -110,12 +110,6 @@ variable "docker_version" {
   default     = "20.10"
 }
 
-variable "rancher_bootstrap_password" {
-  description = "Password to use for bootstrapping Rancher (min 12 characters)"
-  default     = "initial-admin-password"
-  type        = string
-}
-
 variable "rancher_password" {
   description = "Password to use for Rancher (min 12 characters)"
   default     = "initial-admin-password"

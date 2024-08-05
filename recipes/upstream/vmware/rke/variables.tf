@@ -41,3 +41,14 @@ variable "vsphere_virtual_machine" {
 
 variable "vsphere_network" {
 }
+
+variable "rancher_password" {
+  description = "Password to use for Rancher (min 12 characters)"
+  default     = null
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
+  }
+}

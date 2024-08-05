@@ -39,7 +39,6 @@ module "rancher_install" {
   kubeconfig_file                       = module.rke.kubeconfig_filename
   rancher_hostname                      = local.rancher_hostname
   rancher_replicas                      = min(var.rancher_replicas, var.instance_count)
-  rancher_bootstrap_password            = var.rancher_bootstrap_password
   rancher_password                      = var.rancher_password
   rancher_version                       = var.rancher_version
   wait                                  = var.wait

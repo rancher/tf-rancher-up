@@ -52,17 +52,6 @@ variable "rancher_antiaffinity" {
   type        = string
 }
 
-variable "rancher_bootstrap_password" {
-  description = "Password to use for bootstrapping Rancher (min 12 characters)"
-  default     = "initial-admin-password"
-  type        = string
-
-  validation {
-    condition     = length(var.rancher_bootstrap_password) >= 12
-    error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
-  }
-}
-
 variable "rancher_password" {
   description = "Password to use for Rancher (min 12 characters)"
   default     = null

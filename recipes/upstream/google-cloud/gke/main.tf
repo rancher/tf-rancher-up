@@ -39,13 +39,12 @@ locals {
 }
 
 module "rancher_install" {
-  source                     = "../../../../modules/rancher"
-  dependency                 = [data.kubernetes_service.ingress-nginx-controller-svc]
-  kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
-  rancher_hostname           = local.rancher_hostname
-  rancher_bootstrap_password = var.rancher_password
-  rancher_password           = var.rancher_password
-  rancher_version            = var.rancher_version
+  source           = "../../../../modules/rancher"
+  dependency       = [data.kubernetes_service.ingress-nginx-controller-svc]
+  kubeconfig_file  = "${path.cwd}/${var.prefix}_kube_config.yml"
+  rancher_hostname = local.rancher_hostname
+  rancher_password = var.rancher_password
+  rancher_version  = var.rancher_version
   rancher_additional_helm_values = [
     "replicas: 3",
     "ingress.ingressClassName: nginx",

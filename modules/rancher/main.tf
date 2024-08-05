@@ -127,6 +127,7 @@ resource "helm_release" "rancher" {
   version             = var.rancher_version
   timeout             = var.helm_timeout
   wait                = true
+  wait_for_jobs       = true
 
   dynamic "set" {
     for_each = local.rancher_helm_values
@@ -162,12 +163,12 @@ resource "null_resource" "wait_for_rancher" {
 resource "rancher2_bootstrap" "admin" {
   depends_on       = [null_resource.wait_for_rancher[0]]
   count            = var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
-  initial_password = var.rancher_bootstrap_password
+  initial_password = var.rancher_password
   password         = var.rancher_password
 }
 
 locals {
-  bootstrap_message = var.bootstrap_rancher && var.rancher_password != null ? "Rancher will be started with the given password" : "Rancher will be started with only bootstrap password"
+  bootstrap_message = var.bootstrap_rancher && var.rancher_password != null ? "Rancher will be bootstraped with the password provided" : "Rancher will be installed with a randomly generated bootstrap password, please check the docs on how to retrieve the bootstrap password"
 }
 
 resource "null_resource" "bootstrap_message" {

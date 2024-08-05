@@ -31,7 +31,6 @@ module "rke" {
   ]
 }
 
-
 provider "helm" {
   kubernetes {
     config_path = "${path.module}/${module.rke.rke_kubeconfig_filename}"
@@ -44,11 +43,11 @@ provider "kubernetes" {
 }
 
 module "rancher_install" {
-  source                     = "../../../../modules/rancher"
-  depends_on                 = [module.rke]
-  rancher_hostname           = join(".", ["rancher", module.upstream-cluster.rancher_ip, "sslip.io"])
-  rancher_replicas           = 1
-  rancher_bootstrap_password = "changeme"
+  source           = "../../../../modules/rancher"
+  depends_on       = [module.rke]
+  rancher_hostname = join(".", ["rancher", module.upstream-cluster.rancher_ip, "sslip.io"])
+  rancher_replicas = 1
+  rancher_password = var.rancher_password
   providers = {
     kubernetes = kubernetes
     helm       = helm

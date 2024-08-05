@@ -115,15 +115,9 @@ variable "kube_config_filename" {
   default     = null
 }
 
-variable "rancher_bootstrap_password" {
-  description = "Password to use for bootstrapping Rancher (min 12 characters)"
-  default     = "initial-admin-password"
-  type        = string
-}
-
 variable "rancher_password" {
   description = "Password to use for Rancher (min 12 characters)"
-  default     = null
+  default     = "initial-admin-password"
   type        = string
 
   validation {
