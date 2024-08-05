@@ -75,7 +75,6 @@ module "k3s_workers" {
   user_data               = module.k3s_additional.k3s_worker_user_data
 }
 
-
 data "local_file" "ssh_private_key" {
   depends_on = [module.k3s_first_server]
   filename   = pathexpand(module.k3s_first_server.ssh_key_path)

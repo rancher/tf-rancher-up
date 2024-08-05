@@ -15,7 +15,7 @@ output "rancher_url" {
 }
 
 output "rancher_password" {
-  value = var.rancher_bootstrap_password
+  value = var.rancher_password
 }
 
 output "rancher_admin_token" {

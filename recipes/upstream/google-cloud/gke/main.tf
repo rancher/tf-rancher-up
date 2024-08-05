@@ -43,7 +43,7 @@ module "rancher_install" {
   dependency                 = [data.kubernetes_service.ingress-nginx-controller-svc]
   kubeconfig_file            = "${path.cwd}/${var.prefix}_kube_config.yml"
   rancher_hostname           = local.rancher_hostname
-  rancher_bootstrap_password = var.rancher_password
+  rancher_bootstrap_password = var.rancher_bootstrap_password
   rancher_password           = var.rancher_password
   rancher_version            = var.rancher_version
   rancher_additional_helm_values = [
