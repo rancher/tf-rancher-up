@@ -4,8 +4,14 @@ output "rancher_hostname" {
 }
 
 output "rancher_bootstrap_password" {
+  description = "Password used to install Rancher"
+  value       = var.rancher_password
+  sensitive   = true
+}
+
+output "rancher_password" {
   description = "Password for the Rancher admin account"
-  value       = var.rancher_bootstrap_password
+  value       = var.rancher_password
   sensitive   = true
 }
 

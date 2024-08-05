@@ -58,7 +58,6 @@ module "k3s_additional_servers" {
   user_data               = module.k3s_additional.k3s_server_user_data
 }
 
-
 module "k3s_workers" {
   source                  = "../../../../modules/infra/aws"
   prefix                  = var.prefix
@@ -76,7 +75,6 @@ module "k3s_workers" {
   subnet_id               = var.subnet_id
   user_data               = module.k3s_additional.k3s_worker_user_data
 }
-
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.k3s_first_server]
@@ -109,12 +107,13 @@ locals {
 }
 
 module "rancher_install" {
-  source           = "../../../../modules/rancher"
-  dependency       = var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
-  kubeconfig_file  = local_file.kube_config_yaml.filename
-  rancher_hostname = local.rancher_hostname
-  rancher_replicas = min(var.rancher_replicas, var.server_instance_count)
-  rancher_password = var.rancher_password
-  rancher_version  = var.rancher_version
-  wait             = var.wait
+  source                     = "../../../../modules/rancher"
+  dependency                 = var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
+  kubeconfig_file            = local_file.kube_config_yaml.filename
+  rancher_hostname           = local.rancher_hostname
+  rancher_replicas           = min(var.rancher_replicas, var.server_instance_count)
+  rancher_bootstrap_password = var.rancher_bootstrap_password
+  rancher_password           = var.rancher_password
+  rancher_version            = var.rancher_version
+  wait                       = var.wait
 }
