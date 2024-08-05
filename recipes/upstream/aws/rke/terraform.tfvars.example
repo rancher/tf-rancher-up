@@ -15,10 +15,10 @@
 ## -- Set the prefix for the name tag on instancrease created. A default prefix (rancher-terraform) if not provided.
 prefix = "my-name-here"
 
-###### !! Optional variables !! ######
-
-## -- Password to set when installing Rancher, otherwise use default (initial-admin-password)
+## -- Admin password to set for Rancher
 # rancher_password = "at-least-12-characters"
+
+###### !! Optional variables !! ######
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
