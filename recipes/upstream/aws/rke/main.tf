@@ -29,7 +29,7 @@ module "rke_cluster" {
 resource "local_file" "kube_config_yaml" {
   depends_on = [module.rke_cluster]
 
-  filename        = "local_kubeconfig.yaml"
+  filename        = "local_kube_config.yml"
   file_permission = "0600"
   content         = module.rke_cluster.kube_config_path
 }
