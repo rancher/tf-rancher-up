@@ -74,8 +74,16 @@ ssh_username = "ubuntu"
 ## -- RKE2 token, override the programmatically generated token
 # rke2_token = "string here"
 
+<<<<<<< HEAD
 ## -- RKE2 custom config file
 # rke2_config = "<RKE2_CONFIG_FILE>"
+=======
+##### SSH
+## -- (A) Create a new keypair in AWS
+create_ssh_key_pair = true
+## -- Override the default (./${prefix}_ssh_private_key.pem) path where this SSH key is written
+# ssh_key_pair_path = "/path/to/private/key.pem"
+>>>>>>> 88b09e67f9f71c19222f90aec94bd4067c5b7fb1
 
 ## -- RKE2 KUBECONFIG file path
 # kube_config_path = "<KUBE_CONFIG_PATH>"

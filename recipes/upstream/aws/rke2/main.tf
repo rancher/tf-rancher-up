@@ -50,6 +50,7 @@ module "rke2_additional" {
 }
 
 module "rke2_additional_servers" {
+<<<<<<< HEAD
   source                = "../../../../modules/infra/aws/ec2"
   prefix                = var.prefix
   aws_region            = var.aws_region
@@ -68,6 +69,23 @@ module "rke2_additional_servers" {
   instance_security_group_id = local.instance_security_group_id
   ssh_username               = var.ssh_username
   user_data                  = module.rke2_additional.rke2_user_data
+=======
+  source                  = "../../../../modules/infra/aws"
+  prefix                  = var.prefix
+  instance_count          = var.instance_count - 1
+  instance_type           = var.instance_type
+  instance_disk_size      = var.instance_disk_size
+  create_ssh_key_pair     = false
+  ssh_key_pair_name       = module.rke2_first_server.ssh_key_pair_name
+  ssh_username            = var.ssh_username
+  spot_instances          = var.spot_instances
+  tag_begin               = 2
+  aws_region              = var.aws_region
+  create_security_group   = false
+  instance_security_group = module.rke2_first_server.sg-id
+  subnet_id               = var.subnet_id
+  user_data               = module.rke2_additional.rke2_user_data
+>>>>>>> 88b09e67f9f71c19222f90aec94bd4067c5b7fb1
 }
 
 data "local_file" "ssh_private_key" {
@@ -126,9 +144,14 @@ module "rancher_install" {
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   rancher_version            = var.rancher_version
+<<<<<<< HEAD
   rancher_additional_helm_values = [
     "replicas: ${var.instance_count}",
     "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
     "service.type: ${var.rancher_service_type}"
   ]
 }
+=======
+  wait                       = var.wait
+}
+>>>>>>> 88b09e67f9f71c19222f90aec94bd4067c5b7fb1
