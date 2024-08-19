@@ -80,8 +80,16 @@ ssh_username = "ubuntu"
 ## -- K3S token, override the programmatically generated token
 # k3s_token = "string here"
 
+<<<<<<< HEAD
 ## -- K3S custom config file
 # k3s_config = "<K3S_CONFIG_FILE>"
+=======
+##### SSH
+## -- (A) Create a new keypair in AWS
+create_ssh_key_pair = true
+## -- Override the default (./${prefix}_ssh_private_key.pem) path where this SSH key is written
+# ssh_key_pair_path = "/path/to/private/key.pem"
+>>>>>>> 88b09e67f9f71c19222f90aec94bd4067c5b7fb1
 
 ## -- K3S KUBECONFIG file path
 # kube_config_path = "<KUBE_CONFIG_PATH>"
