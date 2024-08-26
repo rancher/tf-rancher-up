@@ -167,7 +167,7 @@ resource "rancher2_bootstrap" "admin" {
 }
 
 locals {
-  bootstrap_message = var.bootstrap_rancher && var.rancher_password != null ? "Rancher will be started with the given password" : "Rancher will be started with only bootstrap password"
+  bootstrap_message = var.bootstrap_rancher && var.rancher_password != null ? "Rancher will be bootstraped with the password provided" : "Rancher will be installed with a bootstrap password, access the Rancher dashboard to bootstrap and set a password"
 }
 
 resource "null_resource" "bootstrap_message" {

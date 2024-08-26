@@ -67,6 +67,7 @@ module "rancher_install" {
   rancher_hostname           = local.rancher_hostname
   rancher_replicas           = min(var.rancher_replicas, var.node_count)
   rancher_bootstrap_password = var.rancher_bootstrap_password
+  rancher_password           = var.rancher_password
   rancher_version            = var.rancher_version
   wait                       = var.wait
   rancher_additional_helm_values = [

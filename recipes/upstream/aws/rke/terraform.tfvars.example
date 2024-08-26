@@ -53,16 +53,14 @@ instance_count = 3
 ## -- Use spot instances
 # spot_instances = false
 
-<<<<<<< HEAD
 ## -- Size of the disk attached to each node, specified in GB
 # instance_disk_size = 80
-=======
-##### SSH
-## -- (A) Create a new keypair in AWS
+
+## -- Create a new keypair in AWS
 create_ssh_key_pair = true
+
 ## -- Override the default (./${prefix}_ssh_private_key.pem) path where this SSH key is written
 # ssh_key_pair_path = "/path/to/private/key.pem"
->>>>>>> 88b09e67f9f71c19222f90aec94bd4067c5b7fb1
 
 ## -- If the Security Group was created manually, it can be entered here
 # instance_security_group_id = null
