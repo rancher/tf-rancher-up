@@ -7,5 +7,6 @@ output "instances_private_ip" {
 }
 
 output "kube_config_path" {
-  value = module.rke.kube_config_yaml
+  value     = module.rke.kube_config_yaml
+  sensitive = true
 }

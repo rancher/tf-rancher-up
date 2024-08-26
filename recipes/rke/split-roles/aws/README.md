@@ -18,7 +18,6 @@ cd recipes/rke/split-roles/aws
     -  `aws_region` to suit your region
     -  `server_nodes_count` to specify the number of Master nodes to create
     -  `worker_nodes_count` to specify the number of Worker nodes to create
-    -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
     -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
 - Make sure you are logged into your AWS Account from your local Terminal. See the preparatory steps [here](../../../../modules/infra/aws/README.md).

@@ -9,23 +9,23 @@ locals {
 }
 
 module "aws_ec2_upstream_cluster" {
-  source     = "../../../../modules/infra/aws/ec2"
-  prefix     = var.prefix
-  aws_region = var.aws_region
-  #  create_ssh_key_pair   = var.create_ssh_key_pair
-  ssh_key_pair_name    = local.ssh_key_pair_name
-  ssh_private_key_path = local.local_ssh_private_key_path
-  ssh_public_key_path  = local.local_ssh_public_key_path
-  #  create_vpc            = var.create_vpc
-  #  vpc_id                = var.vpc_id
-  #  subnet_id             = var.subnet_id
-  #  create_security_group = var.create_security_group
-  instance_count = var.instance_count
-  #  instance_type              = var.instance_type
-  #  spot_instances             = var.spot_instances
-  #  instance_disk_size         = var.instance_disk_size
-  #  instance_security_group_id = var.instance_security_group_id
-  ssh_username = var.ssh_username
+  source                     = "../../../../modules/infra/aws/ec2"
+  prefix                     = var.prefix
+  aws_region                 = var.aws_region
+  create_ssh_key_pair        = var.create_ssh_key_pair
+  ssh_key_pair_name          = local.ssh_key_pair_name
+  ssh_private_key_path       = local.local_ssh_private_key_path
+  ssh_public_key_path        = local.local_ssh_public_key_path
+  create_vpc                 = var.create_vpc
+  vpc_id                     = var.vpc_id
+  subnet_id                  = var.subnet_id
+  create_security_group      = var.create_security_group
+  instance_count             = var.instance_count
+  instance_type              = var.instance_type
+  spot_instances             = var.spot_instances
+  instance_disk_size         = var.instance_disk_size
+  instance_security_group_id = var.instance_security_group_id
+  ssh_username               = var.ssh_username
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
@@ -33,9 +33,9 @@ module "aws_ec2_upstream_cluster" {
       docker_version = var.docker_version
     }
   )
-  #  bastion_host         = var.bastion_host
-  #  iam_instance_profile = var.iam_instance_profile
-  #  tags                 = var.tags
+  bastion_host         = var.bastion_host
+  iam_instance_profile = var.iam_instance_profile
+  tags                 = var.tags
 }
 
 resource "null_resource" "wait_docker_startup" {
@@ -51,7 +51,7 @@ module "rke" {
   dependency           = [null_resource.wait_docker_startup]
   ssh_private_key_path = local.local_ssh_private_key_path
   node_username        = var.ssh_username
-  #  kubernetes_version   = var.kubernetes_version
+  kubernetes_version   = var.kubernetes_version
 
   rancher_nodes = [for instance_ips in module.aws_ec2_upstream_cluster.instance_ips :
     {

@@ -1,29 +1,29 @@
 module "rke_cluster" {
-  source     = "../../../../recipes/standalone/aws/rke"
-  prefix     = var.prefix
-  aws_region = var.aws_region
-  #  create_ssh_key_pair   = var.create_ssh_key_pair
-  #  ssh_key_pair_name     = var.ssh_key_pair_name
-  #  ssh_private_key_path  = var.ssh_private_key_path
-  #  ssh_public_key_path   = var.ssh_public_key_path
-  #  create_vpc            = var.create_vpc
-  #  vpc_id                = var.vpc_id
-  #  subnet_id             = var.subnet_id
-  #  create_security_group = var.create_security_group
-  instance_count = var.instance_count
-  #instance_type      = var.instance_type
-  #spot_instances     = var.spot_instances
-  #instance_disk_size = var.instance_disk_size
-  #  instance_security_group_id = var.instance_security_group_id
-  ssh_username   = var.ssh_username
-  install_docker = var.install_docker
-  docker_version = var.docker_version
-  #  bastion_host         = var.bastion_host
-  #  iam_instance_profile = var.iam_instance_profile
-  #  tags                 = var.tags
-  #  kubernetes_version   = var.kubernetes_version
-  kube_config_path     = var.kube_config_path
-  kube_config_filename = var.kube_config_filename
+  source                     = "../../../../recipes/standalone/aws/rke"
+  prefix                     = var.prefix
+  aws_region                 = var.aws_region
+  create_ssh_key_pair        = var.create_ssh_key_pair
+  ssh_key_pair_name          = var.ssh_key_pair_name
+  ssh_private_key_path       = var.ssh_private_key_path
+  ssh_public_key_path        = var.ssh_public_key_path
+  create_vpc                 = var.create_vpc
+  vpc_id                     = var.vpc_id
+  subnet_id                  = var.subnet_id
+  create_security_group      = var.create_security_group
+  instance_count             = var.instance_count
+  instance_type              = var.instance_type
+  spot_instances             = var.spot_instances
+  instance_disk_size         = var.instance_disk_size
+  instance_security_group_id = var.instance_security_group_id
+  ssh_username               = var.ssh_username
+  install_docker             = var.install_docker
+  docker_version             = var.docker_version
+  bastion_host               = var.bastion_host
+  iam_instance_profile       = var.iam_instance_profile
+  tags                       = var.tags
+  kubernetes_version         = var.kubernetes_version
+  kube_config_path           = var.kube_config_path
+  kube_config_filename       = var.kube_config_filename
 }
 
 resource "local_file" "kube_config_yaml" {

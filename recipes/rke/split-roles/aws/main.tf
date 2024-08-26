@@ -4,18 +4,42 @@ locals {
   local_ssh_private_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
   local_ssh_public_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
   create_vpc                 = var.create_vpc == null ? false : true
-  vpc_id                     = var.vpc_id == null ? module.aws-ec2-upstream-master-nodes.vpc[0].id : var.vpc_id
-  subnet_id                  = var.subnet_id == null ? module.aws-ec2-upstream-master-nodes.subnet[0].id : var.subnet_id
+  vpc_id                     = var.vpc_id == null ? module.aws-ec2-upstream-first-node.vpc[0].id : var.vpc_id
+  subnet_id                  = var.subnet_id == null ? module.aws-ec2-upstream-first-node.subnet[0].id : var.subnet_id
   create_security_group      = var.create_security_group == null ? false : true
-  instance_security_group_id = local.create_security_group == "true" ? null : module.aws-ec2-upstream-master-nodes.security_group[0].id
+  instance_security_group_id = local.create_security_group == "true" ? null : module.aws-ec2-upstream-first-node.security_group[0].id
 }
 
-module "aws-ec2-upstream-master-nodes" {
+module "aws-ec2-upstream-first-node" {
   source         = "../../../../modules/infra/aws/ec2"
   prefix         = var.prefix
   aws_region     = var.aws_region
-  instance_count = var.server_nodes_count
+  instance_count = 1
   ssh_username   = var.ssh_username
+  user_data = templatefile("${path.module}/user_data.tmpl",
+    {
+      install_docker = var.install_docker
+      username       = var.ssh_username
+      docker_version = var.docker_version
+    }
+  )
+}
+
+module "aws-ec2-upstream-server-nodes" {
+  source                     = "../../../../modules/infra/aws/ec2"
+  prefix                     = "${var.prefix}-m"
+  aws_region                 = var.aws_region
+  create_ssh_key_pair        = local.create_ssh_key_pair
+  ssh_key_pair_name          = local.ssh_key_pair_name
+  ssh_private_key_path       = local.local_ssh_private_key_path
+  ssh_public_key_path        = local.local_ssh_public_key_path
+  create_vpc                 = local.create_vpc
+  vpc_id                     = local.vpc_id
+  subnet_id                  = local.subnet_id
+  create_security_group      = local.create_security_group
+  instance_count             = var.server_nodes_count - 1
+  instance_security_group_id = local.instance_security_group_id
+  ssh_username               = var.ssh_username
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
@@ -49,8 +73,8 @@ module "aws-ec2-upstream-worker-nodes" {
   )
 }
 
-resource "null_resource" "wait-docker-startup-m" {
-  depends_on = [module.aws-ec2-upstream-master-nodes.instances_public_ip]
+resource "null_resource" "wait-docker-startup" {
+  depends_on = [module.aws-ec2-upstream-first-node.instances_public_ip]
   provisioner "local-exec" {
     command = "sleep ${var.waiting_time}"
   }
@@ -65,7 +89,7 @@ resource "null_resource" "wait-docker-startup-w" {
 
 locals {
   ssh_private_key_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  server_nodes = [for instance_ips in module.aws-ec2-upstream-master-nodes.instance_ips :
+  server_nodes = [for instance_ips in concat(module.aws-ec2-upstream-first-node.instance_ips, module.aws-ec2-upstream-server-nodes.instance_ips) :
     {
       public_ip         = instance_ips.public_ip,
       private_ip        = instance_ips.private_ip,
