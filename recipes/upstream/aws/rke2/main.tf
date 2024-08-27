@@ -24,21 +24,21 @@ module "rke2_first_server" {
   source     = "../../../../modules/infra/aws/ec2"
   prefix     = var.prefix
   aws_region = var.aws_region
-  #  create_ssh_key_pair   = var.create_ssh_key_pair
+  #create_ssh_key_pair        = var.create_ssh_key_pair
   ssh_key_pair_name    = local.ssh_key_pair_name
   ssh_private_key_path = local.local_ssh_private_key_path
   ssh_public_key_path  = local.local_ssh_public_key_path
-  #  create_vpc            = var.create_vpc
-  #  vpc_id                = var.vpc_id
-  #  subnet_id             = var.subnet_id
-  #  create_security_group = var.create_security_group
-  instance_count = 1
-  #  instance_type              = var.instance_type
-  #  spot_instances             = var.spot_instances
-  #  instance_disk_size         = var.instance_disk_size
-  #  instance_security_group_id = var.instance_security_group_id
-  ssh_username = var.ssh_username
-  user_data    = module.rke2_first.rke2_user_data
+  #create_vpc                 = var.create_vpc
+  vpc_id                     = var.vpc_id
+  subnet_id                  = var.subnet_id
+  create_security_group      = var.create_security_group
+  instance_count             = 1
+  instance_type              = var.instance_type
+  spot_instances             = var.spot_instances
+  instance_disk_size         = var.instance_disk_size
+  instance_security_group_id = var.instance_security_group_id
+  ssh_username               = var.ssh_username
+  user_data                  = module.rke2_first.rke2_user_data
 }
 
 module "rke2_additional" {
@@ -50,21 +50,21 @@ module "rke2_additional" {
 }
 
 module "rke2_additional_servers" {
-  source                = "../../../../modules/infra/aws/ec2"
-  prefix                = var.prefix
-  aws_region            = var.aws_region
-  create_ssh_key_pair   = local.create_ssh_key_pair
-  ssh_key_pair_name     = local.ssh_key_pair_name
-  ssh_private_key_path  = local.local_ssh_private_key_path
-  ssh_public_key_path   = local.local_ssh_public_key_path
-  create_vpc            = local.create_vpc
-  vpc_id                = local.vpc_id
-  subnet_id             = local.subnet_id
-  create_security_group = local.create_security_group
-  instance_count        = var.instance_count - 1
-  #  instance_type              = var.instance_type
-  #  spot_instances             = var.spot_instances
-  #  instance_disk_size         = var.instance_disk_size
+  source                     = "../../../../modules/infra/aws/ec2"
+  prefix                     = var.prefix
+  aws_region                 = var.aws_region
+  create_ssh_key_pair        = local.create_ssh_key_pair
+  ssh_key_pair_name          = local.ssh_key_pair_name
+  ssh_private_key_path       = local.local_ssh_private_key_path
+  ssh_public_key_path        = local.local_ssh_public_key_path
+  create_vpc                 = local.create_vpc
+  vpc_id                     = local.vpc_id
+  subnet_id                  = local.subnet_id
+  create_security_group      = local.create_security_group
+  instance_count             = var.instance_count - 1
+  instance_type              = var.instance_type
+  spot_instances             = var.spot_instances
+  instance_disk_size         = var.instance_disk_size
   instance_security_group_id = local.instance_security_group_id
   ssh_username               = var.ssh_username
   user_data                  = module.rke2_additional.rke2_user_data
