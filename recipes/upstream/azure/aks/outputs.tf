@@ -6,6 +6,6 @@ output "rancher_url" {
   value = "https://${local.rancher_hostname}"
 }
 
-output "rancher_bootstrap_password" {
-  value = var.rancher_bootstrap_password
+output "rancher_password" {
+  value = var.rancher_password
 }
