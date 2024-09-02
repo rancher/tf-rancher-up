@@ -6,12 +6,12 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "server_nodes_count" {
-  default = 3
+variable "ssh_private_key_path" {
+  default = null
 }
 
-variable "worker_nodes_count" {
-  default = 3
+variable "instance_count" {
+  default = 1
 }
 
 variable "ssh_username" {
