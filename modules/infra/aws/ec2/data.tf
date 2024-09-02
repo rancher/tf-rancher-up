@@ -1,3 +1,5 @@
+data "aws_availability_zones" "available" {}
+
 # TODO: Make the Ubuntu OS version configurable
 # TODO: Add support for ARM architecture
 data "aws_ami" "ubuntu" {
