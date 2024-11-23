@@ -107,15 +107,8 @@ variable "create_https_loadbalancer" {
 }
 
 variable "droplet_image" {
-<<<<<<< HEAD
   type        = string
   description = "Droplet OS Image. Run `doctl compute image list-distribution' for standard OS images or `doctl compute image list` for application images and use the value under the `Slug` header"
   default     = "ubuntu-24-10-x64"
   nullable    = false
-=======
-  type = string
-  description = "Droplet OS Image. Run `doctl compute image list-distribution' for standard OS images or `doctl compute image list` for application images and use the value under the `Slug` header"
-  default = "ubuntu-24-10-x64"
-  nullable = false
->>>>>>> bee09eb (Added distribution image variables to digitalocean recipes/modules)
 }
