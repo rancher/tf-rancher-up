@@ -47,6 +47,10 @@ resource "digitalocean_droplet" "droplet" {
       "echo 'Completed cloud-init!'"
     ])
   }
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "digitalocean_loadbalancer" "k8s_api_loadbalancer" {
@@ -150,4 +154,7 @@ resource "digitalocean_firewall" "k8s_cluster" {
   }
 
   depends_on = [digitalocean_droplet.droplet]
+  lifecycle {
+    create_before_destroy = true
+  }
 }

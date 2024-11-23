@@ -1,5 +1,5 @@
 data "digitalocean_image" "ubuntu" {
-  slug = "ubuntu-22-04-x64"
+  slug = var.droplet_image
 }
 
 data "digitalocean_ssh_key" "terraform" {
