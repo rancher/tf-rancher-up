@@ -18,6 +18,7 @@ module "upstream-cluster" {
   {})
   create_https_loadbalancer   = var.create_https_loadbalancer
   create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
+  droplet_image               = var.droplet_image
 }
 
 module "rke" {
