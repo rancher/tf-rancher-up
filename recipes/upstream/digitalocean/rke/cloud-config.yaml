@@ -16,4 +16,4 @@ packages:
   - ca-certificates
   - gnupg
   - curl
-  - docker-ce=5:20.10.24~3-0~ubuntu-jammy 
+  - docker-ce=5:27.2.* 
