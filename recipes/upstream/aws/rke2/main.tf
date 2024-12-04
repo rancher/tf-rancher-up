@@ -95,5 +95,11 @@ module "rancher_install" {
   rancher_bootstrap_password = var.rancher_bootstrap_password
   rancher_password           = var.rancher_password
   rancher_version            = var.rancher_version
+  rancher_helm_repository               = var.rancher_helm_repository
+  rancher_helm_repository_username      = var.rancher_helm_repository_username
+  rancher_helm_repository_password      = var.rancher_helm_repository_password
+  cert_manager_helm_repository          = var.cert_manager_helm_repository
+  cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
+  cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
   wait                       = var.wait
 }
