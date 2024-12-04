@@ -26,6 +26,8 @@ prefix = "my-name-here"
 ## -- Override the default k8s version used by RKE2
 # rke2_version = "v1.25.10+rke2r1"
 
+rancher_helm_repository = "https://charts.rancher.com/server-charts/prime"
+
 ## -- Number and type of EC2 instances to launch
 instance_count = 1
 # instance_type = "t3.medium"
