@@ -137,6 +137,42 @@ variable "rancher_replicas" {
   type        = number
 }
 
+variable "rancher_helm_repository" {
+  description = "Helm repository for Rancher chart"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_username" {
+  description = "Private Rancher helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_password" {
+  description = "Private Rancher helm repository password"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository" {
+  description = "Helm repository for Cert Manager chart"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_username" {
+  description = "Private Cert Manager helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_password" {
+  description = "Private Cert Manager helm repository password"
+  default     = null
+  type        = string
+}
+
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
