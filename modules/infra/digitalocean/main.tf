@@ -49,7 +49,7 @@ resource "digitalocean_droplet" "droplet" {
   }
   lifecycle {
     create_before_destroy = true
-    ignore_changes = [ image ]
+    ignore_changes        = [image]
   }
 }
 
