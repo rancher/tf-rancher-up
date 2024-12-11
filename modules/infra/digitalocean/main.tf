@@ -47,9 +47,9 @@ resource "digitalocean_droplet" "droplet" {
       "echo 'Completed cloud-init!'"
     ])
   }
-
   lifecycle {
     create_before_destroy = true
+    ignore_changes = [ image ]
   }
 }
 
