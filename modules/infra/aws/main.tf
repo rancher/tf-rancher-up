@@ -53,6 +53,14 @@ resource "aws_security_group" "sg_allowall" {
   }
 
   ingress {
+    description = "Allow all inbound HTTP to nodes"
+    from_port   = "80"
+    to_port     = "80"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow all inbound HTTPS to nodes"
     from_port   = "443"
     to_port     = "443"
