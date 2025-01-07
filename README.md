@@ -16,15 +16,20 @@
 
 Table of Contents
 
-1.  [About The Project](#about-the-project)
-2.  [Built With](#built-with)
-3.  [Getting Started](#getting-started)
-    *   [Prerequisites](#prerequisites)
-    *   [What's next](#whats-next)
-4.  [Roadmap](#roadmap)
-5.  [Contributing](#contributing)
-6.  [License](#license)
-7.  [Acknowledgments](#acknowledgments)
+- [About The Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+    - [Git](#git)
+    - [Terraform](#terraform)
+  - [What's next](#whats-next)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+    - [Naming convention](#naming-convention)
+    - [Design/Architecture](#designarchitecture)
+    - [Testing](#testing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -72,7 +77,7 @@ Once you clone the repository please go to the desired [recipes](./recipes) path
 
 - [x] Add support for RKE2 and K3S
 - [ ] Add support for DO as infrastructure provider
-- [ ] Option to deploy Rancher Prime
+- [x] Option to deploy Rancher Prime
 
 See the [open issues](https://github.com/rancherlabs/tf-rancher-up/issues) for a full list of proposed features (and known issues).
 
