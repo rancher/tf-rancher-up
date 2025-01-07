@@ -23,6 +23,9 @@ region = "<REGION>"
 ## -- Range of private IPs available for the Google Subnet
 # ip_cidr_range = "10.10.0.0/24"
 
+## -- Specify whether VPC / Subnet should be created for the instances
+# create_vpc = true
+
 ## -- Google VPC used for all resources
 # vpc = null
 
@@ -30,7 +33,7 @@ region = "<REGION>"
 # subnet = null
 
 ## -- Google Firewall used for all resources
-# create_firewall = null
+# create_firewall = true
 
 ## -- The number of Server nodes
 # server_instance_count = 1
@@ -49,13 +52,10 @@ region = "<REGION>"
 ## -- The name of a Google Compute Engine machine type
 # instance_type = "e2-highmem-2"
 
-## -- The image used as the VM Operating System
-# os_image = "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230908"
+## -- Operating system type (sles or ubuntu)
+# os_type = "sles"
 
 #Ref. https://cloud.google.com/compute/docs/images
-
-## -- Username used to allow access to VMs via SSH key exchange
-ssh_username = "ubuntu"
 
 ## -- Script that will run when the VMs start
 # startup_script = ""
