@@ -6,6 +6,11 @@ output "instances_public_ip" {
   value = module.google-compute-engine-upstream-cluster.instances_public_ip
 }
 
+output "instances_ssh_username" {
+  description = "Username used for SSH login"
+  value       = var.os_type
+}
+
 output "rancher_url" {
   description = "Rancher URL"
   value       = "https://${module.rancher_install.rancher_hostname}"
