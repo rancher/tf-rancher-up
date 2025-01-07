@@ -1,6 +1,8 @@
 locals {
   private_ssh_key_path = var.ssh_private_key_path == null ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
   public_ssh_key_path  = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
+  os_image             = var.os_type == "sles" ? var.os_image : "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230908"
+  ssh_username         = var.os_type == "sles" ? var.ssh_username : "ubuntu"
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -111,7 +113,7 @@ resource "google_compute_instance" "default" {
     initialize_params {
       size  = var.instance_disk_size
       type  = var.disk_type
-      image = var.os_image
+      image = local.os_image
     }
   }
 
@@ -126,7 +128,7 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys       = var.create_ssh_key_pair ? "${var.ssh_username}:${tls_private_key.ssh_private_key[0].public_key_openssh}" : "${var.ssh_username}:${local.public_ssh_key_path}"
+    ssh-keys       = var.create_ssh_key_pair ? "${local.ssh_username}:${tls_private_key.ssh_private_key[0].public_key_openssh}" : "${local.ssh_username}:${local.public_ssh_key_path}"
     startup-script = var.startup_script
   }
 }
