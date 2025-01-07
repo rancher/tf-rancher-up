@@ -6,6 +6,11 @@ output "instances_public_ip" {
   value = concat([module.rke2_first_server.instances_public_ip], [module.rke2_additional_servers.instances_public_ip])
 }
 
+output "instances_ssh_username" {
+  description = "Username used for SSH login"
+  value       = var.os_type
+}
+
 # Uncomment for debugging purposes
 #output "rke2_first_server_config_file" {
 #  value = nonsensitive(module.rke2_first.rke2_user_data)
