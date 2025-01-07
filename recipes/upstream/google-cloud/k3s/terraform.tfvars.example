@@ -50,7 +50,7 @@ region = "<REGION>"
 # disk_type = "pd-ssd"
 
 ## -- The name of a Google Compute Engine machine type
-# instance_type = "e2-highmem-2"
+# instance_type = "n2-standard-2"
 
 ## -- Operating system type (sles or ubuntu)
 # os_type = "sles"

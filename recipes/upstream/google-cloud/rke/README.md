@@ -17,19 +17,20 @@ cd recipes/upstream/google-cloud/rke
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `project_id` to specify in which Project the resources will be created
     -  `region` to suit your region
-    -  `ssh_username` to specify the user used to create the VMs (default "ubuntu")
+    -  `os_type` to specify the OS and the SSH user used to create the VMs (default "sles")
     -  `startup_script` for installing Docker if you are not using a ready-made image (only required if the user the VMs were installed under is not "ubuntu")
     -  `rancher_hostname` in order to reach the Rancher console via DNS name
     -  `rancher_password` to configure the initial Admin password (the password must be at least 12 characters)
 - Make sure you are logged into your Google Account from your local Terminal. See the preparatory steps [here](../../../../modules/infra/google-cloud/README.md).
 
-**NB: If you want to use all the configurable variables in the `terraform.tfvars` file, you will need to uncomment them there and in the `variables.tf` and `main.tf` files.**
+#### Terraform Apply
 
 ```bash
 terraform init -upgrade && terraform apply -auto-approve
 ```
 
-- Destroy the resources when finished
+#### Terraform Destroy
+
 ```bash
 terraform destroy -auto-approve
 ```
