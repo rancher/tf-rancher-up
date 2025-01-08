@@ -26,7 +26,6 @@ module "rke" {
   kube_config_path     = var.kube_config_path
   kube_config_filename = var.kube_config_filename
   kubernetes_version   = var.kubernetes_version
-
 }
 
 locals {

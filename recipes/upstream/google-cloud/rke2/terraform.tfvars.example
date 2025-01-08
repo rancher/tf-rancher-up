@@ -69,11 +69,9 @@ ssh_username = "ubuntu"
 ## -- RKE2 custom config file
 # rke2_config = "<RKE2_CONFIG_FILE>"
 
-## -- RKE2 KUBECONFIG file path
-# kube_config_path = "<KUBE_CONFIG_PATH>"
-
-## -- RKE2 KUBECONFIG file
-# kube_config_filename = "<KUBE_CONFIG_FILENAME>"
+## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
+# kube_config_path = "~/.kube"
+# kube_config_filename = "rancher-terraform.yml"
 
 ## -- Bootstrap the Rancher installation
 # bootstrap_rancher = false
