@@ -47,6 +47,7 @@ module "k3s_additional_servers" {
   instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
+  ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
   tag_begin               = 2
@@ -65,7 +66,7 @@ module "k3s_workers" {
   instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
-  ssh_key_pair_path       = pathexpand(module.k3s_first_server.ssh_key_path)
+  ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
   aws_region              = var.aws_region
