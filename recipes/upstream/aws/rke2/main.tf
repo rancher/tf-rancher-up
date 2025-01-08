@@ -45,7 +45,7 @@ module "rke2_additional_servers" {
   instance_disk_size      = var.instance_disk_size
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.rke2_first_server.ssh_key_pair_name
-  ssh_key_pair_path       = var.ssh_key_pair_path
+  ssh_key_pair_path       = module.rke2_first_server.ssh_key_path
   ssh_username            = var.ssh_username
   spot_instances          = var.spot_instances
   tag_begin               = 2
