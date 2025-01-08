@@ -142,18 +142,6 @@ variable "os_type" {
   }
 }
 
-variable "os_image" {
-  description = "Operating system image name"
-  type        = string
-  default     = "projects/suse-cloud/global/images/sles-15-sp5-v20240913-x86-64"
-}
-
-variable "ssh_username" {
-  description = "Username used for SSH login"
-  type        = string
-  default     = "sles"
-}
-
 variable "startup_script" {
   description = "Custom startup script"
   type        = string

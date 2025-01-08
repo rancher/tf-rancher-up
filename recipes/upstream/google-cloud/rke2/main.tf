@@ -6,7 +6,7 @@ locals {
   vpc                        = var.vpc == null ? module.rke2_first_server.vpc[0].name : var.vpc
   subnet                     = var.subnet == null ? module.rke2_first_server.subnet[0].name : var.subnet
   create_firewall            = var.create_firewall == true ? false : var.create_firewall
-  ssh_username               = var.os_type == "sles" ? "sles" : "ubuntu"
+  ssh_username               = var.os_type
   kc_path                    = var.kube_config_path != null ? var.kube_config_path : path.cwd
   kc_file                    = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
 }
