@@ -50,5 +50,6 @@ create_ssh_key_pair = true
 # ssh_key_pair_path  = "/path/to/private/key.pem"
 #####
 
-## -- Override the default (${prefix}_kube_config.yml) kubeconfig file/path
-# kube_config_path = "~/.kube/rancher-terraform.yml"
+## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
+# kube_config_path = "~/.kube"
+# kube_config_filename = "rancher-terraform.yml"
