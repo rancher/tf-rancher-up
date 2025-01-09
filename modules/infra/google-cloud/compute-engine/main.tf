@@ -137,4 +137,11 @@ resource "google_compute_instance" "default" {
     ssh-keys       = var.create_ssh_key_pair ? "${local.ssh_username}:${tls_private_key.ssh_private_key[0].public_key_openssh}" : "${local.ssh_username}:${local.public_ssh_key_path}"
     startup-script = var.startup_script
   }
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes = [
+      boot_disk[0].initialize_params[0].image
+    ]
+  }
 }
