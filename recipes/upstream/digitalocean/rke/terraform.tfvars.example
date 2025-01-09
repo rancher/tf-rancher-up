@@ -40,8 +40,9 @@
 # If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
 # ssh_key_pair_name = "terraform"
 
-# Filepath to the private ssh key to be uploaded or already existing on DigitalOcean 
-# ssh_key_pair_path = "~/.ssh/terraform"
+## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
+# kube_config_path = "~/.kube"
+# kube_config_filename = "rancher-terraform.yml"
 
 # DigitalOcean authentication token 
 # do_token = ""
