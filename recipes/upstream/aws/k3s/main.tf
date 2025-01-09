@@ -78,7 +78,7 @@ module "k3s_workers" {
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.k3s_first_server]
-  filename   = pathexpand(module.k3s_first_server.ssh_key_path)
+  filename   = module.k3s_first_server.ssh_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
