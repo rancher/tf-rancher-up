@@ -36,6 +36,13 @@ instance_count = 1
 ## -- Use spot instances
 # spot_instances = false
 
+### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
+# os_type = "sles"
+## - SSH username (must match the SSH user for the AMI used)
+# ssh_username = "ec2-user"
+## - Custom AMI to launch instances with
+# instance_ami = "ami-xxxx"
+
 ## -- RKE2 token, override the programmatically generated token
 # rke2_token = "string here"
 

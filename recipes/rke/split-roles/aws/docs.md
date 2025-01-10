@@ -33,6 +33,7 @@ No resources.
 | <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
 | <a name="input_docker_version"></a> [docker\_version](#input\_docker\_version) | Docker version to install on nodes | `string` | `"23.0.6"` | no |
 | <a name="input_install_docker"></a> [install\_docker](#input\_install\_docker) | Should install docker while creating the instance | `bool` | `true` | no |
+| <a name="input_instance_ami"></a> [instance\_ami](#input\_instance\_ami) | Override the default SLES or Ubuntu AMI | `string` | `null` | no |
 | <a name="input_instance_security_group"></a> [instance\_security\_group](#input\_instance\_security\_group) | Provide a pre-existing security group ID | `string` | `null` | no |
 | <a name="input_instance_security_group_name"></a> [instance\_security\_group\_name](#input\_instance\_security\_group\_name) | Provide a pre-existing security group name | `string` | `null` | no |
 | <a name="input_kube_config_filename"></a> [kube\_config\_filename](#input\_kube\_config\_filename) | Filename to write the kube config | `string` | `null` | no |
@@ -42,11 +43,12 @@ No resources.
 | <a name="input_master_nodes_iam_instance_profile"></a> [master\_nodes\_iam\_instance\_profile](#input\_master\_nodes\_iam\_instance\_profile) | Specify IAM instance profile to attach to master nodes | `string` | `null` | no |
 | <a name="input_master_nodes_instance_disk_size"></a> [master\_nodes\_instance\_disk\_size](#input\_master\_nodes\_instance\_disk\_size) | Disk size used for all master nodes (in GB) | `string` | `"80"` | no |
 | <a name="input_master_nodes_instance_type"></a> [master\_nodes\_instance\_type](#input\_master\_nodes\_instance\_type) | Instance type used for all master nodes | `string` | `"t3.medium"` | no |
+| <a name="input_os_type"></a> [os\_type](#input\_os\_type) | Use SLES or Ubuntu images when launching instances (sles or ubuntu) | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | n/a | yes |
 | <a name="input_ssh_key"></a> [ssh\_key](#input\_ssh\_key) | Contents of the private key to connect to the instances. | `string` | `null` | no |
 | <a name="input_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#input\_ssh\_key\_pair\_name) | Specify the SSH key name to use (that's already present in AWS) | `string` | `null` | no |
 | <a name="input_ssh_key_pair_path"></a> [ssh\_key\_pair\_path](#input\_ssh\_key\_pair\_path) | Path to the SSH private key used as the key pair (that's already present in AWS) | `string` | `null` | no |
-| <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | Username used for SSH with sudo access | `string` | `"ubuntu"` | no |
+| <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | Username used for SSH with sudo access, must align with the AMI in use | `string` | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID to create the instance(s) in | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | User-provided tags for the resources | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID to create the instance(s) in | `string` | `null` | no |
