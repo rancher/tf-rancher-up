@@ -1,6 +1,8 @@
 locals {
-  kc_path = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_file_backup = "${local.kc_file}.backup"
+  ssh_username = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
 }
 
 module "rke2_first" {
@@ -16,10 +18,12 @@ module "rke2_first_server" {
   instance_count          = 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
-  ssh_username            = var.ssh_username
+  ssh_username            = local.ssh_username
   spot_instances          = var.spot_instances
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
@@ -42,10 +46,12 @@ module "rke2_additional_servers" {
   instance_count          = var.instance_count - 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.rke2_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.rke2_first_server.ssh_key_path
-  ssh_username            = var.ssh_username
+  ssh_username            = local.ssh_username
   spot_instances          = var.spot_instances
   tag_begin               = 2
   aws_region              = var.aws_region
@@ -65,7 +71,7 @@ resource "ssh_resource" "retrieve_kubeconfig" {
   commands = [
     "sudo sed 's/127.0.0.1/${module.rke2_first_server.instances_public_ip[0]}/g' /etc/rancher/rke2/rke2.yaml"
   ]
-  user        = var.ssh_username
+  user        = local.ssh_username
   private_key = data.local_file.ssh_private_key.content
 }
 

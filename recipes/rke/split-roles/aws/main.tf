@@ -1,3 +1,7 @@
+locals {
+  ssh_username = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+}
+
 module "master_nodes" {
   source = "../../../../modules/infra/aws"
 
@@ -5,11 +9,13 @@ module "master_nodes" {
   instance_count          = var.master_nodes_count
   instance_type           = var.master_nodes_instance_type
   instance_disk_size      = var.master_nodes_instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
   ssh_key                 = var.ssh_key
-  ssh_username            = var.ssh_username
+  ssh_username            = local.ssh_username
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
@@ -18,7 +24,7 @@ module "master_nodes" {
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
-      username       = var.ssh_username
+      username       = local.ssh_username
       docker_version = var.docker_version
     }
   )
@@ -33,11 +39,13 @@ module "worker_nodes" {
   instance_count          = var.worker_nodes_count
   instance_type           = var.worker_nodes_instance_type
   instance_disk_size      = var.worker_nodes_instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
   ssh_key                 = var.ssh_key
-  ssh_username            = var.ssh_username
+  ssh_username            = local.ssh_username
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
@@ -46,7 +54,7 @@ module "worker_nodes" {
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
-      username       = var.ssh_username
+      username       = local.ssh_username
       docker_version = var.docker_version
     }
   )
@@ -82,7 +90,7 @@ locals {
 module "rke" {
   source                 = "../../../../modules/distribution/rke"
   prefix                 = var.prefix
-  node_username          = var.ssh_username
+  node_username          = local.ssh_username
   create_kubeconfig_file = var.create_kubeconfig_file
   kube_config_path       = var.kube_config_path
   kube_config_filename   = var.kube_config_filename

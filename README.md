@@ -65,7 +65,7 @@ Git clone can be performed only after setting up the required ssh keys. Please r
 
 #### Terraform
 
-Terraform should be installed on your local or remote computer where the repository is cloned.  Please refer [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for installation instructions.
+Terraform (v1.9 or greater) should be installed on your local or remote computer where the repository is cloned.  Please refer [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for installation instructions.
 
 ### What's next
 
