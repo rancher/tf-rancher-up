@@ -2,7 +2,7 @@ locals {
   kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
   kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
   kc_file_backup = "${local.kc_file}.backup"
-  ssh_username = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+  ssh_username   = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
 }
 
 module "rke2_first" {
