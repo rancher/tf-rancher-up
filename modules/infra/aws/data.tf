@@ -14,3 +14,18 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 }
+
+data "aws_ami" "sles" {
+  most_recent = true
+  owners      = ["679593333241"] # SUSE
+
+  filter {
+    name   = "name"
+    values = ["suse-sles-15-sp6-byos-*-hvm-ssd-x86_64-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}

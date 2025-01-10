@@ -136,8 +136,20 @@ variable "bastion_host" {
 
 variable "ssh_username" {
   type        = string
-  description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
+  description = "Username used for SSH with sudo access, must align with the AMI in use"
+  default     = null
+}
+
+variable "instance_ami" {
+  type        = string
+  description = "Override the default SLES or Ubuntu AMI"
+  default     = null
+}
+
+variable "os_type" {
+  type        = string
+  description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
+  default     = null
 }
 
 variable "master_nodes_instance_type" {

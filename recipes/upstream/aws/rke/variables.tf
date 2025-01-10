@@ -107,7 +107,7 @@ variable "install_docker" {
 variable "docker_version" {
   type        = string
   description = "Docker version to install on nodes"
-  default     = "20.10"
+  default     = "27.2"
 }
 
 variable "rancher_bootstrap_password" {
@@ -164,14 +164,26 @@ variable "ssh_key_pair_path" {
 
 variable "ssh_username" {
   type        = string
-  description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
+  description = "Username used for SSH with sudo access, must align with the AMI in use"
+  default     = null
 }
 
 variable "spot_instances" {
   type        = bool
   description = "Use spot instances"
   default     = null
+}
+
+variable "instance_ami" {
+  type        = string
+  description = "Override the default SLES or Ubuntu AMI"
+  default     = null
+}
+
+variable "os_type" {
+  type        = string
+  description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
+  default     = "sles"
 }
 
 variable "subnet_id" {

@@ -15,23 +15,22 @@
 ## -- Set the prefix for the name tag on instancrease created. A default prefix (rancher-terraform) if not provided.
 prefix = "my-name-here"
 
-## -- Admin password to set for Rancher
-# rancher_password = "at-least-12-characters"
-
 ###### !! Optional variables !! ######
+
+## -- Password to set when installing Rancher, otherwise use default (initial-admin-password)
+# rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
-
-# Override the helm repository for the Rancher chart
-# rancher_helm_repository = "https://charts.example.com/rancher"
 
 ## -- Override the default k8s version used by RKE
 # kubernetes_version = "v1.24.10-rancher4-1"
 
 ## -- Number and type of EC2 instances to launch
-instance_count = 1
-# instance_type = "t3.medium"
+master_nodes_count = 1
+worker_nodes_count = 1
+# master_nodes_instance_type = "t3.medium"
+# worker_nodes_instance_type = "t3.medium"
 
 ## -- Use spot instances
 # spot_instances = false
@@ -47,13 +46,12 @@ instance_count = 1
 ## -- (A) Create a new keypair in AWS
 create_ssh_key_pair = true
 ## -- Override the default (./${prefix}_ssh_private_key.pem) path where this SSH key is written
-# ssh_key_pair_path = "/path/to/private/key.pem"
+# ssh_private_key_path = "/path/to/private/key.pem"
 
 ## -- (B) Provide an existing keypair name in AWS to use for nodes, the matching private key file for this keypair also must be provided so RKE can SSH to the launched nodes
 # ssh_key_pair_name = "aws_keypair_name"
 # ssh_key_pair_path  = "/path/to/private/key.pem"
 #####
 
-## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
-# kube_config_path = "~/.kube"
-# kube_config_filename = "rancher-terraform.yml"
+## -- Override the default (${prefix}_kube_config.yml) kubeconfig file/path
+# kube_config_path = "~/.kube/rancher-terraform.yml"
