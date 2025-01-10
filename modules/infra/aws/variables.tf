@@ -84,6 +84,22 @@ variable "instance_count" {
   nullable    = false
 }
 
+variable "instance_ami" {
+  type        = string
+  description = "Override the default SLES or Ubuntu AMI"
+  default     = null
+}
+
+variable "os_type" {
+  type        = string
+  description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
+  default     = "sles"
+  validation {
+    condition     = contains(["sles", "ubuntu"], var.os_type)
+    error_message = "The operating system type must be 'sles' or 'ubuntu'."
+  }
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID to create the instance(s) in"
@@ -148,8 +164,11 @@ variable "instance_security_group" {
 variable "ssh_username" {
   type        = string
   description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
-  nullable    = false
+  default     = null
+  validation {
+    condition     = var.ssh_username != null
+    error_message = "An SSH username must be provided"
+  }
 }
 
 variable "spot_instances" {

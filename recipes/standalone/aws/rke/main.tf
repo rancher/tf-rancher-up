@@ -1,13 +1,19 @@
+locals {
+  ssh_username = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+}
+
 module "cluster-nodes" {
   source                  = "../../../../modules/infra/aws"
   prefix                  = var.prefix
   instance_count          = var.instance_count
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
-  ssh_username            = var.ssh_username
+  ssh_username            = local.ssh_username
   spot_instances          = var.spot_instances
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
@@ -16,7 +22,7 @@ module "cluster-nodes" {
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
-      username       = var.ssh_username
+      username       = local.ssh_username
       docker_version = var.docker_version
     }
   )
@@ -27,7 +33,7 @@ module "rke" {
   prefix               = var.prefix
   dependency           = module.cluster-nodes.dependency
   ssh_private_key_path = module.cluster-nodes.ssh_key_path
-  node_username        = var.ssh_username
+  node_username        = local.ssh_username
   kube_config_path     = var.kube_config_path
   kube_config_filename = var.kube_config_filename
   kubernetes_version   = var.kubernetes_version
