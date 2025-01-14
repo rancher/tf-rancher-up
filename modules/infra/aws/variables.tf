@@ -80,7 +80,7 @@ variable "instance_disk_size" {
 variable "instance_count" {
   type        = number
   description = "Number of EC2 instances to create"
-  default     = 3
+  default     = 1
   nullable    = false
 }
 
