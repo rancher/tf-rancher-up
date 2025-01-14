@@ -108,7 +108,7 @@ locals {
 
 module "rancher_install" {
   source                                = "../../../../modules/rancher"
-  dependency                            = var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
+  dependency                            = var.worker_instance_count != null ? module.k3s_workers.dependency : var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
   kubeconfig_file                       = local_file.kube_config_yaml.filename
   rancher_hostname                      = local.rancher_hostname
   rancher_replicas                      = min(var.rancher_replicas, var.server_instance_count)
