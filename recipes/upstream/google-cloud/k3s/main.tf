@@ -106,11 +106,9 @@ resource "ssh_resource" "retrieve_kubeconfig" {
 }
 
 resource "local_file" "kube_config_yaml" {
-  depends_on = [ssh_resource.retrieve_kubeconfig]
-
-  filename        = local.kc_file
-  file_permission = "0600"
+  filename        = pathexpand(local.kc_file)
   content         = ssh_resource.retrieve_kubeconfig.result
+  file_permission = "0600"
 }
 
 provider "kubernetes" {
