@@ -32,7 +32,7 @@ module "rke" {
 
 locals {
   rancher_hostname = join(".", ["rancher", module.rke.instances_public_ip[0], "sslip.io"])
-  ssh_username   = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+  ssh_username     = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
 }
 
 module "rancher_install" {

@@ -6,4 +6,6 @@ if [ ${install_docker} = true ]
 		export DEBIAN_FRONTEND=noninteractive
 		curl -sSL https://releases.rancher.com/install-docker/${docker_version}.sh | sh -
 		sudo usermod -aG docker ${username}
+    systemctl enable docker
+    systemctl start docker
 fi
