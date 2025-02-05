@@ -10,6 +10,8 @@ module "rke" {
   instance_count     = var.instance_count
   instance_type      = var.instance_type
   instance_disk_size = var.instance_disk_size
+  instance_ami       = var.instance_ami
+  os_type            = var.os_type
   spot_instances     = var.spot_instances
   install_docker     = var.install_docker
   docker_version     = var.docker_version
@@ -19,7 +21,7 @@ module "rke" {
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
 
-  ssh_username      = var.ssh_username
+  ssh_username      = local.ssh_username
   ssh_key_pair_name = var.ssh_key_pair_name
   ssh_key_pair_path = var.ssh_key_pair_path
 
@@ -30,6 +32,7 @@ module "rke" {
 
 locals {
   rancher_hostname = join(".", ["rancher", module.rke.instances_public_ip[0], "sslip.io"])
+  ssh_username   = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
 }
 
 module "rancher_install" {
