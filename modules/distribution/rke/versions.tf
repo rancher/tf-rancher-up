@@ -2,7 +2,7 @@ terraform {
   required_providers {
     rke = {
       source  = "rancher/rke"
-      version = ">= 1.4.3"
+      version = ">= 1.7.0"
     }
     local = {
       source  = "hashicorp/local"
