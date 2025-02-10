@@ -14,7 +14,7 @@ module "k3s_first" {
 }
 
 module "k3s_first_server" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = 1
   instance_type           = var.instance_type
@@ -43,7 +43,7 @@ module "k3s_additional" {
 }
 
 module "k3s_additional_servers" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = var.server_instance_count - 1
   instance_type           = var.instance_type
@@ -64,7 +64,7 @@ module "k3s_additional_servers" {
 }
 
 module "k3s_workers" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = var.worker_instance_count
   instance_type           = var.instance_type

@@ -3,7 +3,7 @@ locals {
 }
 
 module "cluster-nodes" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = var.instance_count
   instance_type           = var.instance_type

@@ -10,7 +10,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cluster-nodes"></a> [cluster-nodes](#module\_cluster-nodes) | ../../../../modules/infra/aws | n/a |
+| <a name="module_cluster-nodes"></a> [cluster-nodes](#module\_cluster-nodes) | ../../../../modules/infra/aws/ec2 | n/a |
 | <a name="module_rke"></a> [rke](#module\_rke) | ../../../../modules/distribution/rke | n/a |
 
 ## Resources

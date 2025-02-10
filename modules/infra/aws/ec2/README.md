@@ -12,7 +12,7 @@ Documentation can be found [here](./docs.md).
 
 ```terraform
 module "upstream_cluster" {
-  source              = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws"
+  source              = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws/ec2"
   aws_region          = "us-east-1"
   prefix              = "example-rancher"
   instance_count      = 1
@@ -26,7 +26,7 @@ module "upstream_cluster" {
 
 ```terraform
 module "upstream_cluster" {
-  source                  = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws"
+  source                  = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws/ec2"
   aws_region              = "us-east-1"
   prefix                  = "example-rancher"
   instance_count          = 1
@@ -39,7 +39,7 @@ module "upstream_cluster" {
 
 ```terraform
 module "upstream_cluster" {
-  source                  = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws"
+  source                  = "git::https://github.com/rancherlabs/tf-rancher-up.git//modules/infra/aws/ec2"
   aws_region              = "us-east-1"
   prefix                  = "example-rancher"
   instance_count          = 1

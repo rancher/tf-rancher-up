@@ -3,7 +3,7 @@ locals {
 }
 
 module "master_nodes" {
-  source = "../../../../modules/infra/aws"
+  source = "../../../../modules/infra/aws/ec2"
 
   prefix                  = "${var.prefix}-m"
   instance_count          = var.master_nodes_count
@@ -33,7 +33,7 @@ module "master_nodes" {
 }
 
 module "worker_nodes" {
-  source = "../../../../modules/infra/aws"
+  source = "../../../../modules/infra/aws/ec2"
 
   prefix                  = "${var.prefix}-w"
   instance_count          = var.worker_nodes_count
