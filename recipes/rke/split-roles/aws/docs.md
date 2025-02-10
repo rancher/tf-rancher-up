@@ -10,9 +10,9 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_master_nodes"></a> [master\_nodes](#module\_master\_nodes) | ../../../../modules/infra/aws | n/a |
+| <a name="module_master_nodes"></a> [master\_nodes](#module\_master\_nodes) | ../../../../modules/infra/aws/ec2 | n/a |
 | <a name="module_rke"></a> [rke](#module\_rke) | ../../../../modules/distribution/rke | n/a |
-| <a name="module_worker_nodes"></a> [worker\_nodes](#module\_worker\_nodes) | ../../../../modules/infra/aws | n/a |
+| <a name="module_worker_nodes"></a> [worker\_nodes](#module\_worker\_nodes) | ../../../../modules/infra/aws/ec2 | n/a |
 
 ## Resources
 

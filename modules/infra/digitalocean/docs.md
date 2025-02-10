@@ -22,6 +22,8 @@ No modules.
 |------|------|
 | [digitalocean_droplet.droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet) | resource |
 | [digitalocean_firewall.k8s_cluster](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/firewall) | resource |
+| [digitalocean_loadbalancer.https_loadbalancer](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/loadbalancer) | resource |
+| [digitalocean_loadbalancer.k8s_api_loadbalancer](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/loadbalancer) | resource |
 | [digitalocean_ssh_key.key_pair](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/ssh_key) | resource |
 | [local_file.private_key_pem](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [tls_private_key.ssh_private_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
@@ -32,9 +34,12 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_create_https_loadbalancer"></a> [create\_https\_loadbalancer](#input\_create\_https\_loadbalancer) | Specify if a loadbalancer for port 443 needs to be created for the instances | `bool` | `false` | no |
+| <a name="input_create_k8s_api_loadbalancer"></a> [create\_k8s\_api\_loadbalancer](#input\_create\_k8s\_api\_loadbalancer) | Specify if a loadbalancer for port 6443 needs to be created for the instances | `bool` | `false` | no |
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Specify if a new SSH key pair needs to be created for the instances | `bool` | `false` | no |
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | DigitalOcean Authentication Token | `string` | `null` | no |
 | <a name="input_droplet_count"></a> [droplet\_count](#input\_droplet\_count) | Number of droplets to create | `number` | `3` | no |
+| <a name="input_droplet_image"></a> [droplet\_image](#input\_droplet\_image) | Droplet OS Image. Run `doctl compute image list-distribution' for standard OS images or `doctl compute image list` for application images and use the value under the `Slug` header` | `string` | `"ubuntu-24-10-x64"` | no |
 | <a name="input_droplet_size"></a> [droplet\_size](#input\_droplet\_size) | Size used for all droplets | `string` | `"s-2vcpu-4gb"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | `"rancher-terraform"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region that droplets will be deployed to | `string` | `"sfo3"` | no |
@@ -50,8 +55,11 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_dependency"></a> [dependency](#output\_dependency) | n/a |
+| <a name="output_droplet_ids"></a> [droplet\_ids](#output\_droplet\_ids) | n/a |
 | <a name="output_droplet_ips"></a> [droplet\_ips](#output\_droplet\_ips) | n/a |
 | <a name="output_droplets_private_ip"></a> [droplets\_private\_ip](#output\_droplets\_private\_ip) | n/a |
 | <a name="output_droplets_public_ip"></a> [droplets\_public\_ip](#output\_droplets\_public\_ip) | n/a |
+| <a name="output_https_loadbalancer_ip"></a> [https\_loadbalancer\_ip](#output\_https\_loadbalancer\_ip) | n/a |
+| <a name="output_k8s_api_loadbalancer_ip"></a> [k8s\_api\_loadbalancer\_ip](#output\_k8s\_api\_loadbalancer\_ip) | n/a |
 | <a name="output_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#output\_ssh\_key\_pair\_name) | n/a |
 | <a name="output_ssh_key_path"></a> [ssh\_key\_path](#output\_ssh\_key\_path) | n/a |

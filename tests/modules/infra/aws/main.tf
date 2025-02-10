@@ -1,5 +1,5 @@
 module "test1_all_defaults" {
-  source = "../../../../modules/infra/aws"
+  source = "../../../../modules/infra/aws/ec2"
 
   instance_count          = 1
   create_security_group   = false
@@ -8,7 +8,7 @@ module "test1_all_defaults" {
 }
 
 module "test2_specify_sg" {
-  source = "../../../../modules/infra/aws"
+  source = "../../../../modules/infra/aws/ec2"
 
   instance_count          = 1
   create_security_group   = false
@@ -21,7 +21,7 @@ resource "aws_vpc" "for_test3" {
 }
 
 module "test3_specify_dynamic_vpc" {
-  source = "../../../../modules/infra/aws"
+  source = "../../../../modules/infra/aws/ec2"
 
   instance_count      = 1
   create_ssh_key_pair = true

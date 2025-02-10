@@ -57,7 +57,7 @@ terraform destroy -var-file terraform.tfvars
 The user data automatically sets up each node for use with kubectl (also alias to k) and crictl when logged in.
 
 See full argument list for each module in use:
-  - [AWS](../../../../modules/infra/aws)
+  - [AWS](../../../../modules/infra/aws/ec2)
   - [K3S](../../../../modules/distribution/k3s)
   - [Rancher](../../../../modules/rancher)
 

@@ -3,14 +3,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.1.0 |
-| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.4.3 |
+| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
-| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.4.3 |
+| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.7.0 |
 
 ## Modules
 
@@ -28,6 +28,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_hostnames"></a> [additional\_hostnames](#input\_additional\_hostnames) | List of additional hostnames and IPs to include in the api server PKI cert | `list(string)` | `null` | no |
 | <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br>    address      = string<br>    user         = string<br>    ssh_key      = string<br>    ssh_key_path = string<br>  })</pre> | `null` | no |
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | Specify the cloud provider name | `string` | `null` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name for the RKE cluster | `string` | `"rke-demo"` | no |

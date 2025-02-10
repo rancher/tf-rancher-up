@@ -39,7 +39,8 @@
 | <a name="input_kube_config_filename"></a> [kube\_config\_filename](#input\_kube\_config\_filename) | Filename to write the kue config | `string` | `null` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of nodes to create in the default node pool | `number` | `3` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | `"rancher-terraform"` | no |
-| <a name="input_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#input\_rancher\_bootstrap\_password) | Password to use for bootstrapping Rancher (min 12 characters) | `string` | `"initial-admin-password"` | no |
+| <a name="input_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#input\_rancher\_bootstrap\_password) | Password to use when bootstrapping Rancher (min 12 characters) | `string` | `"initial-bootstrap-password"` | no |
+| <a name="input_rancher_password"></a> [rancher\_password](#input\_rancher\_password) | Password for the Rancher admin account (min 12 characters) | `string` | `null` | no |
 | <a name="input_rancher_replicas"></a> [rancher\_replicas](#input\_rancher\_replicas) | Value for replicas when installing the Rancher helm chart | `number` | `3` | no |
 | <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `null` | no |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | VM Size for the default node pool | `string` | `"Standard_DS2_v2"` | no |
@@ -49,6 +50,6 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#output\_rancher\_bootstrap\_password) | n/a |
 | <a name="output_rancher_hostname"></a> [rancher\_hostname](#output\_rancher\_hostname) | n/a |
+| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | n/a |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | n/a |

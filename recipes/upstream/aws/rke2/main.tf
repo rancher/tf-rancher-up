@@ -13,7 +13,7 @@ module "rke2_first" {
 }
 
 module "rke2_first_server" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = 1
   instance_type           = var.instance_type
@@ -41,7 +41,7 @@ module "rke2_additional" {
 }
 
 module "rke2_additional_servers" {
-  source                  = "../../../../modules/infra/aws"
+  source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = var.prefix
   instance_count          = var.instance_count - 1
   instance_type           = var.instance_type

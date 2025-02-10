@@ -56,7 +56,7 @@ terraform destroy
 The user data automatically sets up each node for use with kubectl (also alias to k) and crictl when logged in.
 
 See full argument list for each module in use:
-  - [AWS](../../../../modules/infra/aws)
+  - [AWS](../../../../modules/infra/aws/ec2)
   - [RKE2](../../../../modules/distribution/rke2)
   - [Rancher](../../../../modules/rancher)
 
