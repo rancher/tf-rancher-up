@@ -59,6 +59,8 @@ module "rke2_additional_servers" {
   instance_security_group = module.rke2_first_server.sg-id
   subnet_id               = var.subnet_id
   user_data               = module.rke2_additional.rke2_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 data "local_file" "ssh_private_key" {
