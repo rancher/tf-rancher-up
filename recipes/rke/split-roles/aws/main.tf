@@ -21,6 +21,8 @@ module "master_nodes" {
   instance_security_group = var.instance_security_group
   subnet_id               = var.subnet_id
   bastion_host            = var.bastion_host
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker
@@ -51,6 +53,8 @@ module "worker_nodes" {
   instance_security_group = var.instance_security_group
   subnet_id               = var.subnet_id
   bastion_host            = var.bastion_host
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
   user_data = templatefile("${path.module}/user_data.tmpl",
     {
       install_docker = var.install_docker

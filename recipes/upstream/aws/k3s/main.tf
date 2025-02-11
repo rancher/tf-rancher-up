@@ -31,6 +31,8 @@ module "k3s_first_server" {
   instance_security_group = var.instance_security_group
   subnet_id               = var.subnet_id
   user_data               = module.k3s_first.k3s_server_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 module "k3s_additional" {
@@ -61,6 +63,8 @@ module "k3s_additional_servers" {
   instance_security_group = module.k3s_first_server.sg-id
   subnet_id               = var.subnet_id
   user_data               = module.k3s_additional.k3s_server_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 module "k3s_workers" {
@@ -81,6 +85,8 @@ module "k3s_workers" {
   instance_security_group = module.k3s_first_server.sg-id
   subnet_id               = var.subnet_id
   user_data               = module.k3s_additional.k3s_worker_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 data "local_file" "ssh_private_key" {
