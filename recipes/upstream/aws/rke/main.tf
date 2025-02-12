@@ -12,6 +12,8 @@ module "rke" {
   instance_disk_size = var.instance_disk_size
   instance_ami       = var.instance_ami
   os_type            = var.os_type
+  sles_version       = var.sles_version
+  ubuntu_version     = var.ubuntu_version
   spot_instances     = var.spot_instances
   install_docker     = var.install_docker
   docker_version     = var.docker_version
