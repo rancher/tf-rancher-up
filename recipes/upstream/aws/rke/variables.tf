@@ -186,6 +186,16 @@ variable "os_type" {
   default     = "sles"
 }
 
+variable "sles_version" {
+  description = "Version of SLES to use for instances (ex: 15-sp6)"
+  default     = "15-sp6"
+}
+
+variable "ubuntu_version" {
+  description = "Version of Ubuntu to use for instances (ex: 22.04)"
+  default     = "22.04"
+}
+
 variable "subnet_id" {
   type        = string
   description = "VPC Subnet ID to create the instance(s) in"

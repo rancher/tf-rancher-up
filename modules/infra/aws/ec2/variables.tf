@@ -80,7 +80,7 @@ variable "instance_disk_size" {
 variable "instance_count" {
   type        = number
   description = "Number of EC2 instances to create"
-  default     = 1
+  default     = 0
   nullable    = false
 }
 
@@ -98,6 +98,16 @@ variable "os_type" {
     condition     = contains(["sles", "ubuntu"], var.os_type)
     error_message = "The operating system type must be 'sles' or 'ubuntu'."
   }
+}
+
+variable "sles_version" {
+  description = "Version of SLES to use for instances (ex: 15-sp6)"
+  default     = "15-sp6"
+}
+
+variable "ubuntu_version" {
+  description = "Version of Ubuntu to use for instances (ex: 22.04)"
+  default     = "22.04"
 }
 
 variable "vpc_id" {
