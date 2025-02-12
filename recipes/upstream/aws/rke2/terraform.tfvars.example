@@ -38,6 +38,9 @@ instance_count = 1
 
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
 # os_type = "sles"
+# sles_version = "15-sp6"
+# ubuntu_version = "22.04"
+
 ## - SSH username (must match the SSH user for the AMI used)
 # ssh_username = "ec2-user"
 ## - Custom AMI to launch instances with

@@ -10,6 +10,8 @@ module "cluster-nodes" {
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
   os_type                 = var.os_type
+  sles_version            = var.sles_version
+  ubuntu_version          = var.ubuntu_version
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path

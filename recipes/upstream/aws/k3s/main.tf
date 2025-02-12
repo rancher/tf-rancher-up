@@ -21,6 +21,8 @@ module "k3s_first_server" {
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
   os_type                 = var.os_type
+  sles_version            = var.sles_version
+  ubuntu_version          = var.ubuntu_version
   create_ssh_key_pair     = var.create_ssh_key_pair
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
@@ -52,6 +54,8 @@ module "k3s_additional_servers" {
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
   os_type                 = var.os_type
+  sles_version            = var.sles_version
+  ubuntu_version          = var.ubuntu_version
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
@@ -75,6 +79,8 @@ module "k3s_workers" {
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
   os_type                 = var.os_type
+  sles_version            = var.sles_version
+  ubuntu_version          = var.ubuntu_version
   create_ssh_key_pair     = false
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path

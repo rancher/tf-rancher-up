@@ -82,11 +82,10 @@ resource "aws_security_group" "sg_allowall" {
 }
 
 resource "aws_instance" "instance" {
-  count         = var.instance_count
-  ami           = var.instance_ami != null ? var.instance_ami : var.os_type == "sles" ? data.aws_ami.sles.id : data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
-  subnet_id     = var.subnet_id
-
+  count                  = var.instance_count
+  ami                    = var.instance_ami != null ? var.instance_ami : var.os_type == "sles" ? data.aws_ssm_parameter.sles.insecure_value : data.aws_ssm_parameter.ubuntu.insecure_value
+  instance_type          = var.instance_type
+  subnet_id              = var.subnet_id
   key_name               = var.create_ssh_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
   vpc_security_group_ids = [var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group]
   user_data              = var.user_data
