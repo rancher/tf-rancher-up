@@ -20,7 +20,8 @@ locals {
     "hostname: ${var.rancher_hostname}",
     "bootstrapPassword: ${var.rancher_bootstrap_password}",
     "replicas: ${var.rancher_replicas}",
-    "global.cattle.psp.enabled: false"
+    "global.cattle.psp.enabled: false",
+    "postDelete.ignoreTimeoutError: true"
   ]
   rancher_private_ca_values = var.tls_source == "secret" && var.cacerts_path != null ? [
     "privateCA: true"
