@@ -13,14 +13,14 @@ data "aws_security_group" "sg" {
 }
 
 data "aws_vpc" "default_vpc" {
-  count = var.create_vpc != true ? 1 : 0
+  count   = var.create_vpc != true ? 1 : 0
   default = true
 }
 
 data "aws_subnets" "default_subnets" {
   count = var.create_vpc != true ? 1 : 0
   filter {
-    name = "vpc-id"
+    name   = "vpc-id"
     values = [data.aws_vpc.default_vpc[0].id]
   }
 }

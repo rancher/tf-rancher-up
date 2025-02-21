@@ -1,6 +1,6 @@
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  existing_subnet = var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids 
+  existing_subnet   = var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids
 }
 
 resource "tls_private_key" "ssh_private_key" {
