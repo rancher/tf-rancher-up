@@ -110,14 +110,8 @@ variable "ubuntu_version" {
   default     = "22.04"
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "VPC ID to create the instance(s) in"
-  default     = null
-}
-
 variable "subnet_id" {
-  type        = string
+  type        = any
   description = "VPC Subnet ID to create the instance(s) in"
   default     = null
 }
@@ -159,16 +153,18 @@ variable "ssh_private_key_path" {
 
 variable "create_security_group" {
   type        = bool
-  description = "Should create the security group associated with the instance(s)"
+  description = "Create the security group attached to the instance(s)"
   default     = true
-  nullable    = false
 }
 
-# TODO: Add a check based on above value
 variable "instance_security_group" {
   type        = string
-  description = "Provide a pre-existing security group ID"
+  description = "Provide a pre-existing security group ID to attach to the instance(s)"
   default     = null
+  validation {
+    condition     = var.create_security_group && var.instance_security_group == null || !var.create_security_group && var.instance_security_group != null
+    error_message = "Both create_security_group and instance_security_group can't be set, choose either option. If creating a VPC the SG must be created"
+  }
 }
 
 variable "ssh_username" {
@@ -207,6 +203,30 @@ variable "bastion_host" {
 variable "iam_instance_profile" {
   type        = string
   description = "Specify IAM Instance Profile to assign to the instances/nodes"
+  default     = null
+}
+
+variable "create_vpc" {
+  description = "Create a VPC"
+  default     = false
+  # validation {
+  #   condition     = var.create_vpc && var.instance_security_group == null
+  #   error_message = "If creating a VPC the SG must be created"
+  # }
+}
+
+variable "vpc_cidr" {
+  description = "CIDR for AWS VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "public_subnets" {
+  description = "Create Public subnets for VPC"
+  default     = true
+}
+
+variable "private_subnets" {
+  description = "Create Public subnets for VPC"
   default     = null
 }
 

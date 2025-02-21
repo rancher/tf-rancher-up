@@ -226,21 +226,40 @@ variable "ubuntu_version" {
 }
 
 variable "subnet_id" {
-  type        = string
+  type        = any
   description = "VPC Subnet ID to create the instance(s) in"
   default     = null
 }
 
 variable "create_security_group" {
   type        = bool
-  description = "Should create the security group associated with the instance(s)"
+  description = "Create the security group attached to the instance(s)"
+  default     = true
+}
+
+variable "instance_security_group" {
+  type        = string
+  description = "Provide a pre-existing security group ID to attach to the instance(s)"
   default     = null
 }
 
-# TODO: Add a check based on above value
-variable "instance_security_group" {
-  type        = string
-  description = "Provide a pre-existing security group ID"
+variable "create_vpc" {
+  description = "Create a VPC"
+  default     = null
+}
+
+variable "vpc_cidr" {
+  description = "CIDR for AWS VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "public_subnets" {
+  description = "Create Public subnets for VPC"
+  default     = true
+}
+
+variable "private_subnets" {
+  description = "Create Public subnets for VPC"
   default     = null
 }
 
