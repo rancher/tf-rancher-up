@@ -209,10 +209,6 @@ variable "iam_instance_profile" {
 variable "create_vpc" {
   description = "Create a VPC"
   default     = false
-  # validation {
-  #   condition     = var.create_vpc && var.instance_security_group == null
-  #   error_message = "If creating a VPC the SG must be created"
-  # }
 }
 
 variable "vpc_cidr" {
