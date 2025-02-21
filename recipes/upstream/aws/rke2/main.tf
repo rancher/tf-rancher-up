@@ -14,7 +14,7 @@ module "rke2_first" {
 
 module "rke2_first_server" {
   source                  = "../../../../modules/infra/aws/ec2"
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-cp"
   instance_count          = 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
@@ -30,6 +30,10 @@ module "rke2_first_server" {
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
+  create_vpc              = var.create_vpc
+  vpc_cidr                = var.vpc_cidr
+  public_subnets          = var.public_subnets
+  private_subnets         = var.private_subnets
   subnet_id               = var.subnet_id
   user_data               = module.rke2_first.rke2_user_data
 }
@@ -44,7 +48,7 @@ module "rke2_additional" {
 
 module "rke2_additional_servers" {
   source                  = "../../../../modules/infra/aws/ec2"
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-cp"
   instance_count          = var.instance_count - 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
@@ -61,7 +65,8 @@ module "rke2_additional_servers" {
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.rke2_first_server.sg-id
-  subnet_id               = var.subnet_id
+  create_vpc              = false
+  subnet_id               = module.rke2_first_server.public_subnets != null ? module.rke2_first_server.public_subnets : var.subnet_id
   user_data               = module.rke2_additional.rke2_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key

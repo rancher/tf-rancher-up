@@ -1,6 +1,6 @@
-# Condition to use an existing keypair if a keypair name and file is also provided
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  existing_subnet = var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids 
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -21,9 +21,24 @@ resource "aws_key_pair" "key_pair" {
   public_key = tls_private_key.ssh_private_key[0].public_key_openssh
 }
 
+module "aws_vpc" {
+  count           = var.create_vpc == true ? 1 : 0
+  source          = "../vpc"
+  prefix          = var.prefix
+  vpc_cidr        = var.vpc_cidr
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
+  tags            = var.tags
+}
+
+resource "random_shuffle" "subnet" {
+  input        = try(module.aws_vpc[0].public_subnets, null) != null ? module.aws_vpc[0].public_subnets : tolist(local.existing_subnet)
+  result_count = var.instance_count
+}
+
 resource "aws_security_group" "sg_allowall" {
   count  = var.create_security_group ? 1 : 0
-  vpc_id = var.vpc_id
+  vpc_id = var.create_vpc == true ? module.aws_vpc[0].vpc_id : var.create_security_group ? null : data.aws_security_group.sg[0].vpc_id
 
   name        = "${var.prefix}-allow-nodes"
   description = "Allow traffic for nodes in the cluster"
@@ -85,7 +100,7 @@ resource "aws_instance" "instance" {
   count                  = var.instance_count
   ami                    = var.instance_ami != null ? var.instance_ami : var.os_type == "sles" ? data.aws_ssm_parameter.sles.insecure_value : data.aws_ssm_parameter.ubuntu.insecure_value
   instance_type          = var.instance_type
-  subnet_id              = var.subnet_id
+  subnet_id              = tostring(element(random_shuffle.subnet.result, count.index))
   key_name               = var.create_ssh_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
   vpc_security_group_ids = [var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group]
   user_data              = var.user_data
@@ -128,6 +143,6 @@ resource "aws_instance" "instance" {
   iam_instance_profile = var.iam_instance_profile
 
   lifecycle {
-    ignore_changes = [ami, instance_market_options, user_data, tags]
+    ignore_changes = [ami, instance_market_options, user_data, subnet_id, tags]
   }
 }
