@@ -62,26 +62,3 @@ See full argument list for each module in use:
   - [Rancher](../../../../modules/rancher)
 
 ### Known Issues
-- Terraform plan shows below warnings which can be ignored:
-
-```bash
-Warning: Value for undeclared variable
-
-The root module does not declare a variable named "ssh_private_key_path" but a value was found in file "terraform.tfvars". If you meant to use this value, add a "variable" block to the configuration.
-
-Invalid attribute in provider configuration
-
-with module.rancher_install.provider["registry.terraform.io/hashicorp/kubernetes"],
-on ../../../../modules/rancher/provider.tf line 7, in provider "kubernetes":
-7: provider "kubernetes" {
-```
-- Terraform apply shows below warnings and errors. Please rerun the terraform apply again and it will be successful[(Issue #22)](#22).
-
-```bash
-Warning: 
-
-Helm release "rancher" was created but has a failed status. Use the `helm` command to investigate the error, correct it, then run Terraform again.
-
-Error: 1 error occurred:
-* Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": failed to call webhook: Post "https://rke2-ingress-nginx-controller-admission.kube-system.svc:443/networking/v1/ingresses?timeout=10s": no endpoints available for service "rke2-ingress-nginx-controller-admission"
-```

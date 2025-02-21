@@ -15,7 +15,7 @@ module "k3s_first" {
 
 module "k3s_first_server" {
   source                  = "../../../../modules/infra/aws/ec2"
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-cp"
   instance_count          = 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
@@ -31,6 +31,10 @@ module "k3s_first_server" {
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
+  create_vpc              = var.create_vpc
+  vpc_cidr                = var.vpc_cidr
+  public_subnets          = var.public_subnets
+  private_subnets         = var.private_subnets
   subnet_id               = var.subnet_id
   user_data               = module.k3s_first.k3s_server_user_data
   aws_access_key          = var.aws_access_key
@@ -48,7 +52,7 @@ module "k3s_additional" {
 
 module "k3s_additional_servers" {
   source                  = "../../../../modules/infra/aws/ec2"
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-cp"
   instance_count          = var.server_instance_count - 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
@@ -65,7 +69,8 @@ module "k3s_additional_servers" {
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
-  subnet_id               = var.subnet_id
+  create_vpc              = false
+  subnet_id               = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
   user_data               = module.k3s_additional.k3s_server_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
@@ -73,7 +78,7 @@ module "k3s_additional_servers" {
 
 module "k3s_workers" {
   source                  = "../../../../modules/infra/aws/ec2"
-  prefix                  = var.prefix
+  prefix                  = "${var.prefix}-wrk"
   instance_count          = var.worker_instance_count
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
@@ -89,7 +94,8 @@ module "k3s_workers" {
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
-  subnet_id               = var.subnet_id
+  create_vpc              = false
+  subnet_id               = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
   user_data               = module.k3s_additional.k3s_worker_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
