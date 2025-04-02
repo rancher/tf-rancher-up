@@ -1,0 +1,54 @@
+# Uncomment and change the values below to suit your individual needs
+
+# Number of droplets to provision
+# droplet_count = 3
+
+# Droplet Machine Type/Size
+# droplet_size = "g-4vcpu-16gb"
+
+# A string that will prefix the name of all resources
+# prefix = "terraform-rancher-support"
+
+# Tag added to resources to identify your resource in 'FirstInitialLastName' format
+# user_tag = "terraform"
+
+# The region that droplets will be deployed to
+# region = "sfo2"
+
+# Desired Kubernetes version
+# kubernetes_version = "v1.24.17-rancher1-1"
+
+# Admin password to set for Rancher
+# rancher_password = "at-least-12-characters"
+
+# Desired Rancher version
+# rancher_version = "2.6.13"
+
+# Filepath for where the new cluster's kubeconfig will be stored
+# kube_config_path = "~/.kube/"
+
+# Name of the kubeconfig file
+# kube_config_filename = "tf-rancher-up.yaml"
+
+# Switch on/off new ssh keypair generation for droplet/node ssh connections
+# Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
+# create_ssh_key_pair = "false"
+
+# Optionally, specify the filepath to write the generated SSH private key
+# ssh_private_key_path = "~/.ssh/rancher-tf-up.pem"
+
+# If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
+# ssh_key_pair_name = "terraform"
+
+## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
+# kube_config_path = "~/.kube"
+# kube_config_filename = "rancher-terraform.yml"
+
+# DigitalOcean authentication token
+# do_token = ""
+
+# Create a loadbalancer resource to route https traffic across all droplets
+# create_https_loadbalancer = false
+
+# Create a loadbalancer resource to route kubernetes apiserver traffic across all droplets
+# create_k8s_api_loadbalancer = false

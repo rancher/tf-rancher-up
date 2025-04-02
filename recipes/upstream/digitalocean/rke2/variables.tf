@@ -12,13 +12,6 @@ variable "droplet_count" {
   nullable    = false
 }
 
-variable "extra_droplet_id" {
-  type        = string
-  description = "Specifies the droplet ID to be selected when firewall creation"
-  default     = null
-  nullable    = true
-}
-
 variable "droplet_size" {
   type        = string
   description = "Size used for all droplets"
@@ -31,19 +24,18 @@ variable "prefix" {
   type        = string
   description = "Prefix added to names of all resources"
   default     = "rancher-terraform"
-  nullable    = false
-}
-
-variable "tag_begin" {
-  type        = number
-  description = "Tag from this number when module is called more than once"
-  default     = 1
 }
 
 variable "user_tag" {
   type        = string
   description = "FirstInitialLastname of user"
   nullable    = false
+}
+
+variable "tag_begin" {
+  type        = string
+  description = "tag number added to DigitalOcean droplet"
+  default     = 2
 }
 
 variable "create_ssh_key_pair" {
@@ -64,7 +56,6 @@ variable "ssh_key_pair_path" {
   description = "Path to the SSH private key used as the key pair (that's already present in DigitalOcean)"
   default     = null
 }
-
 variable "ssh_private_key_path" {
   type        = string
   description = "Path to write the generated SSH private key"
@@ -94,41 +85,126 @@ variable "region" {
   }
 }
 
-variable "user_data" {
-  description = "User data content for EC2 instance(s)"
+variable "ssh_username" {
+  description = "The user account used to connect to droplets via ssh"
+  type        = string
+  default     = "root"
+  nullable    = false
+}
+
+variable "kube_config_path" {
+  description = "The path to write the kubeconfig for the RKE cluster"
+  type        = string
   default     = null
+}
+
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
+variable "rke2_version" {
+  description = "Kubernetes version to use for the RKE2 cluster"
+  type        = string
+  default     = null
+}
+
+variable "rke2_token" {
+  description = "Token to use when configuring RKE2 nodes"
+  type        = string
+  default     = null
+}
+
+variable "rke2_config" {
+  description = "Additional RKE2 configuration to add to the config.yaml file"
+  type        = string
+  default     = null
+}
+
+
+variable "bootstrap_rancher" {
+  description = "Bootstrap the Rancher installation"
+  type        = bool
+  default     = true
+}
+
+variable "rancher_hostname" {
+  description = "Hostname to set when installing Rancher"
+  type        = string
+  default     = "rancher"
+}
+
+variable "rancher_bootstrap_password" {
+  description = "Password to use when bootstrapping Rancher (min 12 characters)"
+  default     = "initial-bootstrap-password"
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_bootstrap_password) >= 12
+    error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
+  }
+}
+
+variable "rancher_password" {
+  description = "Password for the Rancher admin account (min 12 characters)"
+  default     = null
+  type        = string
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
+  }
+}
+
+variable "rancher_version" {
+  description = "Rancher version to install"
+  default     = null
+  type        = string
+}
+
+variable "rancher_ingress_class_name" {
+  description = "Rancher ingressClassName value"
+  type        = string
+  default     = "nginx"
+}
+
+variable "rancher_service_type" {
+  description = "Rancher serviceType value"
+  type        = string
+  default     = "ClusterIP"
+}
+
+
+variable "waiting_time" {
+  description = "An optional wait before installing the Rancher helm chart"
+  default     = "20s"
 }
 
 variable "create_k8s_api_loadbalancer" {
   type        = bool
   description = "Specify if a loadbalancer for port 6443 needs to be created for the instances"
-  default     = false
+  default     = true
   nullable    = false
 }
 
 variable "create_https_loadbalancer" {
   type        = bool
   description = "Specify if a loadbalancer for port 443 needs to be created for the instances"
+  default     = true
+  nullable    = false
+}
+variable "create_firewall" {
+  type        = bool
+  description = "Specify if a firewall to access droplets needs to be created for the instances"
   default     = false
   nullable    = false
 }
 
-variable "create_firewall" {
-  type        = bool
-  description = "Specify if a firewall to access droplets needs to be created for the instances"
-  default     = true
-  nullable    = false
-}
 
 variable "droplet_image" {
   type        = string
   description = "Droplet OS Image. Run `doctl compute image list-distribution' for standard OS images or `doctl compute image list` for application images and use the value under the `Slug` header"
   default     = "ubuntu-24-10-x64"
   nullable    = false
-}
-
-variable "rke2_installation" {
-  type        = bool
-  description = "Specifies if rke2 module is being deployed"
-  default     = false
 }
