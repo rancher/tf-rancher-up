@@ -1,6 +1,7 @@
 # Condition to use an existing keypair if a keypair name and file is also provided
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
+  all_droplet_ids = var.rke2_installation ? concat(digitalocean_droplet.droplet[*].id, var.extra_droplet_id != null ? [var.extra_droplet_id] : []) : digitalocean_droplet.droplet[*].id
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -36,7 +37,7 @@ resource "digitalocean_droplet" "droplet" {
     host        = self.ipv4_address
     user        = "root"
     type        = "ssh"
-    private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : file(pathexpand(var.ssh_key_pair_path))
+    private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : (var.create_ssh_key_pair == false && var.rke2_installation == true ? file(pathexpand(local.new_key_pair_path)) : file(pathexpand(var.ssh_key_pair_path)))
     timeout     = "2m"
   }
 
@@ -71,7 +72,7 @@ resource "digitalocean_loadbalancer" "k8s_api_loadbalancer" {
     protocol = "tcp"
   }
 
-  droplet_ids = resource.digitalocean_droplet.droplet[*].id
+  droplet_ids = local.all_droplet_ids
   depends_on  = [digitalocean_droplet.droplet]
 }
 
@@ -93,13 +94,14 @@ resource "digitalocean_loadbalancer" "https_loadbalancer" {
     protocol = "tcp"
   }
 
-  droplet_ids = resource.digitalocean_droplet.droplet[*].id
+  droplet_ids = local.all_droplet_ids
   depends_on  = [digitalocean_droplet.droplet]
 }
 resource "digitalocean_firewall" "k8s_cluster" {
+  count = var.create_firewall ? 1 : 0
   name = "${var.prefix}-allow-nodes"
 
-  droplet_ids = resource.digitalocean_droplet.droplet[*].id
+  droplet_ids = local.all_droplet_ids
 
   inbound_rule {
     protocol         = "tcp"
@@ -122,18 +124,18 @@ resource "digitalocean_firewall" "k8s_cluster" {
   inbound_rule {
     protocol           = "tcp"
     port_range         = "1-65535"
-    source_droplet_ids = resource.digitalocean_droplet.droplet[*].id
+    source_droplet_ids = local.all_droplet_ids
   }
 
   inbound_rule {
     protocol           = "udp"
     port_range         = "1-65535"
-    source_droplet_ids = resource.digitalocean_droplet.droplet[*].id
+    source_droplet_ids = local.all_droplet_ids
   }
 
   inbound_rule {
     protocol           = "icmp"
-    source_droplet_ids = resource.digitalocean_droplet.droplet[*].id
+    source_droplet_ids = local.all_droplet_ids
   }
 
   outbound_rule {
