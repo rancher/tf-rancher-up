@@ -1,10 +1,8 @@
 locals {
   rke2_installation           = true
-  create_ssh_key_pair         = var.create_ssh_key_pair == true ? false : true
   kc_path                     = var.kube_config_path != null ? var.kube_config_path : path.cwd
   kc_file                     = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
   first_node_droplet_id       = module.rke2_first_server.droplet_ids
-  create_firewall             = var.create_firewall == true ? false : true
 }
 
 module "rke2_first" {
@@ -27,7 +25,9 @@ module "rke2_first_server" {
   create_ssh_key_pair         = var.create_ssh_key_pair
   ssh_private_key_path        = var.ssh_private_key_path
   user_data                   = module.rke2_first.rke2_user_data
-  create_firewall             = var.create_firewall
+  create_firewall             = false
+  create_https_loadbalancer   = false
+  create_k8s_api_loadbalancer = false
   droplet_image               = var.droplet_image
   rke2_installation           = local.rke2_installation
 }
@@ -52,10 +52,12 @@ module "rke2_additional_servers" {
   ssh_key_pair_name           = var.ssh_key_pair_name
   ssh_key_pair_path           = var.ssh_key_pair_path
   region                      = var.region
-  create_ssh_key_pair         = local.create_ssh_key_pair
+  create_ssh_key_pair         = false
   ssh_private_key_path        = var.ssh_private_key_path
   user_data                   = module.rke2_additional.rke2_user_data
-  # create_firewall             = var.create_firewall
+  create_firewall             = var.create_firewall
+  create_https_loadbalancer   = var.create_https_loadbalancer
+  create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
   extra_droplet_id            = local.first_node_droplet_id[0]
   droplet_image               = var.droplet_image
   rke2_installation           = local.rke2_installation

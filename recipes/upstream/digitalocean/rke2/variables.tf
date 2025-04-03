@@ -175,7 +175,6 @@ variable "rancher_service_type" {
   default     = "ClusterIP"
 }
 
-
 variable "waiting_time" {
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
@@ -184,23 +183,23 @@ variable "waiting_time" {
 variable "create_k8s_api_loadbalancer" {
   type        = bool
   description = "Specify if a loadbalancer for port 6443 needs to be created for the instances"
-  default     = true
+  default     = false
   nullable    = false
 }
 
 variable "create_https_loadbalancer" {
   type        = bool
   description = "Specify if a loadbalancer for port 443 needs to be created for the instances"
-  default     = true
-  nullable    = false
-}
-variable "create_firewall" {
-  type        = bool
-  description = "Specify if a firewall to access droplets needs to be created for the instances"
   default     = false
   nullable    = false
 }
 
+variable "create_firewall" {
+  type        = bool
+  description = "Specify if a firewall to access droplets needs to be created for the instances"
+  default     = true
+  nullable    = false
+}
 
 variable "droplet_image" {
   type        = string

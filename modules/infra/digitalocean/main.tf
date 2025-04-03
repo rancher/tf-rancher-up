@@ -37,7 +37,7 @@ resource "digitalocean_droplet" "droplet" {
     host        = self.ipv4_address
     user        = "root"
     type        = "ssh"
-    private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : (var.create_ssh_key_pair == false && var.rke2_installation == true ? file(pathexpand(local.new_key_pair_path)) : file(pathexpand(var.ssh_key_pair_path)))
+    private_key = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : (var.create_ssh_key_pair == false && var.ssh_key_pair_path == null && var.rke2_installation == true ? file(pathexpand(local.new_key_pair_path)) : file(pathexpand(var.ssh_key_pair_path)))
     timeout     = "2m"
   }
 
