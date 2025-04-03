@@ -41,7 +41,7 @@ variable "tag_begin" {
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = false
+  default     = true
   nullable    = false
 }
 
