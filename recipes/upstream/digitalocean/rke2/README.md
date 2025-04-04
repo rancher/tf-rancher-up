@@ -21,7 +21,7 @@ cd recipes/upstream/digitalocean/rke2
     -  `rancher_password` to specify admin password to access rancher.
 - SSH keys are automatically created unless you define variable `create_ssh_key_pair` as `false`.
 - Modify the `ssh_key_pair_name` variable to contain the name of a public ssh key stored in DigitalOcean and the `ssh_key_pair_path` variable to contain the local path to it's private key when `create_ssh_key_pair` is set to `false`.
-- If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.
+- If an HA cluster need to be deployed, change the `droplet_count` variable to 3 or more.
 - There are more optional variables which can be tweaked under `terraform.tfvars`.
 
 Execute the below commands to start deployment.
