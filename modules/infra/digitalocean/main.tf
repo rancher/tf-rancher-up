@@ -1,7 +1,7 @@
 # Condition to use an existing keypair if a keypair name and file is also provided
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  all_droplet_ids = var.rke2_installation ? concat(digitalocean_droplet.droplet[*].id, var.extra_droplet_id != null ? [var.extra_droplet_id] : []) : digitalocean_droplet.droplet[*].id
+  all_droplet_ids   = var.rke2_installation ? concat(digitalocean_droplet.droplet[*].id, var.extra_droplet_id != null ? [var.extra_droplet_id] : []) : digitalocean_droplet.droplet[*].id
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -99,7 +99,7 @@ resource "digitalocean_loadbalancer" "https_loadbalancer" {
 }
 resource "digitalocean_firewall" "k8s_cluster" {
   count = var.create_firewall ? 1 : 0
-  name = "${var.prefix}-allow-nodes"
+  name  = "${var.prefix}-allow-nodes"
 
   droplet_ids = local.all_droplet_ids
 

@@ -32,4 +32,3 @@ output "k8s_api_loadbalancer_ip" {
 output "https_loadbalancer_ip" {
   value = module.upstream-cluster.https_loadbalancer_ip
 }
-
