@@ -17,7 +17,6 @@ variable "droplet_size" {
   description = "Size used for all droplets"
   default     = "s-2vcpu-4gb"
   nullable    = false
-
 }
 
 variable "prefix" {
@@ -121,7 +120,6 @@ variable "rke2_config" {
   type        = string
   default     = null
 }
-
 
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
