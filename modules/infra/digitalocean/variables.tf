@@ -24,7 +24,6 @@ variable "droplet_size" {
   description = "Size used for all droplets"
   default     = "s-2vcpu-4gb"
   nullable    = false
-
 }
 
 variable "prefix" {
