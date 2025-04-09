@@ -1,8 +1,8 @@
 locals {
-  rke2_installation           = true
-  kc_path                     = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file                     = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
-  first_node_droplet_id       = module.rke2_first_server.droplet_ids
+  rke2_installation     = true
+  kc_path               = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file               = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  first_node_droplet_id = module.rke2_first_server.droplet_ids
 }
 
 module "rke2_first" {
@@ -65,7 +65,7 @@ module "rke2_additional_servers" {
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.rke2_additional_servers]
-  filename = module.rke2_first_server.ssh_key_path
+  filename   = module.rke2_first_server.ssh_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {

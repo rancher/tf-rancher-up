@@ -6,7 +6,6 @@ output "instances_public_ip" {
   value = concat([module.rke2_first_server.droplets_public_ip], [module.rke2_additional_servers.droplets_public_ip])
 }
 
-
 # # Uncomment for debugging purposes
 # output "rke2_first_server_config_file" {
 #  value = nonsensitive(module.rke2_first.rke2_user_data)
