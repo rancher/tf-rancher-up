@@ -33,6 +33,18 @@ output "ssh_key_pair_name" {
   value = var.create_ssh_key_pair ? aws_key_pair.key_pair[0].key_name : var.ssh_key_pair_name
 }
 
+output "public_subnets" {
+  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(local.existing_subnet)
+}
+
+output "private_subnets" {
+  value = var.create_vpc == true ? module.aws_vpc[0].private_subnets : null
+}
+
+output "vpc_id" {
+  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : null
+}
+
 output "sg-id" {
   value = var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group
 }
