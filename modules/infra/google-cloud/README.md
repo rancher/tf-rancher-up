@@ -27,3 +27,18 @@ gcloud auth application-default login
 ```console 
 gcloud config set account `ACCOUNT`
 ```
+
+## It is also possible to specify a Service Account JSON file and use it directly in recipes
+
+#### terraform.tfvars file example (k3s x Google Cloud)
+
+```console
+prefix                = "yourname"
+project_id            = "xyz"
+gcp_account_json      = "path/to/YOUR-SA-FILE.json"
+region                = "europe-west8"
+server_instance_count = 1
+worker_instance_count = 1
+rancher_hostname      = "yourname-rancher"
+rancher_password      = "Yourpassword.123"
+```

@@ -8,6 +8,12 @@ variable "project_id" {
   type        = string
 }
 
+variable "gcp_account_json" {
+  description = "The full path to the Google Cloud service account JSON key file used for authentication"
+  type        = string
+  default     = null
+}
+
 variable "region" {
   description = "Google Region to create the resources"
   type        = string
