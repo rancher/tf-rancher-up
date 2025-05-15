@@ -6,6 +6,9 @@ prefix = "<RESOURCES_PREFIX>"
 ## -- The ID of the Google Project that will contain all created resources
 project_id = "<PROJECT_ID>"
 
+## -- The full path to the Google Cloud service account JSON key file used for authentication
+gcp_account_json = null
+
 ## -- Google Region to create the resources
 region = "<REGION>"
 
