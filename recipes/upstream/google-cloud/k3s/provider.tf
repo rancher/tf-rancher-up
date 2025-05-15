@@ -25,6 +25,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  credentials = var.gcp_account_json == null ? null : file(var.gcp_account_json)
+  project     = var.project_id
+  region      = var.region
 }
