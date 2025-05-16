@@ -1,6 +1,6 @@
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  existing_subnet   = var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids
+  existing_subnet   = var.subnet_id != null ? var.subnet_id : try(data.aws_subnets.default_subnets[0].ids, [])
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -24,7 +24,7 @@ resource "aws_key_pair" "key_pair" {
 module "aws_vpc" {
   count           = var.create_vpc == true ? 1 : 0
   source          = "../vpc"
-  prefix          = var.prefix
+  prefix          = trimsuffix(var.prefix, "-cp")
   vpc_cidr        = var.vpc_cidr
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
