@@ -1,5 +1,11 @@
 data "digitalocean_image" "ubuntu" {
-  slug = var.droplet_image
+  count = var.os_type == "ubuntu" ? 1 : 0
+  slug  = "ubuntu-22-04-x64"
+}
+
+data "digitalocean_image" "opensuse" {
+  count = var.os_type == "opensuse" ? 1 : 0
+  name  = var.droplet_image
 }
 
 data "digitalocean_ssh_key" "terraform" {

@@ -177,7 +177,19 @@ variable "create_https_loadbalancer" {
 
 variable "droplet_image" {
   type        = string
-  description = "Droplet OS Image. Run `doctl compute image list-distribution' for standard OS images or `doctl compute image list` for application images and use the value under the `Slug` header"
-  default     = "ubuntu-22-04-x64"
+  description = "name of the OpenSUSE custom image uploaded to DigitalOcean account"
+  default     = "openSUSE-Leap-15.6"
   nullable    = false
 }
+
+variable "os_type" {
+  description = "Operating system type (opensuse or ubuntu)"
+  type        = string
+  default     = "opensuse"
+
+  validation {
+    condition     = contains(["opensuse", "ubuntu"], var.os_type)
+    error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
+  }
+}
+

@@ -24,7 +24,7 @@ resource "digitalocean_ssh_key" "key_pair" {
 
 resource "digitalocean_droplet" "droplet" {
   count      = var.droplet_count
-  image      = data.digitalocean_image.ubuntu.id
+  image      = var.os_type == "opensuse" ? data.digitalocean_image.opensuse[0].id : data.digitalocean_image.ubuntu[0].id
   size       = var.droplet_size
   name       = "${var.prefix}-${count.index + var.tag_begin}"
   tags       = ["user:${var.user_tag}", "creator:${var.prefix}"]
@@ -45,7 +45,12 @@ resource "digitalocean_droplet" "droplet" {
     inline = flatten([
       "echo 'Waiting for cloud-init to complete...'",
       "cloud-init status --wait > /dev/null",
-      "echo 'Completed cloud-init!'"
+      "echo 'Completed cloud-init!'",
+      var.os_type == "opensuse" ? [
+        "echo 'installing iptables package (openSUSE)'",
+        "zypper --non-interactive refresh > /dev/null 2>&1",
+        "zypper --non-interactive install iptables > /dev/null 2>&1"
+      ] : []
     ])
   }
 

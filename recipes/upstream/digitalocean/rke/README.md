@@ -21,6 +21,8 @@ cd recipes/upstream/digitalocean/rke
 export TF_VAR_do_token=dop_v1_xxxxxxxxx
 ```
 - Alternatively, you can uncomment `do_token` in `terraform.tfvars` and input the required auth token there.
+- Variable `os_type` defines operating system used by DigitalOcean droplets. it is possible to choose between `ubuntu` or `opensuse` but, by default, the variable is defined as `opensuse`
+- Define variable `droplet_image` with the name of the OpenSUSE image uploaded to the DigitalOcean account when `os_type` has been defined as `opensuse`. The validated OpenSUSE image is openSUSE-Leap-15.6-Minimal-VM.x86_64-Cloud that can be downloaded [here](https://download.opensuse.org/distribution/leap/15.6/appliances/openSUSE-Leap-15.6-Minimal-VM.x86_64-Cloud.qcow2). The steps to upload an image to Digitalocean can be found [here](https://docs.digitalocean.com/products/custom-images/how-to/upload/). 
 - SSH keys will be automatically created if `create_ssh_key_pair` is set to `true` (default).
 - Modify the `ssh_key_pair_name` variable to contain the name of a public ssh key stored in DigitalOcean and the `ssh_key_pair_path` variable to contain the local path to it's private key when `create_ssh_key_pair` is set to `false`.
 - If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.
