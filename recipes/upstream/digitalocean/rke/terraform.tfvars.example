@@ -6,6 +6,12 @@
 # Droplet Machine Type/Size
 # droplet_size = "g-4vcpu-16gb"
 
+# Droplet Operating system. By default variable is set opensuse but ubuntu can also be selected.
+# os_type = "opensuse"
+
+# Name of the OpenSUSE leap image uploaded to the DO account.
+# droplet_image = "openSUSE-Leap-15.6"
+
 # A string that will prefix the name of all resources 
 # prefix = "terraform-rancher-support"
 

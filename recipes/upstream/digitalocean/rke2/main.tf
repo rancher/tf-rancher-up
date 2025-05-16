@@ -29,6 +29,7 @@ module "rke2_first_server" {
   create_https_loadbalancer   = false
   create_k8s_api_loadbalancer = false
   droplet_image               = var.droplet_image
+  os_type                     = var.os_type
   rke2_installation           = local.rke2_installation
 }
 
@@ -60,6 +61,7 @@ module "rke2_additional_servers" {
   create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
   extra_droplet_id            = local.first_node_droplet_id[0]
   droplet_image               = var.droplet_image
+  os_type                     = var.os_type
   rke2_installation           = local.rke2_installation
 }
 

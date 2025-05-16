@@ -131,3 +131,14 @@ variable "rke2_installation" {
   description = "Specifies if rke2 module is being deployed"
   default     = false
 }
+
+variable "os_type" {
+  description = "Operating system type (opensuse or ubuntu)"
+  type        = string
+  default     = "opensuse"
+
+  validation {
+    condition     = contains(["opensuse", "ubuntu"], var.os_type)
+    error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
+  }
+}

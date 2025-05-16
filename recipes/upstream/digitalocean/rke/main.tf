@@ -1,24 +1,25 @@
 locals {
   rancher_hostname = var.create_https_loadbalancer ? module.upstream-cluster.https_loadbalancer_ip : module.upstream-cluster.droplets_public_ip[0]
+  startup_script   = var.os_type == "ubuntu" ? templatefile("${path.module}/cloud-config.yaml", {}) : "#!/bin/bash\nzypper --non-interactive install docker && sudo systemctl enable --now docker"
 }
 
 module "upstream-cluster" {
-  source               = "../../../../modules/infra/digitalocean"
-  prefix               = var.prefix
-  do_token             = var.do_token
-  droplet_count        = var.droplet_count
-  droplet_size         = var.droplet_size
-  user_tag             = var.user_tag
-  ssh_key_pair_name    = var.ssh_key_pair_name
-  ssh_key_pair_path    = var.ssh_key_pair_path
-  region               = var.region
-  create_ssh_key_pair  = var.create_ssh_key_pair
-  ssh_private_key_path = var.ssh_private_key_path
-  user_data = templatefile("${path.module}/cloud-config.yaml",
-  {})
+  source                      = "../../../../modules/infra/digitalocean"
+  prefix                      = var.prefix
+  do_token                    = var.do_token
+  droplet_count               = var.droplet_count
+  droplet_size                = var.droplet_size
+  user_tag                    = var.user_tag
+  ssh_key_pair_name           = var.ssh_key_pair_name
+  ssh_key_pair_path           = var.ssh_key_pair_path
+  region                      = var.region
+  create_ssh_key_pair         = var.create_ssh_key_pair
+  ssh_private_key_path        = var.ssh_private_key_path
+  user_data                   = local.startup_script
   create_https_loadbalancer   = var.create_https_loadbalancer
   create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
   droplet_image               = var.droplet_image
+  os_type                     = var.os_type
 }
 
 module "rke" {
