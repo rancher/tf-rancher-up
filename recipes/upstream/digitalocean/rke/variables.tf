@@ -192,4 +192,3 @@ variable "os_type" {
     error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
   }
 }
-
