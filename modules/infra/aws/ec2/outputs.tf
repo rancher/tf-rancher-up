@@ -48,3 +48,7 @@ output "vpc_id" {
 output "sg-id" {
   value = var.create_security_group ? aws_security_group.sg_allowall[0].id : var.instance_security_group
 }
+
+output "client_public_ip" {
+  value = var.restricted_access == true ? "${chomp(data.http.client_public_ip[0].response_body)}" : null
+}

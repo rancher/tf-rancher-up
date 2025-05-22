@@ -97,21 +97,13 @@ provider "helm" {
   }
 }
 
-resource "null_resource" "wait_k8s_services_startup" {
-  depends_on = [local_file.kube_config_yaml]
-
-  provisioner "local-exec" {
-    command = "sleep ${var.waiting_time}"
-  }
-}
-
 locals {
   rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", module.rke2_first_server.droplets_public_ip[0], "sslip.io"]) : join(".", ["rancher", module.rke2_first_server.droplets_public_ip[0], "sslip.io"])
 }
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = [module.rke2_first_server, null_resource.wait_k8s_services_startup]
+  dependency                 = var.droplet_count > 1 ? module.rke2_additional_servers.dependency : module.rke2_first_server.dependency
   kubeconfig_file            = local_file.kube_config_yaml.filename
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_bootstrap_password

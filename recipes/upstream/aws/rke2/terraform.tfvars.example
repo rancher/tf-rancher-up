@@ -42,6 +42,9 @@ instance_count = 1
 # public_subnets  = true
 # private_subnets = false
 
+## - Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform
+# restricted_access = false
+
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
 # os_type = "sles"
 # sles_version = "15-sp6"

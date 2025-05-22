@@ -1,11 +1,13 @@
 #!/bin/bash
 
-PUBLIC_IP=$(curl ifconfig.io)
+PUBLIC_IP=$(curl -s http://icanhazip.com)
+PRIVATE_IP=$(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1 | grep -v "$PUBLIC_IP")
 
 cat > /tmp/config.yaml <<EOF
 token: ${k3s_token}
 server: https://${server_ip}:6443
 node-external-ip: $PUBLIC_IP
+node-ip: $PRIVATE_IP
 %{ if k3s_config != "false" }
 ${k3s_config}
 %{ endif }
