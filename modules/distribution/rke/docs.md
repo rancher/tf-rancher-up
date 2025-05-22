@@ -29,7 +29,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_hostnames"></a> [additional\_hostnames](#input\_additional\_hostnames) | List of additional hostnames and IPs to include in the api server PKI cert | `list(string)` | `null` | no |
-| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br>    address      = string<br>    user         = string<br>    ssh_key      = string<br>    ssh_key_path = string<br>  })</pre> | `null` | no |
+| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br/>    address      = string<br/>    user         = string<br/>    ssh_key      = string<br/>    ssh_key_path = string<br/>  })</pre> | `null` | no |
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | Specify the cloud provider name | `string` | `null` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name for the RKE cluster | `string` | `"rke-demo"` | no |
 | <a name="input_cluster_yaml"></a> [cluster\_yaml](#input\_cluster\_yaml) | cluster.yaml configuration file to apply to the cluster | `string` | `null` | no |
@@ -49,7 +49,7 @@ No modules.
 | <a name="input_private_registry_password"></a> [private\_registry\_password](#input\_private\_registry\_password) | Specify private registry's password | `string` | `null` | no |
 | <a name="input_private_registry_url"></a> [private\_registry\_url](#input\_private\_registry\_url) | Specify the private registry where kubernetes images are hosted. Ex: artifactory.company.com/docker | `string` | `null` | no |
 | <a name="input_private_registry_username"></a> [private\_registry\_username](#input\_private\_registry\_username) | Specify private registry's username | `string` | `null` | no |
-| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br>    hostname_override = string<br>    public_ip         = string<br>    private_ip        = string<br>    roles             = list(string)<br>    ssh_key           = string<br>    ssh_key_path      = string<br>  }))</pre> | `null` | no |
+| <a name="input_rancher_nodes"></a> [rancher\_nodes](#input\_rancher\_nodes) | List of compute nodes for Rancher cluster | <pre>list(object({<br/>    hostname_override = string<br/>    public_ip         = string<br/>    private_ip        = string<br/>    roles             = list(string)<br/>    ssh_key           = string<br/>    ssh_key_path      = string<br/>  }))</pre> | `null` | no |
 | <a name="input_ssh_agent_auth"></a> [ssh\_agent\_auth](#input\_ssh\_agent\_auth) | Enable SSH agent authentication | `bool` | `false` | no |
 | <a name="input_ssh_key"></a> [ssh\_key](#input\_ssh\_key) | Private key used for SSH access to the Rancher server cluster node(s) | `string` | `null` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Path to private key used for SSH access to the Rancher server cluster node(s) | `string` | `null` | no |
