@@ -18,12 +18,6 @@
 # A string that will prefix the name of all resources
 # prefix = "terraform-rancher-support"
 
-# Tag added to resources to identify your resource in 'FirstInitialLastName' format
-# user_tag = "terraform"
-
-# Tag added to the droplet resource when it is being created.
-# user_tag = "terraform"
-
 # Switch on/off new ssh keypair generation for droplet/node ssh connections
 # Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
 # create_ssh_key_pair = "false"
