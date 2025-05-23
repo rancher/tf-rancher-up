@@ -17,7 +17,6 @@ cd recipes/upstream/digitalocean/rke2
     -  `region` to suit your region
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
     -  `do_token` to specify the token to authenticate on DigitalOcean API.
-    -  `user_tag` To specify the tag associated to the resources on DigitalOcean.
     -  `rancher_password` to specify admin password to access rancher.
 - Variable `os_type` defines operating system used by DigitalOcean droplets. it is possible to choose between `ubuntu` or `opensuse` but, by default, the variable is defined as `opensuse`
 - Define variable `droplet_image` with the name of the OpenSUSE image uploaded to the DigitalOcean account when `os_type` has been defined as `opensuse`. The validated OpenSUSE image is openSUSE-Leap-15.6-Minimal-VM.x86_64-Cloud that can be downloaded [here](https://download.opensuse.org/distribution/leap/15.6/appliances/openSUSE-Leap-15.6-Minimal-VM.x86_64-Cloud.qcow2). The steps to upload an image to Digitalocean can be found [here](https://docs.digitalocean.com/products/custom-images/how-to/upload/). 

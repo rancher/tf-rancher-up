@@ -25,12 +25,6 @@ variable "prefix" {
   default     = "rancher-terraform"
 }
 
-variable "user_tag" {
-  type        = string
-  description = "FirstInitialLastname of user"
-  nullable    = false
-}
-
 variable "tag_begin" {
   type        = string
   description = "tag number added to DigitalOcean droplet"

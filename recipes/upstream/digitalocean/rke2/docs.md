@@ -65,7 +65,6 @@
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Path to write the generated SSH private key | `string` | `null` | no |
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | The user account used to connect to droplets via ssh | `string` | `"root"` | no |
 | <a name="input_tag_begin"></a> [tag\_begin](#input\_tag\_begin) | tag number added to DigitalOcean droplet | `string` | `2` | no |
-| <a name="input_user_tag"></a> [user\_tag](#input\_user\_tag) | FirstInitialLastname of user | `string` | n/a | yes |
 | <a name="input_waiting_time"></a> [waiting\_time](#input\_waiting\_time) | An optional wait before installing the Rancher helm chart | `string` | `"20s"` | no |
 
 ## Outputs
