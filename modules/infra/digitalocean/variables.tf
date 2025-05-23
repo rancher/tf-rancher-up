@@ -39,12 +39,6 @@ variable "tag_begin" {
   default     = 1
 }
 
-variable "user_tag" {
-  type        = string
-  description = "FirstInitialLastname of user"
-  nullable    = false
-}
-
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"

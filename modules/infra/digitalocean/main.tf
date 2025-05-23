@@ -27,7 +27,7 @@ resource "digitalocean_droplet" "droplet" {
   image      = var.os_type == "opensuse" ? data.digitalocean_image.opensuse[0].id : data.digitalocean_image.ubuntu[0].id
   size       = var.droplet_size
   name       = "${var.prefix}-${count.index + var.tag_begin}"
-  tags       = ["user:${var.user_tag}", "creator:${var.prefix}"]
+  tags       = ["user:${var.prefix}", "creator:${var.prefix}"]
   ssh_keys   = var.create_ssh_key_pair ? [digitalocean_ssh_key.key_pair[0].id] : [data.digitalocean_ssh_key.terraform.id]
   user_data  = var.user_data
   region     = var.region

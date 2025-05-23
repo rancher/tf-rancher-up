@@ -1,6 +1,8 @@
 locals {
   rancher_hostname = var.create_https_loadbalancer ? module.upstream-cluster.https_loadbalancer_ip : module.upstream-cluster.droplets_public_ip[0]
   startup_script   = var.os_type == "ubuntu" ? templatefile("${path.module}/cloud-config.yaml", {}) : "#!/bin/bash\nzypper --non-interactive install docker && sudo systemctl enable --now docker"
+  kc_path          = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file          = var.kube_config_filename != null ? basename(var.kube_config_filename) : "${var.prefix}_kube_config.yml"
 }
 
 module "upstream-cluster" {
@@ -9,7 +11,6 @@ module "upstream-cluster" {
   do_token                    = var.do_token
   droplet_count               = var.droplet_count
   droplet_size                = var.droplet_size
-  user_tag                    = var.user_tag
   ssh_key_pair_name           = var.ssh_key_pair_name
   ssh_key_pair_path           = var.ssh_key_pair_path
   region                      = var.region
@@ -28,8 +29,8 @@ module "rke" {
   dependency           = module.upstream-cluster.dependency
   ssh_private_key_path = pathexpand(module.upstream-cluster.ssh_key_path)
   node_username        = var.ssh_username
-  kube_config_path     = pathexpand(var.kube_config_path)
-  kube_config_filename = var.kube_config_filename
+  kube_config_path     = local.kc_path
+  kube_config_filename = local.kc_file
   kubernetes_version   = var.kubernetes_version
   additional_hostnames = [module.upstream-cluster.k8s_api_loadbalancer_ip]
 
@@ -45,9 +46,17 @@ module "rke" {
   ]
 }
 
+resource "null_resource" "wait-k8s-services-startup" {
+  depends_on = [module.rke]
+
+  provisioner "local-exec" {
+    command = "sleep ${var.waiting_time}"
+  }
+}
+
 module "rancher_install" {
   source                           = "../../../../modules/rancher"
-  dependency                       = module.rke.dependency
+  dependency                       = [module.upstream-cluster, null_resource.wait-k8s-services-startup]
   kubeconfig_file                  = module.rke.rke_kubeconfig_filename
   rancher_hostname                 = join(".", ["rancher", local.rancher_hostname, "sslip.io"])
   rancher_replicas                 = var.droplet_count

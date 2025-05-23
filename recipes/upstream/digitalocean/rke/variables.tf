@@ -31,16 +31,10 @@ variable "tag_begin" {
   default     = 1
 }
 
-variable "user_tag" {
-  type        = string
-  description = "FirstInitialLastname of user"
-  nullable    = false
-}
-
 variable "create_ssh_key_pair" {
   type        = bool
   description = "Specify if a new SSH key pair needs to be created for the instances"
-  default     = false
+  default     = true
   nullable    = false
 }
 
@@ -90,6 +84,12 @@ variable "ssh_username" {
   type        = string
   default     = "root"
   nullable    = false
+}
+
+variable "waiting_time" {
+  description = "Waiting time (in seconds)"
+  type        = number
+  default     = 60
 }
 
 variable "kube_config_path" {
