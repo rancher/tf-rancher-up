@@ -15,9 +15,6 @@
 # A string that will prefix the name of all resources 
 # prefix = "terraform-rancher-support"
 
-# Tag added to resources to identify your resource in 'FirstInitialLastName' format
-# user_tag = "terraform"
-
 # The region that droplets will be deployed to
 # region = "sfo2"
 

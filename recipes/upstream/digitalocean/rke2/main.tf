@@ -18,7 +18,6 @@ module "rke2_first_server" {
   do_token                    = var.do_token
   droplet_count               = 1
   droplet_size                = var.droplet_size
-  user_tag                    = var.user_tag
   ssh_key_pair_name           = var.ssh_key_pair_name
   ssh_key_pair_path           = var.ssh_key_pair_path
   region                      = var.region
@@ -48,7 +47,6 @@ module "rke2_additional_servers" {
   do_token                    = var.do_token
   droplet_count               = var.droplet_count - 1
   droplet_size                = var.droplet_size
-  user_tag                    = var.user_tag
   tag_begin                   = var.tag_begin
   ssh_key_pair_name           = var.ssh_key_pair_name
   ssh_key_pair_path           = var.ssh_key_pair_path
