@@ -56,7 +56,7 @@ resource "aws_security_group" "sg_allowall" {
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.restricted_access == true ? ["${chomp(data.http.client_public_ip[0].response_body)}/32"] : ["0.0.0.0/0"]
   }
 
   ingress {
@@ -64,7 +64,7 @@ resource "aws_security_group" "sg_allowall" {
     from_port   = "6443"
     to_port     = "6443"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.restricted_access == true ? ["${chomp(data.http.client_public_ip[0].response_body)}/32"] : ["0.0.0.0/0"]
   }
 
   ingress {

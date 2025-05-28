@@ -243,6 +243,12 @@ variable "instance_security_group" {
   default     = null
 }
 
+variable "restricted_access" {
+  type        = bool
+  description = "Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform"
+  default     = false
+}
+
 variable "create_vpc" {
   description = "Create a VPC"
   default     = null
@@ -265,5 +271,5 @@ variable "private_subnets" {
 
 variable "wait" {
   description = "An optional wait before installing the Rancher helm chart"
-  default     = "20s"
+  default     = null
 }
