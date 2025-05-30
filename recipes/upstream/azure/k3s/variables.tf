@@ -5,8 +5,14 @@ variable "prefix" {
 
 variable "tag_begin" {
   type        = string
-  description = "tag number added to Azure Virtual Machine"
-  default     = 1
+  description = "tag number added to Azure Virtual Machines"
+  default     = 2
+}
+
+variable "subscription_id" {
+  description = "Specifies the Azure Subscription ID that will contain all created resources. Default is 'azure-tf'."
+  type        = string
+  default     = "azure-tf"
 }
 
 variable "region" {
@@ -95,28 +101,10 @@ variable "ssh_public_key_path" {
   default     = null
 }
 
-variable resource_group_location {
-  description = "Specify location of resource group"
-  type        = string
-  default     = null
-}
-
-variable resource_group_name {
-  description = "Specify name of resource group"
-  type        = string
-  default     = null
-}
-
 variable "create_rg" {
   description = "Specify if resource group needs to be created"
   type        = bool
   default     = true
-}
-
-variable "ip_cidr_range" {
-  description = "Range of private IPs available for the Azure Subnet"
-  type        = string
-  default     = "10.10.0.0/24"
 }
 
 variable "create_vnet" {
@@ -131,28 +119,31 @@ variable "create_subnet" {
   default     = true
 }
 
-variable "subnet_id" {
-  description = "Azure subnet id from inside Azure vnet "
-  type        = string
-  default     = null
-}
-
 variable "create_firewall" {
   description = "Azure Network security rule used for all resources"
   type        = bool
   default     = true
 }
 
-variable "network_security_group_id" {
-  description = "Azure Network Security group id required to attach NIC to "
-  type        = string
-  default     = null
-}
-
-variable "instance_count" {
-  description = "The number of nodes"
+variable "server_instance_count" {
+  description = "The number of Server nodes"
   type        = number
   default     = 3
+
+  validation {
+    condition = contains([
+      1,
+      3,
+      5,
+    ], var.server_instance_count)
+    error_message = "Invalid number of Server nodes specified! The value must be 1, 3 or 5 (ETCD quorum)."
+  }
+}
+
+variable "worker_instance_count" {
+  description = "The number of Worker nodes"
+  type        = number
+  default     = 1
 }
 
 variable "instance_disk_size" {
@@ -194,4 +185,92 @@ variable "startup_script" {
   description = "Custom startup script"
   type        = string
   default     = null
+}
+
+variable "k3s_version" {
+  description = "Kubernetes version to use for the K3s cluster"
+  type        = string
+  default     = "v1.28.9+k3s1" #Version compatible with Rancher v2.8.3
+}
+
+variable "k3s_channel" {
+  description = "K3s channel to use, the latest patch version for the provided minor version will be used"
+  type        = string
+  default     = null
+}
+
+variable "k3s_token" {
+  description = "Token to use when configuring K3s nodes"
+  type        = string
+  default     = null
+}
+
+variable "k3s_config" {
+  description = "Additional K3s configuration to add to the config.yaml file"
+  type        = string
+  default     = null
+}
+
+variable "kube_config_path" {
+  description = "The path to write the kubeconfig for the RKE cluster"
+  type        = string
+  default     = null
+}
+
+variable "kube_config_filename" {
+  description = "Filename to write the kube config"
+  type        = string
+  default     = null
+}
+
+variable "bootstrap_rancher" {
+  description = "Bootstrap the Rancher installation"
+  type        = bool
+  default     = true
+}
+
+variable "rancher_hostname" {
+  description = "Hostname to set when installing Rancher"
+  type        = string
+  default     = "rancher"
+}
+
+variable "rancher_bootstrap_password" {
+  description = "Password to use when bootstrapping Rancher (min 12 characters)"
+  type        = string
+  default     = "initial-bootstrap-password"
+
+  validation {
+    condition     = length(var.rancher_bootstrap_password) >= 12
+    error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
+  }
+}
+
+variable "rancher_password" {
+  description = "Password for the Rancher admin account (min 12 characters)"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = length(var.rancher_password) >= 12
+    error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
+  }
+}
+
+variable "rancher_version" {
+  description = "Rancher version to install"
+  type        = string
+  default     = null
+}
+
+variable "rancher_ingress_class_name" {
+  description = "Rancher ingressClassName value"
+  type        = string
+  default     = "traefik"
+}
+
+variable "rancher_service_type" {
+  description = "Rancher serviceType value"
+  type        = string
+  default     = "ClusterIP"
 }

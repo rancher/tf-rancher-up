@@ -5,7 +5,7 @@ variable "prefix" {
 
 variable "tag_begin" {
   type        = string
-  description = "tag number added to DigitalOcean droplet"
+  description = "tag number added to Azure Virtual Machines"
   default     = 2
 }
 
