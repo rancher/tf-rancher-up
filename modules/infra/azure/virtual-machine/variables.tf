@@ -95,13 +95,13 @@ variable "ssh_public_key_path" {
   default     = null
 }
 
-variable resource_group_location {
+variable "resource_group_location" {
   description = "Specify location of resource group"
   type        = string
   default     = null
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
   description = "Specify name of resource group"
   type        = string
   default     = null
