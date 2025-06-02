@@ -74,7 +74,7 @@ module "rke2_additional_servers" {
 
 data "local_file" "ssh_private_key" {
   depends_on = [module.rke2_additional_servers]
-  filename = local.local_ssh_private_key_path
+  filename   = local.local_ssh_private_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
