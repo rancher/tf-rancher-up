@@ -1,6 +1,6 @@
 # Upstream | Azure | Virtual Machines x K3s
 
-This module is used to establish a Rancher (local) managment cluster using [Azure Virtual Machine](https://learn.microsoft.com/en-us/azure/virtual-machines/) and [RKE2](https://docs.rke2.io/).
+This module is used to establish a Rancher (local) managment cluster using [Azure Virtual Machine](https://learn.microsoft.com/en-us/azure/virtual-machines/) and [K3s](https://docs.k3s.io/).
 
 ## Usage
 
