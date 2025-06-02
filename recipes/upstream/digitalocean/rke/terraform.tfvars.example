@@ -27,12 +27,6 @@
 # Desired Rancher version
 # rancher_version = "2.6.13"
 
-# Filepath for where the new cluster's kubeconfig will be stored 
-# kube_config_path = "~/.kube/"
-
-# Name of the kubeconfig file
-# kube_config_filename = "tf-rancher-up.yaml"
-
 # Switch on/off new ssh keypair generation for droplet/node ssh connections
 # Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
 # create_ssh_key_pair = "false"
@@ -46,9 +40,11 @@
 # Optionally, specify the filepath to write the generated SSH private key
 # ssh_private_key_path = "~/.ssh/rancher-tf-up.pem"
 
-## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
-# kube_config_path = "~/.kube"
-# kube_config_filename = "rancher-terraform.yml"
+# Filepath for where the new cluster's kubeconfig will be stored
+# kube_config_path = "~/.kube/"
+
+# Name of the kubeconfig file
+# kube_config_filename = "tf-rancher-up.yaml"
 
 # DigitalOcean authentication token 
 # do_token = ""
