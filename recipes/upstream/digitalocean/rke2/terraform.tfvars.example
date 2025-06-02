@@ -25,7 +25,7 @@
 # If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
 # ssh_key_pair_name = "terraform"
 
-# If 'ssh_key_pair_path' is set to false, give the path where private key associated with the ssh key uploaded to DigitalOcean is stored.
+# If 'create_ssh_key_pair' is set to false, give the path where private key associated with the ssh key uploaded to DigitalOcean is stored.
 # ssh_key_pair_path =  "~/.ssh/terraform.pem"
 
 # Optionally, specify the filepath to write the generated SSH private key
