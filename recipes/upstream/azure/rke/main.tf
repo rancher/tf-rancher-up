@@ -51,7 +51,7 @@ module "rke" {
 
 module "rancher_install" {
   source                           = "../../../../modules/rancher"
-  dependency                       = module.rke.dependency
+  dependency                       = [module.rke.dependency, module.azure-virtual-machine-upstream-cluster]
   kubeconfig_file                  = module.rke.rke_kubeconfig_filename
   rancher_hostname                 = join(".", [var.rancher_hostname, module.azure-virtual-machine-upstream-cluster.instances_public_ip[0], "sslip.io"])
   rancher_replicas                 = var.instance_count
