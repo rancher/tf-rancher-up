@@ -3,7 +3,7 @@ locals {
   public_ssh_key_path     = var.ssh_public_key_path == null ? "${path.cwd}/${var.prefix}-ssh_public_key.pem" : var.ssh_public_key_path
   resource_group_location = var.create_rg ? azurerm_resource_group.rg[0].location : var.resource_group_location
   resource_group_name     = var.create_rg ? azurerm_resource_group.rg[0].name : var.resource_group_name
-  os_image_publisher      = var.os_type == "sles" ? "suse" :  "canonical"
+  os_image_publisher      = var.os_type == "sles" ? "suse" : "canonical"
   os_image_offer          = var.os_type == "sles" ? "sles-15-sp6-basic" : "0001-com-ubuntu-server-jammy"
   os_image_sku            = var.os_type == "sles" ? "gen1" : "22_04-lts"
   os_image_version        = "latest"
@@ -89,13 +89,13 @@ resource "azurerm_network_security_group" "nsg" {
 resource "azurerm_network_security_rule" "allow_inbound" {
   for_each = var.create_firewall ? toset([
     "22", "443", "6443", "2379", "2380", "8443", "9099", "10250", "10254",
-    "2376", "30000-32767", "2375", "8472", "9345", "2381","51820", "51821"
+    "2376", "30000-32767", "2375", "8472", "9345", "2381", "51820", "51821"
   ]) : []
 
   name = "${var.prefix}-allow-inbound-${each.key}"
   priority = 100 + index([
     "22", "443", "6443", "2379", "2380", "8443", "9099", "10250", "10254",
-    "2376", "30000-32767", "2375", "8472", "9345", "2381","51820", "51821"
+    "2376", "30000-32767", "2375", "8472", "9345", "2381", "51820", "51821"
   ], each.key)
   direction                   = "Inbound"
   access                      = "Allow"

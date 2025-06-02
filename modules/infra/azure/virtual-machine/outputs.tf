@@ -15,7 +15,7 @@ output "instances_public_ip" {
 
 output "instance_ips" {
   value = [
-    for i in azurerm_linux_virtual_machine.vm.*:
+    for i in azurerm_linux_virtual_machine.vm.* :
     {
       public_ip  = i.public_ip_address
       private_ip = i.private_ip_address
