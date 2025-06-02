@@ -102,14 +102,14 @@ module "k3s_additional_workers" {
 
 
 data "local_file" "ssh_private_key" {
-  depends_on = [module.k3s_additional_servers ,module.k3s_additional_workers]
+  depends_on = [module.k3s_additional_servers, module.k3s_additional_workers]
   filename   = local.local_ssh_private_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
   depends_on = [data.local_file.ssh_private_key]
   host       = module.k3s_first_server.instances_public_ip[0]
-  commands   = [
+  commands = [
     "sudo sed 's/127.0.0.1/${module.k3s_first_server.instances_public_ip[0]}/g' /etc/rancher/k3s/k3s.yaml"
   ]
   user        = local.ssh_username
@@ -134,7 +134,7 @@ provider "helm" {
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = [module.k3s_additional_servers ,module.k3s_additional_workers]
+  dependency                 = [module.k3s_additional_servers, module.k3s_additional_workers]
   kubeconfig_file            = local_file.kube_config_yaml.filename
   rancher_hostname           = join(".", [var.rancher_hostname, module.k3s_first_server.instances_public_ip[0], "sslip.io"])
   rancher_bootstrap_password = var.rancher_bootstrap_password
