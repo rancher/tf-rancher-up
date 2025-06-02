@@ -13,9 +13,9 @@ variable "droplet_count" {
 }
 
 variable "extra_droplet_id" {
-  type        = string
+  type        = list(string)
   description = "Specifies the droplet ID to be selected when firewall creation"
-  default     = null
+  default     = []
   nullable    = true
 }
 
