@@ -1,8 +1,6 @@
-# Upstream | Azure | RKE
+# Upstream | Azure | Virtual Machine x RKE
 
-This module is used to establish a Rancher (local) management cluster using Azure Virtual Machines and RKE.
-
-Documentation can be found [here](./docs.md).
+This module is used to establish a Rancher (local) managment cluster using [Azure Virtual Machine](https://learn.microsoft.com/en-us/azure/virtual-machines/) and [RKE](https://rke.docs.rancher.com/).
 
 ## Usage
 
