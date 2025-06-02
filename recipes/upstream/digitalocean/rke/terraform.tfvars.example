@@ -37,11 +37,14 @@
 # Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
 # create_ssh_key_pair = "false"
 
-# Optionally, specify the filepath to write the generated SSH private key
-# ssh_private_key_path = "~/.ssh/rancher-tf-up.pem"
-
 # If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
 # ssh_key_pair_name = "terraform"
+
+# If 'create_ssh_key_pair' is set to false, give the path where private key associated with the ssh key uploaded to DigitalOcean is stored.
+# ssh_key_pair_path =  "~/.ssh/terraform.pem"
+
+# Optionally, specify the filepath to write the generated SSH private key
+# ssh_private_key_path = "~/.ssh/rancher-tf-up.pem"
 
 ## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
 # kube_config_path = "~/.kube"
