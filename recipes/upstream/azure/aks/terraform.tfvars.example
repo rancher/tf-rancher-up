@@ -10,3 +10,5 @@ prefix = "my-name-here"
 
 ## -- Azure region to create the resources, adjust as needed
 # azure_region = "westus3"
+
+#Ref. https://learn.microsoft.com/en-us/azure/reliability/regions-list
