@@ -197,15 +197,15 @@ variable "ubuntu_version" {
 }
 
 variable "subnet_id" {
-  type        = string
+  type        = any
   description = "VPC Subnet ID to create the instance(s) in"
   default     = null
 }
 
 variable "create_security_group" {
   type        = bool
-  description = "Should create the security group associated with the instance(s)"
-  default     = null
+  description = "Create the security group attached to the instance(s)"
+  default     = true
 }
 
 variable "instance_security_group" {
@@ -220,9 +220,29 @@ variable "restricted_access" {
   default     = false
 }
 
+variable "create_vpc" {
+  description = "Create a VPC"
+  default     = null
+}
+
+variable "vpc_cidr" {
+  description = "CIDR for AWS VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "public_subnets" {
+  description = "Create Public subnets for VPC"
+  default     = true
+}
+
+variable "private_subnets" {
+  description = "Create Public subnets for VPC"
+  default     = null
+}
+
 variable "wait" {
   description = "An optional wait before installing the Rancher helm chart"
-  default     = "20s"
+  default     = null
 }
 
 variable "rancher_helm_repository" {

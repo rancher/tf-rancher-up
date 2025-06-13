@@ -156,7 +156,7 @@ resource "null_resource" "wait_for_rancher" {
 }
 
 resource "rancher2_bootstrap" "admin" {
-  depends_on       = [null_resource.wait_for_rancher[0]]
+  depends_on       = [helm_release.rancher]
   count            = var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
   initial_password = var.rancher_bootstrap_password
   password         = var.rancher_password

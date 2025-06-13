@@ -18,10 +18,14 @@ module "rke" {
   install_docker     = var.install_docker
   docker_version     = var.docker_version
 
-  subnet_id               = var.subnet_id
   create_ssh_key_pair     = var.create_ssh_key_pair
   create_security_group   = var.create_security_group
-  instance_security_group = var.instance_security_group
+  restricted_access       = var.restricted_access
+  create_vpc              = var.create_vpc
+  vpc_cidr                = var.vpc_cidr
+  public_subnets          = var.public_subnets
+  private_subnets         = var.private_subnets
+  subnet_id               = var.subnet_id
 
   ssh_username      = local.ssh_username
   ssh_key_pair_name = var.ssh_key_pair_name
