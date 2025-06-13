@@ -11,6 +11,11 @@
 
 #Ref. https://learn.microsoft.com/en-us/azure/reliability/regions-list
 
+## -- Admin password to set for Rancher
+# rancher_password = "at-least-12-characters"
+
+###### !! Optional variables !! ######
+
 ## -- Specify if a new SSH key pair needs to be created for the instances
 # create_ssh_key_pair = true
 
@@ -68,9 +73,6 @@
 
 ## -- Hostname to set when installing Rancher
 # rancher_hostname = "rancher"
-
-## -- Admin password to set for Rancher
-# rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
