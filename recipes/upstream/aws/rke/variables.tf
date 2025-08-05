@@ -208,11 +208,16 @@ variable "create_security_group" {
   default     = null
 }
 
-# TODO: Add a check based on above value
 variable "instance_security_group" {
   type        = string
-  description = "Provide a pre-existing security group ID"
+  description = "Provide a pre-existing security group ID to attach to the instance(s)"
   default     = null
+}
+
+variable "restricted_access" {
+  type        = bool
+  description = "Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform"
+  default     = false
 }
 
 variable "wait" {

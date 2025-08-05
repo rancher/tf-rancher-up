@@ -167,6 +167,12 @@ variable "instance_security_group" {
   }
 }
 
+variable "restricted_access" {
+  type        = bool
+  description = "Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform"
+  default     = false
+}
+
 variable "ssh_username" {
   type        = string
   description = "Username used for SSH with sudo access"
