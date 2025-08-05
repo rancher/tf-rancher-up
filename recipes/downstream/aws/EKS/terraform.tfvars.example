@@ -1,0 +1,28 @@
+# Rancher credentials
+rancher_api_url    = ""
+rancher_access_key = ""
+rancher_secret_key = ""
+
+# AWS cloud credential
+aws_access_key = ""
+aws_secret_key = ""
+
+# Rancher cloud credential 
+cloud_cred_name              = "eks-cloud-cred-from-tf"
+cloud_credential_description = "cloud_cred created by Terraform"
+
+# Cluster details
+cluster_name       = ""
+kubernetes_version = ""
+aws_region         = ""
+
+# Multiple node groups configuration
+node_groups = [
+  {
+    name          = "general-purpose"
+    instance_type = "t3.medium"
+    desired_size  = 2
+    max_size      = 3
+    min_size      = 1
+  }
+]
