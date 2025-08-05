@@ -22,13 +22,6 @@ variable "rancher_secret_key" {
   sensitive   = true
 }
 
-variable "cloud_cred_name" {
-  description = "Name of the Rancher cloud credential"
-  type        = string
-  default     = "eks_cred"
-}
-
-
 variable "aws_access_key" {
   description = "AWS access key"
   type        = string

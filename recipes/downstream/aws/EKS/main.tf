@@ -6,7 +6,7 @@ module "downstream_eks" {
   rancher_secret_key           = var.rancher_secret_key
   aws_access_key               = var.aws_access_key
   aws_secret_key               = var.aws_secret_key
-  cloud_cred_name              = var.cloud_cred_name
+  cloud_credential_name        = var.cloud_credential_name
   cloud_credential_description = var.cloud_credential_description
   cluster_name                 = var.cluster_name
   kubernetes_version           = var.kubernetes_version
