@@ -1,41 +1,34 @@
 
-variable "rancher_api_url" {
-  description = "Rancher server API URL"
+variable "rancher_token" {
+  description = "Rancher API token"
+  default     = null
   type        = string
 }
 
 variable "rancher_insecure" {
-  description = "Skip TLS verification for Rancher API"
-  type        = bool
+  description = "Allow insecure connections to Rancher"
   default     = true
 }
 
-variable "rancher_access_key" {
-  description = "Rancher access key"
+variable "rancher_url" {
+  description = "The Rancher server URL"
+  default     = null
   type        = string
-  sensitive   = true
 }
-
-variable "rancher_secret_key" {
-  description = "Rancher secret key"
-  type        = string
-  sensitive   = true
-}
-
 
 variable "aws_access_key" {
   description = "AWS access key"
   type        = string
+  default     = null
   sensitive   = true
 }
-
 
 variable "aws_secret_key" {
   description = "AWS secret key"
   type        = string
+  default     = null
   sensitive   = true
 }
-
 
 variable "cluster_name" {
   description = "Name of the Rancher EKS cluster"
@@ -45,25 +38,48 @@ variable "cluster_name" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string
-  default     = "1.32"
+  default     = null
 }
 
 variable "aws_region" {
-  description = "AWS region to deploy EKS cluster"
   type        = string
-  default     = "ap-south-1"
-}
+  description = "AWS region used for all resources"
+  default     = "us-east-1"
 
-variable "cloud_credential_name" {
-  description = "Name for the cloud credential"
-  type        = string
-  default     = "eks-cloud-cred-from-tf"
-}
-
-variable "cloud_credential_description" {
-  description = "Description for the cloud credential"
-  type        = string
-  default     = "Auto-created credentials for EKS"
+  validation {
+    condition = contains([
+      "us-east-2",
+      "us-east-1",
+      "us-west-1",
+      "us-west-2",
+      "af-south-1",
+      "ap-east-1",
+      "ap-south-2",
+      "ap-southeast-3",
+      "ap-southeast-4",
+      "ap-south-1",
+      "ap-northeast-3",
+      "ap-northeast-2",
+      "ap-southeast-1",
+      "ap-southeast-2",
+      "ap-northeast-1",
+      "ca-central-1",
+      "ca-west-1",
+      "eu-central-1",
+      "eu-west-1",
+      "eu-west-2",
+      "eu-south-1",
+      "eu-west-3",
+      "eu-south-2",
+      "eu-north-1",
+      "eu-central-2",
+      "il-central-1",
+      "me-south-1",
+      "me-central-1",
+      "sa-east-1",
+    ], var.aws_region)
+    error_message = "Invalid Region specified!"
+  }
 }
 
 variable "logging_types" {
@@ -102,6 +118,12 @@ variable "node_groups" {
     ])
     error_message = "Desired size must be greater than or equal to min size."
   }
+}
+
+variable "cloud_credential_id" {
+  description = "Rancher cloud credential to use, instead of AWS access/secret key (ex: cattle-global-data:cc-xxx)"
+  default     = null
+  type        = string
 }
 
 variable "cluster_description" {

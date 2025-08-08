@@ -1,6 +1,18 @@
 
-variable "rancher_api_url" {
-  description = "Rancher server API URL"
+variable "cluster_name" {
+  description = "The cluster name"
+  default     = null
+}
+
+variable "cluster_description" {
+  description = "EKS cluster description"
+  type        = string
+  default     = null
+}
+
+variable "rancher_token" {
+  description = "Rancher API token"
+  default     = null
   type        = string
 }
 
@@ -10,35 +22,28 @@ variable "rancher_insecure" {
   default     = true
 }
 
-variable "rancher_access_key" {
-  description = "Rancher access key"
+variable "rancher_url" {
+  description = "The Rancher server URL"
+  default     = null
   type        = string
-  sensitive   = true
-}
-
-variable "rancher_secret_key" {
-  description = "Rancher secret key"
-  type        = string
-  sensitive   = true
 }
 
 variable "aws_access_key" {
-  description = "AWS access key"
   type        = string
-  sensitive   = true
+  description = "AWS access key used to create infrastructure"
+  default     = null
 }
-
 
 variable "aws_secret_key" {
-  description = "AWS secret key"
   type        = string
-  sensitive   = true
+  description = "AWS secret key used to create AWS infrastructure"
+  default     = null
 }
 
-
-variable "cluster_name" {
-  description = "Name of the Rancher EKS cluster"
+variable "aws_region" {
   type        = string
+  description = "AWS region used for all resources"
+  default     = "us-west-2"
 }
 
 variable "kubernetes_version" {
@@ -47,22 +52,10 @@ variable "kubernetes_version" {
   default     = "1.32"
 }
 
-variable "aws_region" {
-  description = "AWS region to deploy EKS cluster"
+variable "cloud_credential_id" {
+  description = "Rancher cloud credential to use, instead of AWS access/secret key (ex: cattle-global-data:cc-xxx)"
+  default     = null
   type        = string
-  default     = "ap-south-1"
-}
-
-variable "cloud_credential_name" {
-  description = "Name for the cloud credential"
-  type        = string
-  default     = "eks-cloud-cred-from-tf"
-}
-
-variable "cloud_credential_description" {
-  description = "Description for the cloud credential"
-  type        = string
-  default     = "Auto-created credentials for EKS"
 }
 
 variable "logging_types" {
@@ -101,12 +94,6 @@ variable "node_groups" {
     ])
     error_message = "Desired size must be greater than or equal to min size."
   }
-}
-
-variable "cluster_description" {
-  description = "EKS cluster description"
-  type        = string
-  default     = "Terraform managed EKS cluster"
 }
 
 variable "private_access" {

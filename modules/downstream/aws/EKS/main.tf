@@ -1,7 +1,7 @@
-resource "rancher2_cloud_credential" "eks_cred" {
-  name        = var.cloud_credential_name
-  description = var.cloud_credential_description
-
+resource "rancher2_cloud_credential" "aws_credential" {
+  count       = var.cloud_credential_id != null ? 0 : 1
+  name        = var.cluster_name
+  description = "AWS Credential for Terraform"
   amazonec2_credential_config {
     access_key = var.aws_access_key
     secret_key = var.aws_secret_key
@@ -13,12 +13,11 @@ resource "rancher2_cluster" "ranchereks" {
   description = var.cluster_description
 
   eks_config_v2 {
-    cloud_credential_id = rancher2_cloud_credential.eks_cred.id
+    cloud_credential_id = var.cloud_credential_id != null ? var.cloud_credential_id : rancher2_cloud_credential.aws_credential[0].id
     region              = var.aws_region
     kubernetes_version  = var.kubernetes_version
     logging_types       = var.logging_types
 
-    # Dynamic node groups
     dynamic "node_groups" {
       for_each = var.node_groups
       content {
@@ -31,6 +30,5 @@ resource "rancher2_cluster" "ranchereks" {
     }
     private_access = var.private_access
     public_access  = var.public_access
-
   }
 }
