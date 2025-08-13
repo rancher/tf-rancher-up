@@ -1,0 +1,27 @@
+
+# Enter the Rancher server URL
+rancher_url = "https://xxx"
+
+# Enter the Rancher API token
+rancher_token = "token-xxxxx:yyyyy"
+
+# gcp_credentials_path = "service-account.json"
+# cloud_credential_id = "cattle-global-data:cc-xxx"
+
+# Required variables
+project_id = "your-project-id"
+
+# Optional variables 
+cluster_name = "rancher-gke-cluster"
+cluster_description = "Terraform GKE cluster"
+region = "us-east1-b"
+kubernetes_version = "1.32.6-gke.1125000"
+cloud_credential_name = "gcp-credential"
+
+node_pools = [
+  {
+    name                = "worker-pool-1"
+    initial_node_count  = 1
+    max_pods_constraint = 110
+  }
+]
