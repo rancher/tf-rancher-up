@@ -42,12 +42,12 @@ variable "region" {
   description = "GCP region or zone for the cluster"
   type        = string
   default     = "us-east1-b"
-  
+
   validation {
     condition = contains([
       # Africa
       "africa-south1-a", "africa-south1-b", "africa-south1-c",
-      
+
       # Asia Pacific
       "asia-east1-a", "asia-east1-b", "asia-east1-c",
       "asia-east2-a", "asia-east2-b", "asia-east2-c",
@@ -60,7 +60,7 @@ variable "region" {
       "asia-southeast2-a", "asia-southeast2-b", "asia-southeast2-c",
       "australia-southeast1-a", "australia-southeast1-b", "australia-southeast1-c",
       "australia-southeast2-a", "australia-southeast2-b", "australia-southeast2-c",
-      
+
       # Europe
       "europe-central2-a", "europe-central2-b", "europe-central2-c",
       "europe-north1-a", "europe-north1-b", "europe-north1-c",
@@ -74,12 +74,12 @@ variable "region" {
       "europe-west9-a", "europe-west9-b", "europe-west9-c",
       "europe-west10-a", "europe-west10-b", "europe-west10-c",
       "europe-west12-a", "europe-west12-b", "europe-west12-c",
-      
+
       # Middle East
       "me-central1-a", "me-central1-b", "me-central1-c",
       "me-central2-a", "me-central2-b", "me-central2-c",
       "me-west1-a", "me-west1-b", "me-west1-c",
-      
+
       # North America
       "northamerica-northeast1-a", "northamerica-northeast1-b", "northamerica-northeast1-c",
       "northamerica-northeast2-a", "northamerica-northeast2-b", "northamerica-northeast2-c",
@@ -92,7 +92,7 @@ variable "region" {
       "us-west2-a", "us-west2-b", "us-west2-c",
       "us-west3-a", "us-west3-b", "us-west3-c",
       "us-west4-a", "us-west4-b", "us-west4-c",
-      
+
       # South America
       "southamerica-east1-a", "southamerica-east1-b", "southamerica-east1-c",
       "southamerica-west1-a", "southamerica-west1-b", "southamerica-west1-c"

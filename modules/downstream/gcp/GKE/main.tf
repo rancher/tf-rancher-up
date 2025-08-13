@@ -14,10 +14,10 @@ resource "rancher2_cluster" "ranchergke" {
 
   gke_config_v2 {
     google_credential_secret = var.cloud_credential_id != null ? var.cloud_credential_id : rancher2_cloud_credential.gcp_credential[0].id
-    name                = var.cluster_name
-    region              = var.region
-    project_id          = var.project_id
-    kubernetes_version  = var.kubernetes_version
+    name                     = var.cluster_name
+    region                   = var.region
+    project_id               = var.project_id
+    kubernetes_version       = var.kubernetes_version
 
     # Dynamic node pools
     dynamic "node_pools" {
