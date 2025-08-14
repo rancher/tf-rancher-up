@@ -101,14 +101,13 @@ resource "helm_release" "cert_manager" {
   version             = var.cert_manager_version
   wait                = false
 
-  dynamic "set" {
-    for_each = local.cert_manager_helm_values
-    content {
-      name  = split(":", set.value)[0]
-      value = trimspace(replace(set.value, "${split(":", set.value)[0]}:", ""))
-      type  = trimspace(replace(set.value, "${split(":", set.value)[0]}:", "")) == "true" || trimspace(replace(set.value, "${split(":", set.value)[0]}:", "")) == "false" ? "string" : null
+  set = [
+    for v in local.cert_manager_helm_values : {
+      name  = split(":", v)[0]
+      value = trimspace(replace(v, "${split(":", v)[0]}:", ""))
+      type  = trimspace(replace(v, "${split(":", v)[0]}:", "")) == "true" || trimspace(replace(v, "${split(":", v)[0]}:", "")) == "false" ? "string" : null
     }
-  }
+  ]
 }
 
 resource "helm_release" "rancher" {
@@ -124,13 +123,12 @@ resource "helm_release" "rancher" {
   timeout             = var.helm_timeout
   wait                = true
 
-  dynamic "set" {
-    for_each = local.rancher_helm_values
-    content {
-      name  = split(":", set.value)[0]
-      value = trimspace(replace(set.value, "${split(":", set.value)[0]}:", ""))
+  set = [
+    for v in local.rancher_helm_values : {
+      name  = split(":", v)[0]
+      value = trimspace(replace(v, "${split(":", v)[0]}:", ""))
     }
-  }
+  ]
 }
 
 resource "null_resource" "wait_for_rancher" {
