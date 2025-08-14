@@ -3,7 +3,7 @@ locals {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = local.kubeconfig_exists ? var.kubeconfig_file : null
   }
 }
