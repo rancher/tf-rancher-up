@@ -1,3 +1,4 @@
+###### !! Required variables !! ######
 
 ## -- AWS access/secret keys
 # aws_access_key = "ACCESS_KEY_HERE"
@@ -7,23 +8,20 @@
 
 ## -- AWS region to create the resources, uncomment one or adjust as needed
 # aws_region = "us-east-1"         # US, Virginia
-aws_region = "us-west-2"         # US, Oregon
+# aws_region = "us-west-2"         # US, Oregon
 # aws_region = "eu-west-1"         # EU, Ireland
 # aws_region = "eu-west-1"         # EU, Frankfurt
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
 # Cluster name
-# cluster_name = "eks-test"
+cluster_name = "eks-test"
 
 # Enter the Rancher server URL
 rancher_url = "https://xxx"
 
 # Enter the Rancher API token
 rancher_token = "token-xxxxx:yyyyy"
-
-# Kubernetes version for the EKS cluster
-kubernetes_version = "1.33"
 
 # Multiple node groups configuration
 node_groups = [
@@ -35,3 +33,8 @@ node_groups = [
     min_size      = 1
   }
 ]
+
+###### !! Optional variables !! ######
+
+# Kubernetes version for the EKS cluster
+# kubernetes_version = "1.33"
