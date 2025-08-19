@@ -25,6 +25,7 @@ No resources.
 | <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access key | `string` | `null` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region used for all resources | `string` | `"us-east-1"` | no |
 | <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret key | `string` | `null` | no |
+| <a name="input_cloud_credential_id"></a> [cloud\_credential\_id](#input\_cloud\_credential\_id) | Rancher cloud credential to use, instead of AWS access/secret key (ex: cattle-global-data:cc-xxx) | `string` | `null` | no |
 | <a name="input_cluster_description"></a> [cluster\_description](#input\_cluster\_description) | EKS cluster description | `string` | `"Terraform managed EKS cluster"` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the Rancher EKS cluster | `string` | n/a | yes |
 | <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version for the EKS cluster | `string` | `null` | no |

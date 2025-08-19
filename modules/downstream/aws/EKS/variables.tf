@@ -49,7 +49,7 @@ variable "aws_region" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string
-  default     = "1.32"
+  default     = null
 }
 
 variable "cloud_credential_id" {
