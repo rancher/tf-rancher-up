@@ -24,7 +24,7 @@ variable "cloud_credential_id" {
 variable "cluster_name" {
   description = "Name of the Rancher GKE cluster"
   type        = string
-  default     = "ranchergke"
+  default     = "gke-test"
 }
 
 variable "cluster_description" {
@@ -104,7 +104,7 @@ variable "region" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the cluster"
   type        = string
-  default     = "1.32.6-gke.1125000"
+  default     = null
 }
 
 variable "gcp_credentials_path" {

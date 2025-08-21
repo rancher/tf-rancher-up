@@ -4,7 +4,7 @@ resource "rancher2_cloud_credential" "gcp_credential" {
   description = "Terraform managed GCP cloud credential"
 
   google_credential_config {
-    auth_encoded_json = file("${path.module}/${var.gcp_credentials_path}")
+    auth_encoded_json = file("${var.gcp_credentials_path}")
   }
 }
 
