@@ -11,5 +11,4 @@ module "downstream_gke" {
   gcp_credentials_path  = var.gcp_credentials_path
   cloud_credential_name = var.cloud_credential_name
   node_pools            = var.node_pools
-
 }
