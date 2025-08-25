@@ -1,24 +1,25 @@
 ###### !! Required variables !! ######
 
+## -- Define a service account file, or an existing cloud credential
+# gcp_credentials_path = "service-account.json"
+## OR
+# cloud_credential_id = "cattle-global-data:cc-xxx"
+
+# Cluster name
+cluster_name = "gke-test"
+
 # Enter the Rancher server URL
 rancher_url = "https://xxx"
 
 # Enter the Rancher API token
 rancher_token = "token-xxxxx:yyyyy"
 
-# Cluster name
-cluster_name = "gke-test"
-
-## -- Define a service account file, or an existing cloud credential
-# gcp_credentials_path = "service-account.json"
-## OR
-# cloud_credential_id = "cattle-global-data:cc-xxx"
-
 # Google Cloud project ID
-project_id = "your-project-id"
+project_id = "GCP-project-id"
 
 # GKE Kubernetes version
-kubernetes_version = "1.32.6-gke.1125000"
+# https://cloud.google.com/kubernetes-engine/docs/release-notes
+kubernetes_version = "1.32.8-gke.1026000"
 
 ###### !! Optional variables !! ######
 
