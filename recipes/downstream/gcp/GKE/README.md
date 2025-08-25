@@ -14,6 +14,8 @@ cd recipes/downstream/gcp/GKE
   - Update the required variables:
     - Add the Rancher server URL as well an API token. The API token can be obtained by navigating through the Rancher UI -> Profile Icon -> Account and API Keys.
 
+Available GKE Kubernetes versions can be found at: https://cloud.google.com/kubernetes-engine/docs/release-notes
+
 Execute the below commands to start deployment.
 
 ```bash
