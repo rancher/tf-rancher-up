@@ -104,7 +104,7 @@ variable "region" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the cluster"
   type        = string
-  default     = "1.32.6-gke.1125000"
+  default     = null
 }
 
 variable "gcp_credentials_path" {
