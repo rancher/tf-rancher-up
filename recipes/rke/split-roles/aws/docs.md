@@ -25,7 +25,7 @@ No resources.
 | <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | Enter your AWS access key | `string` | n/a | yes |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region used for all resources | `string` | n/a | yes |
 | <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | Enter your AWS secret key | `string` | n/a | yes |
-| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br>    address      = string<br>    user         = string<br>    ssh_key_path = string<br>    ssh_key      = string<br>  })</pre> | `null` | no |
+| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br/>    address      = string<br/>    user         = string<br/>    ssh_key_path = string<br/>    ssh_key      = string<br/>  })</pre> | `null` | no |
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | Specify the cloud provider name | `string` | `null` | no |
 | <a name="input_create_kubeconfig_file"></a> [create\_kubeconfig\_file](#input\_create\_kubeconfig\_file) | Boolean flag to generate a kubeconfig file (mostly used for dev only) | `bool` | `true` | no |
 | <a name="input_create_security_group"></a> [create\_security\_group](#input\_create\_security\_group) | Should create the security group associated with the instance(s) | `bool` | `true` | no |
