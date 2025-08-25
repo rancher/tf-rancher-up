@@ -4,7 +4,7 @@
 |------|---------|
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.10.1 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.23.0 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.1.1 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 8.0.0 |
 
 ## Providers
 
@@ -13,7 +13,7 @@
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.10.1 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.23.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 3.1.1 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
 | <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
