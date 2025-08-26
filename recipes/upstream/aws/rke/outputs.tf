@@ -25,5 +25,5 @@ output "rancher_admin_token" {
 }
 
 output "client_public_ip" {
-  value = var.restricted_access == true ? module.rke2_first_server.client_public_ip : null
+  value = var.restricted_access == true ? module.rke.client_public_ip : null
 }

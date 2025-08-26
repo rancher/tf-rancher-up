@@ -107,7 +107,7 @@ variable "install_docker" {
 variable "docker_version" {
   type        = string
   description = "Docker version to install on nodes"
-  default     = "20.10"
+  default     = "27.2"
 }
 
 variable "create_ssh_key_pair" {
@@ -170,13 +170,39 @@ variable "subnet_id" {
 
 variable "create_security_group" {
   type        = bool
-  description = "Should create the security group associated with the instance(s)"
-  default     = null
+  description = "Create the security group attached to the instance(s)"
+  default     = true
 }
 
 # TODO: Add a check based on above value
 variable "instance_security_group" {
   type        = string
   description = "Provide a pre-existing security group ID"
+  default     = null
+}
+
+variable "restricted_access" {
+  type        = bool
+  description = "Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform"
+  default     = false
+}
+
+variable "create_vpc" {
+  description = "Create a VPC"
+  default     = null
+}
+
+variable "vpc_cidr" {
+  description = "CIDR for AWS VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "public_subnets" {
+  description = "Create Public subnets for VPC"
+  default     = true
+}
+
+variable "private_subnets" {
+  description = "Create Public subnets for VPC"
   default     = null
 }
