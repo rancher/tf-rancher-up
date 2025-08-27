@@ -31,7 +31,7 @@ No modules.
 | <a name="input_additional_hostnames"></a> [additional\_hostnames](#input\_additional\_hostnames) | List of additional hostnames and IPs to include in the api server PKI cert | `list(string)` | `null` | no |
 | <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the RKE nodes | <pre>object({<br/>    address      = string<br/>    user         = string<br/>    ssh_key      = string<br/>    ssh_key_path = string<br/>  })</pre> | `null` | no |
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | Specify the cloud provider name | `string` | `null` | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name for the RKE cluster | `string` | `"rke-demo"` | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name for the RKE cluster | `string` | `null` | no |
 | <a name="input_cluster_yaml"></a> [cluster\_yaml](#input\_cluster\_yaml) | cluster.yaml configuration file to apply to the cluster | `string` | `null` | no |
 | <a name="input_create_kubeconfig_file"></a> [create\_kubeconfig\_file](#input\_create\_kubeconfig\_file) | Boolean flag to generate a kubeconfig file (mostly used for dev only) | `bool` | `true` | no |
 | <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
