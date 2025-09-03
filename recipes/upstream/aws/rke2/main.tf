@@ -37,6 +37,8 @@ module "rke2_first_server" {
   private_subnets         = var.private_subnets
   subnet_id               = var.subnet_id
   user_data               = module.rke2_first.rke2_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 module "rke2_additional" {

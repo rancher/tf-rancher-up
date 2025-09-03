@@ -163,7 +163,7 @@ variable "ubuntu_version" {
 }
 
 variable "subnet_id" {
-  type        = string
+  type        = any
   description = "VPC Subnet ID to create the instance(s) in"
   default     = null
 }
