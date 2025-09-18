@@ -5,27 +5,30 @@ module "rke" {
   aws_secret_key = var.aws_secret_key
   aws_region     = var.aws_region
 
-  dependency         = var.dependency
-  prefix             = var.prefix
-  instance_count     = var.instance_count
-  instance_type      = var.instance_type
-  instance_disk_size = var.instance_disk_size
-  instance_ami       = var.instance_ami
-  os_type            = var.os_type
-  sles_version       = var.sles_version
-  ubuntu_version     = var.ubuntu_version
-  spot_instances     = var.spot_instances
-  install_docker     = var.install_docker
-  docker_version     = var.docker_version
-
+  dependency              = var.dependency
+  prefix                  = var.prefix
+  instance_count          = var.instance_count
+  instance_type           = var.instance_type
+  instance_disk_size      = var.instance_disk_size
+  instance_ami            = var.instance_ami
+  os_type                 = var.os_type
+  sles_version            = var.sles_version
+  ubuntu_version          = var.ubuntu_version
+  spot_instances          = var.spot_instances
+  install_docker          = var.install_docker
+  docker_version          = var.docker_version
   subnet_id               = var.subnet_id
   create_ssh_key_pair     = var.create_ssh_key_pair
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
-
-  ssh_username      = local.ssh_username
-  ssh_key_pair_name = var.ssh_key_pair_name
-  ssh_key_pair_path = var.ssh_key_pair_path
+  restricted_access       = var.restricted_access
+  create_vpc              = var.create_vpc
+  vpc_cidr                = var.vpc_cidr
+  public_subnets          = var.public_subnets
+  private_subnets         = var.private_subnets
+  ssh_username            = local.ssh_username
+  ssh_key_pair_name       = var.ssh_key_pair_name
+  ssh_key_pair_path       = var.ssh_key_pair_path
 
   kube_config_path     = var.kube_config_path
   kube_config_filename = var.kube_config_filename

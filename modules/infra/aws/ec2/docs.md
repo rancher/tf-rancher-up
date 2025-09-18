@@ -10,6 +10,7 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.46 |
+| <a name="provider_http"></a> [http](#provider\_http) | n/a |
 | <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
@@ -35,6 +36,7 @@
 | [aws_ssm_parameter.ubuntu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_subnets.default_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnets) | data source |
 | [aws_vpc.default_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
+| [http_http.client_public_ip](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 
 ## Inputs
 
@@ -57,6 +59,7 @@
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | `"rancher-terraform"` | no |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | Create Public subnets for VPC | `any` | `null` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Create Public subnets for VPC | `bool` | `true` | no |
+| <a name="input_restricted_access"></a> [restricted\_access](#input\_restricted\_access) | Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform | `bool` | `false` | no |
 | <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `"15-sp6"` | no |
 | <a name="input_spot_instances"></a> [spot\_instances](#input\_spot\_instances) | Use spot instances | `bool` | `false` | no |
 | <a name="input_ssh_key"></a> [ssh\_key](#input\_ssh\_key) | Contents of the private key to connect to the instances. | `string` | `null` | no |
@@ -75,6 +78,7 @@
 
 | Name | Description |
 |------|-------------|
+| <a name="output_client_public_ip"></a> [client\_public\_ip](#output\_client\_public\_ip) | n/a |
 | <a name="output_dependency"></a> [dependency](#output\_dependency) | n/a |
 | <a name="output_instance_ips"></a> [instance\_ips](#output\_instance\_ips) | n/a |
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |

@@ -30,12 +30,15 @@ module "rke2_first_server" {
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
+  restricted_access       = var.restricted_access
   create_vpc              = var.create_vpc
   vpc_cidr                = var.vpc_cidr
   public_subnets          = var.public_subnets
   private_subnets         = var.private_subnets
   subnet_id               = var.subnet_id
   user_data               = module.rke2_first.rke2_user_data
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
 }
 
 module "rke2_additional" {

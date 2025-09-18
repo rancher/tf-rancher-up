@@ -23,3 +23,7 @@ output "rancher_admin_token" {
   value       = module.rancher_install.rancher_admin_token
   sensitive   = true
 }
+
+output "client_public_ip" {
+  value = var.restricted_access == true ? module.k3s_first_server.client_public_ip : null
+}

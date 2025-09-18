@@ -91,7 +91,7 @@ variable "private_registry_password" {
 variable "cluster_name" {
   type        = string
   description = "Name for the RKE cluster"
-  default     = "rke-demo"
+  default     = null
 }
 
 variable "cluster_yaml" {

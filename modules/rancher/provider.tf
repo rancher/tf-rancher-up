@@ -1,5 +1,5 @@
 locals {
-  kubeconfig_exists = fileexists(pathexpand(var.kubeconfig_file))
+  kubeconfig_exists = can(file(abspath(var.kubeconfig_file)))
 }
 
 provider "helm" {

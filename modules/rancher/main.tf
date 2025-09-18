@@ -110,13 +110,8 @@ resource "helm_release" "cert_manager" {
   ]
 }
 
-resource "time_sleep" "sleep-for-ingress-webhook" {
-  depends_on      = [helm_release.cert_manager]
-  create_duration = var.wait != null ? var.wait : "1s"
-}
-
 resource "helm_release" "rancher" {
-  depends_on          = [time_sleep.sleep-for-ingress-webhook]
+  depends_on          = [helm_release.cert_manager]
   name                = "rancher"
   chart               = "rancher"
   create_namespace    = true

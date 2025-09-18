@@ -17,3 +17,7 @@ output "kubeconfig_filename" {
 output "kubeconfig_yaml" {
   value = module.rke.kube_config_yaml
 }
+
+output "client_public_ip" {
+  value = var.restricted_access == true ? module.cluster-nodes.client_public_ip : null
+}

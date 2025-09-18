@@ -31,6 +31,7 @@ module "k3s_first_server" {
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
+  restricted_access       = var.restricted_access
   create_vpc              = var.create_vpc
   vpc_cidr                = var.vpc_cidr
   public_subnets          = var.public_subnets

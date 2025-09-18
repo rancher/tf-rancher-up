@@ -14,7 +14,6 @@
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.23.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | n/a |
 | <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
-| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -32,7 +31,6 @@ No modules.
 | [null_resource.bootstrap_message](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.wait_for_rancher](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [rancher2_bootstrap.admin](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/bootstrap) | resource |
-| [time_sleep.sleep-for-ingress-webhook](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ## Inputs
 

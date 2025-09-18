@@ -6,7 +6,7 @@ locals {
 
 resource "rke_cluster" "this" {
   depends_on   = [var.dependency]
-  cluster_name = var.cluster_name
+  cluster_name = var.cluster_name != null ? var.cluster_name : var.prefix
 
   dynamic "nodes" {
     for_each = var.rancher_nodes == null ? [1] : []
@@ -35,11 +35,15 @@ resource "rke_cluster" "this" {
     }
   }
 
-  bastion_host {
-    address      = var.bastion_host != null ? var.bastion_host.address : ""
-    user         = var.bastion_host != null ? var.bastion_host.user : ""
-    ssh_key_path = var.bastion_host != null ? var.bastion_host.ssh_key_path : ""
-    ssh_key      = var.bastion_host != null ? var.bastion_host.ssh_key : ""
+  dynamic "bastion_host" {
+    for_each = var.bastion_host != null ? ["this"] : []
+
+    content {
+      address      = bastion_host.address != null ? var.bastion_host.address : ""
+      user         = bastion_host.user != null ? var.bastion_host.user : ""
+      ssh_key_path = bastion_host.ssh_key_path != null ? var.bastion_host.ssh_key_path : ""
+      ssh_key      = bastion_host.ssh_key != null ? var.bastion_host.ssh_key : ""
+    }
   }
 
   authentication {
@@ -89,8 +93,4 @@ resource "local_file" "kube_config_yaml_backup" {
   filename        = local.kc_file_backup
   content         = rke_cluster.this.kube_config_yaml
   file_permission = "0600"
-
-  lifecycle {
-    ignore_changes = [content]
-  }
 }
