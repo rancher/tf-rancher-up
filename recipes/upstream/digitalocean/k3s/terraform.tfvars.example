@@ -3,8 +3,11 @@
 # DigitalOcean authentication token
 # do_token = ""
 
-# Number of droplets to provision
-# droplet_count = 3
+# Number of master nodes to provision as droplets on DigitalOcean
+# server_instance_count = 3
+
+# Number of worker nodes to provision as droplets on DigitalOcean
+# worker_instance_count = 1
 
 # Droplet Machine Type/Size
 # droplet_size = "g-4vcpu-16gb"
