@@ -2,6 +2,10 @@
 
 PUBLIC_IP=$(curl -s http://icanhazip.com)
 PRIVATE_IP=$(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1 | grep -v "$PUBLIC_IP")
+if [ $(echo "$PRIVATE_IP" | wc -l) -gt 1 ];
+then
+  PRIVATE_IP=$(echo "$PRIVATE_IP" | sed -n '2p');
+fi
 
 cat > /tmp/config.yaml <<EOF
 token: ${k3s_token}
