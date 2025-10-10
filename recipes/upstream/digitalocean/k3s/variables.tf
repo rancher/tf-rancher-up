@@ -120,7 +120,7 @@ variable "kube_config_filename" {
 variable "k3s_version" {
   description = "Kubernetes version to use for the K3s cluster"
   type        = string
-  default     = "v1.28.9+k3s1" #Version compatible with Rancher v2.8.3
+  default     = null
 }
 
 variable "k3s_channel" {
