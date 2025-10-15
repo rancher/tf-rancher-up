@@ -1,6 +1,6 @@
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
-  existing_subnet   = var.subnet_id != null ? var.subnet_id : try(data.aws_subnets.default_subnets[0].ids, [])
+  existing_subnet   = var.create_vpc != true && var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -32,7 +32,7 @@ module "aws_vpc" {
 }
 
 resource "random_shuffle" "subnet" {
-  input        = try(module.aws_vpc[0].public_subnets, null) != null ? module.aws_vpc[0].public_subnets : tolist(local.existing_subnet)
+  input        = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(local.existing_subnet)
   result_count = var.instance_count
 }
 
@@ -56,7 +56,7 @@ resource "aws_security_group" "sg_allowall" {
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.restricted_access == true ? ["${chomp(data.http.client_public_ip[0].response_body)}/32"] : ["0.0.0.0/0"]
   }
 
   ingress {
@@ -64,7 +64,7 @@ resource "aws_security_group" "sg_allowall" {
     from_port   = "6443"
     to_port     = "6443"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.restricted_access == true ? ["${chomp(data.http.client_public_ip[0].response_body)}/32"] : ["0.0.0.0/0"]
   }
 
   ingress {

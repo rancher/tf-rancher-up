@@ -2,13 +2,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.0.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 8.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 3.0.0 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
 
 ## Modules
 
