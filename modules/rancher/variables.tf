@@ -58,7 +58,7 @@ variable "rancher_bootstrap_password" {
   type        = string
 
   validation {
-    condition     = length(var.rancher_bootstrap_password) >= 12
+    condition     = var.rancher_bootstrap_password == null ? true : length(var.rancher_bootstrap_password) >= 12
     error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
   }
 }
