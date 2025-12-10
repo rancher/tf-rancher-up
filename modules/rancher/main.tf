@@ -18,7 +18,7 @@ locals {
     "antiAffinity: ${var.rancher_replicas == 1 ? "preferred" : var.rancher_antiaffinity}",
     "ingress.tls.source: ${var.tls_source}",
     "hostname: ${var.rancher_hostname}",
-    "bootstrapPassword: ${var.rancher_bootstrap_password}",
+    "bootstrapPassword: ${var.rancher_bootstrap_password == null ? "" : var.rancher_bootstrap_password}",
     "replicas: ${var.rancher_replicas}",
     "global.cattle.psp.enabled: false",
     "postDelete.ignoreTimeoutError: true"
