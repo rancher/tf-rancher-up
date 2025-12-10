@@ -231,7 +231,7 @@ variable "rancher_password" {
   default     = null
 
   validation {
-    condition     = length(var.rancher_password) >= 12
+    condition     = var.rancher_password == null ? true : length(var.rancher_password) >= 12
     error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
   }
 }

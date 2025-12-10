@@ -17,6 +17,6 @@ output "rancher_password" {
 
 output "rancher_admin_token" {
   description = "Rancher API token for the admin user"
-  value       = rancher2_bootstrap.admin[0].token
+  value       = one(rancher2_bootstrap.admin[*].token)
   sensitive   = true
 }
