@@ -33,7 +33,7 @@ locals {
   cert_manager_helm_values = distinct(flatten([local.cert_manager_default_helm_values, local.cert_manager_airgap_helm_values]))
 }
 
-resource "kubernetes_secret" "tls_rancher_ingress" {
+resource "kubernetes_secret_v1" "tls_rancher_ingress" {
   depends_on = [var.dependency]
   count      = var.tls_source == "secret" ? 1 : 0
   metadata {
@@ -52,7 +52,7 @@ resource "kubernetes_secret" "tls_rancher_ingress" {
   }
 }
 
-resource "kubernetes_secret" "tls_ca" {
+resource "kubernetes_secret_v1" "tls_ca" {
   depends_on = [var.dependency]
   count      = var.tls_source == "secret" && var.cacerts_path != null ? 1 : 0
   metadata {
@@ -69,7 +69,7 @@ resource "kubernetes_secret" "tls_ca" {
   }
 }
 
-resource "kubernetes_secret" "image_pull_secret" {
+resource "kubernetes_secret_v1" "image_pull_secret" {
   depends_on = [var.dependency]
   count      = var.registry_username != null ? 1 : 0
   metadata {
