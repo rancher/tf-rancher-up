@@ -40,9 +40,11 @@ No modules.
 | <a name="input_bootstrap_rancher"></a> [bootstrap\_rancher](#input\_bootstrap\_rancher) | Bootstrap the Rancher installation | `bool` | `true` | no |
 | <a name="input_cacerts_path"></a> [cacerts\_path](#input\_cacerts\_path) | Private CA certificate to use for Rancher UI/API connectivity | `string` | `null` | no |
 | <a name="input_cert_manager_enable"></a> [cert\_manager\_enable](#input\_cert\_manager\_enable) | Install cert-manager even if not needed for Rancher, useful if migrating to certificates | `string` | `false` | no |
+| <a name="input_cert_manager_helm_atomic"></a> [cert\_manager\_helm\_atomic](#input\_cert\_manager\_helm\_atomic) | Purge cert-manager chart on fail | `bool` | `false` | no |
 | <a name="input_cert_manager_helm_repository"></a> [cert\_manager\_helm\_repository](#input\_cert\_manager\_helm\_repository) | Helm repository for Cert Manager chart | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_password"></a> [cert\_manager\_helm\_repository\_password](#input\_cert\_manager\_helm\_repository\_password) | Private Cert Manager helm repository password | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_username"></a> [cert\_manager\_helm\_repository\_username](#input\_cert\_manager\_helm\_repository\_username) | Private Cert Manager helm repository username | `string` | `null` | no |
+| <a name="input_cert_manager_helm_upgrade_install"></a> [cert\_manager\_helm\_upgrade\_install](#input\_cert\_manager\_helm\_upgrade\_install) | Install the release even if a release not controlled by the provider is present. Equivalent to running 'helm upgrade --install' | `bool` | `false` | no |
 | <a name="input_cert_manager_namespace"></a> [cert\_manager\_namespace](#input\_cert\_manager\_namespace) | Namespace to install cert-manager | `string` | `"cert-manager"` | no |
 | <a name="input_cert_manager_version"></a> [cert\_manager\_version](#input\_cert\_manager\_version) | Version of cert-manager to install | `string` | `"v1.11.0"` | no |
 | <a name="input_default_registry"></a> [default\_registry](#input\_default\_registry) | Default container image registry to pull images in the format of registry.domain.com:port (systemDefaultRegistry helm value) | `string` | `null` | no |
@@ -52,9 +54,11 @@ No modules.
 | <a name="input_rancher_additional_helm_values"></a> [rancher\_additional\_helm\_values](#input\_rancher\_additional\_helm\_values) | Helm options to provide to the Rancher helm chart | `list(string)` | `[]` | no |
 | <a name="input_rancher_antiaffinity"></a> [rancher\_antiaffinity](#input\_rancher\_antiaffinity) | Value for antiAffinity when installing the Rancher helm chart (required/preferred) | `string` | `"required"` | no |
 | <a name="input_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#input\_rancher\_bootstrap\_password) | Password to use when bootstrapping Rancher (min 12 characters) | `string` | `"initial-bootstrap-password"` | no |
+| <a name="input_rancher_helm_atomic"></a> [rancher\_helm\_atomic](#input\_rancher\_helm\_atomic) | Purge cert-manager chart on fail | `bool` | `false` | no |
 | <a name="input_rancher_helm_repository"></a> [rancher\_helm\_repository](#input\_rancher\_helm\_repository) | Helm repository for Rancher chart | `string` | `null` | no |
 | <a name="input_rancher_helm_repository_password"></a> [rancher\_helm\_repository\_password](#input\_rancher\_helm\_repository\_password) | Private Rancher helm repository password | `string` | `null` | no |
 | <a name="input_rancher_helm_repository_username"></a> [rancher\_helm\_repository\_username](#input\_rancher\_helm\_repository\_username) | Private Rancher helm repository username | `string` | `null` | no |
+| <a name="input_rancher_helm_upgrade_install"></a> [rancher\_helm\_upgrade\_install](#input\_rancher\_helm\_upgrade\_install) | Install the release even if a release not controlled by the provider is present. Equivalent to running 'helm upgrade --install' | `bool` | `false` | no |
 | <a name="input_rancher_hostname"></a> [rancher\_hostname](#input\_rancher\_hostname) | Value for hostname when installing the Rancher helm chart | `string` | n/a | yes |
 | <a name="input_rancher_namespace"></a> [rancher\_namespace](#input\_rancher\_namespace) | The Rancher release will be deployed to this namespace | `string` | `"cattle-system"` | no |
 | <a name="input_rancher_password"></a> [rancher\_password](#input\_rancher\_password) | Password for the Rancher admin account (min 12 characters) | `string` | `null` | no |

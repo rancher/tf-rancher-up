@@ -100,6 +100,8 @@ resource "helm_release" "cert_manager" {
   repository_password = var.cert_manager_helm_repository_password != null ? var.cert_manager_helm_repository_password : null
   version             = var.cert_manager_version
   wait                = false
+  atomic              = var.cert_manager_helm_atomic
+  upgrade_install     = var.cert_manager_helm_upgrade_install
 
   set = [
     for v in local.cert_manager_helm_values : {
@@ -122,6 +124,8 @@ resource "helm_release" "rancher" {
   version             = var.rancher_version
   timeout             = var.helm_timeout
   wait                = true
+  atomic              = var.rancher_helm_atomic
+  upgrade_install     = var.rancher_helm_upgrade_install
 
   set = [
     for v in local.rancher_helm_values : {

@@ -115,6 +115,18 @@ variable "rancher_helm_repository_password" {
   type        = string
 }
 
+variable "rancher_helm_atomic" {
+  description = "Purge cert-manager chart on fail"
+  default     = false
+  type        = bool
+}
+
+variable "rancher_helm_upgrade_install" {
+  description = "Install the release even if a release not controlled by the provider is present. Equivalent to running 'helm upgrade --install'"
+  default     = false
+  type        = bool
+}
+
 variable "cert_manager_helm_repository" {
   description = "Helm repository for Cert Manager chart"
   default     = null
@@ -131,6 +143,18 @@ variable "cert_manager_helm_repository_password" {
   description = "Private Cert Manager helm repository password"
   default     = null
   type        = string
+}
+
+variable "cert_manager_helm_atomic" {
+  description = "Purge cert-manager chart on fail"
+  default     = false
+  type        = bool
+}
+
+variable "cert_manager_helm_upgrade_install" {
+  description = "Install the release even if a release not controlled by the provider is present. Equivalent to running 'helm upgrade --install'"
+  default     = false
+  type        = bool
 }
 
 variable "registry_username" {
