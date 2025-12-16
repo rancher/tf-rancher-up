@@ -263,6 +263,12 @@ variable "rancher_version" {
   default     = null
 }
 
+variable "rancher_replicas" {
+  description = "Value for replicas when installing the Rancher helm chart"
+  default     = 3
+  type        = number
+}
+
 variable "rancher_ingress_class_name" {
   description = "Rancher ingressClassName value"
   type        = string
