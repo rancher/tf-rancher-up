@@ -134,6 +134,7 @@ module "rancher_install" {
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   rancher_version            = var.rancher_version
+  rancher_replicas           = min(var.rancher_replicas, var.server_instance_count)
   rancher_additional_helm_values = [
     "replicas: ${var.worker_instance_count}",
     "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
