@@ -24,7 +24,7 @@ variable "cert_manager_namespace" {
 
 variable "cert_manager_version" {
   description = "Version of cert-manager to install"
-  default     = "v1.11.0"
+  default     = "v1.15.0" # First version to support 'crds.enabled' instead of 'installCRDs
   type        = string
 }
 
