@@ -25,7 +25,10 @@ locals {
   # cert-manager >=1.16.0 requires 'installCRDs' to be a literal boolean, not a string "true".
   # Defined as a Map so yamlencode preserves the boolean type in generated YAML.
   cert_manager_defaults = {
-    installCRDs = true
+    # `installCRDs` is deprecated, use `crds.enabled` instead
+    crds = {
+      enabled = true
+    }
     startupapicheck = {
       timeout = "10m"
     }
