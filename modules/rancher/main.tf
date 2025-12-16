@@ -1,19 +1,42 @@
 locals {
+  # Refactored to HCL Map to support strict typing via yamlencode.
+  # Return 'null' instead of '{}' when false to avoid type inconsistency errors in ternary operator.
+  cert_manager_airgap = var.airgap ? {
+    image = {
+      repository = "${var.default_registry}/quay.io/jetstack/cert-manager-controller"
+    }
+    webhook = {
+      image = {
+        repository = "${var.default_registry}/quay.io/jetstack/cert-manager-webhook"
+      }
+    }
+    cainjector = {
+      image = {
+        repository = "${var.default_registry}/quay.io/jetstack/cert-manager-cainjector"
+      }
+    }
+    startupapicheck = {
+      image = {
+        repository = "${var.default_registry}/quay.io/jetstack/cert-manager-ctl"
+      }
+    }
+  } : null
+
+  # cert-manager >=1.16.0 requires 'installCRDs' to be a literal boolean, not a string "true".
+  # Defined as a Map so yamlencode preserves the boolean type in generated YAML.
+  cert_manager_defaults = {
+    installCRDs = true
+    startupapicheck = {
+      timeout = "10m"
+    }
+  }
+
   rancher_airgap_helm_values = var.airgap ? [
     "rancherImage: ${var.default_registry}/rancher/rancher",
     "systemDefaultRegistry: ${var.default_registry}",
     "useBundledSystemChart: true"
   ] : []
-  cert_manager_airgap_helm_values = var.airgap ? [
-    "image.repository: ${var.default_registry}/quay.io/jetstack/cert-manager-controller",
-    "webhook.image.repository: ${var.default_registry}/quay.io/jetstack/cert-manager-webhook",
-    "cainjector.image.repository: ${var.default_registry}/quay.io/jetstack/cert-manager-cainjector",
-    "startupapicheck.image.repository: ${var.default_registry}/quay.io/jetstack/cert-manager-ctl"
-  ] : []
-  cert_manager_default_helm_values = [
-    "startupapicheck.timeout: 10m",
-    "installCRDs: true"
-  ]
+
   rancher_default_helm_values = [
     "antiAffinity: ${var.rancher_replicas == 1 ? "preferred" : var.rancher_antiaffinity}",
     "ingress.tls.source: ${var.tls_source}",
@@ -23,14 +46,16 @@ locals {
     "global.cattle.psp.enabled: false",
     "postDelete.ignoreTimeoutError: true"
   ]
+
   rancher_private_ca_values = var.tls_source == "secret" && var.cacerts_path != null ? [
     "privateCA: true"
   ] : []
+
   rancher_registry_pull_secret = var.registry_username != null ? [
     "imagePullSecrets[0].name: rancher-pull-secret"
   ] : []
-  rancher_helm_values      = distinct(flatten([var.rancher_additional_helm_values, local.rancher_airgap_helm_values, local.rancher_registry_pull_secret, local.rancher_private_ca_values, local.rancher_default_helm_values]))
-  cert_manager_helm_values = distinct(flatten([local.cert_manager_default_helm_values, local.cert_manager_airgap_helm_values]))
+
+  rancher_helm_values = distinct(flatten([var.rancher_additional_helm_values, local.rancher_airgap_helm_values, local.rancher_registry_pull_secret, local.rancher_private_ca_values, local.rancher_default_helm_values]))
 }
 
 resource "kubernetes_secret_v1" "tls_rancher_ingress" {
@@ -40,13 +65,11 @@ resource "kubernetes_secret_v1" "tls_rancher_ingress" {
     name      = "tls-rancher-ingress"
     namespace = helm_release.rancher.namespace
   }
-
   data = {
     "tls.crt" = file(var.tls_crt_path)
     "tls.key" = file(var.tls_key_path)
   }
   type = "kubernetes.io/tls"
-
   lifecycle {
     ignore_changes = [metadata]
   }
@@ -59,11 +82,9 @@ resource "kubernetes_secret_v1" "tls_ca" {
     name      = "tls-ca"
     namespace = helm_release.rancher.namespace
   }
-
   data = {
     "cacerts.pem" = file(var.cacerts_path)
   }
-
   lifecycle {
     ignore_changes = [metadata]
   }
@@ -76,13 +97,11 @@ resource "kubernetes_secret_v1" "image_pull_secret" {
     name      = "rancher-pull-secret"
     namespace = helm_release.rancher.namespace
   }
-
   type = "Opaque"
   data = {
     "username" = var.registry_username
     "password" = var.registry_password
   }
-
   lifecycle {
     ignore_changes = [metadata]
   }
@@ -103,13 +122,12 @@ resource "helm_release" "cert_manager" {
   atomic              = var.cert_manager_helm_atomic
   upgrade_install     = var.cert_manager_helm_upgrade_install
 
-  set = [
-    for v in local.cert_manager_helm_values : {
-      name  = split(":", v)[0]
-      value = trimspace(replace(v, "${split(":", v)[0]}:", ""))
-      type  = trimspace(replace(v, "${split(":", v)[0]}:", "")) == "true" || trimspace(replace(v, "${split(":", v)[0]}:", "")) == "false" ? "string" : null
-    }
-  ]
+  # 'values' with yamlencode to pass strict types, e.g. bools remain bools.
+  # 'compact' removes empty strings, airgap ignored when disabled.
+  values = compact([
+    yamlencode(local.cert_manager_defaults),
+    var.airgap ? yamlencode(local.cert_manager_airgap) : ""
+  ])
 }
 
 resource "helm_release" "rancher" {
