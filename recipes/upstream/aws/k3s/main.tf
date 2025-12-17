@@ -1,8 +1,9 @@
 locals {
-  kc_path        = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
-  kc_file_backup = "${local.kc_file}.backup"
-  ssh_username   = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+  kc_path          = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file          = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_file_backup   = "${local.kc_file}.backup"
+  ssh_username     = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+  rancher_replicas = var.server_instance_count + var.worker_instance_count
 }
 
 module "k3s_first" {
@@ -137,7 +138,7 @@ module "rancher_install" {
   dependency                            = var.worker_instance_count != null ? module.k3s_workers.dependency : var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
   kubeconfig_file                       = local_file.kube_config_yaml.filename
   rancher_hostname                      = local.rancher_hostname
-  rancher_replicas                      = min(var.rancher_replicas, var.server_instance_count)
+  rancher_replicas                      = min(var.rancher_replicas, local.rancher_replicas)
   rancher_bootstrap_password            = var.rancher_bootstrap_password
   rancher_password                      = var.rancher_password
   rancher_version                       = var.rancher_version
