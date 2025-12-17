@@ -9,6 +9,7 @@ locals {
   ssh_username               = var.os_type
   kc_path                    = var.kube_config_path != null ? var.kube_config_path : path.cwd
   kc_file                    = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  rancher_replicas           = var.server_instance_count + var.worker_instance_count
 }
 
 module "k3s_first" {
@@ -141,7 +142,7 @@ module "rancher_install" {
   rancher_password           = var.rancher_password
   bootstrap_rancher          = var.bootstrap_rancher
   rancher_version            = var.rancher_version
-  rancher_replicas           = min(var.rancher_replicas, var.server_instance_count)
+  rancher_replicas           = min(var.rancher_replicas, local.rancher_replicas)
   rancher_additional_helm_values = [
     "replicas: ${var.worker_instance_count}",
     "ingress.ingressClassName: ${var.rancher_ingress_class_name}",
