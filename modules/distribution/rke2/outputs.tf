@@ -7,6 +7,7 @@ output "rke2_user_data" {
       rke2_token   = local.rke2_token,
       rke2_version = var.rke2_version == null ? "false" : var.rke2_version,
       server_ip    = var.first_server_ip == null ? "false" : var.first_server_ip
+      rke2_ingress = var.rke2_ingress
     }
   )
 }
