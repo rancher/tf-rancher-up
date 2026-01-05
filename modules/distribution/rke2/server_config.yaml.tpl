@@ -8,6 +8,7 @@ token: ${rke2_token}
 %{ if server_ip != "false" }
 server: https://${server_ip}:9345
 %{ endif }
+ingress-controller: ${rke2_ingress}
 node-external-ip: $PUBLIC_IP
 node-ip: $PRIVATE_IP
 advertise-address: $PRIVATE_IP

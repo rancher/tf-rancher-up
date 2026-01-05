@@ -24,3 +24,9 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+
+variable "rke2_ingress" {
+  description = "RKE2 ingress deployed (nginx or traefik)"
+  type        = string
+  default     = "ingress-nginx"
+}
