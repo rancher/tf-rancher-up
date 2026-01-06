@@ -57,6 +57,9 @@ region = "<REGION>"
 
 #Ref. https://cloud.google.com/compute/docs/images
 
+## -- Ingress deployed (nginx or traefik)
+# rke2_ingress = "nginx"
+
 ## -- Script that will run when the VMs start
 # startup_script = ""
 

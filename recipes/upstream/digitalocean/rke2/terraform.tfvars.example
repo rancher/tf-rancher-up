@@ -52,6 +52,9 @@
 ## -- RKE2 custom config file
 # rke2_config = "<RKE2_CONFIG_FILE>"
 
+## -- Ingress deployed (nginx or traefik)
+# rke2_ingress = "nginx"
+
 ## -- Bootstrap the Rancher installation
 # bootstrap_rancher = false
 
