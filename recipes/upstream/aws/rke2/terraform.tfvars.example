@@ -33,6 +33,9 @@ prefix = "my-name-here"
 instance_count = 1
 # instance_type = "t3.medium"
 
+## -- Ingress deployed (nginx or traefik)
+# rke2_ingress = "nginx"
+
 ## -- Use spot instances
 # spot_instances = false
 

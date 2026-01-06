@@ -40,6 +40,9 @@
 ## -- The name of a Azure virtual Machine type
 # instance_type = "Standard_D2_v5"
 
+## -- Ingress deployed (nginx or traefik)
+# rke2_ingress = "nginx"
+
 ## -- Specify whether Azure VirtualMachines should be created with spot instances.
 # spot_instance = "true"
 
