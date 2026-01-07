@@ -12,6 +12,10 @@ resource "google_compute_subnetwork" "subnet" {
   ip_cidr_range = var.ip_cidr_range
 }
 
+data "google_compute_regions" "available" {
+  project = var.project_id
+}
+
 data "google_container_engine_versions" "gke_version" {
   location       = var.region
   version_prefix = var.cluster_version_prefix
