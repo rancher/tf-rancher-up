@@ -12,50 +12,9 @@ variable "region" {
   description = "Google Region to create the resources"
   type        = string
   default     = "us-west2"
-
   validation {
-    condition = contains([
-      "asia-east1",
-      "asia-east2",
-      "asia-northeast1",
-      "asia-northeast2",
-      "asia-northeast3",
-      "asia-south1",
-      "asia-south2",
-      "asia-southeast1",
-      "asia-southeast2",
-      "australia-southeast1",
-      "australia-southeast2",
-      "europe-central2",
-      "europe-north1",
-      "europe-southwest1",
-      "europe-west1",
-      "europe-west10",
-      "europe-west12",
-      "europe-west2",
-      "europe-west3",
-      "europe-west4",
-      "europe-west6",
-      "europe-west8",
-      "europe-west9",
-      "me-central1",
-      "me-central2",
-      "me-west1",
-      "northamerica-northeast1",
-      "northamerica-northeast2",
-      "southamerica-east1",
-      "southamerica-west1",
-      "us-central1",
-      "us-east1",
-      "us-east4",
-      "us-east5",
-      "us-south1",
-      "us-west1",
-      "us-west2",
-      "us-west3",
-      "us-west4",
-    ], var.region)
-    error_message = "Invalid Region specified!"
+    condition     = contains(data.google_compute_regions.available.names, var.region)
+    error_message = "The region '${var.region}' is not available in your GCP project. Valid regions are: ${join(", ", data.google_compute_regions.available.names)}"
   }
 }
 
@@ -135,7 +94,6 @@ variable "os_type" {
   description = "Operating system type (sles or ubuntu)"
   type        = string
   default     = "sles"
-
   validation {
     condition     = contains(["sles", "ubuntu"], var.os_type)
     error_message = "The operating system type must be 'sles' or 'ubuntu'."

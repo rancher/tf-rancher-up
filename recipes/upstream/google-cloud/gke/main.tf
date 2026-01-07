@@ -58,7 +58,7 @@ resource "null_resource" "wait_ingress_services_startup" {
   }
 }
 
-data "kubernetes_service" "ingress_nginx_controller_svc" {
+data "kubernetes_service_v1" "ingress_nginx_controller_svc" {
   depends_on = [null_resource.wait_ingress_services_startup]
 
   metadata {
@@ -68,12 +68,12 @@ data "kubernetes_service" "ingress_nginx_controller_svc" {
 }
 
 locals {
-  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", data.kubernetes_service.ingress_nginx_controller_svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"]) : join(".", ["rancher", data.kubernetes_service.ingress_nginx_controller_svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
+  rancher_hostname = var.rancher_hostname != null ? join(".", ["${var.rancher_hostname}", data.kubernetes_service_v1.ingress_nginx_controller_svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"]) : join(".", ["rancher", data.kubernetes_service_v1.ingress_nginx_controller_svc.status.0.load_balancer.0.ingress[0].ip, "sslip.io"])
 }
 
 module "rancher_install" {
   source                     = "../../../../modules/rancher"
-  dependency                 = [data.kubernetes_service.ingress_nginx_controller_svc]
+  dependency                 = [data.kubernetes_service_v1.ingress_nginx_controller_svc]
   kubeconfig_file            = local_file.kube_config_yaml.filename
   rancher_hostname           = local.rancher_hostname
   rancher_bootstrap_password = var.rancher_bootstrap_password

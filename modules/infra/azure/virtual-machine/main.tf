@@ -129,7 +129,6 @@ resource "azurerm_network_interface" "nic" {
   name                = "${var.prefix}-nic-${count.index + var.tag_begin}"
   location            = local.resource_group_location
   resource_group_name = local.resource_group_name
-
   ip_configuration {
     name                          = "internal"
     subnet_id                     = var.create_subnet ? azurerm_subnet.subnet[0].id : var.subnet_id
@@ -174,7 +173,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = local.os_image_version
   }
   custom_data = var.startup_script != null ? base64encode(var.startup_script) : null
-
   connection {
     type        = "ssh"
     user        = local.ssh_username
