@@ -68,22 +68,9 @@ variable "region" {
   type        = string
   description = "Region that droplets will be deployed to"
   default     = "sfo3"
-
   validation {
-    condition = contains([
-      "nyc1",
-      "nyc3",
-      "ams3",
-      "sfo2",
-      "sfo3",
-      "sgp1",
-      "lon1",
-      "fra1",
-      "tor1",
-      "blr1",
-      "syd1",
-    ], var.region)
-    error_message = "Invalid Region specified!"
+    condition     = contains(data.digitalocean_regions.available.regions[*].slug, var.region)
+    error_message = "The region '${var.region}' is not available in DigitalOcean. Valid regions are: ${join(", ", data.digitalocean_regions.available.regions[*].slug)}"
   }
 }
 
@@ -130,7 +117,6 @@ variable "os_type" {
   description = "Operating system type (opensuse or ubuntu)"
   type        = string
   default     = "opensuse"
-
   validation {
     condition     = contains(["opensuse", "ubuntu"], var.os_type)
     error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
