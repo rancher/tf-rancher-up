@@ -59,23 +59,6 @@ variable "region" {
   type        = string
   description = "Region that droplets will be deployed to"
   default     = "sfo3"
-
-  validation {
-    condition = contains([
-      "nyc1",
-      "nyc3",
-      "ams3",
-      "sfo2",
-      "sfo3",
-      "sgp1",
-      "lon1",
-      "fra1",
-      "tor1",
-      "blr1",
-      "syd1",
-    ], var.region)
-    error_message = "Invalid Region specified!"
-  }
 }
 
 variable "ssh_username" {
@@ -131,7 +114,6 @@ variable "rancher_bootstrap_password" {
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
-
   validation {
     condition     = var.rancher_bootstrap_password == null ? true : length(var.rancher_bootstrap_password) >= 12
     error_message = "The password provided for Rancher (rancher_bootstrap_password) must be at least 12 characters"
@@ -142,7 +124,6 @@ variable "rancher_password" {
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
-
   validation {
     condition     = var.rancher_password == null ? true : length(var.rancher_password) >= 12
     error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
@@ -204,7 +185,6 @@ variable "os_type" {
   description = "Operating system type (opensuse or ubuntu)"
   type        = string
   default     = "opensuse"
-
   validation {
     condition     = contains(["opensuse", "ubuntu"], var.os_type)
     error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
@@ -215,7 +195,6 @@ variable "rke2_ingress" {
   description = "RKE2 ingress deployed (nginx or traefik)"
   type        = string
   default     = "nginx"
-
   validation {
     condition     = contains(["nginx", "traefik"], var.rke2_ingress)
     error_message = "The ingress selected must be 'nginx' or 'traefik'."

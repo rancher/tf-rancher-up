@@ -22,6 +22,13 @@ resource "digitalocean_ssh_key" "key_pair" {
   public_key = tls_private_key.ssh_private_key[0].public_key_openssh
 }
 
+data "digitalocean_regions" "available" {
+  filter {
+    key    = "available"
+    values = ["true"]
+  }
+}
+
 resource "digitalocean_droplet" "droplet" {
   count      = var.droplet_count
   image      = var.os_type == "opensuse" ? data.digitalocean_image.opensuse[0].id : data.digitalocean_image.ubuntu[0].id
