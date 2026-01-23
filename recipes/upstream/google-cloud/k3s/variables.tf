@@ -119,7 +119,9 @@ variable "os_type" {
 variable "startup_script" {
   description = "Custom startup script"
   type        = string
-  default     = null
+  default     = <<-EOF
+export INSTALL_K3S_SKIP_SELINUX_RPM=true
+EOF
 }
 
 variable "waiting_time" {
@@ -131,7 +133,7 @@ variable "waiting_time" {
 variable "k3s_version" {
   description = "Kubernetes version to use for the K3s cluster"
   type        = string
-  default     = "v1.28.9+k3s1" #Version compatible with Rancher v2.8.3
+  default     = "v1.28.9+k3s1"
 }
 
 variable "k3s_channel" {
