@@ -37,7 +37,17 @@ module "k3s_first_server" {
   disk_type            = var.disk_type
   instance_type        = var.instance_type
   os_type              = var.os_type
-  startup_script       = module.k3s_first.k3s_server_user_data
+  #  startup_script       = module.k3s_first.k3s_server_user_data
+  startup_script = var.os_type == "sles" ? (
+    <<-EOF
+#!/bin/bash
+set -e
+
+${var.startup_script}
+
+${module.k3s_first.k3s_server_user_data}
+EOF
+  ) : module.k3s_first.k3s_server_user_data
 }
 
 module "k3s_additional" {
@@ -66,7 +76,17 @@ module "k3s_additional_servers" {
   disk_type            = var.disk_type
   instance_type        = var.instance_type
   os_type              = var.os_type
-  startup_script       = module.k3s_additional.k3s_server_user_data
+  #  startup_script       = module.k3s_additional.k3s_server_user_data
+  startup_script = var.os_type == "sles" ? (
+    <<-EOF
+#!/bin/bash
+set -e
+
+${var.startup_script}
+
+${module.k3s_additional.k3s_server_user_data}
+EOF
+  ) : module.k3s_additional.k3s_server_user_data
 }
 
 module "k3s_additional_workers" {
@@ -86,7 +106,17 @@ module "k3s_additional_workers" {
   disk_type            = var.disk_type
   instance_type        = var.instance_type
   os_type              = var.os_type
-  startup_script       = module.k3s_additional.k3s_worker_user_data
+  #  startup_script       = module.k3s_additional.k3s_worker_user_data
+  startup_script = var.os_type == "sles" ? (
+    <<-EOF
+#!/bin/bash
+set -e
+
+${var.startup_script}
+
+${module.k3s_additional.k3s_worker_user_data}
+EOF
+  ) : module.k3s_additional.k3s_worker_user_data
 }
 
 data "local_file" "ssh_private_key" {
