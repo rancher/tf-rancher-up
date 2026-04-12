@@ -58,4 +58,6 @@ module "rancher_backup" {
 
 ## Notes
 
+- This module automatically installs the `rancher-backup-crd` chart before the operator chart. Chart version 7+ ships CRDs separately; the module handles this transparently.
+- The S3 credential Secret must be created separately and contain `accessKey` and `secretKey` data fields.
 - `docs.md` is auto-generated — do not edit manually

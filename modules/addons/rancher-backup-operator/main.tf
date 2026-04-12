@@ -16,8 +16,26 @@ locals {
   }
 }
 
-resource "helm_release" "rancher_backup_operator" {
+# rancher-backup chart (v7+) ships CRDs in a separate chart that must be
+# installed first. Install it here so callers don't need to manage it.
+resource "helm_release" "rancher_backup_operator_crd" {
   depends_on          = [var.dependency]
+  name                = "rancher-backup-operator-crd"
+  chart               = "rancher-backup-crd"
+  create_namespace    = true
+  namespace           = var.rancher_backup_namespace
+  repository          = var.rancher_backup_helm_repository != null ? var.rancher_backup_helm_repository : "https://charts.rancher.io"
+  repository_username = var.rancher_backup_helm_repository_username
+  repository_password = var.rancher_backup_helm_repository_password
+  version             = var.rancher_backup_version
+  wait                = true
+  atomic              = var.rancher_backup_helm_atomic
+  upgrade_install     = var.rancher_backup_helm_upgrade_install
+  timeout             = var.rancher_backup_helm_timeout
+}
+
+resource "helm_release" "rancher_backup_operator" {
+  depends_on          = [var.dependency, helm_release.rancher_backup_operator_crd]
   name                = "rancher-backup-operator"
   chart               = "rancher-backup"
   create_namespace    = true

@@ -52,4 +52,5 @@ module "longhorn" {
 
 - Longhorn requires `open-iscsi` installed on all cluster nodes
 - Set `longhorn_default_replica_count = 1` for single-node clusters
+- Teardown: Longhorn's Helm uninstall spawns an uninstall job that may time out on clusters where volumes are still in use. Delete PVCs and PVs before running `terraform destroy` to avoid this.
 - `docs.md` is auto-generated — do not edit manually
