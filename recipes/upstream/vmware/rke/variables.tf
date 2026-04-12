@@ -10,6 +10,7 @@ variable "vsphere_user" {
 }
 
 variable "vsphere_password" {
+  sensitive   = true
   description = "Add your vSphere password for the above mentioned username."
 }
 
@@ -43,6 +44,7 @@ variable "vsphere_network" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -54,6 +56,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string

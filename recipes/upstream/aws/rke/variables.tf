@@ -10,6 +10,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null
@@ -76,6 +77,7 @@ variable "docker_version" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -86,6 +88,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
@@ -221,6 +224,7 @@ variable "rancher_helm_repository_username" {
 }
 
 variable "rancher_helm_repository_password" {
+  sensitive   = true
   description = "Private Rancher helm repository password"
   default     = null
   type        = string
@@ -239,6 +243,7 @@ variable "cert_manager_helm_repository_username" {
 }
 
 variable "cert_manager_helm_repository_password" {
+  sensitive   = true
   description = "Private Cert Manager helm repository password"
   default     = null
   type        = string

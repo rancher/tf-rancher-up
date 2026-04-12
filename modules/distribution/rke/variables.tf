@@ -83,6 +83,7 @@ variable "private_registry_username" {
 }
 
 variable "private_registry_password" {
+  sensitive   = true
   type        = string
   description = "Specify private registry's password"
   default     = null

@@ -87,6 +87,7 @@ variable "rke2_version" {
 }
 
 variable "rke2_token" {
+  sensitive   = true
   description = "Token to use when configuring RKE2 nodes"
   type        = string
   default     = null
@@ -111,6 +112,7 @@ variable "rancher_hostname" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -121,6 +123,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string

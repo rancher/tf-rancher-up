@@ -11,6 +11,7 @@ variable "rke2_version" {
 }
 
 variable "rke2_token" {
+  sensitive   = true
   description = "Token to use when configuring RKE2 nodes"
   default     = null
 }

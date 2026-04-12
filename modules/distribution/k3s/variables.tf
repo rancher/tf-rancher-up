@@ -11,6 +11,7 @@ variable "k3s_version" {
 }
 
 variable "k3s_token" {
+  sensitive   = true
   description = "Token to use when configuring k3s nodes"
   default     = null
 }

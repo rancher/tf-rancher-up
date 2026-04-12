@@ -1,5 +1,6 @@
 
 variable "rancher_token" {
+  sensitive   = true
   description = "Rancher API token"
   default     = null
   type        = string

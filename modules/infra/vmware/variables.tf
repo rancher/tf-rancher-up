@@ -13,6 +13,7 @@ variable "vsphere_user" {
 }
 
 variable "vsphere_password" {
+  sensitive   = true
   type        = string
   description = "Add your vSphere password for the above mentioned username."
 }
