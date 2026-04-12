@@ -35,6 +35,46 @@ jobs:
           terraform-docs --version
           ./scripts/generate_docs.sh
 
+  detect_secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Install detect-secrets
+        run: pip install detect-secrets
+
+      - name: Scan for secrets
+        run: |
+          detect-secrets scan \
+            --exclude-files '\.terraform/.*' \
+            --exclude-files '\.terraform\.lock\.hcl' \
+            > /tmp/secrets-scan.json
+          # Fail if any finding in the new scan is absent from the committed baseline
+          python3 - <<'EOF'
+          import json, sys
+          with open('/tmp/secrets-scan.json') as f:
+              new = json.load(f)
+          with open('.secrets.baseline') as f:
+              baseline = json.load(f)
+          baseline_hashes = {
+              h
+              for secrets in baseline.get('results', {}).values()
+              for h in [s['hashed_secret'] for s in secrets]
+          }
+          new_findings = [
+              (path, s)
+              for path, secrets in new.get('results', {}).items()
+              for s in secrets
+              if s['hashed_secret'] not in baseline_hashes
+          ]
+          if new_findings:
+              for path, s in new_findings:
+                  print(f"UNREVIEWED SECRET: {path}:{s['line_number']} [{s['type']}]")
+              sys.exit(1)
+          print(f"All {sum(len(v) for v in new.get('results',{}).values())} finding(s) are in the baseline — OK")
+          EOF
+
   check_docs:
     runs-on: ubuntu-latest
     steps:
