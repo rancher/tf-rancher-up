@@ -93,9 +93,46 @@ variable "rancher_backup_s3_endpoint" {
   type        = string
 }
 
+variable "rancher_backup_s3_folder" {
+  description = "Optional key prefix (folder) within the S3 bucket where backups are stored"
+  default     = null
+  type        = string
+}
+
+variable "rancher_backup_s3_endpoint_ca" {
+  description = "PEM-encoded CA certificate for verifying a custom S3/Minio TLS endpoint"
+  default     = null
+  type        = string
+  sensitive   = true
+}
+
+variable "rancher_backup_s3_insecure_tls_skip_verify" {
+  description = "Skip TLS certificate verification for the S3 endpoint (use only for dev/self-signed certs)"
+  default     = false
+  type        = bool
+}
+
 variable "rancher_backup_s3_credential_secret_name" {
   description = "Name of the Kubernetes Secret containing S3 access credentials (required when rancher_backup_storage_backend is 's3')"
   default     = null
+  type        = string
+}
+
+variable "rancher_backup_schedule" {
+  description = "Cron expression for automatic backups (e.g. '0 0 * * *' for daily at midnight). null disables scheduled backups."
+  default     = null
+  type        = string
+}
+
+variable "rancher_backup_retention_count" {
+  description = "Number of backup files to retain when using a schedule (older backups are deleted)"
+  default     = 10
+  type        = number
+}
+
+variable "rancher_backup_resource_set_name" {
+  description = "Name of the ResourceSet that defines which Kubernetes resources are included in backups"
+  default     = "rancher-resource-set"
   type        = string
 }
 

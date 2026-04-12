@@ -10,6 +10,9 @@ locals {
       bucketName                = var.rancher_backup_s3_bucket
       region                    = var.rancher_backup_s3_region
       endpoint                  = var.rancher_backup_s3_endpoint
+      folder                    = var.rancher_backup_s3_folder
+      endpointCA                = var.rancher_backup_s3_endpoint_ca
+      insecureTLSSkipVerify     = var.rancher_backup_s3_insecure_tls_skip_verify
       credentialSecretName      = var.rancher_backup_s3_credential_secret_name
       credentialSecretNamespace = var.rancher_backup_namespace
     }
@@ -59,4 +62,27 @@ resource "helm_release" "rancher_backup_operator" {
       value = trimspace(replace(v, "${split(":", v)[0]}:", ""))
     }
   ]
+}
+
+# Create a scheduled Backup CR when the user provides a cron schedule.
+# NOTE: This resource requires the operator CRD to be present at plan time.
+# Use the two-stage apply pattern: deploy the operator first, then set
+# rancher_backup_schedule on a subsequent apply.
+resource "kubernetes_manifest" "rancher_backup_schedule" {
+  count = var.rancher_backup_schedule != null ? 1 : 0
+
+  depends_on = [helm_release.rancher_backup_operator]
+
+  manifest = {
+    apiVersion = "resources.cattle.io/v1"
+    kind       = "Backup"
+    metadata = {
+      name = "scheduled-backup"
+    }
+    spec = {
+      resourceSetName = var.rancher_backup_resource_set_name
+      schedule        = var.rancher_backup_schedule
+      retentionCount  = var.rancher_backup_retention_count
+    }
+  }
 }

@@ -41,9 +41,28 @@ module "rancher_backup" {
   rancher_backup_s3_bucket                 = "rancher-backups"
   rancher_backup_s3_region                 = "us-east-1"
   rancher_backup_s3_endpoint               = "https://minio.example.com"
+  rancher_backup_s3_folder                 = "my-cluster"
+  rancher_backup_s3_insecure_tls_skip_verify = true   # for self-signed certs
   rancher_backup_s3_credential_secret_name = "minio-credentials"
 }
 ```
+
+### With a scheduled backup job
+
+```hcl
+module "rancher_backup" {
+  source = "../../modules/addons/rancher-backup-operator"
+
+  kubeconfig_file                = "/path/to/kubeconfig.yaml"
+  rancher_backup_schedule        = "0 2 * * *"  # daily at 02:00
+  rancher_backup_retention_count = 7
+}
+```
+
+**Important:** `rancher_backup_schedule` creates a `Backup` Custom Resource. The CRD must exist at plan time, which means a two-stage apply is required when provisioning a new cluster:
+
+1. First apply without `rancher_backup_schedule` to install the operator and register the CRDs.
+2. Add `rancher_backup_schedule` and apply again — Terraform can now resolve the CRD schema.
 
 ### Ordering after Rancher install
 
