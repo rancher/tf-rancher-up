@@ -1,15 +1,19 @@
 variable "vsphere_server" {
+  type        = string
   description = "Add the vSphere hostname."
 }
 
 variable "vsphere_server_allow_unverified_ssl" {
+  type        = bool
   description = "Allow use of unverified SSL certificates (Ex: Self signed)"
 }
 variable "vsphere_user" {
+  type        = string
   description = "Add your vSphere username."
 }
 
 variable "vsphere_password" {
+  type        = string
   description = "Add your vSphere password for the above mentioned username."
 }
 
@@ -20,26 +24,32 @@ variable "instance_count" {
 }
 
 variable "ssh_private_key_path" {
+  type        = string
   description = "Add your SSH private key path here."
 }
 
 variable "vsphere_datacenter" {
+  type        = string
   description = "vSphere Datacenter details."
 }
 
 variable "vsphere_datastore" {
+  type        = string
   description = "Datastore used for storing VM data."
 }
 
 variable "vsphere_resource_pool" {
+  type        = string
   description = "Available resourcepool on the host."
 }
 
 variable "vsphere_virtual_machine" {
+  type        = string
   description = "Virtual Machine template name"
 }
 
 variable "vsphere_network" {
+  type = string
 }
 
 variable "rancher_bootstrap_password" {

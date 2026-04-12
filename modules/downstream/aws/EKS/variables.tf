@@ -1,5 +1,6 @@
 
 variable "cluster_name" {
+  type        = string
   description = "The cluster name"
   default     = null
 }

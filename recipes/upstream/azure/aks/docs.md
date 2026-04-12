@@ -43,7 +43,7 @@
 | <a name="input_rancher_replicas"></a> [rancher\_replicas](#input\_rancher\_replicas) | Value for replicas when installing the Rancher helm chart | `number` | `3` | no |
 | <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `null` | no |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | VM Size for the default node pool | `string` | `"Standard_DS2_v2"` | no |
-| <a name="input_wait"></a> [wait](#input\_wait) | An optional wait before installing the Rancher helm chart (seconds) | `any` | `null` | no |
+| <a name="input_wait"></a> [wait](#input\_wait) | An optional wait before installing the Rancher helm chart (seconds) | `string` | `null` | no |
 
 ## Outputs
 

@@ -58,16 +58,19 @@ variable "prefix" {
 }
 
 variable "vpc_cidr" {
+  type        = string
   description = "CIDR for AWS VPC"
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = true
 }
 
 variable "private_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = null
 }

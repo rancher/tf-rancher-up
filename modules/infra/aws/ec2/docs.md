@@ -45,7 +45,7 @@
 | <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access key used to create infrastructure | `string` | `null` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region used for all resources | `string` | `"us-east-1"` | no |
 | <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret key used to create AWS infrastructure | `string` | `null` | no |
-| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the instances | <pre>object({<br>    address      = string<br>    user         = string<br>    ssh_key      = string<br>    ssh_key_path = string<br>  })</pre> | `null` | no |
+| <a name="input_bastion_host"></a> [bastion\_host](#input\_bastion\_host) | Bastion host configuration to access the instances | <pre>object({<br/>    address      = string<br/>    user         = string<br/>    ssh_key      = string<br/>    ssh_key_path = string<br/>  })</pre> | `null` | no |
 | <a name="input_create_security_group"></a> [create\_security\_group](#input\_create\_security\_group) | Create the security group attached to the instance(s) | `bool` | `true` | no |
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Specify if a new SSH key pair needs to be created for the instances | `bool` | `true` | no |
 | <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Create a VPC | `bool` | `false` | no |
@@ -57,7 +57,7 @@
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type used for all EC2 instances | `string` | `"t3.medium"` | no |
 | <a name="input_os_type"></a> [os\_type](#input\_os\_type) | Use SLES or Ubuntu images when launching instances (sles or ubuntu) | `string` | `"sles"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | `"rancher-terraform"` | no |
-| <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | Create Public subnets for VPC | `any` | `null` | no |
+| <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | Create Public subnets for VPC | `bool` | `null` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Create Public subnets for VPC | `bool` | `true` | no |
 | <a name="input_restricted_access"></a> [restricted\_access](#input\_restricted\_access) | Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform | `bool` | `false` | no |
 | <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `"15-sp6"` | no |
@@ -71,7 +71,7 @@
 | <a name="input_tag_begin"></a> [tag\_begin](#input\_tag\_begin) | When module is being called mode than once, begin tagging from this number | `number` | `1` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | User-provided tags for the resources | `map(string)` | `{}` | no |
 | <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `"22.04"` | no |
-| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | User data content for EC2 instance(s) | `any` | `null` | no |
+| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | User data content for EC2 instance(s) | `string` | `null` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR for AWS VPC | `string` | `"10.0.0.0/16"` | no |
 
 ## Outputs

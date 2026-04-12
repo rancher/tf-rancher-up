@@ -1,10 +1,12 @@
 # TODO: Add description for the variables
 # TODO: Remove any unused variables
 variable "vsphere_server" {
+  type        = string
   description = "Add the vSphere hostname."
 }
 
 variable "vsphere_server_allow_unverified_ssl" {
+  type        = bool
   description = "Allow use of unverified SSL certificates (Ex: Self signed)"
 }
 variable "vsphere_user" {
@@ -18,48 +20,60 @@ variable "vsphere_password" {
 }
 
 variable "vsphere_datacenter" {
+  type        = string
   description = "vSphere Datacenter details."
 }
 
 variable "vsphere_datastore" {
+  type        = string
   description = "Datastore used for storing VM data."
 }
 
 variable "vsphere_resource_pool" {
+  type        = string
   description = "Available resourcepool on the host."
 }
 
 variable "vsphere_network" {
+  type = string
 }
 
 variable "vsphere_virtual_machine" {
+  type        = string
   description = "Virtual Machine template name"
 }
 
 variable "prefix" {
+  type        = string
   description = "Prefix to use for various resources"
 }
 
 variable "ssh_private_key_path" {
+  type        = string
   description = "Add your Private Key"
 }
 
 variable "docker_version" {
+  type    = string
   default = "20.10"
 }
 
 variable "vm_username" {
+  type = string
 }
 
 variable "vm_cpus" {
+  type    = number
   default = 2
 }
 
 variable "vm_memory" {
+  type    = number
   default = 4096
 }
 
 variable "vm_disk" {
+  type    = number
   default = 80
 }
 
@@ -70,5 +84,6 @@ variable "instance_count" {
 }
 
 variable "authorized_keys" {
+  type        = string
   description = "Add in your SSH public key. This will be added to the VMs by cloud-init in the authorized_keys file under ~/.ssh"
 }
