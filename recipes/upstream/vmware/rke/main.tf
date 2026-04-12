@@ -43,12 +43,19 @@ provider "kubernetes" {
 }
 
 module "rancher_install" {
-  source                     = "../../../../modules/rancher"
-  depends_on                 = [module.rke]
-  rancher_hostname           = join(".", ["rancher", module.upstream-cluster.rancher_ip, "sslip.io"])
-  rancher_replicas           = 1
-  rancher_bootstrap_password = var.rancher_bootstrap_password
-  rancher_password           = var.rancher_password
+  source                                = "../../../../modules/rancher"
+  depends_on                            = [module.rke]
+  rancher_hostname                      = join(".", ["rancher", module.upstream-cluster.rancher_ip, "sslip.io"])
+  rancher_replicas                      = min(var.rancher_replicas, var.instance_count)
+  rancher_version                       = var.rancher_version
+  rancher_bootstrap_password            = var.rancher_bootstrap_password
+  rancher_password                      = var.rancher_password
+  rancher_helm_repository               = var.rancher_helm_repository
+  rancher_helm_repository_username      = var.rancher_helm_repository_username
+  rancher_helm_repository_password      = var.rancher_helm_repository_password
+  cert_manager_helm_repository          = var.cert_manager_helm_repository
+  cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
+  cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
   providers = {
     kubernetes = kubernetes
     helm       = helm
