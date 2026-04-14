@@ -141,6 +141,7 @@ variable "rancher_helm_repository_password" {
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
 }

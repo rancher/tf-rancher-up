@@ -75,6 +75,7 @@ variable "region" {
 }
 
 variable "user_data" {
+  type        = string
   description = "User data content for EC2 instance(s)"
   default     = null
 }

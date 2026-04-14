@@ -7,6 +7,7 @@ variable "rancher_token" {
 }
 
 variable "rancher_insecure" {
+  type        = bool
   description = "Allow insecure connections to Rancher"
   default     = true
 }

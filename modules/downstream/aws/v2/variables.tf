@@ -1,4 +1,5 @@
 variable "cluster_name" {
+  type        = string
   description = "The cluster name"
   default     = "v2-ds"
 }
@@ -11,6 +12,7 @@ variable "rancher_token" {
 }
 
 variable "rancher_insecure" {
+  type        = bool
   description = "Allow insecure connections to Rancher"
   default     = true
 }
@@ -77,11 +79,13 @@ variable "kubernetes_version" {
 }
 
 variable "cp_node_pool_name" {
+  type        = string
   description = "Control plane pool name"
   default     = "cp"
 }
 
 variable "worker_node_pool_name" {
+  type        = string
   description = "Worker pool name"
   default     = "w"
 }
@@ -99,6 +103,7 @@ variable "volume_size" {
 }
 
 variable "cni_provider" {
+  type        = string
   description = "CNI provider to use"
   default     = "calico"
 }
@@ -110,6 +115,7 @@ variable "vpc_id" {
 }
 
 variable "security_group_name" {
+  type        = string
   description = "Security Group name for nodes"
   default     = null
 }
@@ -127,6 +133,7 @@ variable "spot_instances" {
 }
 
 variable "ami" {
+  type        = string
   default     = null
   description = "AMI to use when launching nodes"
 

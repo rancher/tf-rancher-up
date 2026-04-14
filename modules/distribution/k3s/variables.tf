@@ -12,6 +12,7 @@ variable "k3s_version" {
 
 variable "k3s_token" {
   sensitive   = true
+  type        = string
   description = "Token to use when configuring k3s nodes"
   default     = null
 }
@@ -23,11 +24,13 @@ variable "k3s_channel" {
 }
 
 variable "k3s_config" {
+  type        = string
   description = "Additional k3s configuration to add to the config.yaml file"
   default     = null
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
