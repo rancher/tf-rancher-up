@@ -8,15 +8,17 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+No providers.
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_google-kubernetes-engine"></a> [google-kubernetes-engine](#module\_google-kubernetes-engine) | ../../../../modules/distribution/gke | n/a |
+
+## Resources
+
+No resources.
 
 ## Inputs
 
