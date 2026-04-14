@@ -73,3 +73,52 @@ variable "rancher_password" {
     error_message = "The password provided for Rancher (rancher_password) must be at least 12 characters"
   }
 }
+variable "rancher_version" {
+  description = "Rancher version to install"
+  default     = null
+  type        = string
+}
+
+variable "rancher_replicas" {
+  description = "Value for replicas when installing the Rancher helm chart"
+  default     = 3
+  type        = number
+}
+
+variable "rancher_helm_repository" {
+  description = "Helm repository for Rancher chart"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_username" {
+  description = "Private Rancher helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_password" {
+  description = "Private Rancher helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
+}
+
+variable "cert_manager_helm_repository" {
+  description = "Helm repository for Cert Manager chart"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_username" {
+  description = "Private Cert Manager helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_password" {
+  description = "Private Cert Manager helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
+}
