@@ -12,6 +12,7 @@ variable "cluster_description" {
 }
 
 variable "rancher_token" {
+  sensitive   = true
   description = "Rancher API token"
   default     = null
   type        = string
@@ -36,6 +37,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null

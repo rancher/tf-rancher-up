@@ -5,6 +5,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null
@@ -47,6 +48,7 @@ variable "rke2_version" {
 }
 
 variable "rke2_token" {
+  sensitive   = true
   type        = string
   description = "Token to use when configuring RKE2 nodes"
   default     = null
@@ -71,6 +73,7 @@ variable "kube_config_filename" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -81,6 +84,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
@@ -115,6 +119,7 @@ variable "rancher_helm_repository_username" {
 }
 
 variable "rancher_helm_repository_password" {
+  sensitive   = true
   description = "Private Rancher helm repository password"
   default     = null
   type        = string
@@ -133,6 +138,7 @@ variable "cert_manager_helm_repository_username" {
 }
 
 variable "cert_manager_helm_repository_password" {
+  sensitive   = true
   description = "Private Cert Manager helm repository password"
   default     = null
   type        = string
