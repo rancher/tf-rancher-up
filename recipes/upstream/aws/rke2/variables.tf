@@ -47,11 +47,13 @@ variable "rke2_version" {
 }
 
 variable "rke2_token" {
+  type        = string
   description = "Token to use when configuring RKE2 nodes"
   default     = null
 }
 
 variable "rke2_config" {
+  type        = string
   description = "Additional RKE2 configuration to add to the config.yaml file"
   default     = null
 }
@@ -179,11 +181,13 @@ variable "os_type" {
 }
 
 variable "sles_version" {
+  type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
   default     = "15-sp6"
 }
 
 variable "ubuntu_version" {
+  type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
   default     = "22.04"
 }
@@ -213,26 +217,31 @@ variable "restricted_access" {
 }
 
 variable "create_vpc" {
+  type        = bool
   description = "Create a VPC"
   default     = null
 }
 
 variable "vpc_cidr" {
+  type        = string
   description = "CIDR for AWS VPC"
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = true
 }
 
 variable "private_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = null
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart"
   default     = null
 }

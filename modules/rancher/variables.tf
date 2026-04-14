@@ -194,11 +194,13 @@ variable "tls_source" {
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart (seconds)"
   default     = null
 }

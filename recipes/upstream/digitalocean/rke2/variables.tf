@@ -149,6 +149,7 @@ variable "rancher_service_type" {
 }
 
 variable "waiting_time" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
 }

@@ -25,8 +25,8 @@ No modules.
 | <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
 | <a name="input_first_server_ip"></a> [first\_server\_ip](#input\_first\_server\_ip) | Internal IP address for the first k3s-server node | `string` | `null` | no |
 | <a name="input_k3s_channel"></a> [k3s\_channel](#input\_k3s\_channel) | K3s channel to use, the latest patch version for the provided minor version will be used | `string` | `null` | no |
-| <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional k3s configuration to add to the config.yaml file | `any` | `null` | no |
-| <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring k3s nodes | `any` | `null` | no |
+| <a name="input_k3s_config"></a> [k3s\_config](#input\_k3s\_config) | Additional k3s configuration to add to the config.yaml file | `string` | `null` | no |
+| <a name="input_k3s_token"></a> [k3s\_token](#input\_k3s\_token) | Token to use when configuring k3s nodes | `string` | `null` | no |
 | <a name="input_k3s_version"></a> [k3s\_version](#input\_k3s\_version) | Kubernetes version to use for the k3s cluster | `string` | `null` | no |
 
 ## Outputs

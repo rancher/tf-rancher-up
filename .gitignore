@@ -22,6 +22,7 @@ rke.log
 **/*.swp
 .DS_Store
 **gke_gcloud_auth_plugin_cache**
+.claude/
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in

@@ -113,11 +113,13 @@ variable "kube_config_filename" {
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
 
 variable "ingress_provider" {
+  type        = string
   description = "Ingress controller provider. nginx (default), and none are supported (string)"
   default     = "nginx"
 }
@@ -147,6 +149,7 @@ variable "cloud_provider" {
 }
 
 variable "create_kubeconfig_file" {
+  type        = bool
   description = "Boolean flag to generate a kubeconfig file (mostly used for dev only)"
   default     = true
 }

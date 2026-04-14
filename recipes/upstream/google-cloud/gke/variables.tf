@@ -1,6 +1,10 @@
-variable "prefix" {}
+variable "prefix" {
+  type = string
+}
 
-variable "project_id" {}
+variable "project_id" {
+  type = string
+}
 
 variable "gcp_account_json" {
   description = "The full path to the Google Cloud service account JSON key file used for authentication"
@@ -9,6 +13,7 @@ variable "gcp_account_json" {
 }
 
 variable "region" {
+  type        = string
   description = "Google Region to create the resources"
   default     = "us-west2"
 }
@@ -44,6 +49,7 @@ variable "kube_config_filename" {
 }
 
 variable "waiting_time" {
+  type        = number
   description = "Waiting time (in seconds)"
   default     = 120
 }
@@ -54,7 +60,9 @@ variable "bootstrap_rancher" {
   default     = true
 }
 
-variable "rancher_hostname" {}
+variable "rancher_hostname" {
+  type = string
+}
 
 variable "rancher_bootstrap_password" {
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
