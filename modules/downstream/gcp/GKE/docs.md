@@ -31,7 +31,7 @@ No modules.
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the Rancher GKE cluster | `string` | `"ranchergke"` | no |
 | <a name="input_gcp_credentials_path"></a> [gcp\_credentials\_path](#input\_gcp\_credentials\_path) | Path to the GCP service account JSON file | `string` | `null` | no |
 | <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version for the cluster | `string` | `null` | no |
-| <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | List of node pools configuration | <pre>list(object({<br>    name                = string<br>    initial_node_count  = optional(number, 1)<br>    version             = optional(string, null)<br>    max_pods_constraint = optional(number, 110)<br>  }))</pre> | n/a | yes |
+| <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | List of node pools configuration | <pre>list(object({<br/>    name                = string<br/>    initial_node_count  = optional(number, 1)<br/>    version             = optional(string, null)<br/>    max_pods_constraint = optional(number, 110)<br/>  }))</pre> | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | GCP Project ID where the cluster will be created | `string` | n/a | yes |
 | <a name="input_rancher_insecure"></a> [rancher\_insecure](#input\_rancher\_insecure) | Skip TLS verification for Rancher API | `bool` | `true` | no |
 | <a name="input_rancher_token"></a> [rancher\_token](#input\_rancher\_token) | Rancher API token | `string` | `null` | no |
