@@ -40,11 +40,13 @@ No modules.
 | <a name="input_rancher_insecure"></a> [rancher\_insecure](#input\_rancher\_insecure) | Allow insecure connections to Rancher | `bool` | `true` | no |
 | <a name="input_rancher_token"></a> [rancher\_token](#input\_rancher\_token) | Rancher API token | `string` | `null` | no |
 | <a name="input_rancher_url"></a> [rancher\_url](#input\_rancher\_url) | The Rancher server URL | `string` | `null` | no |
+| <a name="input_rke2_ingress"></a> [rke2\_ingress](#input\_rke2\_ingress) | RKE2 ingress deployed (nginx or traefik) | `string` | `"traefik"` | no |
 | <a name="input_security_group_name"></a> [security\_group\_name](#input\_security\_group\_name) | Security Group name for nodes | `string` | `null` | no |
 | <a name="input_spot_instances"></a> [spot\_instances](#input\_spot\_instances) | Use spot instances | `bool` | `null` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username used for SSH with sudo access | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID for all resources | `string` | `null` | no |
 | <a name="input_volume_size"></a> [volume\_size](#input\_volume\_size) | Specify root volume size (GB) | `number` | `20` | no |
+| <a name="input_volume_type"></a> [volume\_type](#input\_volume\_type) | Specify volume type | `string` | `"gp3"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | AWS VPC to use, subnet ID and security group must exist in the VPC | `string` | `null` | no |
 | <a name="input_worker_count"></a> [worker\_count](#input\_worker\_count) | Worker pool node count | `number` | `1` | no |
 | <a name="input_worker_node_pool_name"></a> [worker\_node\_pool\_name](#input\_worker\_node\_pool\_name) | Worker pool name | `string` | `"w"` | no |
