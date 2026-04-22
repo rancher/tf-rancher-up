@@ -143,6 +143,12 @@ variable "cni_provider" {
   default     = "calico"
 }
 
+variable "rke2_ingress" {
+  type        = string
+  description = "RKE2 ingress deployed (nginx or traefik)"
+  default     = "traefik"
+}
+
 variable "vpc_id" {
   description = "AWS VPC to use, subnet ID and security group must exist in the VPC"
   default     = null
