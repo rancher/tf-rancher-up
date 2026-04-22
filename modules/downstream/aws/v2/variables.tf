@@ -102,10 +102,22 @@ variable "volume_size" {
   type        = number
 }
 
+variable "volume_type" {
+  description = "Specify volume type"
+  default     = "gp3"
+  type        = string
+}
+
 variable "cni_provider" {
   type        = string
   description = "CNI provider to use"
   default     = "calico"
+}
+
+variable "rke2_ingress" {
+  type        = string
+  description = "RKE2 ingress deployed (nginx or traefik)"
+  default     = "traefik"
 }
 
 variable "vpc_id" {

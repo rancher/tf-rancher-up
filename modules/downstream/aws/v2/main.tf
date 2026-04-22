@@ -19,6 +19,7 @@ resource "rancher2_machine_config_v2" "machine_config" {
     zone                  = var.zone
     root_size             = var.volume_size
     instance_type         = var.instance_type
+    volume_type           = var.volume_type
     request_spot_instance = var.spot_instances
   }
 }
@@ -31,6 +32,7 @@ resource "rancher2_cluster_v2" "cluster" {
 
     machine_global_config = <<-EOF
       cni: "${var.cni_provider}"
+      ingress-controller: "${var.rke2_ingress}"
     EOF
 
     machine_pools {
