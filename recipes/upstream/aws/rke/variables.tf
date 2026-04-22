@@ -1,4 +1,5 @@
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
@@ -10,6 +11,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null
@@ -76,6 +78,7 @@ variable "docker_version" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -86,6 +89,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
@@ -150,11 +154,13 @@ variable "os_type" {
 }
 
 variable "sles_version" {
+  type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
   default     = "15-sp6"
 }
 
 variable "ubuntu_version" {
+  type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
   default     = "22.04"
 }
@@ -184,26 +190,31 @@ variable "restricted_access" {
 }
 
 variable "create_vpc" {
+  type        = bool
   description = "Create a VPC"
   default     = null
 }
 
 variable "vpc_cidr" {
+  type        = string
   description = "CIDR for AWS VPC"
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = true
 }
 
 variable "private_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = null
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
 }
@@ -221,6 +232,7 @@ variable "rancher_helm_repository_username" {
 }
 
 variable "rancher_helm_repository_password" {
+  sensitive   = true
   description = "Private Rancher helm repository password"
   default     = null
   type        = string
@@ -239,6 +251,7 @@ variable "cert_manager_helm_repository_username" {
 }
 
 variable "cert_manager_helm_repository_password" {
+  sensitive   = true
   description = "Private Cert Manager helm repository password"
   default     = null
   type        = string

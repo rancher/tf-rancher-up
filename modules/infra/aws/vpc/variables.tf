@@ -5,6 +5,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null
@@ -58,16 +59,19 @@ variable "prefix" {
 }
 
 variable "vpc_cidr" {
+  type        = string
   description = "CIDR for AWS VPC"
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = true
 }
 
 variable "private_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = null
 }

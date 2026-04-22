@@ -1,11 +1,13 @@
 
 variable "rancher_token" {
+  sensitive   = true
   description = "Rancher API token"
   default     = null
   type        = string
 }
 
 variable "rancher_insecure" {
+  type        = bool
   description = "Allow insecure connections to Rancher"
   default     = true
 }

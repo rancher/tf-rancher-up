@@ -200,6 +200,7 @@ variable "k3s_channel" {
 }
 
 variable "k3s_token" {
+  sensitive   = true
   description = "Token to use when configuring K3s nodes"
   type        = string
   default     = null
@@ -236,6 +237,7 @@ variable "rancher_hostname" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   type        = string
   default     = "initial-bootstrap-password"
@@ -247,6 +249,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   type        = string
   default     = null
@@ -279,4 +282,42 @@ variable "rancher_service_type" {
   description = "Rancher serviceType value"
   type        = string
   default     = "ClusterIP"
+}
+
+variable "rancher_helm_repository" {
+  description = "Helm repository for Rancher chart"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_username" {
+  description = "Private Rancher helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_password" {
+  description = "Private Rancher helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
+}
+
+variable "cert_manager_helm_repository" {
+  description = "Helm repository for Cert Manager chart"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_username" {
+  description = "Private Cert Manager helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_password" {
+  description = "Private Cert Manager helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
 }
