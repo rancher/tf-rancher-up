@@ -40,5 +40,5 @@ region                = "europe-west8"
 server_instance_count = 1
 worker_instance_count = 1
 rancher_hostname      = "yourname-rancher"
-rancher_password      = "Yourpassword.123"
+rancher_password      = "CHANGE-ME-min-12-chars"
 ```
