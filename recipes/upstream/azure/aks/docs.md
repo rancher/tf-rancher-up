@@ -56,5 +56,4 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_rancher_hostname"></a> [rancher\_hostname](#output\_rancher\_hostname) | n/a |
-| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | n/a |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | n/a |

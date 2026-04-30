@@ -59,5 +59,4 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | Rancher Initial Custom Password |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher URL |

@@ -87,5 +87,4 @@
 | <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
 | <a name="output_rancher_admin_token"></a> [rancher\_admin\_token](#output\_rancher\_admin\_token) | Rancher API token for the admin user |
 | <a name="output_rancher_hostname"></a> [rancher\_hostname](#output\_rancher\_hostname) | n/a |
-| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | n/a |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | n/a |
