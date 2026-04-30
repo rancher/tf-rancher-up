@@ -62,5 +62,4 @@
 |------|-------------|
 | <a name="output_droplets_private_ip"></a> [droplets\_private\_ip](#output\_droplets\_private\_ip) | n/a |
 | <a name="output_droplets_public_ip"></a> [droplets\_public\_ip](#output\_droplets\_public\_ip) | n/a |
-| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | n/a |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher URL |

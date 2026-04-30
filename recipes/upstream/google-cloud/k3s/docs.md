@@ -88,5 +88,4 @@
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |
 | <a name="output_instances_public_ip"></a> [instances\_public\_ip](#output\_instances\_public\_ip) | n/a |
 | <a name="output_instances_ssh_username"></a> [instances\_ssh\_username](#output\_instances\_ssh\_username) | Username used for SSH login |
-| <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | Rancher Initial Custom Password |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher URL |

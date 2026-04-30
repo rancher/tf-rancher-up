@@ -16,11 +16,6 @@ output "rancher_url" {
   value       = "https://${module.rancher_install.rancher_hostname}"
 }
 
-output "rancher_password" {
-  description = "Rancher Initial Custom Password"
-  value       = var.rancher_password
-}
-
 #output "ingress_nginx_stats" {
 #  value = data.kubernetes_service.ingress-nginx-controller-svc.spec.0.port.1.node_port
 #}
