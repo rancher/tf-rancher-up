@@ -1,0 +1,69 @@
+# vSphere Connection
+
+vsphere_server               = "vcenter.example.com"
+vsphere_user                 = "administrator@vsphere.local"
+vsphere_password             = "YourVSpherePassword"
+vsphere_allow_unverified_ssl = true
+
+# vSphere Resources
+
+vsphere_datacenter = "Datacenter"
+vsphere_datastore  = "datastore1"
+
+# Choose ONE of the following options:
+
+# Option 1 (Cluster-based): Use compute cluster name
+# vsphere_cluster                = "Cluster1"
+
+# Option 2 (Standalone ESXi Host): Use host FQDN/IP
+vsphere_host = "esxi01.example.com"
+
+# Option 3 (Explicit Resource Pool): Use resource pool path
+vsphere_resource_pool = "resource-pool"
+
+# Optional: VM folder for organization
+vsphere_folder = "vm-folder"
+
+vsphere_network         = "VM Network"
+vsphere_virtual_machine = "ubuntu-24.04-cloudimg-template"
+
+# VM Configuration
+
+prefix         = "k3s-demo"
+instance_count = 1        # For HA, use an odd number (3, 5). Use 1 for a single node.
+vm_cpus        = 4        # Number of CPUs per VM
+vm_memory      = 8192     # Memory in MBs
+vm_disk        = 100      # Disk size in GBs
+vm_username    = "ubuntu" # SSH user (must match your template)
+
+# SSH Configuration
+
+# By default, create_ssh_key_pair = true will generate an ssh key automatically.
+# create_ssh_key_pair  = false
+# ssh_private_key_path = "/path/to/k3s/rke2-key"
+# ssh_public_key_path  = "/path/to/k3s/rke2-key.pub"
+
+# K3s Configuration
+
+# Leave k3s_version null to fetch the latest available in the channel.
+k3s_version = "v1.34.3+k3s1"
+k3s_channel = "stable"
+k3s_ingress = "traefik" # Default for K3s is traefik
+# k3s_token    = "SecretK3sToken123!" # Will be auto-generated if left commented
+k3s_config = <<EOF
+# Add any K3s config here. Example:
+# disable:
+#   - traefik
+EOF
+
+# Rancher Configuration
+
+rancher_version            = "v2.13.1"
+rancher_replicas           = 3
+rancher_bootstrap_password = "initial-bootstrap-password"
+rancher_password           = "initial-bootstrap-password"
+# rancher_helm_repository    = "https://releases.rancher.com/server-charts/latest" # Uncomment to use latest
+
+# Advanced Options
+
+helm_timeout = 1800

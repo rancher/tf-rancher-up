@@ -1,0 +1,72 @@
+# vSphere Connection
+
+vsphere_server               = "vcenter.example.com"
+vsphere_user                 = "administrator@vsphere.local"
+vsphere_password             = "YourVSpherePassword"
+vsphere_allow_unverified_ssl = true
+
+# vSphere Resources
+
+vsphere_datacenter = "Datacenter"
+vsphere_datastore  = "datastore1"
+
+# Choose ONE of the following options:
+
+# Option 1 (Cluster-based): Use compute cluster name
+# vsphere_cluster                = "Cluster1"
+
+# Option 2 (Standalone ESXi Host): Use host FQDN/IP
+vsphere_host = "esxi01.example.com"
+
+# Option 3 (Explicit Resource Pool): Use resource pool path
+vsphere_resource_pool = "resource-pool"
+
+# Optional: VM folder for organization
+vsphere_folder = "vm-folder"
+
+vsphere_network         = "VM Network"
+vsphere_virtual_machine = "ubuntu-24.04-cloudimg-template" # Template name
+
+
+# VM Configuration
+
+prefix         = "rke2-test"
+instance_count = 1 # Use 1, 3, or 5 for HA
+vm_cpus        = 4
+vm_memory      = 8192 # MB
+vm_disk        = 60   # GB
+vm_username    = "ubuntu"
+
+# SSH Configuration
+
+#ssh_public_key       = "ssh-ed25519 AAA... user@test.local"
+#ssh_public_key_path  = "./rke2-key.pub"
+#create_ssh_key_pair  = false        # Set to false if using existing key
+#ssh_private_key_path = "./rke2-key" # Only needed if create_ssh_key_pair = false
+
+# RKE2 Configuration
+
+rke2_version = "v1.34.3+rke2r1" # Or null for latest
+#rke2_token   = mytoken          # Auto-generated if not provided
+rke2_ingress = "ingress-nginx"  # or "traefik"
+
+# Optional: Additional RKE2 configuration
+# rke2_config = <<-EOT
+#   write-kubeconfig-mode: "0644"
+#   disable:
+#     - rke2-ingress-nginx
+# EOT
+
+# Rancher Configuration (Optional)
+
+rancher_version            = "v2.13.1"
+rancher_bootstrap_password = "initial-bootstrap-password"
+rancher_password           = "initial-bootstrap-password"
+rancher_replicas           = 3
+rancher_helm_repository    = "https://charts.rancher.com/server-charts/prime"
+
+
+# Advanced Options
+
+# kube_config_path               = null  # Defaults to current directory
+# wait                           = true

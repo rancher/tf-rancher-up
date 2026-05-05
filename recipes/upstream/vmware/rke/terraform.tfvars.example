@@ -1,0 +1,60 @@
+# vSphere Connection
+
+vsphere_server               = "vcenter.example.com"
+vsphere_user                 = "administrator@vsphere.local"
+vsphere_password             = "YourVSpherePassword"
+vsphere_allow_unverified_ssl = true
+
+# vSphere Resources
+
+vsphere_datacenter = "Datacenter"
+vsphere_datastore  = "datastore1"
+
+# Choose ONE of the following options:
+
+# Option 1 (Cluster-based): Use compute cluster name
+# vsphere_cluster                = "Cluster1"
+
+# Option 2 (Standalone ESXi Host): Use host FQDN/IP
+vsphere_host = "esxi01.example.com"
+
+# Option 3 (Explicit Resource Pool): Use resource pool path
+vsphere_resource_pool = "resource-pool"
+
+# Optional: VM folder for organization
+vsphere_folder = "vm-folder"
+
+vsphere_network         = "VM Network"
+vsphere_virtual_machine = "ubuntu-22.04-cloudimg-template" # Template name
+
+# VM Configuration
+
+prefix         = "rke-vmware"
+instance_count = 1
+vm_cpus        = 4
+vm_memory      = 8192 # MB
+vm_disk        = 60   # GB
+vm_username    = "ubuntu"
+
+# SSH Configuration
+
+# create_ssh_key_pair  = false
+# ssh_public_key_path  = "~/.ssh/id_rsa_rke.pub"
+# ssh_private_key_path = "~/.ssh/id_rsa_rke"
+
+# RKE Configuration
+
+kubernetes_version = "v1.31.7-rancher1-1"
+
+# Rancher Configuration
+
+rancher_version            = "v2.13.1"
+rancher_bootstrap_password = "initial-bootstrap-password"
+rancher_password           = "initial-bootstrap-password"
+rancher_replicas           = 3
+rancher_helm_repository    = "https://charts.rancher.com/server-charts/prime"
+
+# Advanced Options
+
+wait         = 60
+helm_timeout = 900

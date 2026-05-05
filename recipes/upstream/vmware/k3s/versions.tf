@@ -1,4 +1,3 @@
-# TODO: Fix the required_version
 terraform {
   required_version = ">= 1.5.0"
 
@@ -38,10 +37,6 @@ terraform {
     time = {
       source  = "hashicorp/time"
       version = ">= 0.9.1"
-    }
-    rke = {
-      source  = "rancher/rke"
-      version = ">= 1.7.5"
     }
   }
 }
