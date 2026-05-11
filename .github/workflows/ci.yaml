@@ -48,11 +48,14 @@ jobs:
         run: |
           git fetch origin main
           git worktree add /tmp/main-checkout origin/main
+          # Copy baseline config so detect-secrets uses consistent plugins/filters
+          cp .secrets.baseline /tmp/main-checkout/
+          cd /tmp/main-checkout
           detect-secrets scan \
             --exclude-files '\.terraform/.*' \
             --exclude-files '\.terraform\.lock\.hcl' \
             --exclude-files '\.secrets\.baseline' \
-            /tmp/main-checkout > /tmp/main-baseline.json
+            . > /tmp/main-baseline.json
           rm -rf /tmp/main-checkout
           git worktree prune
 
