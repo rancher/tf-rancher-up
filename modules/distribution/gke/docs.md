@@ -34,11 +34,11 @@ No modules.
 | <a name="input_instance_disk_size"></a> [instance\_disk\_size](#input\_instance\_disk\_size) | Size of the disk attached to each node, specified in GB | `number` | `50` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The name of a Google Compute Engine machine type | `string` | `"e2-highmem-2"` | no |
 | <a name="input_ip_cidr_range"></a> [ip\_cidr\_range](#input\_ip\_cidr\_range) | Range of private IPs available for the Google Subnet | `string` | `"10.10.0.0/24"` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix used in front of all Google resources | `any` | n/a | yes |
-| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the Google Project that will contain all created resources | `any` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix used in front of all Google resources | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the Google Project that will contain all created resources | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | Google Region to create the resources | `string` | `"us-west2"` | no |
-| <a name="input_subnet"></a> [subnet](#input\_subnet) | Google Subnet used for all resources | `any` | `null` | no |
-| <a name="input_vpc"></a> [vpc](#input\_vpc) | Google VPC used for all resources | `any` | `null` | no |
+| <a name="input_subnet"></a> [subnet](#input\_subnet) | Google Subnet used for all resources | `string` | `null` | no |
+| <a name="input_vpc"></a> [vpc](#input\_vpc) | Google VPC used for all resources | `string` | `null` | no |
 
 ## Outputs
 

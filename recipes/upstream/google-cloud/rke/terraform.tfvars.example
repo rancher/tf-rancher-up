@@ -74,3 +74,14 @@ rancher_hostname = "rancher"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
 # rancher_version = "2.7.3"
+
+## -- Rancher Helm repository (for airgap/private registry deployments)
+# rancher_helm_repository          = "https://your-private-registry/rancher"
+# rancher_helm_repository_username = "username"
+# rancher_helm_repository_password = "password"
+# rancher_replicas                  = 3
+
+## -- Cert Manager Helm repository (for airgap/private registry deployments)
+# cert_manager_helm_repository          = "https://your-private-registry/cert-manager"
+# cert_manager_helm_repository_username = "username"
+# cert_manager_helm_repository_password = "password"

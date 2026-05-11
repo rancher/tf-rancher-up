@@ -14,10 +14,6 @@ output "rancher_url" {
   value = "https://${local.rancher_hostname}"
 }
 
-output "rancher_password" {
-  value = var.rancher_password
-}
-
 output "rancher_admin_token" {
   description = "Rancher API token for the admin user"
   value       = module.rancher_install.rancher_admin_token

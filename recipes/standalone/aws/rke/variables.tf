@@ -1,4 +1,5 @@
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
@@ -10,6 +11,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null
@@ -153,11 +155,13 @@ variable "os_type" {
 }
 
 variable "sles_version" {
+  type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
   default     = "15-sp6"
 }
 
 variable "ubuntu_version" {
+  type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
   default     = "22.04"
 }
@@ -188,21 +192,25 @@ variable "restricted_access" {
 }
 
 variable "create_vpc" {
+  type        = bool
   description = "Create a VPC"
   default     = null
 }
 
 variable "vpc_cidr" {
+  type        = string
   description = "CIDR for AWS VPC"
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = true
 }
 
 variable "private_subnets" {
+  type        = bool
   description = "Create Public subnets for VPC"
   default     = null
 }

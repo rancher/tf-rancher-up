@@ -1,16 +1,20 @@
 variable "prefix" {
+  type    = string
   default = "gke-test"
 }
 
 variable "project_id" {
+  type    = string
   default = "project-test"
 }
 
 variable "region" {
+  type    = string
   default = "us-west2"
 }
 
 variable "instance_count" {
+  type    = string
   default = "3"
 }
 
@@ -20,5 +24,6 @@ variable "create_ssh_key_pair" {
 }
 
 variable "startup_script" {
+  type    = string
   default = "export DEBIAN_FRONTEND=noninteractive ; curl -sSL https://releases.rancher.com/install-docker/20.10.sh | sh - ; sudo usermod -aG docker ubuntu ; newgrp docker ; sudo sysctl -w net.bridge.bridge-nf-call-iptables=1 ; sleep 180"
 }

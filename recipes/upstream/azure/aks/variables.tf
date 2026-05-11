@@ -229,6 +229,7 @@ variable "rancher_version" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -240,6 +241,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
@@ -251,6 +253,7 @@ variable "rancher_password" {
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart (seconds)"
   default     = null
 }
@@ -259,4 +262,42 @@ variable "kube_config_filename" {
   description = "Filename to write the kue config"
   type        = string
   default     = null
+}
+
+variable "rancher_helm_repository" {
+  description = "Helm repository for Rancher chart"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_username" {
+  description = "Private Rancher helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "rancher_helm_repository_password" {
+  description = "Private Rancher helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
+}
+
+variable "cert_manager_helm_repository" {
+  description = "Helm repository for Cert Manager chart"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_username" {
+  description = "Private Cert Manager helm repository username"
+  default     = null
+  type        = string
+}
+
+variable "cert_manager_helm_repository_password" {
+  description = "Private Cert Manager helm repository password"
+  default     = null
+  type        = string
+  sensitive   = true
 }

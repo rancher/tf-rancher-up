@@ -53,6 +53,7 @@ variable "rancher_antiaffinity" {
 }
 
 variable "rancher_bootstrap_password" {
+  sensitive   = true
   description = "Password to use when bootstrapping Rancher (min 12 characters)"
   default     = "initial-bootstrap-password"
   type        = string
@@ -64,6 +65,7 @@ variable "rancher_bootstrap_password" {
 }
 
 variable "rancher_password" {
+  sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
   default     = null
   type        = string
@@ -110,6 +112,7 @@ variable "rancher_helm_repository_username" {
 }
 
 variable "rancher_helm_repository_password" {
+  sensitive   = true
   description = "Private Rancher helm repository password"
   default     = null
   type        = string
@@ -140,6 +143,7 @@ variable "cert_manager_helm_repository_username" {
 }
 
 variable "cert_manager_helm_repository_password" {
+  sensitive   = true
   description = "Private Cert Manager helm repository password"
   default     = null
   type        = string
@@ -164,6 +168,7 @@ variable "registry_username" {
 }
 
 variable "registry_password" {
+  sensitive   = true
   description = "Private container image registry password"
   default     = null
   type        = string
@@ -194,11 +199,13 @@ variable "tls_source" {
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
 
 variable "wait" {
+  type        = string
   description = "An optional wait before installing the Rancher helm chart (seconds)"
   default     = null
 }

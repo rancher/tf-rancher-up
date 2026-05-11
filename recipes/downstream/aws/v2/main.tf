@@ -22,4 +22,5 @@ module "downstream_rke2" {
   cp_count              = var.cp_count
   worker_count          = var.worker_count
   cni_provider          = var.cni_provider
+  rke2_ingress          = var.rke2_ingress
 }

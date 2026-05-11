@@ -113,14 +113,21 @@ locals {
 }
 
 module "rancher_install" {
-  source                     = "../../../../modules/rancher"
-  dependency                 = [module.rke2_first_server]
-  kubeconfig_file            = local_file.kube_config_yaml.filename
-  rancher_hostname           = local.rancher_hostname
-  rancher_bootstrap_password = var.rancher_bootstrap_password
-  rancher_password           = var.rancher_password
-  bootstrap_rancher          = var.bootstrap_rancher
-  rancher_version            = var.rancher_version
+  source                                = "../../../../modules/rancher"
+  dependency                            = [module.rke2_first_server]
+  kubeconfig_file                       = local_file.kube_config_yaml.filename
+  rancher_hostname                      = local.rancher_hostname
+  rancher_bootstrap_password            = var.rancher_bootstrap_password
+  rancher_password                      = var.rancher_password
+  bootstrap_rancher                     = var.bootstrap_rancher
+  rancher_version                       = var.rancher_version
+  rancher_replicas                      = min(var.rancher_replicas, var.instance_count)
+  rancher_helm_repository               = var.rancher_helm_repository
+  rancher_helm_repository_username      = var.rancher_helm_repository_username
+  rancher_helm_repository_password      = var.rancher_helm_repository_password
+  cert_manager_helm_repository          = var.cert_manager_helm_repository
+  cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
+  cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
   rancher_additional_helm_values = [
     "replicas: ${var.instance_count}",
     "ingress.ingressClassName: ${var.rke2_ingress}",

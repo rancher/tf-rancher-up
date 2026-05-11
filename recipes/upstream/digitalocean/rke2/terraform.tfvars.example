@@ -81,3 +81,13 @@
 
 # Create DigitalOcean Firewall associated with droplets
 # create_firewall = true
+## -- Rancher Helm repository (for airgap/private registry deployments)
+# rancher_helm_repository          = "https://your-private-registry/rancher"
+# rancher_helm_repository_username = "username"
+# rancher_helm_repository_password = "password"
+# rancher_replicas                  = 3
+
+## -- Cert Manager Helm repository (for airgap/private registry deployments)
+# cert_manager_helm_repository          = "https://your-private-registry/cert-manager"
+# cert_manager_helm_repository_username = "username"
+# cert_manager_helm_repository_password = "password"

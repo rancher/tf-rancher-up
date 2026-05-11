@@ -153,11 +153,13 @@ variable "os_type" {
 }
 
 variable "sles_version" {
+  type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
   default     = "15-sp6"
 }
 
 variable "ubuntu_version" {
+  type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
   default     = "22.04"
 }
@@ -187,6 +189,7 @@ variable "worker_nodes_instance_disk_size" {
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
@@ -216,6 +219,7 @@ variable "cloud_provider" {
 }
 
 variable "create_kubeconfig_file" {
+  type        = bool
   description = "Boolean flag to generate a kubeconfig file (mostly used for dev only)"
   default     = true
 }

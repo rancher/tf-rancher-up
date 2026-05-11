@@ -5,6 +5,7 @@ variable "aws_access_key" {
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type        = string
   description = "AWS secret key used to create AWS infrastructure"
   default     = null

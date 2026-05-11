@@ -11,16 +11,20 @@ variable "rke2_version" {
 }
 
 variable "rke2_token" {
+  sensitive   = true
+  type        = string
   description = "Token to use when configuring RKE2 nodes"
   default     = null
 }
 
 variable "rke2_config" {
+  type        = string
   description = "Additional RKE2 configuration to add to the config.yaml file"
   default     = null
 }
 
 variable "dependency" {
+  type        = any
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
