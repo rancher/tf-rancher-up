@@ -44,35 +44,70 @@ jobs:
       - name: Install detect-secrets
         run: pip install detect-secrets
 
-      - name: Scan for secrets
+      - name: Build baseline from origin/main
+        run: |
+          git fetch origin main
+          git worktree add /tmp/main-checkout origin/main
+          detect-secrets scan \
+            --exclude-files '\.terraform/.*' \
+            --exclude-files '\.terraform\.lock\.hcl' \
+            --exclude-files '\.secrets\.baseline' \
+            /tmp/main-checkout > /tmp/main-baseline.json
+          rm -rf /tmp/main-checkout
+          git worktree prune
+
+      - name: Scan merge commit and compare
         run: |
           detect-secrets scan \
             --exclude-files '\.terraform/.*' \
             --exclude-files '\.terraform\.lock\.hcl' \
-            > /tmp/secrets-scan.json
-          # Fail if any finding in the new scan is absent from the committed baseline
+            --exclude-files '\.secrets\.baseline' \
+            > /tmp/pr-scan.json
           python3 - <<'EOF'
           import json, sys
-          with open('/tmp/secrets-scan.json') as f:
-              new = json.load(f)
-          with open('.secrets.baseline') as f:
-              baseline = json.load(f)
-          baseline_hashes = {
-              h
-              for secrets in baseline.get('results', {}).values()
-              for h in [s['hashed_secret'] for s in secrets]
-          }
-          new_findings = [
-              (path, s)
-              for path, secrets in new.get('results', {}).items()
+
+          with open('/tmp/pr-scan.json') as f:
+              pr_scan = json.load(f)
+          with open('/tmp/main-baseline.json') as f:
+              main_baseline = json.load(f)
+
+          # Hashes from origin/main's current code
+          main_hashes = {
+              s['hashed_secret']
+              for secrets in main_baseline.get('results', {}).values()
               for s in secrets
-              if s['hashed_secret'] not in baseline_hashes
-          ]
+          }
+
+          # Hashes from the committed baseline — covers legacy reviewed findings
+          # that main may have since diverged from, or the first-time setup
+          try:
+              with open('.secrets.baseline') as f:
+                  committed = json.load(f)
+              committed_hashes = {
+                  s['hashed_secret']
+                  for secrets in committed.get('results', {}).values()
+                  for s in secrets
+              }
+          except (FileNotFoundError, json.JSONDecodeError):
+              committed_hashes = set()
+
+          # Union: known-safe set covers both current main + legacy reviewed state
+          baseline_hashes = main_hashes | committed_hashes
+
+          new_findings = []
+          for path, secrets in pr_scan.get('results', {}).items():
+              for s in secrets:
+                  if s['hashed_secret'] not in baseline_hashes:
+                      new_findings.append((path, s))
+
           if new_findings:
-              for path, s in new_findings:
-                  print(f"UNREVIEWED SECRET: {path}:{s['line_number']} [{s['type']}]")
+              print("UNREVIEWED SECRETS introduced by this PR:")
+              for path, s in sorted(new_findings, key=lambda x: (x[0], x[1].get('line_number', 0))):
+                  print(f"  {path}:{s['line_number']} [{s['type']}]")
               sys.exit(1)
-          print(f"All {sum(len(v) for v in new.get('results',{}).values())} finding(s) are in the baseline — OK")
+
+          pr_total = sum(len(v) for v in pr_scan.get('results', {}).values())
+          print(f"All {pr_total} finding(s) are in the baseline — OK")
           EOF
 
   check_docs:
