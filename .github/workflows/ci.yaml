@@ -56,6 +56,7 @@ jobs:
             --exclude-files '\.terraform\.lock\.hcl' \
             --exclude-files '\.secrets\.baseline' \
             . > /tmp/main-baseline.json
+          cd $GITHUB_WORKSPACE
           rm -rf /tmp/main-checkout
           git worktree prune
 
