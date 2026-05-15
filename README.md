@@ -62,6 +62,7 @@ Use these steps to set up a Rancher management cluster on DigitalOcean with RKE2
 
 | Provider | Upstream Recipes | Downstream/Standalone Recipes |
 | :--- | :--- | :--- |
+| Any / None | None | [Custom](./recipes/downstream/custom), [Imported](./recipes/downstream/imported) |
 | AWS | [RKE](./recipes/upstream/aws/rke), [RKE2](./recipes/upstream/aws/rke2), [K3S](./recipes/upstream/aws/k3s) | [v2](./recipes/downstream/aws/v2), [EKS](./recipes/downstream/aws/EKS), [RKE](./recipes/downstream/aws/rke), [Split-roles RKE](./recipes/rke/split-roles/aws) |
 | Azure | [RKE](./recipes/upstream/azure/rke), [RKE2](./recipes/upstream/azure/rke2), [K3S](./recipes/upstream/azure/k3s), [AKS](./recipes/upstream/azure/aks) | None |
 | Google Cloud | [RKE](./recipes/upstream/google-cloud/rke), [RKE2](./recipes/upstream/google-cloud/rke2), [K3S](./recipes/upstream/google-cloud/k3s), [GKE](./recipes/upstream/google-cloud/gke) | [GKE](./recipes/downstream/gcp/GKE) |

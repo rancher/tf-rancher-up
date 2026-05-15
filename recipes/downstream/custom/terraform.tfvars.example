@@ -1,0 +1,18 @@
+###### !! Required variables !! ######
+
+## -- Rancher server URL
+rancher_url = "https://rancher.yourdomain.com"
+
+## -- Rancher API token
+rancher_token = "token-xxxx"
+
+## -- Name of the custom cluster
+cluster_name = "my-custom-cluster"
+
+## -- Kubernetes version for the custom cluster
+kubernetes_version = "v1.34.7+rke2r1"
+
+###### !! Optional variables !! ######
+
+## -- Allow insecure connections to Rancher
+# rancher_insecure = true
