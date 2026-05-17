@@ -25,8 +25,8 @@ No resources.
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the custom cluster | `string` | `"custom-cluster"` | no |
 | <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version for the custom cluster | `string` | n/a | yes |
 | <a name="input_rancher_insecure"></a> [rancher\_insecure](#input\_rancher\_insecure) | n/a | `bool` | `true` | no |
-| <a name="input_rancher_token"></a> [rancher\_token](#input\_rancher\_token) | Rancher Token Key | `string` | n/a | yes |
-| <a name="input_rancher_url"></a> [rancher\_url](#input\_rancher\_url) | Rancher API URL | `string` | n/a | yes |
+| <a name="input_rancher_token"></a> [rancher\_token](#input\_rancher\_token) | Rancher API token | `string` | n/a | yes |
+| <a name="input_rancher_url"></a> [rancher\_url](#input\_rancher\_url) | The Rancher server URL | `string` | n/a | yes |
 
 ## Outputs
 
