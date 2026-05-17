@@ -1,10 +1,10 @@
 # Imported Cluster Recipe
 
-This recipe imports an existing Kubernetes cluster into Rancher.
+This recipe imports an existing Kubernetes cluster into Rancher. It provides the registration command to be applied on the existing downstream cluster.
 
 ## Usage
 
-1. Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in the values.
-2. Run `terraform init`.
-3. Run `terraform apply`.
-4. Run either the `kubectl_apply_command` (secure) or `insecure_kubectl_apply_command` outputted by Terraform on your existing cluster.
+- Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in the values.
+- Run `terraform init`.
+- Run `terraform apply`.
+- Run either the `command` (secure) or `insecure_command` in the outputs on your existing cluster.
