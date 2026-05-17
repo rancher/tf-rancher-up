@@ -1,11 +1,11 @@
 variable "rancher_url" {
   type        = string
-  description = "Rancher API URL"
+  description = "The Rancher server URL"
 }
 
 variable "rancher_token" {
   type        = string
-  description = "Rancher Token Key"
+  description = "Rancher API token"
   sensitive   = true
 }
 
