@@ -1,6 +1,6 @@
 # Custom Downstream Cluster Module
 
-This module creates a custom downstream cluster in Rancher. It provides the registration tokens needed to join external nodes to the cluster.
+This module creates a custom downstream cluster in Rancher for RKE2 or k3s. It provides the registration commands needed to join existing nodes to the cluster.
 
 ## Usage
 

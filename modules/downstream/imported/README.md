@@ -1,7 +1,6 @@
 # Imported Cluster Module
 
-This module creates an imported cluster in Rancher using the v2 provisioning engine.
-It provides the registration command and manifest URL to be applied on the existing downstream cluster.
+This module creates an imported cluster in Rancher. It provides the registration command to be applied on the existing downstream cluster.
 
 ## Usage
 
