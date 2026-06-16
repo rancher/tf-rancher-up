@@ -34,7 +34,7 @@ output "ssh_key_pair_name" {
 }
 
 output "public_subnets" {
-  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(local.existing_subnet)
+  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids)
 }
 
 output "private_subnets" {
