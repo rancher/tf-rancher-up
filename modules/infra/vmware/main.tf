@@ -1,18 +1,12 @@
-# VMware Infrastructure Module - Main Configuration
-# Provisions VMs on vSphere with cloud-init support
-
 locals {
-  # Generate SSH key if requested
   ssh_private_key_path = var.create_ssh_key_pair ? "${path.cwd}/${var.prefix}-ssh_private_key.pem" : var.ssh_private_key_path
 
-  # Use provided user_data or generate default cloud-init
   effective_user_data = var.user_data != null ? var.user_data : templatefile("${path.module}/cloud-init-default.yaml.tpl", {
     vm_username    = var.vm_username
     ssh_public_key = var.ssh_public_key
   })
 }
 
-# Generate SSH key pair if requested
 resource "tls_private_key" "ssh_key" {
   count     = var.create_ssh_key_pair ? 1 : 0
   algorithm = "ED25519"
@@ -25,13 +19,10 @@ resource "local_file" "private_key" {
   file_permission = "0600"
 }
 
-# Wait resource to allow VM boot and cloud-init to start
-resource "time_sleep" "vm_boot" {
-  count           = var.instance_count
-  create_duration = "30s"
-}
+# resource "time_sleep" "vm_boot" {
+#   create_duration = "30s"
+# }
 
-# Provision VMs
 resource "vsphere_virtual_machine" "instance" {
   count = var.instance_count
 
@@ -66,9 +57,6 @@ resource "vsphere_virtual_machine" "instance" {
     thin_provisioned = true
   }
 
-
-
-  # Cloud-init configuration via VMware guestinfo
   extra_config = {
     "guestinfo.metadata" = base64encode(templatefile("${path.module}/metadata.yaml.tpl", {
       hostname = "${var.prefix}-${var.start_index + count.index}"
@@ -78,7 +66,6 @@ resource "vsphere_virtual_machine" "instance" {
     "guestinfo.userdata.encoding" = "base64"
   }
 
-  # Wait for cloud-init to complete
   provisioner "remote-exec" {
     connection {
       host        = self.default_ip_address
@@ -96,5 +83,5 @@ resource "vsphere_virtual_machine" "instance" {
     ]
   }
 
-  depends_on = [time_sleep.vm_boot]
+  # depends_on = [time_sleep.vm_boot]
 }

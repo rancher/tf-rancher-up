@@ -9,6 +9,9 @@
 
 # This file has personal secrets, so don't add
 terraform.tfvars
+*-key
+*-key.pub
+*kubeconfig.yaml
 
 # Crash log files
 crash.log
