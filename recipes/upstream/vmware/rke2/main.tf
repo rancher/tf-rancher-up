@@ -2,16 +2,6 @@ locals {
   kc_path = var.kube_config_path != null ? var.kube_config_path : path.cwd
   kc_file = "${local.kc_path}/${var.prefix}_kubeconfig.yaml"
 
-  # SSH Key Logic
-  ssh_key_name         = "rke2-key"
-  ssh_private_key_path = var.create_ssh_key_pair ? "${path.cwd}/${local.ssh_key_name}" : var.ssh_private_key_path
-  ssh_public_key_path  = var.create_ssh_key_pair ? "${path.cwd}/${local.ssh_key_name}.pub" : var.ssh_public_key_path
-
-
-  ssh_public_key_content = var.create_ssh_key_pair ? tls_private_key.ssh_key[0].public_key_openssh : file(var.ssh_public_key_path)
-
-  rke2_ingress = var.rke2_ingress
-
   ingress_class_map = {
     "nginx"         = "nginx"
     "ingress-nginx" = "nginx"
@@ -20,20 +10,15 @@ locals {
   rancher_ingress_class = lookup(local.ingress_class_map, var.rke2_ingress, var.rke2_ingress)
 }
 
-# RKE2  - FIRST SERVER (Token + Config Generation)
-
 module "rke2_first" {
   source       = "../../../../modules/distribution/rke2"
   rke2_token   = var.rke2_token
   rke2_version = var.rke2_version
   rke2_config  = var.rke2_config
-  rke2_ingress = local.rke2_ingress
+  rke2_ingress = var.rke2_ingress
 }
 
-
-
 locals {
-  # First server network wait script
   network_wait_script = <<-EOT
     #!/bin/bash
     # Wait for network
@@ -41,39 +26,17 @@ locals {
   EOT
 }
 
-# INFRASTRUCTURE - FIRST SERVER
-
-# SSH KEY GENERATION
-resource "tls_private_key" "ssh_key" {
-  count     = var.create_ssh_key_pair ? 1 : 0
-  algorithm = "ED25519"
-}
-
-resource "local_file" "private_key" {
-  count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.ssh_private_key_path
-  content         = tls_private_key.ssh_key[0].private_key_openssh
-  file_permission = "0600"
-}
-
-resource "local_file" "public_key" {
-  count           = var.create_ssh_key_pair ? 1 : 0
-  filename        = local.ssh_public_key_path
-  content         = tls_private_key.ssh_key[0].public_key_openssh
-  file_permission = "0644"
-}
-
 module "rke2_first_server" {
   source               = "../../../../modules/infra/vmware"
   prefix               = "${var.prefix}-cp"
-  instance_count       = 1
+  instance_count       = var.instance_count > 1 ? var.instance_count - 1 : 0
   vm_cpus              = var.vm_cpus
   vm_memory            = var.vm_memory
   vm_disk              = var.vm_disk
   vm_username          = var.vm_username
-  ssh_public_key       = local.ssh_public_key_content
-  ssh_private_key_path = local.ssh_private_key_path
-  create_ssh_key_pair  = false
+  ssh_public_key       = var.ssh_public_key_path
+  ssh_private_key_path = var.ssh_private_key_path
+  create_ssh_key_pair  = var.create_ssh_key_pair
 
   # vSphere configuration
   vsphere_server               = var.vsphere_server
@@ -93,13 +56,11 @@ module "rke2_first_server" {
   user_data = templatefile("${path.module}/cloud-init-multipart.yaml.tpl", {
     hostname               = "${var.prefix}-cp-1"
     vm_username            = var.vm_username
-    ssh_public_key_content = local.ssh_public_key_content
+    ssh_public_key_content = module.rke2_first_server.ssh_public_key
     wait_script            = local.network_wait_script
     rke2_script            = module.rke2_first.rke2_user_data
   })
 }
-
-# RKE2 - ADDITIONAL SERVERS
 
 module "rke2_additional" {
   source          = "../../../../modules/distribution/rke2"
@@ -107,10 +68,8 @@ module "rke2_additional" {
   rke2_version    = var.rke2_version
   rke2_config     = var.rke2_config
   first_server_ip = module.rke2_first_server.instances_private_ip[0]
-  rke2_ingress    = local.rke2_ingress
+  rke2_ingress    = var.rke2_ingress
 }
-
-# CLOUD-INIT COMPOSITION - ADDITIONAL SERVERS
 
 locals {
   additional_wait_script = <<-EOT
@@ -122,20 +81,18 @@ locals {
   EOT
 }
 
-# INFRASTRUCTURE - ADDITIONAL SERVERS
-
 module "rke2_additional_servers" {
-  count                = var.instance_count > 1 ? var.instance_count - 1 : 0
+
   source               = "../../../../modules/infra/vmware"
   prefix               = "${var.prefix}-cp"
-  instance_count       = 1
-  start_index          = count.index + 2
+  instance_count       = var.instance_count > 1 ? var.instance_count - 1 : 0
+  start_index          = 2
   vm_cpus              = var.vm_cpus
   vm_memory            = var.vm_memory
   vm_disk              = var.vm_disk
   vm_username          = var.vm_username
-  ssh_public_key       = local.ssh_public_key_content
-  ssh_private_key_path = local.ssh_private_key_path
+  ssh_public_key       = module.rke2_first_server.ssh_public_key
+  ssh_private_key_path = module.rke2_first_server.ssh_key_path
   create_ssh_key_pair  = false
 
   # vSphere configuration (same as first server)
@@ -154,22 +111,15 @@ module "rke2_additional_servers" {
 
   # Merged cloud-init for additional servers
   user_data = templatefile("${path.module}/cloud-init-multipart.yaml.tpl", {
-    hostname               = "${var.prefix}-cp-${count.index + 2}"
+    hostname               = "${var.prefix}-cp"
     vm_username            = var.vm_username
-    ssh_public_key_content = local.ssh_public_key_content
+    ssh_public_key_content = module.rke2_first_server.ssh_public_key
     wait_script            = local.additional_wait_script
     rke2_script            = module.rke2_additional.rke2_user_data
   })
-
-  # Ensure first server is deployed first
-  depends_on = [module.rke2_first_server]
 }
 
-# KUBECONFIG RETRIEVAL
-
 resource "null_resource" "wait_for_rke2" {
-  depends_on = [module.rke2_first_server]
-
   triggers = {
     server_id = module.rke2_first_server.instances_private_ip[0]
   }
@@ -234,8 +184,6 @@ resource "null_resource" "retrieve_kubeconfig" {
   }
 }
 
-# RANCHER INSTALLATION 
-
 locals {
   rancher_hostname = join(".", ["rancher", module.rke2_first_server.instances_private_ip[0], "sslip.io"])
 }
@@ -265,4 +213,3 @@ module "rancher_install" {
     "ingress.ingressClassName: ${local.rancher_ingress_class}"
   ]
 }
-
