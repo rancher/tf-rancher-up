@@ -1,0 +1,15 @@
+###### !! Required variables !! ######
+
+## -- Rancher server URL
+rancher_url = "https://rancher.yourdomain.com"
+
+## -- Rancher API token
+rancher_token = "token-xxxx"
+
+## -- Name of the imported cluster
+cluster_name = "my-imported-cluster"
+
+###### !! Optional variables !! ######
+
+## -- Allow insecure connections to Rancher
+# rancher_insecure = true
