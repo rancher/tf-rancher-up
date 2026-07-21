@@ -2,17 +2,17 @@ terraform {
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "~> 2.0"
+      version = ">= 2.30.0"
     }
 
     ssh = {
       source  = "loafoe/ssh"
-      version = "2.6.0"
+      version = ">= 2.7.0"
     }
 
     local = {
       source  = "hashicorp/local"
-      version = ">= 2.0.0"
+      version = ">= 2.5.0"
     }
 
     tls = {
@@ -27,7 +27,7 @@ terraform {
 
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.10.1"
+      version = ">= 2.10.0"
     }
   }
 

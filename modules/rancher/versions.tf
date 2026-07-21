@@ -6,7 +6,7 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.10.1"
+      version = ">= 2.10.0"
     }
     rancher2 = {
       source  = "rancher/rancher2"
