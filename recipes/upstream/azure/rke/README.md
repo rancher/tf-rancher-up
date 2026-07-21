@@ -1,5 +1,9 @@
 # Upstream | Azure | Virtual Machine x RKE
 
+> [!WARNING]
+> **RKE1 is End of Life (EOL) as of July 2025.**
+> This module/recipe is no longer receiving updates and is unsupported. For new deployments, please use the equivalent RKE2 or K3s recipes.
+
 This module is used to establish a Rancher (local) managment cluster using [Azure Virtual Machine](https://learn.microsoft.com/en-us/azure/virtual-machines/) and [RKE](https://rke.docs.rancher.com/).
 
 ## Usage

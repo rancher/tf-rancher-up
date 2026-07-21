@@ -1,5 +1,9 @@
 # Upstream | DigitalOcean | RKE
 
+> [!WARNING]
+> **RKE1 is End of Life (EOL) as of July 2025.**
+> This module/recipe is no longer receiving updates and is unsupported. For new deployments, please use the equivalent RKE2 or K3s recipes.
+
 This module is used to establish a Rancher (local) management cluster using DigitalOcean and RKE.
 
 Documentation can be found [here](./docs.md).

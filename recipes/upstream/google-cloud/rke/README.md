@@ -1,5 +1,9 @@
 # Upstream | Google Cloud | Compute Engine x RKE
 
+> [!WARNING]
+> **RKE1 is End of Life (EOL) as of July 2025.**
+> This module/recipe is no longer receiving updates and is unsupported. For new deployments, please use the equivalent RKE2 or K3s recipes.
+
 This module is used to establish a Rancher (local) management cluster using [Google Compute Engine](https://cloud.google.com/compute?hl=en) and [RKE](https://rke.docs.rancher.com/).
 
 Documentation can be found [here](./docs.md).
