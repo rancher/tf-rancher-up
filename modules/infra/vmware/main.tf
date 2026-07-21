@@ -19,10 +19,6 @@ resource "local_file" "private_key" {
   file_permission = "0600"
 }
 
-resource "time_sleep" "vm_boot" {
-  create_duration = "30s"
-}
-
 resource "vsphere_virtual_machine" "instance" {
   count = var.instance_count
 
@@ -82,6 +78,4 @@ resource "vsphere_virtual_machine" "instance" {
       "echo 'Cloud-init completed!'"
     ]
   }
-
-  depends_on = [time_sleep.vm_boot]
 }
