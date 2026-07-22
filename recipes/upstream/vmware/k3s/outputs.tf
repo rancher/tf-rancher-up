@@ -1,6 +1,6 @@
 output "first_server_ip" {
   description = "The IP address of the first K3s server."
-  value       = module.k3s_first_server.instances_private_ip[0]
+  value       = try(module.k3s_first_server.instances_private_ip[0], "")
 }
 
 output "first_server_ssh_key_path" {

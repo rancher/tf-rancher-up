@@ -24,7 +24,7 @@ output "ssh_key_path" {
 
 output "connection_command" {
   description = "SSH command to connect to first server"
-  value       = "ssh -i ${module.rke2_first_server.ssh_key_path} ${var.vm_username}@${module.rke2_first_server.instances_private_ip[0]}"
+  value       = "ssh -i ${module.rke2_first_server.ssh_key_path} ${var.vm_username}@${try(module.rke2_first_server.instances_private_ip[0], "")}"
 }
 
 output "rancher_url" {

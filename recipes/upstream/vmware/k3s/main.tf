@@ -68,7 +68,7 @@ module "k3s_additional" {
   k3s_version     = var.k3s_version
   k3s_config      = var.k3s_config
   k3s_channel     = var.k3s_channel
-  first_server_ip = module.k3s_first_server.instances_private_ip[0]
+  first_server_ip = try(module.k3s_first_server.instances_private_ip[0], "")
 }
 
 locals {
@@ -77,7 +77,7 @@ locals {
     # Wait for network
     timeout 60 bash -c 'until ping -c1 8.8.8.8 &>/dev/null; do sleep 2; done'
     # Wait for first server to be ready on 6443 (API and K3s node join)
-    timeout 300 bash -c 'until nc -zv ${module.k3s_first_server.instances_private_ip[0]} 6443 &>/dev/null; do sleep 5; done'
+    timeout 300 bash -c 'until nc -zv ${try(module.k3s_first_server.instances_private_ip[0], "")} 6443 &>/dev/null; do sleep 5; done'
   EOT
 }
 
@@ -121,7 +121,7 @@ module "k3s_additional_servers" {
 
 resource "null_resource" "wait_for_k3s" {
   triggers = {
-    server_id = module.k3s_first_server.instances_private_ip[0]
+    server_id = try(module.k3s_first_server.instances_private_ip[0], "")
   }
 
   provisioner "remote-exec" {
@@ -134,7 +134,7 @@ resource "null_resource" "wait_for_k3s" {
 
     connection {
       type        = "ssh"
-      host        = module.k3s_first_server.instances_private_ip[0]
+      host        = try(module.k3s_first_server.instances_private_ip[0], "")
       user        = var.vm_username
       private_key = file(pathexpand(module.k3s_first_server.ssh_key_path))
     }
@@ -157,7 +157,7 @@ resource "null_resource" "wait_for_cluster_ready" {
 
     connection {
       type        = "ssh"
-      host        = module.k3s_first_server.instances_private_ip[0]
+      host        = try(module.k3s_first_server.instances_private_ip[0], "")
       user        = var.vm_username
       private_key = file(pathexpand(module.k3s_first_server.ssh_key_path))
     }
@@ -168,16 +168,16 @@ resource "null_resource" "retrieve_kubeconfig" {
   depends_on = [null_resource.wait_for_cluster_ready]
 
   triggers = {
-    server_id = module.k3s_first_server.instances_private_ip[0]
+    server_id = try(module.k3s_first_server.instances_private_ip[0], "")
   }
 
   provisioner "local-exec" {
     command = <<-EOT
       ssh -o StrictHostKeyChecking=no \
           -i ${pathexpand(module.k3s_first_server.ssh_key_path)} \
-          ${var.vm_username}@${module.k3s_first_server.instances_private_ip[0]} \
+          ${var.vm_username}@${try(module.k3s_first_server.instances_private_ip[0], "")} \
           "sudo cat /etc/rancher/k3s/k3s.yaml" | \
-      sed 's/127.0.0.1/${module.k3s_first_server.instances_private_ip[0]}/g' | \
+      sed 's/127.0.0.1/${try(module.k3s_first_server.instances_private_ip[0], "")}/g' | \
       sed 's/certificate-authority-data:.*/insecure-skip-tls-verify: true/g' > ${local.kc_file}
       chmod 600 ${local.kc_file}
     EOT
@@ -185,7 +185,7 @@ resource "null_resource" "retrieve_kubeconfig" {
 }
 
 locals {
-  rancher_hostname = join(".", ["rancher", module.k3s_first_server.instances_private_ip[0], "sslip.io"])
+  rancher_hostname = join(".", ["rancher", try(module.k3s_first_server.instances_private_ip[0], ""), "sslip.io"])
 }
 
 module "rancher_install" {
