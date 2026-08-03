@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.10"
   required_providers {
     rancher2 = {
       source  = "rancher/rancher2"
@@ -6,7 +7,7 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 4.0.0"
+      version = ">= 5.0.0"
     }
     null = {
       source  = "hashicorp/null"
