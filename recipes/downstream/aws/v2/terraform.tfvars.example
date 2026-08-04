@@ -8,14 +8,14 @@
 
 ## -- AWS region to create the resources, uncomment one or adjust as needed
 # aws_region = "us-east-1"         # US, Virginia
-aws_region = "us-west-2"         # US, Oregon
+# aws_region = "us-west-2"         # US, Oregon
 # aws_region = "eu-west-1"         # EU, Ireland
 # aws_region = "eu-west-1"         # EU, Frankfurt
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
 # Cluster name
-# cluster_name = "tf-test"
+cluster_name = "tf-test"
 
 # Enter the Rancher server URL
 rancher_url = "https://xxx"
@@ -32,18 +32,22 @@ subnet_id = "subnet-xxx"
 # Enter an existing security group name to use (not ID sg-*)
 security_group_name = "rancher-nodes"
 
-# AMI you want to use
-ami = "ami-03f4878755434977f" # Replace with your desired AMI ID
-
 # Kubernetes version for the RKE2/k3s cluster
-# https://github.com/rancher/rke2/releases/tag
+# https://github.com/rancher/rke2/tags
 # https://github.com/k3s-io/k3s/tags
-kubernetes_version = "v1.27.12+rke2r1"
+kubernetes_version = "v1.35.6+rke2r1"
 
 ###### !! Optional variables !! ######
 
-# SSH username
-# ssh_user = "ubuntu" # Replace with your SSH user
+### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
+# os_type = "sles"
+# sles_version = "15-sp6"
+# ubuntu_version = "22.04"
+
+## - SSH username (must match the SSH user for the AMI used)
+# ssh_username = "ec2-user"
+# AMI you want to use
+# ami = "xxxx" # Replace with your desired AMI ID
 
 # Enter the EC2 instance type
 # instance_type = "t3a.medium"
