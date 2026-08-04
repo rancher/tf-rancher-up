@@ -179,7 +179,7 @@ variable "ami" {
   description = "AMI to use when launching nodes"
 
   validation {
-    condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))
+    condition     = var.ami == null ? true : can(regex("^ami-[[:alnum:]]{10}", var.ami))
     error_message = "The ami value must be a valid AMI id, starting with \"ami-\"."
   }
 }
