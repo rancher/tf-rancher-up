@@ -138,11 +138,6 @@ variable "ssh_user" {
   default     = "ubuntu"
 }
 
-variable "spot_instances" {
-  type        = bool
-  description = "Use spot instances"
-  default     = null
-}
 
 variable "ami" {
   type        = string
@@ -174,4 +169,15 @@ variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
   default     = "22.04"
+}
+variable "cp_spot_instances" {
+  type        = bool
+  description = "Use spot instances for control plane nodes"
+  default     = false
+}
+
+variable "worker_spot_instances" {
+  type        = bool
+  description = "Use spot instances for worker nodes"
+  default     = false
 }

@@ -12,8 +12,8 @@ resource "rancher2_cloud_credential" "aws_credential" {
   }
 }
 
-resource "rancher2_machine_config_v2" "machine_config" {
-  generate_name = var.cluster_name
+resource "rancher2_machine_config_v2" "cp_machine_config" {
+  generate_name = "${var.cluster_name}-cp"
   amazonec2_config {
     ami                   = local.ami
     region                = var.aws_region
@@ -24,7 +24,23 @@ resource "rancher2_machine_config_v2" "machine_config" {
     root_size             = var.volume_size
     instance_type         = var.instance_type
     volume_type           = var.volume_type
-    request_spot_instance = var.spot_instances
+    request_spot_instance = var.cp_spot_instances
+  }
+}
+
+resource "rancher2_machine_config_v2" "worker_machine_config" {
+  generate_name = "${var.cluster_name}-w"
+  amazonec2_config {
+    ami                   = local.ami
+    region                = var.aws_region
+    security_group        = [var.security_group_name]
+    subnet_id             = var.subnet_id
+    vpc_id                = var.vpc_id
+    zone                  = var.zone
+    root_size             = var.volume_size
+    instance_type         = var.instance_type
+    volume_type           = var.volume_type
+    request_spot_instance = var.worker_spot_instances
   }
 }
 
@@ -34,10 +50,10 @@ resource "rancher2_cluster_v2" "cluster" {
 
   rke_config {
 
-    machine_global_config = <<-EOF
+    machine_global_config = <<-EOT
       cni: "${var.cni_provider}"
       ingress-controller: "${var.rke2_ingress}"
-    EOF
+    EOT
 
     machine_pools {
       name                         = var.cp_node_pool_name
@@ -48,8 +64,8 @@ resource "rancher2_cluster_v2" "cluster" {
       quantity                     = var.cp_count
       drain_before_delete          = true
       machine_config {
-        kind = rancher2_machine_config_v2.machine_config.kind
-        name = rancher2_machine_config_v2.machine_config.name
+        kind = rancher2_machine_config_v2.cp_machine_config.kind
+        name = rancher2_machine_config_v2.cp_machine_config.name
       }
     }
     machine_pools {
@@ -61,8 +77,8 @@ resource "rancher2_cluster_v2" "cluster" {
       quantity                     = var.worker_count
       drain_before_delete          = true
       machine_config {
-        kind = rancher2_machine_config_v2.machine_config.kind
-        name = rancher2_machine_config_v2.machine_config.name
+        kind = rancher2_machine_config_v2.worker_machine_config.kind
+        name = rancher2_machine_config_v2.worker_machine_config.name
       }
     }
   }

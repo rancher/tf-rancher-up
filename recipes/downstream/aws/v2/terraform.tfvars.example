@@ -58,4 +58,5 @@ kubernetes_version = "v1.27.12+rke2r1"
 # worker_count = 1
 # cni_provider = "calico"
 # rke2_ingress = "traefik"
-# spot_instances = false
+# cp_spot_instances     = false
+# worker_spot_instances = false
