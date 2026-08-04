@@ -15,9 +15,10 @@ module "downstream_rke2" {
   sles_version        = var.sles_version
   ubuntu_version      = var.ubuntu_version
 
-  instance_type  = var.instance_type
-  volume_size    = var.volume_size
-  spot_instances = var.spot_instances
+  instance_type         = var.instance_type
+  volume_size           = var.volume_size
+  cp_spot_instances     = var.cp_spot_instances
+  worker_spot_instances = var.worker_spot_instances
 
   cluster_name          = var.cluster_name
   kubernetes_version    = var.kubernetes_version
