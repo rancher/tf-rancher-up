@@ -63,7 +63,7 @@
 | <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `null` | no |
 | <a name="input_restricted_access"></a> [restricted\_access](#input\_restricted\_access) | Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform | `bool` | `false` | no |
 | <a name="input_rke2_config"></a> [rke2\_config](#input\_rke2\_config) | Additional RKE2 configuration to add to the config.yaml file | `string` | `null` | no |
-| <a name="input_rke2_ingress"></a> [rke2\_ingress](#input\_rke2\_ingress) | RKE2 ingress deployed (nginx or traefik) | `string` | `"ingress-nginx"` | no |
+| <a name="input_rke2_ingress"></a> [rke2\_ingress](#input\_rke2\_ingress) | RKE2 ingress deployed (ingress-nginx or traefik) | `string` | `"ingress-nginx"` | no |
 | <a name="input_rke2_token"></a> [rke2\_token](#input\_rke2\_token) | Token to use when configuring RKE2 nodes | `string` | `null` | no |
 | <a name="input_rke2_version"></a> [rke2\_version](#input\_rke2\_version) | Kubernetes version to use for the RKE2 cluster | `string` | `null` | no |
 | <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `null` | no |
