@@ -23,3 +23,13 @@ output "rancher_admin_token" {
 output "client_public_ip" {
   value = var.restricted_access == true ? module.rke2_first_server.client_public_ip : null
 }
+
+output "vpc_id" {
+  description = "VPC ID used by the Rancher environment"
+  value       = var.create_vpc == true ? module.rke2_first_server.vpc_id : null
+}
+
+output "subnets" {
+  description = "Subnets used by the Rancher environment"
+  value       = module.rke2_first_server.public_subnets != null ? module.rke2_first_server.public_subnets : var.subnet_id
+}
