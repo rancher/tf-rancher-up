@@ -31,20 +31,24 @@ No resources.
 | <a name="input_cni_provider"></a> [cni\_provider](#input\_cni\_provider) | CNI provider to use | `string` | `"calico"` | no |
 | <a name="input_cp_count"></a> [cp\_count](#input\_cp\_count) | Control plane pool node count | `number` | `1` | no |
 | <a name="input_cp_node_pool_name"></a> [cp\_node\_pool\_name](#input\_cp\_node\_pool\_name) | Control plane pool name | `string` | `"cp"` | no |
+| <a name="input_cp_spot_instances"></a> [cp\_spot\_instances](#input\_cp\_spot\_instances) | Use spot instances for control plane nodes | `bool` | `false` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type used for all EC2 instances | `string` | `"t3a.medium"` | no |
 | <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version to use for the RKE2/k3s cluster | `string` | `null` | no |
+| <a name="input_os_type"></a> [os\_type](#input\_os\_type) | Use SLES or Ubuntu images when launching instances (sles or ubuntu) | `string` | `"ubuntu"` | no |
 | <a name="input_rancher_insecure"></a> [rancher\_insecure](#input\_rancher\_insecure) | Allow insecure connections to Rancher | `bool` | `true` | no |
 | <a name="input_rancher_token"></a> [rancher\_token](#input\_rancher\_token) | Rancher API token | `string` | `null` | no |
 | <a name="input_rancher_url"></a> [rancher\_url](#input\_rancher\_url) | The Rancher server URL | `string` | `null` | no |
 | <a name="input_rke2_ingress"></a> [rke2\_ingress](#input\_rke2\_ingress) | RKE2 ingress deployed (nginx or traefik) | `string` | `"traefik"` | no |
 | <a name="input_security_group_name"></a> [security\_group\_name](#input\_security\_group\_name) | Security Group name for nodes | `string` | `null` | no |
-| <a name="input_spot_instances"></a> [spot\_instances](#input\_spot\_instances) | Use spot instances | `bool` | `null` | no |
+| <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `null` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username used for SSH with sudo access | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID for all resources | `string` | `null` | no |
+| <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `null` | no |
 | <a name="input_volume_size"></a> [volume\_size](#input\_volume\_size) | Specify root volume size (GB) | `number` | `20` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | AWS VPC to use, subnet ID and security group must exist in the VPC | `string` | `null` | no |
 | <a name="input_worker_count"></a> [worker\_count](#input\_worker\_count) | Worker pool node count | `number` | `1` | no |
 | <a name="input_worker_node_pool_name"></a> [worker\_node\_pool\_name](#input\_worker\_node\_pool\_name) | Worker pool name | `string` | `"w"` | no |
+| <a name="input_worker_spot_instances"></a> [worker\_spot\_instances](#input\_worker\_spot\_instances) | Use spot instances for worker nodes | `bool` | `false` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | AWS zone to use for all resources | `string` | `"a"` | no |
 
 ## Outputs
