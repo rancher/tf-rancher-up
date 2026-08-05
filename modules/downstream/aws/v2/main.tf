@@ -1,3 +1,7 @@
+locals {
+  ami = var.ami != null ? var.ami : (var.os_type == "ubuntu" ? data.aws_ssm_parameter.ubuntu[0].insecure_value : data.aws_ssm_parameter.sles[0].insecure_value)
+}
+
 resource "rancher2_cloud_credential" "aws_credential" {
   count       = var.cloud_credential_id != null ? 0 : 1
   name        = var.cluster_name
@@ -11,7 +15,7 @@ resource "rancher2_cloud_credential" "aws_credential" {
 resource "rancher2_machine_config_v2" "machine_config" {
   generate_name = var.cluster_name
   amazonec2_config {
-    ami                   = var.ami
+    ami                   = local.ami
     region                = var.aws_region
     security_group        = [var.security_group_name]
     subnet_id             = var.subnet_id

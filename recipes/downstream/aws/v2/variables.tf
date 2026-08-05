@@ -179,7 +179,29 @@ variable "ami" {
   description = "AMI to use when launching nodes"
 
   validation {
-    condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))
+    condition     = var.ami == null ? true : can(regex("^ami-[[:alnum:]]{10}", var.ami))
     error_message = "The ami value must be a valid AMI id, starting with \"ami-\"."
   }
+}
+
+variable "os_type" {
+  type        = string
+  description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
+  default     = "ubuntu"
+  validation {
+    condition     = contains(["sles", "ubuntu"], var.os_type)
+    error_message = "The operating system type must be 'sles' or 'ubuntu'."
+  }
+}
+
+variable "sles_version" {
+  type        = string
+  description = "Version of SLES to use for instances (ex: 15-sp6)"
+  default     = "15-sp6"
+}
+
+variable "ubuntu_version" {
+  type        = string
+  description = "Version of Ubuntu to use for instances (ex: 22.04)"
+  default     = "22.04"
 }
