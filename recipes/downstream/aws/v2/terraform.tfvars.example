@@ -33,7 +33,7 @@ subnet_id = "subnet-xxx"
 security_group_name = "rancher-nodes"
 
 # Kubernetes version for the RKE2/k3s cluster
-# https://github.com/rancher/rke2/releases/tag
+# https://github.com/rancher/rke2/tags
 # https://github.com/k3s-io/k3s/tags
 kubernetes_version = "v1.35.6+rke2r1"
 
