@@ -26,10 +26,10 @@ output "client_public_ip" {
 
 output "vpc_id" {
   description = "VPC ID used by the Rancher environment"
-  value = var.create_vpc == true ? module.k3s_first_server.vpc_id : null
+  value       = var.create_vpc == true ? module.k3s_first_server.vpc_id : null
 }
 
 output "subnets" {
   description = "Subnets used by the Rancher environment"
-  value = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
+  value       = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
 }
