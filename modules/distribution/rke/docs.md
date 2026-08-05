@@ -2,15 +2,15 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.1.0 |
-| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.7.5 |
+| <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.5.0 |
+| <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
-| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.7.5 |
+| <a name="provider_local"></a> [local](#provider\_local) | >= 2.5.0 |
+| <a name="provider_rke"></a> [rke](#provider\_rke) | >= 1.5.0 |
 
 ## Modules
 

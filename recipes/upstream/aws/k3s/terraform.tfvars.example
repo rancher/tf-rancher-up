@@ -47,7 +47,7 @@ worker_instance_count = 1
 ## - Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform
 # restricted_access = false
 
-### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
+### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
 # os_type = "sles"
 # sles_version = "15-sp6"
 # ubuntu_version = "22.04"

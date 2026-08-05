@@ -3,13 +3,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.46 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.46 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
 | <a name="provider_http"></a> [http](#provider\_http) | n/a |
 | <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |

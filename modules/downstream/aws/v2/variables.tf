@@ -116,7 +116,7 @@ variable "cni_provider" {
 
 variable "rke2_ingress" {
   type        = string
-  description = "RKE2 ingress deployed (nginx or traefik)"
+  description = "RKE2 ingress deployed (ingress-nginx or traefik)"
   default     = "traefik"
 }
 
@@ -137,7 +137,6 @@ variable "ssh_user" {
   description = "Username used for SSH with sudo access"
   default     = "ubuntu"
 }
-
 
 variable "ami" {
   type        = string
@@ -162,14 +161,17 @@ variable "os_type" {
 variable "sles_version" {
   type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
-  default     = "15-sp6"
+  default     = "15-sp7"
+  nullable    = false
 }
 
 variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
-  default     = "22.04"
+  default     = "24.04"
+  nullable    = false
 }
+
 variable "cp_spot_instances" {
   type        = bool
   description = "Use spot instances for control plane nodes"

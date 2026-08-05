@@ -8,14 +8,14 @@
 
 ## -- AWS region to create the resources, uncomment one or adjust as needed
 # aws_region = "us-east-1"         # US, Virginia
-aws_region = "us-west-2"         # US, Oregon
+# aws_region = "us-west-2"         # US, Oregon
 # aws_region = "eu-west-1"         # EU, Ireland
 # aws_region = "eu-west-1"         # EU, Frankfurt
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
 # Cluster name
-# cluster_name = "tf-test"
+cluster_name = "tf-test"
 
 # Enter the Rancher server URL
 rancher_url = "https://xxx"
@@ -32,18 +32,24 @@ subnet_id = "subnet-xxx"
 # Enter an existing security group name to use (not ID sg-*)
 security_group_name = "rancher-nodes"
 
-# AMI you want to use
-ami = "ami-03f4878755434977f" # Replace with your desired AMI ID
-
 # Kubernetes version for the RKE2/k3s cluster
 # https://github.com/rancher/rke2/releases/tag
 # https://github.com/k3s-io/k3s/tags
-kubernetes_version = "v1.27.12+rke2r1"
+kubernetes_version = "v1.35.6+rke2r1"
 
 ###### !! Optional variables !! ######
 
-# SSH username
-# ssh_user = "ubuntu" # Replace with your SSH user
+# cp_node_pool_name = "cp"
+# cp_count = 1
+# cp_spot_instances     = false
+
+# worker_node_pool_name = "w"
+# worker_count = 1
+# worker_spot_instances = false
+
+# cni_provider = "calico"
+# rke2_ingress = "traefik" # ingress-nginx or traefik
+# rancher_insecure = true # Allow insecure connections to Rancher
 
 # Enter the EC2 instance type
 # instance_type = "t3a.medium"
@@ -51,12 +57,12 @@ kubernetes_version = "v1.27.12+rke2r1"
 # Specify root volume size (GB)
 # volume_size = "20"
 
-# rancher_insecure = true # Allow insecure connections to Rancher
-# cp_node_pool_name = "cp"
-# worker_node_pool_name = "w"
-# cp_count = 1
-# worker_count = 1
-# cni_provider = "calico"
-# rke2_ingress = "traefik"
-# cp_spot_instances     = false
-# worker_spot_instances = false
+### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu) Note: "sles" may require accepting the user agreement in AWS
+# os_type = "sles"
+# sles_version = "15-sp7"
+# ubuntu_version = "24.02"
+
+## - SSH username (must match the SSH user for the AMI used)
+# ssh_username = "ec2-user"
+## - Custom AMI to launch instances with
+# instance_ami = "ami-xxxx"

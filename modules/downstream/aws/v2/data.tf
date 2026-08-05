@@ -13,5 +13,5 @@ data "aws_ssm_parameter" "sles" {
 
 data "aws_ssm_parameter" "ubuntu" {
   count = var.ami == null && var.os_type == "ubuntu" ? 1 : 0
-  name  = "/aws/service/canonical/ubuntu/server/${var.ubuntu_version}/stable/current/amd64/hvm/ebs-gp2/ami-id"
+  name  = "/aws/service/canonical/ubuntu/server/${var.ubuntu_version}/stable/current/amd64/hvm/ebs-gp3/ami-id"
 }

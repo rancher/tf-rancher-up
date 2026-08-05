@@ -21,10 +21,10 @@ prefix = "my-name-here"
 ###### !! Optional variables !! ######
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
-# rancher_version = "2.7.3"
+# rancher_version = "2.14.3"
 
 ## -- Override the default k8s version used by RKE2
-# rke2_version = "v1.25.10+rke2r1"
+# rke2_version = "v1.35.6+rke2r1"
 
 # Override the helm repository for the Rancher chart
 # rancher_helm_repository = "https://charts.example.com/rancher"
@@ -33,8 +33,8 @@ prefix = "my-name-here"
 instance_count = 1
 # instance_type = "t3.medium"
 
-## -- Ingress deployed (nginx or traefik)
-# rke2_ingress = "nginx"
+## -- Ingress deployed (ingress-nginx or traefik)
+# rke2_ingress = "ingress-nginx"
 
 ## -- Use spot instances
 # spot_instances = false
@@ -48,10 +48,10 @@ instance_count = 1
 ## - Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform
 # restricted_access = false
 
-### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu)
+### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
 # os_type = "sles"
-# sles_version = "15-sp6"
-# ubuntu_version = "22.04"
+# sles_version = "15-sp7"
+# ubuntu_version = "24.02"
 
 ## - SSH username (must match the SSH user for the AMI used)
 # ssh_username = "ec2-user"

@@ -30,7 +30,7 @@ variable "dependency" {
 }
 
 variable "rke2_ingress" {
-  description = "RKE2 ingress deployed (nginx or traefik)"
+  description = "RKE2 ingress deployed (ingress-nginx or traefik)"
   type        = string
-  default     = "ingress-nginx"
+  default     = "traefik"
 }
