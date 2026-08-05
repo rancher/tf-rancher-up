@@ -3,7 +3,6 @@ locals {
   kc_file        = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
   kc_file_backup = "${local.kc_file}.backup"
   ssh_username   = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
-  rke2_ingress   = var.rke2_ingress == "traefik" ? "traefik" : "ingress-${var.rke2_ingress}"
 }
 
 module "rke2_first" {
@@ -11,7 +10,7 @@ module "rke2_first" {
   rke2_token   = var.rke2_token
   rke2_version = var.rke2_version
   rke2_config  = var.rke2_config
-  rke2_ingress = local.rke2_ingress
+  rke2_ingress = var.rke2_ingress
 }
 
 module "rke2_first_server" {
@@ -49,7 +48,7 @@ module "rke2_additional" {
   rke2_version    = var.rke2_version
   rke2_config     = var.rke2_config
   first_server_ip = module.rke2_first_server.instances_private_ip[0]
-  rke2_ingress    = local.rke2_ingress
+  rke2_ingress    = var.rke2_ingress
 }
 
 module "rke2_additional_servers" {
