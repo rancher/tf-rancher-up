@@ -1,5 +1,5 @@
 locals {
-  ami = var.ami != null ? var.ami : (var.os_type == "ubuntu" ? data.aws_ssm_parameter.ubuntu[0].insecure_value : data.aws_ssm_parameter.sles[0].insecure_value)
+  ami = var.ami != null ? var.ami : (var.os_type == "ubuntu" ? data.aws_ssm_parameter.ubuntu[0].value : data.aws_ssm_parameter.sles[0].value)
 }
 
 resource "rancher2_cloud_credential" "aws_credential" {
