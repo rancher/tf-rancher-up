@@ -189,13 +189,13 @@ variable "os_type" {
 variable "sles_version" {
   type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
-  default     = "15-sp6"
+  default     = null
 }
 
 variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
-  default     = "22.04"
+  default     = null
 }
 
 variable "subnet_id" {
@@ -257,7 +257,7 @@ variable "rke2_ingress" {
   type        = string
   default     = "ingress-nginx"
   validation {
-    condition     = contains(["nginx", "traefik"], var.rke2_ingress)
+    condition     = contains(["ingress-nginx", "traefik"], var.rke2_ingress)
     error_message = "The ingress selected must be 'nginx' or 'traefik'."
   }
 }
