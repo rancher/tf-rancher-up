@@ -4,7 +4,7 @@ data "aws_ssm_parameter" "sles" {
 }
 
 data "aws_ssm_parameter" "ubuntu" {
-  name = "/aws/service/canonical/ubuntu/server/${var.ubuntu_version}/stable/current/amd64/hvm/ebs-gp2/ami-id"
+  name = "/aws/service/canonical/ubuntu/server/${var.ubuntu_version}/stable/current/amd64/hvm/ebs-gp3/ami-id"
 }
 
 data "aws_security_group" "sg" {
