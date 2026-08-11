@@ -161,15 +161,23 @@ resource "null_resource" "wait_for_rancher" {
   count      = var.bootstrap_rancher ? 1 : 0
   provisioner "local-exec" {
     command     = <<-EOF
-    count=0
-    while [ "$${count}" -lt 5 ]; do
-      resp=$(curl -k -s -o /dev/null -w "%%{http_code}" https://$${RANCHER_HOSTNAME}/ping)
+    success_count=0
+    deadline=$(( $(date +%s) + 300 ))
+    while [ "$${success_count}" -lt 5 ] && [ "$(date +%s)" -lt "$${deadline}" ]; do
+      resp=$(curl -k -s --connect-timeout 5 --max-time 10 -o /dev/null -w "%%{http_code}" https://$${RANCHER_HOSTNAME}/ping || true)
       echo "Waiting for https://$${RANCHER_HOSTNAME}/ping - response: $${resp}"
       if [ "$${resp}" = "200" ]; then
-        ((count++))
+        success_count=$((success_count + 1))
+      else
+        success_count=0
       fi
       sleep 2
     done
+
+    if [ "$${success_count}" -lt 5 ]; then
+      echo "Timed out after 300 seconds waiting for https://$${RANCHER_HOSTNAME}/ping to return HTTP 200" >&2
+      exit 1
+    fi
     EOF
     interpreter = ["/bin/bash", "-c"]
     environment = {
