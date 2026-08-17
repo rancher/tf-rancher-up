@@ -12,7 +12,7 @@
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
-## -- Set the prefix for the name tag on instancrease created. A default prefix (rancher-terraform) if not provided.
+## -- Set the prefix for the name tag on resources created
 prefix = "my-name-here"
 
 ## -- Admin password to set for Rancher
@@ -51,7 +51,7 @@ server_spot_instances = false
 # restricted_access = false
 
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
-# os_type = "sles"
+# os_type = "ubuntu"
 # sles_version = "15-sp7"
 # ubuntu_version = "24.02"
 

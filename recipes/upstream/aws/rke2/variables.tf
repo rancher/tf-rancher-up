@@ -35,6 +35,12 @@ variable "worker_instance_count" {
   default     = null
 }
 
+variable "instance_count" {
+  type        = number
+  description = "(Deprecated) Number of server EC2 instances to create"
+  default     = null
+}
+
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
@@ -186,6 +192,12 @@ variable "worker_spot_instances" {
   default     = null
 }
 
+variable "spot_instances" {
+  type        = bool
+  description = "(Deprecated) Use spot instances for all nodes"
+  default     = null
+}
+
 variable "instance_ami" {
   type        = string
   description = "Override the default SLES or Ubuntu AMI"
@@ -195,7 +207,7 @@ variable "instance_ami" {
 variable "os_type" {
   type        = string
   description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
-  default     = "sles"
+  default     = "ubuntu"
 }
 
 variable "sles_version" {

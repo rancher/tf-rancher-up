@@ -12,7 +12,7 @@
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
-## -- Set the prefix for the name tag on instancrease created. A default prefix (rancher-terraform) if not provided.
+## -- Set the prefix for the name tag on resources created
 prefix = "my-name-here"
 
 ## -- Admin password to set for Rancher
@@ -21,18 +21,18 @@ prefix = "my-name-here"
 ###### !! Optional variables !! ######
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
-# rancher_version = "2.7.3"
-
-# Override the helm repository for the Rancher chart
-# rancher_helm_repository = "https://charts.example.com/rancher"
+# rancher_version = "2.14.3"
 
 ## -- Override the default k8s version or channel used by K3S
 # k3s_version = "v1.24.14+k3s1"
 # k3s_channel = "v1.25"
 
+# Override the helm repository for the Rancher chart (default is community/stable)
+# rancher_helm_repository = "https://releases.rancher.com/server-charts/latest"
+
 ## -- Number and type of EC2 instances to launch
 server_instance_count = 1
-worker_instance_count = 1
+# worker_instance_count = 1
 # instance_type = "t3.medium"
 
 ## -- Use spot instances
@@ -49,7 +49,7 @@ server_spot_instances = false
 # restricted_access = false
 
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
-# os_type = "sles"
+# os_type = "ubuntu"
 # sles_version = "15-sp6"
 # ubuntu_version = "22.04"
 

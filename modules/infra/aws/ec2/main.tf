@@ -143,5 +143,6 @@ resource "aws_instance" "instance" {
 
   lifecycle {
     ignore_changes = [ami, instance_market_options, user_data, subnet_id, tags]
+    create_before_destroy = true
   }
 }
