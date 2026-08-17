@@ -195,7 +195,7 @@ variable "instance_ami" {
 variable "os_type" {
   type        = string
   description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
-  default     = "sles"
+  default     = "ubuntu"
 }
 
 variable "sles_version" {

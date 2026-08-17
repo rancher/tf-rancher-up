@@ -49,7 +49,7 @@ instance_count = 1
 # restricted_access = false
 
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
-# os_type = "sles"
+# os_type = "ubuntu"
 # sles_version = "15-sp7"
 # ubuntu_version = "24.02"
 
