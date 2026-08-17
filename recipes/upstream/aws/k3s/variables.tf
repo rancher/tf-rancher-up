@@ -180,9 +180,15 @@ variable "ssh_username" {
   default     = null
 }
 
-variable "spot_instances" {
+variable "server_spot_instances" {
   type        = bool
-  description = "Use spot instances"
+  description = "Use spot instances for server nodes"
+  default     = null
+}
+
+variable "worker_spot_instances" {
+  type        = bool
+  description = "Use spot instances for worker nodes"
   default     = null
 }
 
@@ -201,13 +207,13 @@ variable "os_type" {
 variable "sles_version" {
   type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
-  default     = "15-sp6"
+  default     = null
 }
 
 variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
-  default     = "22.04"
+  default     = null
 }
 
 variable "subnet_id" {

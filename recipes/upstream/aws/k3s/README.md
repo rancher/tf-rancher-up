@@ -17,7 +17,7 @@ cd recipes/upstream/aws/k3s
     -  `aws_region` to suit your region
     -  uncomment `instance_type` and change the instance type if needed.
     -  `prefix` to give the resources an identifiable name (eg, your initials or first name)
-    -  Recommended: `spot_instances` can be set to `true` to use spot instances
+    -  Recommended: `server_spot_instances` and `worker_spot_instances` can be set to `true` to use spot instances
 - Check your AWS credentials are configured in `~/.aws/credentials`, terraform will use these by default. Refer the [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) command on how to do this.
 - If you don't want to configure AWS credentials using `aws configure` in above step, uncomment `aws_access_key` and `aws_secret_key` in `terraform.tfvars` and input the required keys there.
 - If an HA cluster need to be deployed, change the `instance_count` variable to 3 or more.

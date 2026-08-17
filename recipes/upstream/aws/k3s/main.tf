@@ -28,7 +28,7 @@ module "k3s_first_server" {
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = var.server_spot_instances
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
@@ -66,7 +66,7 @@ module "k3s_additional_servers" {
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = var.server_spot_instances
   tag_begin               = 2
   aws_region              = var.aws_region
   create_security_group   = false
@@ -92,7 +92,7 @@ module "k3s_workers" {
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = var.worker_spot_instances
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id

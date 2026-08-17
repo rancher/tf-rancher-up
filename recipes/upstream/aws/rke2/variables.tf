@@ -23,9 +23,15 @@ variable "prefix" {
   default     = null
 }
 
-variable "instance_count" {
+variable "server_instance_count" {
   type        = number
-  description = "Number of EC2 instances to create"
+  description = "Number of server EC2 instances to create"
+  default     = null
+}
+
+variable "worker_instance_count" {
+  type        = number
+  description = "Number of worker EC2 instances to create"
   default     = null
 }
 
@@ -168,9 +174,15 @@ variable "ssh_username" {
   default     = null
 }
 
-variable "spot_instances" {
+variable "server_spot_instances" {
   type        = bool
-  description = "Use spot instances"
+  description = "Use spot instances for server nodes"
+  default     = null
+}
+
+variable "worker_spot_instances" {
+  type        = bool
+  description = "Use spot instances for worker nodes"
   default     = null
 }
 

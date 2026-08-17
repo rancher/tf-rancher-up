@@ -67,15 +67,16 @@
 | <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `null` | no |
 | <a name="input_restricted_access"></a> [restricted\_access](#input\_restricted\_access) | Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform | `bool` | `false` | no |
 | <a name="input_server_instance_count"></a> [server\_instance\_count](#input\_server\_instance\_count) | Number of server EC2 instances to create | `number` | `null` | no |
-| <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `"15-sp6"` | no |
-| <a name="input_spot_instances"></a> [spot\_instances](#input\_spot\_instances) | Use spot instances | `bool` | `null` | no |
+| <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `null` | no |
+| <a name="input_server_spot_instances"></a> [server\_spot\_instances](#input\_server\_spot\_instances) | Use spot instances for server nodes | `bool` | `null` | no |
 | <a name="input_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#input\_ssh\_key\_pair\_name) | Specify the SSH key name to use (that's already present in AWS) | `string` | `null` | no |
 | <a name="input_ssh_key_pair_path"></a> [ssh\_key\_pair\_path](#input\_ssh\_key\_pair\_path) | Path to the SSH private key used as the key pair (that's already present in AWS) | `string` | `null` | no |
 | <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | Username used for SSH with sudo access, must align with the AMI in use | `string` | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID to create the instance(s) in | `any` | `null` | no |
-| <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `"22.04"` | no |
+| <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `null` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR for AWS VPC | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_wait"></a> [wait](#input\_wait) | An optional wait before installing the Rancher helm chart | `string` | `"20s"` | no |
+| <a name="input_worker_spot_instances"></a> [worker\_spot\_instances](#input\_worker\_spot\_instances) | Use spot instances for worker nodes | `bool` | `null` | no |
 | <a name="input_worker_instance_count"></a> [worker\_instance\_count](#input\_worker\_instance\_count) | Number of worker EC2 instances to create | `number` | `null` | no |
 
 ## Outputs

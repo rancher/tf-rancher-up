@@ -36,7 +36,8 @@ worker_instance_count = 1
 # instance_type = "t3.medium"
 
 ## -- Use spot instances
-# spot_instances = false
+server_spot_instances = false
+# worker_spot_instances = false
 
 ## -- Create a VPC (will use the default VPC instead)
 # create_vpc      = false
