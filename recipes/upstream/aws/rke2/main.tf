@@ -104,7 +104,8 @@ resource "local_file" "kube_config_yaml_backup" {
 }
 
 locals {
-  rancher_hostname = join(".", ["rancher", module.rke2_first_server.instances_public_ip[0], "sslip.io"])
+  rancher_hostname      = join(".", ["rancher", module.rke2_first_server.instances_public_ip[0], "sslip.io"])
+  rancher_ingress_class = var.rke2_ingress == "ingress-nginx" ? "nginx" : var.rke2_ingress
 }
 
 module "rancher_install" {
@@ -125,6 +126,6 @@ module "rancher_install" {
   wait                                  = var.wait
   rancher_additional_helm_values = [
     "replicas: ${var.instance_count}",
-    "ingress.ingressClassName: ${var.rke2_ingress}"
+    "ingress.ingressClassName: ${local.rancher_ingress_class}"
   ]
 }
