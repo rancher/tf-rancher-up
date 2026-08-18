@@ -19,7 +19,7 @@ output "rke2_token" {
 }
 
 output "rke2_worker_user_data" {
-  depends_on = [var.dependency]
+  depends_on  = [var.dependency]
   description = "RKE2 worker user data"
   value = templatefile("${path.module}/worker_config.yaml.tpl",
     {
