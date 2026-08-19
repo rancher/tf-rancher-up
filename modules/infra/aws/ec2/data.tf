@@ -25,6 +25,11 @@ data "aws_subnets" "default_subnets" {
   }
 }
 
+data "aws_subnet" "default" {
+  for_each = toset(var.create_vpc != true ? data.aws_subnets.default_subnets[0].ids : [])
+  id       = each.value
+}
+
 data "http" "client_public_ip" {
   count = var.restricted_access == true ? 1 : 0
   url   = "http://icanhazip.com"

@@ -33,3 +33,8 @@ output "subnets" {
   description = "Subnets used by the Rancher environment"
   value       = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
 }
+
+output "aws_region" {
+  description = "AWS region used for the cluster"
+  value       = var.aws_region
+}
