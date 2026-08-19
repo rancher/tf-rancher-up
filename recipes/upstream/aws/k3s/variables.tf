@@ -281,3 +281,21 @@ variable "wait" {
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
 }
+
+variable "create_iam_role" {
+  type        = bool
+  description = "Create a dedicated IAM role for the Rancher nodes"
+  default     = false
+}
+
+variable "iam_role_name" {
+  type        = string
+  description = "Name of the IAM role to create"
+  default     = null
+}
+
+variable "iam_instance_profile_name" {
+  type        = string
+  description = "Name of an existing IAM instance profile to use"
+  default     = null
+}

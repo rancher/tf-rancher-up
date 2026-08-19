@@ -285,3 +285,21 @@ variable "rke2_ingress" {
     error_message = "The ingress selected must be 'nginx' or 'traefik'."
   }
 }
+
+variable "create_iam_role" {
+  type        = bool
+  description = "Create a dedicated IAM role for the Rancher nodes"
+  default     = false
+}
+
+variable "iam_role_name" {
+  type        = string
+  description = "Name of the IAM role to create"
+  default     = null
+}
+
+variable "iam_instance_profile_name" {
+  type        = string
+  description = "Name of an existing IAM instance profile to use"
+  default     = null
+}

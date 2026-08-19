@@ -18,6 +18,13 @@ module "k3s_first" {
   k3s_config  = var.k3s_config
 }
 
+module "iam_profile" {
+  source          = "../../../../modules/infra/aws/iam_profile"
+  create_iam_role = var.create_iam_role
+  iam_role_name   = var.iam_role_name
+  prefix          = var.prefix
+}
+
 module "k3s_first_server" {
   source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = "${var.prefix}-cp"
@@ -45,6 +52,7 @@ module "k3s_first_server" {
   user_data               = module.k3s_first.k3s_server_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  iam_instance_profile    = var.create_iam_role ? module.iam_profile.iam_instance_profile_name : var.iam_instance_profile_name
 }
 
 module "k3s_additional" {
@@ -80,6 +88,7 @@ module "k3s_additional_servers" {
   user_data               = module.k3s_additional.k3s_server_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  iam_instance_profile    = var.create_iam_role ? module.iam_profile.iam_instance_profile_name : var.iam_instance_profile_name
 }
 
 module "k3s_workers" {
@@ -105,6 +114,7 @@ module "k3s_workers" {
   user_data               = module.k3s_additional.k3s_worker_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  iam_instance_profile    = var.create_iam_role ? module.iam_profile.iam_instance_profile_name : var.iam_instance_profile_name
 }
 
 data "local_file" "ssh_private_key" {
