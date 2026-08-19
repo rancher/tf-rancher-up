@@ -50,6 +50,9 @@ server_spot_instances = false
 ## - Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform
 # restricted_access = false
 
+## -- Create a dedicated IAM role for the Rancher nodes, this is useful instead of managing cloud credentials
+# create_iam_role = false
+
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu). Note: "sles" may require accepting the user agreement in AWS
 # os_type = "ubuntu"
 # sles_version = "15-sp7"
