@@ -23,6 +23,9 @@ module "iam_profile" {
   create_iam_role = var.create_iam_role
   iam_role_name   = var.iam_role_name
   prefix          = var.prefix
+  aws_region      = var.aws_region
+  aws_access_key  = var.aws_access_key
+  aws_secret_key  = var.aws_secret_key
 }
 
 module "rke2_first_server" {
