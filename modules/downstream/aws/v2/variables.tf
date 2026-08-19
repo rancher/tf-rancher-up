@@ -135,7 +135,7 @@ variable "security_group_name" {
 variable "ssh_user" {
   type        = string
   description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
+  default     = null
 }
 
 variable "ami" {

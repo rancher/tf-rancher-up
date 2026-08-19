@@ -26,7 +26,7 @@ output "client_public_ip" {
 
 output "vpc_id" {
   description = "VPC ID used by the Rancher environment"
-  value       = var.create_vpc == true ? module.rke2_first_server.vpc_id : null
+  value       = module.rke2_first_server.vpc_id
 }
 
 output "subnets" {

@@ -26,6 +26,7 @@ resource "rancher2_machine_config_v2" "cp_machine_config" {
     volume_type           = var.volume_type
     request_spot_instance = var.cp_spot_instances
     http_protocol_ipv6    = "disabled"
+    ssh_user              = var.ssh_user
   }
 }
 
@@ -43,6 +44,7 @@ resource "rancher2_machine_config_v2" "worker_machine_config" {
     volume_type           = var.volume_type
     request_spot_instance = var.worker_spot_instances
     http_protocol_ipv6    = "disabled"
+    ssh_user              = var.ssh_user
   }
 }
 

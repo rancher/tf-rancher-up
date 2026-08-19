@@ -42,7 +42,7 @@ output "private_subnets" {
 }
 
 output "vpc_id" {
-  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : null
+  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : data.aws_vpc.default_vpc[0].id
 }
 
 output "sg-id" {

@@ -50,7 +50,7 @@ No modules.
 | <a name="input_rke2_ingress"></a> [rke2\_ingress](#input\_rke2\_ingress) | RKE2 ingress deployed (ingress-nginx or traefik) | `string` | `"traefik"` | no |
 | <a name="input_security_group_name"></a> [security\_group\_name](#input\_security\_group\_name) | Security Group name for nodes | `string` | `null` | no |
 | <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `"15-sp7"` | no |
-| <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username used for SSH with sudo access | `string` | `"ubuntu"` | no |
+| <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username used for SSH with sudo access | `string` | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID for all resources | `string` | `null` | no |
 | <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `"24.04"` | no |
 | <a name="input_volume_size"></a> [volume\_size](#input\_volume\_size) | Specify root volume size (GB) | `number` | `20` | no |
