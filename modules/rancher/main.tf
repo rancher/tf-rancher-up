@@ -203,13 +203,22 @@ resource "null_resource" "bootstrap_message" {
   }
 }
 
+provider "rancher2" {
+  alias = "admin"
+
+  api_url   = rancher2_bootstrap.admin[0].url
+  token_key = rancher2_bootstrap.admin[0].token
+  insecure  = true
+}
+
 resource "rancher2_cloud_credential" "aws" {
+  provider   = "rancher2.admin"
   count      = var.create_aws_cloud_credential && var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
   depends_on = [rancher2_bootstrap.admin]
   name       = "aws-instance-profile-creds"
   amazonec2_credential_config {
-    access_key     = var.aws_access_key
-    secret_key     = var.aws_secret_key
+    access_key     = var.aws_access_key != null ? var.aws_access_key : ""
+    secret_key     = var.aws_secret_key != null ? var.aws_secret_key : ""
     default_region = var.aws_region
   }
 }

@@ -15,6 +15,7 @@
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.23.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | n/a |
 | <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
+| <a name="provider_rancher2.admin"></a> [rancher2.admin](#provider\_rancher2.admin) | >= 8.0.0 |
 
 ## Modules
 
