@@ -180,6 +180,18 @@ variable "iam_instance_profile" {
   default     = null
 }
 
+variable "create_iam_role" {
+  type        = bool
+  description = "Create an IAM role and instance profile for the instances"
+  default     = false
+}
+
+variable "iam_role_name" {
+  type        = string
+  description = "Specify the name of the IAM role to create"
+  default     = null
+}
+
 variable "create_vpc" {
   type        = bool
   description = "Create a VPC"

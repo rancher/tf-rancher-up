@@ -15,7 +15,6 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_iam_profile"></a> [iam\_profile](#module\_iam\_profile) | ../../../../modules/infra/aws/iam_profile | n/a |
 | <a name="module_k3s_additional"></a> [k3s\_additional](#module\_k3s\_additional) | ../../../../modules/distribution/k3s | n/a |
 | <a name="module_k3s_additional_servers"></a> [k3s\_additional\_servers](#module\_k3s\_additional\_servers) | ../../../../modules/infra/aws/ec2 | n/a |
 | <a name="module_k3s_first"></a> [k3s\_first](#module\_k3s\_first) | ../../../../modules/distribution/k3s | n/a |

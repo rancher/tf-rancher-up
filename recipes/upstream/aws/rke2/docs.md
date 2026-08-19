@@ -15,7 +15,6 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_iam_profile"></a> [iam\_profile](#module\_iam\_profile) | ../../../../modules/infra/aws/iam_profile | n/a |
 | <a name="module_rancher_install"></a> [rancher\_install](#module\_rancher\_install) | ../../../../modules/rancher | n/a |
 | <a name="module_rke2_additional"></a> [rke2\_additional](#module\_rke2\_additional) | ../../../../modules/distribution/rke2 | n/a |
 | <a name="module_rke2_additional_servers"></a> [rke2\_additional\_servers](#module\_rke2\_additional\_servers) | ../../../../modules/infra/aws/ec2 | n/a |

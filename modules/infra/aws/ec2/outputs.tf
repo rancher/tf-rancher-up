@@ -52,3 +52,7 @@ output "sg-id" {
 output "client_public_ip" {
   value = var.restricted_access == true ? "${chomp(data.http.client_public_ip[0].response_body)}" : null
 }
+
+output "iam_instance_profile_name" {
+  value = var.create_iam_role ? aws_iam_instance_profile.rancher_nodes[0].name : var.iam_instance_profile
+}
