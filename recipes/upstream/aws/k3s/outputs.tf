@@ -38,3 +38,8 @@ output "aws_region" {
   description = "AWS region used for the cluster"
   value       = var.aws_region
 }
+
+output "aws_cloud_credential_id" {
+  description = "The ID of the AWS cloud credential created in Rancher"
+  value       = module.rancher_install.aws_cloud_credential_id
+}

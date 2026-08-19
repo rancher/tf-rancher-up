@@ -158,4 +158,8 @@ module "rancher_install" {
   cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
   cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
   wait                                  = var.wait
+  create_aws_cloud_credential           = var.create_iam_role
+  aws_region                            = var.aws_region
+  aws_access_key                        = var.aws_access_key
+  aws_secret_key                        = var.aws_secret_key
 }

@@ -215,3 +215,28 @@ variable "helm_timeout" {
   default     = 600
   type        = number
 }
+
+variable "create_aws_cloud_credential" {
+  description = "Create an AWS cloud credential in Rancher"
+  default     = false
+  type        = bool
+}
+
+variable "aws_region" {
+  description = "AWS region to use for the cloud credential"
+  default     = "us-east-1"
+  type        = string
+}
+
+variable "aws_access_key" {
+  description = "AWS access key to use for the cloud credential"
+  default     = null
+  type        = string
+}
+
+variable "aws_secret_key" {
+  description = "AWS secret key to use for the cloud credential"
+  default     = null
+  type        = string
+  sensitive   = true
+}

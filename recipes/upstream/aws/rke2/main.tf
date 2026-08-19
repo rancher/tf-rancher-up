@@ -163,4 +163,8 @@ module "rancher_install" {
   rancher_additional_helm_values = [
     "ingress.ingressClassName: ${local.rancher_ingress_class}"
   ]
+  create_aws_cloud_credential = var.create_iam_role
+  aws_region                  = var.aws_region
+  aws_access_key              = var.aws_access_key
+  aws_secret_key              = var.aws_secret_key
 }

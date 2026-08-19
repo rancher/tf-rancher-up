@@ -88,6 +88,7 @@
 
 | Name | Description |
 |------|-------------|
+| <a name="output_aws_cloud_credential_id"></a> [aws\_cloud\_credential\_id](#output\_aws\_cloud\_credential\_id) | The ID of the AWS cloud credential created in Rancher |
 | <a name="output_aws_region"></a> [aws\_region](#output\_aws\_region) | AWS region used for the cluster |
 | <a name="output_client_public_ip"></a> [client\_public\_ip](#output\_client\_public\_ip) | n/a |
 | <a name="output_instances_private_ip"></a> [instances\_private\_ip](#output\_instances\_private\_ip) | n/a |

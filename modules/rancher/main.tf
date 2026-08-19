@@ -202,3 +202,14 @@ resource "null_resource" "bootstrap_message" {
     command = "echo '${local.bootstrap_message}'"
   }
 }
+
+resource "rancher2_cloud_credential" "aws" {
+  count      = var.create_aws_cloud_credential && var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
+  depends_on = [rancher2_bootstrap.admin]
+  name       = "aws-instance-profile-creds"
+  amazonec2_credential_config {
+    access_key     = var.aws_access_key
+    secret_key     = var.aws_secret_key
+    default_region = var.aws_region
+  }
+}
