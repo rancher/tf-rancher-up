@@ -43,3 +43,8 @@ output "aws_cloud_credential_id" {
   description = "The ID of the AWS cloud credential created in Rancher"
   value       = module.rancher_install.aws_cloud_credential_id
 }
+
+output "ssh_username" {
+  description = "Username used for SSH access to the nodes"
+  value       = module.rke2_first_server.node_username
+}
