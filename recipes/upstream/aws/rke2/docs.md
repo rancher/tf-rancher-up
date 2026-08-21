@@ -96,5 +96,6 @@
 | <a name="output_rancher_admin_token"></a> [rancher\_admin\_token](#output\_rancher\_admin\_token) | Rancher API token for the admin user |
 | <a name="output_rancher_hostname"></a> [rancher\_hostname](#output\_rancher\_hostname) | n/a |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | n/a |
+| <a name="output_ssh_username"></a> [ssh\_username](#output\_ssh\_username) | Username used for SSH access to the nodes |
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | Subnets used by the Rancher environment |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPC ID used by the Rancher environment |

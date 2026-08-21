@@ -3,6 +3,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0 |
+| <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.1.0 |
 | <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 8.0.0 |
 
 ## Providers
@@ -10,6 +11,7 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
+| <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
 | <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
 
 ## Modules
@@ -20,6 +22,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [local_sensitive_file.kubeconfig](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file) | resource |
 | [rancher2_cloud_credential.aws_credential](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/cloud_credential) | resource |
 | [rancher2_cluster_v2.cluster](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/cluster_v2) | resource |
 | [rancher2_machine_config_v2.cp_machine_config](https://registry.terraform.io/providers/rancher/rancher2/latest/docs/resources/machine_config_v2) | resource |
@@ -63,4 +66,6 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_kubeconfig_file"></a> [kubeconfig\_file](#output\_kubeconfig\_file) | The local path to the generated downstream kubeconfig |

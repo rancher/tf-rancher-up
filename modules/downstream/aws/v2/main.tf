@@ -88,3 +88,10 @@ resource "rancher2_cluster_v2" "cluster" {
     }
   }
 }
+
+resource "local_sensitive_file" "kubeconfig" {
+  content         = rancher2_cluster_v2.cluster.kube_config
+  filename        = "${path.cwd}/${var.cluster_name}_kube_config.yml"
+  file_permission = "0600"
+  depends_on      = [rancher2_cluster_v2.cluster]
+}
