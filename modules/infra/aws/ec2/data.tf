@@ -32,5 +32,5 @@ data "aws_subnet" "default" {
 
 data "http" "client_public_ip" {
   count = var.restricted_access == true ? 1 : 0
-  url   = "http://icanhazip.com"
+  url   = "http://ipv4.icanhazip.com"
 }
