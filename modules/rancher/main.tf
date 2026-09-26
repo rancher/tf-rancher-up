@@ -212,7 +212,7 @@ provider "rancher2" {
 }
 
 resource "rancher2_cloud_credential" "aws" {
-  provider   = "rancher2.admin"
+  provider   = rancher2.admin
   count      = var.create_aws_cloud_credential && var.bootstrap_rancher && var.rancher_password != null ? 1 : 0
   depends_on = [rancher2_bootstrap.admin]
   name       = "aws-instance-profile-creds"
