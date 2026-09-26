@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Fake `ip addr show scope global`: a public address on eth0 and a VPC address on eth1.
+printf '    inet 203.0.113.10/20 brd 203.0.113.255 scope global eth0\n'
+printf '    inet 10.124.0.4/20 brd 10.124.15.255 scope global eth1\n'
