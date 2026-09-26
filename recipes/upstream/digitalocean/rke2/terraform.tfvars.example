@@ -7,7 +7,7 @@
 do_token = "your_do_token_here"
 
 # Admin password to set for Rancher (min 12 characters)
-rancher_password = "your-secure-password"
+rancher_password = "at-least-12-characters"
 
 # ==========================================
 # OPTIONAL VARIABLES
