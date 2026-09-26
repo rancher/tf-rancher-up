@@ -1,6 +1,24 @@
 #!/bin/bash
 
-PUBLIC_IP=$(curl -s http://icanhazip.com)
+# Look up the public IPv4 address, retrying transient failures. If it can't be determined, stop
+# before RKE2 is configured: an empty or garbage address would be written into node-external-ip
+# and tls-san, and the empty value would also blank out PRIVATE_IP below. Exiting non-zero fails
+# cloud-init, which infra modules waiting on `cloud-init status --wait` report as an error.
+PUBLIC_IP=""
+for attempt in $(seq 1 10); do
+  PUBLIC_IP=$(curl -4 -s --fail --max-time 10 http://icanhazip.com | tr -d '[:space:]')
+  if echo "$PUBLIC_IP" | grep -Eq '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
+    break
+  fi
+  PUBLIC_IP=""
+  echo "Attempt $attempt: could not determine the public IP address, retrying" >&2
+  sleep 6
+done
+if [ -z "$PUBLIC_IP" ]; then
+  echo "ERROR: could not determine the public IP address from icanhazip.com; RKE2 not configured" >&2
+  exit 1
+fi
+
 PRIVATE_IP=$(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1 | grep -v "$PUBLIC_IP")
 
 cat > /tmp/config.yaml <<EOF
