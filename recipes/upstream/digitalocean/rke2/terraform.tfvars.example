@@ -1,9 +1,20 @@
-# Uncomment and change the values below to suit your individual needs
+# ==========================================
+# REQUIRED VARIABLES
+# You MUST provide values for these variables
+# ==========================================
 
 # DigitalOcean authentication token
-# do_token = ""
+do_token = "your_do_token_here"
 
-# Number of droplets to provision
+# Admin password to set for Rancher (min 12 characters)
+rancher_password = "your-secure-password"
+
+# ==========================================
+# OPTIONAL VARIABLES
+# Uncomment and change the values below to suit your individual needs
+# ==========================================
+
+# Number of droplets to provision (1, or an odd number >= 3 for HA)
 # droplet_count = 3
 
 # Droplet Machine Type/Size
@@ -15,17 +26,23 @@
 # Name of the OpenSUSE leap image uploaded to the DO account.
 # droplet_image = "openSUSE-Leap-15.6"
 
-# A string that will prefix the name of all resources
+# A string that will prefix the name of all resources.
+# Lowercase letters, digits and '-' only; must be unique in the (shared) DigitalOcean account
+# and different from any downstream recipe's prefix, e.g. "<initials>-up"
 # prefix = "terraform-rancher-support"
+
+# Your name, set as the user: tag on every droplet (defaults to prefix)
+# user_tag = "jdoe"
 
 # Switch on/off new ssh keypair generation for droplet/node ssh connections
 # Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
-# create_ssh_key_pair = "false"
+# create_ssh_key_pair = false
 
 # If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
 # ssh_key_pair_name = "terraform"
 
 # If 'create_ssh_key_pair' is set to false, give the path where private key associated with the ssh key uploaded to DigitalOcean is stored.
+# The key must NOT have a passphrase: Terraform's SSH connections cannot decrypt it or use ssh-agent here.
 # ssh_key_pair_path =  "~/.ssh/terraform.pem"
 
 # Optionally, specify the filepath to write the generated SSH private key
@@ -43,8 +60,8 @@
 # Name of the kubeconfig file
 # kube_config_filename = "tf-rancher-up.yaml"
 
-## -- RKE2 version
-# rke2_version = "v1.28.3+rke2r2"
+## -- RKE2 version, otherwise use the latest stable release
+# rke2_version = "v1.36.4+rke2r1"
 
 ## -- RKE2 token, override the programmatically generated token
 # rke2_token = "string here"
@@ -65,10 +82,40 @@
 # rancher_password = "at-least-12-characters"
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
-# rancher_version = "2.7.3"
+# rancher_version = "2.15.1"
 
-## -- Rancher ingressClassName value
+## -- Rancher ingressClassName value, otherwise match rke2_ingress
 # rancher_ingress_class_name = "nginx"
+
+## -- Extra Rancher helm values, one "key: value" string each
+## (configure the audit log with the rancher_audit_log_* variables below, not auditLog.* values)
+# rancher_additional_helm_values = [
+#   "extraEnv[0].name: CATTLE_EXAMPLE",
+#   "extraEnv[0].value: example"
+# ]
+
+## -- Rancher API audit log (UI actions, kubectl shell sessions, Rancher-proxied kubectl)
+## 0 = disabled, 1 = metadata (who, what, when), 2 = + request bodies, 3 = + response bodies
+# rancher_audit_log_level       = 1
+## "sidecar" (kubectl logs -c rancher-audit-log) or "hostPath" (files on the nodes running Rancher)
+# rancher_audit_log_destination = "sidecar"
+# rancher_audit_log_host_path   = "/var/log/rancher/audit"
+## Rotation, chart defaults when unset
+# rancher_audit_log_max_age     = 1
+# rancher_audit_log_max_backup  = 1
+# rancher_audit_log_max_size    = 100
+
+## -- Kubernetes API audit log of the Rancher (local) cluster: access that bypasses Rancher's
+## audit log (e.g. the RKE2 admin kubeconfig). Changing it rebuilds the nodes.
+## None (disabled), Metadata (who, what, when), Request (+ request bodies), RequestResponse (+ response bodies)
+## Secrets, ConfigMaps and token reviews are always capped at Metadata.
+# kube_audit_level = "Metadata"
+## Or supply a complete audit Policy instead:
+# kube_audit_policy = file("audit-policy.yaml")
+## Rotation of /var/lib/rancher/rke2/server/logs/audit.log
+# kube_audit_log_max_age    = 30
+# kube_audit_log_max_backup = 10
+# kube_audit_log_max_size   = 100
 
 ## -- Rancher serviceType value
 # rancher_service_type = "ClusterIP"

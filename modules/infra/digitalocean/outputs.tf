@@ -38,3 +38,9 @@ output "ssh_key_path" {
 output "ssh_key_pair_name" {
   value = var.create_ssh_key_pair ? digitalocean_ssh_key.key_pair[0].name : var.ssh_key_pair_name
 }
+
+output "ssh_private_key" {
+  description = "Private key for SSH access to the droplets (generated, or read from ssh_key_pair_path)"
+  value       = var.create_ssh_key_pair ? tls_private_key.ssh_private_key[0].private_key_openssh : (var.ssh_key_pair_path != null ? file(pathexpand(var.ssh_key_pair_path)) : null)
+  sensitive   = true
+}
