@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Fake sleep so retries run instantly.
+exit 0
