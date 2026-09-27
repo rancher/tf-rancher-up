@@ -59,7 +59,7 @@ variable "instance_ami" {
 variable "os_type" {
   type        = string
   description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
-  default     = "sles"
+  default     = "ubuntu"
   validation {
     condition     = contains(["sles", "ubuntu"], var.os_type)
     error_message = "The operating system type must be 'sles' or 'ubuntu'."
@@ -69,13 +69,15 @@ variable "os_type" {
 variable "sles_version" {
   type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
-  default     = "15-sp6"
+  default     = "15-sp7"
+  nullable    = false
 }
 
 variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
-  default     = "22.04"
+  default     = "24.04"
+  nullable    = false
 }
 
 variable "subnet_id" {
@@ -103,9 +105,6 @@ variable "ssh_key_pair_path" {
   default     = null
 }
 
-# Used in CI/CD as we don't store the SSH key local. It would read from a secret and
-# the contents are passed on directly. Used when create_ssh_key_pair is false and
-# ssh_key_pair_name is null
 variable "ssh_key" {
   type        = string
   description = "Contents of the private key to connect to the instances."
@@ -178,6 +177,18 @@ variable "bastion_host" {
 variable "iam_instance_profile" {
   type        = string
   description = "Specify IAM Instance Profile to assign to the instances/nodes"
+  default     = null
+}
+
+variable "create_iam_role" {
+  type        = bool
+  description = "Create an IAM role and instance profile for the instances"
+  default     = false
+}
+
+variable "iam_role_name" {
+  type        = string
+  description = "Specify the name of the IAM role to create"
   default     = null
 }
 

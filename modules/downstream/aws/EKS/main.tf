@@ -1,3 +1,24 @@
+data "aws_eks_cluster_versions" "default" {
+  count        = var.kubernetes_version == null ? 1 : 0
+  default_only = true
+}
+
+resource "null_resource" "kubernetes_version" {
+  count = var.kubernetes_version == null ? 1 : 0
+
+  triggers = {
+    version = data.aws_eks_cluster_versions.default[0].cluster_versions[0].cluster_version
+  }
+
+  lifecycle {
+    ignore_changes = [triggers["version"]]
+  }
+}
+
+locals {
+  kubernetes_version = var.kubernetes_version != null ? var.kubernetes_version : null_resource.kubernetes_version[0].triggers["version"]
+}
+
 resource "rancher2_cloud_credential" "aws_credential" {
   count       = var.cloud_credential_id != null ? 0 : 1
   name        = var.cluster_name
@@ -15,7 +36,7 @@ resource "rancher2_cluster" "ranchereks" {
   eks_config_v2 {
     cloud_credential_id = var.cloud_credential_id != null ? var.cloud_credential_id : rancher2_cloud_credential.aws_credential[0].id
     region              = var.aws_region
-    kubernetes_version  = var.kubernetes_version
+    kubernetes_version  = local.kubernetes_version
     logging_types       = var.logging_types
 
     dynamic "node_groups" {

@@ -1,9 +1,13 @@
 locals {
-  kc_path          = var.kube_config_path != null ? var.kube_config_path : path.cwd
-  kc_file          = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
-  kc_file_backup   = "${local.kc_file}.backup"
-  ssh_username     = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
-  rancher_replicas = var.server_instance_count + var.worker_instance_count
+  kc_path                = var.kube_config_path != null ? var.kube_config_path : path.cwd
+  kc_file                = var.kube_config_filename != null ? "${local.kc_path}/${var.kube_config_filename}" : "${local.kc_path}/${var.prefix}_kube_config.yml"
+  kc_file_backup         = "${local.kc_file}.backup"
+  ssh_username           = var.instance_ami != null ? var.ssh_username : var.os_type == "sles" ? "ec2-user" : "ubuntu"
+  effective_server_count = var.server_instance_count != null ? var.server_instance_count : (var.instance_count != null ? var.instance_count : 1)
+  effective_worker_count = var.worker_instance_count != null ? var.worker_instance_count : 0
+  effective_server_spot  = var.server_spot_instances != null ? var.server_spot_instances : (var.spot_instances != null ? var.spot_instances : false)
+  effective_worker_spot  = var.worker_spot_instances != null ? var.worker_spot_instances : (var.spot_instances != null ? var.spot_instances : false)
+  rancher_replicas       = local.effective_server_count + local.effective_worker_count
 }
 
 module "k3s_first" {
@@ -28,7 +32,7 @@ module "k3s_first_server" {
   ssh_key_pair_name       = var.ssh_key_pair_name
   ssh_key_pair_path       = var.ssh_key_pair_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = local.effective_server_spot
   aws_region              = var.aws_region
   create_security_group   = var.create_security_group
   instance_security_group = var.instance_security_group
@@ -41,6 +45,9 @@ module "k3s_first_server" {
   user_data               = module.k3s_first.k3s_server_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  create_iam_role         = var.create_iam_role
+  iam_role_name           = var.iam_role_name
+  iam_instance_profile    = var.iam_instance_profile_name
 }
 
 module "k3s_additional" {
@@ -55,7 +62,7 @@ module "k3s_additional" {
 module "k3s_additional_servers" {
   source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = "${var.prefix}-cp"
-  instance_count          = var.server_instance_count - 1
+  instance_count          = local.effective_server_count - 1
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
@@ -66,7 +73,7 @@ module "k3s_additional_servers" {
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = local.effective_server_spot
   tag_begin               = 2
   aws_region              = var.aws_region
   create_security_group   = false
@@ -76,12 +83,13 @@ module "k3s_additional_servers" {
   user_data               = module.k3s_additional.k3s_server_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  iam_instance_profile    = module.k3s_first_server.iam_instance_profile_name
 }
 
 module "k3s_workers" {
   source                  = "../../../../modules/infra/aws/ec2"
   prefix                  = "${var.prefix}-wrk"
-  instance_count          = var.worker_instance_count
+  instance_count          = local.effective_worker_count
   instance_type           = var.instance_type
   instance_disk_size      = var.instance_disk_size
   instance_ami            = var.instance_ami
@@ -92,7 +100,7 @@ module "k3s_workers" {
   ssh_key_pair_name       = module.k3s_first_server.ssh_key_pair_name
   ssh_key_pair_path       = module.k3s_first_server.ssh_key_path
   ssh_username            = local.ssh_username
-  spot_instances          = var.spot_instances
+  spot_instances          = local.effective_worker_spot
   aws_region              = var.aws_region
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
@@ -101,6 +109,7 @@ module "k3s_workers" {
   user_data               = module.k3s_additional.k3s_worker_user_data
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
+  iam_instance_profile    = module.k3s_first_server.iam_instance_profile_name
 }
 
 data "local_file" "ssh_private_key" {
@@ -135,7 +144,7 @@ locals {
 
 module "rancher_install" {
   source                                = "../../../../modules/rancher"
-  dependency                            = var.worker_instance_count != null ? module.k3s_workers.dependency : var.server_instance_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency
+  dependency                            = local.effective_worker_count > 0 ? module.k3s_workers.dependency : (local.effective_server_count > 1 ? module.k3s_additional_servers.dependency : module.k3s_first_server.dependency)
   kubeconfig_file                       = local_file.kube_config_yaml.filename
   rancher_hostname                      = local.rancher_hostname
   rancher_replicas                      = min(var.rancher_replicas, local.rancher_replicas)
@@ -149,4 +158,8 @@ module "rancher_install" {
   cert_manager_helm_repository_username = var.cert_manager_helm_repository_username
   cert_manager_helm_repository_password = var.cert_manager_helm_repository_password
   wait                                  = var.wait
+  create_aws_cloud_credential           = var.create_iam_role
+  aws_region                            = var.aws_region
+  aws_access_key                        = var.aws_access_key
+  aws_secret_key                        = var.aws_secret_key
 }

@@ -3,17 +3,17 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 4.27.0 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.10.1 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.0.0 |
-| <a name="requirement_ssh"></a> [ssh](#requirement\_ssh) | 2.6.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.0.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.10.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.23.0 |
+| <a name="requirement_ssh"></a> [ssh](#requirement\_ssh) | >= 2.7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_local"></a> [local](#provider\_local) | n/a |
-| <a name="provider_ssh"></a> [ssh](#provider\_ssh) | 2.6.0 |
+| <a name="provider_ssh"></a> [ssh](#provider\_ssh) | >= 2.7.0 |
 
 ## Modules
 
@@ -31,7 +31,7 @@
 | Name | Type |
 |------|------|
 | [local_file.kube_config_yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [ssh_resource.retrieve_kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/2.6.0/docs/resources/resource) | resource |
+| [ssh_resource.retrieve_kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/latest/docs/resources/resource) | resource |
 | [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs

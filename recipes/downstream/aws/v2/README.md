@@ -12,9 +12,10 @@ cd recipes/downstream/aws/v2
 - Copy `terraform.tfvars.example` to `terraform.tfvars`
 - Edit `terraform.tfvars`
   - Update the required variables:
-    - Add the Rancher server URL as well an API token. The API token can be obtained by navigating through the Rancher UI -> Profile Icon -> Account and API Keys.
-    - If you don't want to configure AWS credentials, create or define an existing cloud credential in Rancher using aws configure in above step, uncomment aws_access_key and aws_secret_key variables in terraform.
-    - Recommended: `spot_instances` can be set to `true` to use spot instances
+    - Recommended: Configure an existing cloud credential ID in Rancher. Alternatively uncomment aws_access_key and aws_secret_key variables to create a cloud credential
+    - Set the `aws_region`, and a name for the cluster (`cluster_name`)
+    - Add the Rancher server URL as well an API token. The API token can be obtained by navigating through the Rancher UI -> Profile Icon -> Account and API Keys
+    - Optional: enable spot instances on worker nodes by setting `worker_spot_instances` to `true`
 
 Execute the below commands to start deployment.
 

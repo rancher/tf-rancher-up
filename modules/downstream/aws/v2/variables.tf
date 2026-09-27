@@ -116,7 +116,7 @@ variable "cni_provider" {
 
 variable "rke2_ingress" {
   type        = string
-  description = "RKE2 ingress deployed (nginx or traefik)"
+  description = "RKE2 ingress deployed (ingress-nginx or traefik)"
   default     = "traefik"
 }
 
@@ -135,12 +135,6 @@ variable "security_group_name" {
 variable "ssh_user" {
   type        = string
   description = "Username used for SSH with sudo access"
-  default     = "ubuntu"
-}
-
-variable "spot_instances" {
-  type        = bool
-  description = "Use spot instances"
   default     = null
 }
 
@@ -150,7 +144,42 @@ variable "ami" {
   description = "AMI to use when launching nodes"
 
   validation {
-    condition     = can(regex("^ami-[[:alnum:]]{10}", var.ami))
+    condition     = var.ami == null ? true : can(regex("^ami-[[:alnum:]]{10}", var.ami))
     error_message = "The ami value must be a valid AMI id, starting with \"ami-\"."
   }
+}
+variable "os_type" {
+  type        = string
+  description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
+  default     = "ubuntu"
+  validation {
+    condition     = contains(["sles", "ubuntu"], var.os_type)
+    error_message = "The operating system type must be 'sles' or 'ubuntu'."
+  }
+}
+
+variable "sles_version" {
+  type        = string
+  description = "Version of SLES to use for instances (ex: 15-sp6)"
+  default     = "15-sp7"
+  nullable    = false
+}
+
+variable "ubuntu_version" {
+  type        = string
+  description = "Version of Ubuntu to use for instances (ex: 22.04)"
+  default     = "24.04"
+  nullable    = false
+}
+
+variable "cp_spot_instances" {
+  type        = bool
+  description = "Use spot instances for control plane nodes"
+  default     = false
+}
+
+variable "worker_spot_instances" {
+  type        = bool
+  description = "Use spot instances for worker nodes"
+  default     = false
 }

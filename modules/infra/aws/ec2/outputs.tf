@@ -34,7 +34,7 @@ output "ssh_key_pair_name" {
 }
 
 output "public_subnets" {
-  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : data.aws_subnets.default_subnets[0].ids)
+  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : local.sorted_default_subnets)
 }
 
 output "private_subnets" {
@@ -42,7 +42,7 @@ output "private_subnets" {
 }
 
 output "vpc_id" {
-  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : null
+  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : data.aws_vpc.default_vpc[0].id
 }
 
 output "sg-id" {
@@ -51,4 +51,8 @@ output "sg-id" {
 
 output "client_public_ip" {
   value = var.restricted_access == true ? "${chomp(data.http.client_public_ip[0].response_body)}" : null
+}
+
+output "iam_instance_profile_name" {
+  value = var.create_iam_role ? aws_iam_instance_profile.rancher_nodes[0].name : var.iam_instance_profile
 }

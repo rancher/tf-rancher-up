@@ -20,3 +20,8 @@ output "rancher_admin_token" {
   value       = one(rancher2_bootstrap.admin[*].token)
   sensitive   = true
 }
+
+output "aws_cloud_credential_id" {
+  description = "The ID of the AWS cloud credential created in Rancher"
+  value       = length(rancher2_cloud_credential.aws) > 0 ? rancher2_cloud_credential.aws[0].id : null
+}

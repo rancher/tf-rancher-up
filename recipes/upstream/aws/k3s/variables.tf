@@ -35,6 +35,12 @@ variable "worker_instance_count" {
   default     = null
 }
 
+variable "instance_count" {
+  type        = number
+  description = "(Deprecated) Number of server EC2 instances to create"
+  default     = null
+}
+
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
@@ -180,9 +186,21 @@ variable "ssh_username" {
   default     = null
 }
 
+variable "server_spot_instances" {
+  type        = bool
+  description = "Use spot instances for server nodes"
+  default     = null
+}
+
+variable "worker_spot_instances" {
+  type        = bool
+  description = "Use spot instances for worker nodes"
+  default     = null
+}
+
 variable "spot_instances" {
   type        = bool
-  description = "Use spot instances"
+  description = "(Deprecated) Use spot instances for all nodes"
   default     = null
 }
 
@@ -195,19 +213,19 @@ variable "instance_ami" {
 variable "os_type" {
   type        = string
   description = "Use SLES or Ubuntu images when launching instances (sles or ubuntu)"
-  default     = "sles"
+  default     = "ubuntu"
 }
 
 variable "sles_version" {
   type        = string
   description = "Version of SLES to use for instances (ex: 15-sp6)"
-  default     = "15-sp6"
+  default     = null
 }
 
 variable "ubuntu_version" {
   type        = string
   description = "Version of Ubuntu to use for instances (ex: 22.04)"
-  default     = "22.04"
+  default     = null
 }
 
 variable "subnet_id" {
@@ -262,4 +280,22 @@ variable "wait" {
   type        = string
   description = "An optional wait before installing the Rancher helm chart"
   default     = "20s"
+}
+
+variable "create_iam_role" {
+  type        = bool
+  description = "Create a dedicated IAM role for the Rancher nodes"
+  default     = false
+}
+
+variable "iam_role_name" {
+  type        = string
+  description = "Name of the IAM role to create"
+  default     = null
+}
+
+variable "iam_instance_profile_name" {
+  type        = string
+  description = "Name of an existing IAM instance profile to use"
+  default     = null
 }
