@@ -123,3 +123,18 @@ variable "os_type" {
     error_message = "The operating system type must be 'opensuse' or 'ubuntu'."
   }
 }
+
+variable "vpc" {
+  type = object({
+    id       = string
+    ip_range = string
+  })
+  description = "Existing VPC (id and ip_range) to place the droplets and load balancers in. When null, a VPC is created if create_firewall is true"
+  default     = null
+}
+
+variable "tags" {
+  type        = list(string)
+  description = "Tags for the droplets. When null, defaults to [\"user:<prefix>\", \"creator:<prefix>\"]"
+  default     = null
+}

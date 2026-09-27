@@ -1,0 +1,93 @@
+# ==========================================
+# REQUIRED VARIABLES
+# You MUST provide values for these variables
+# ==========================================
+
+# DigitalOcean authentication token
+do_token = "your_do_token_here"
+
+# ==========================================
+# HYBRID AUTHENTICATION VARIABLES (OPTIONAL)
+# ==========================================
+# By default, this recipe will attempt to automatically find the API URL and Token
+# by reading the terraform.tfstate file of a previously deployed upstream cluster.
+# 
+# The default path assumes you deployed using `recipes/upstream/digitalocean/rke2`.
+# If you deployed your upstream cluster elsewhere (e.g., AWS), uncomment and update this path:
+#
+# upstream_state_path = "../../../upstream/aws/rke2/terraform.tfstate"
+#
+# Alternatively, if you want to connect to a Rancher server NOT managed by local Terraform state
+# (like a production cluster), uncomment BOTH variables below and provide the explicit credentials.
+# Doing so will override the automated `upstream_state_path` lookup completely.
+#
+# rancher_api_url   = "https://rancher.yourdomain.com"
+# rancher_token_key = "token-xxxxx:yyyyyyyyyyyyyyyyyyyyyyyyy"
+#
+# Set to false if the Rancher server has a certificate from a trusted CA
+# rancher_insecure = true
+
+# ==========================================
+# OPTIONAL VARIABLES
+# Uncomment and change the values below to suit your individual needs
+# ==========================================
+
+# The name of the cluster as it will appear in the Rancher UI
+# cluster_name = "do-downstream"
+
+# Number of droplets to provision. Every node runs all roles, so use 1 or an odd number (3, 5)
+# droplet_count = 3
+
+# Droplet Machine Type/Size
+# droplet_size = "s-2vcpu-4gb"
+
+# Droplet Operating system. By default variable is set opensuse but ubuntu can also be selected.
+# os_type = "opensuse"
+
+# Name of the OpenSUSE leap image uploaded to the DO account.
+# droplet_image = "openSUSE-Leap-15.6"
+
+# A string that will prefix the name of all resources.
+# Lowercase letters, digits and '-' only; must be unique in the (shared) DigitalOcean account
+# and different from the upstream recipe's prefix, e.g. "<initials>-down"
+# prefix = "rancher-downstream"
+
+# Your name, set as the user: tag on every droplet (defaults to prefix)
+# user_tag = "jdoe"
+
+# Switch on/off new ssh keypair generation for droplet/node ssh connections
+# Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
+# create_ssh_key_pair = true
+
+# If 'create_ssh_key_pair' is set to false, give the name of an ssh key on DigitalOcean
+# and the path to its private key. The key must NOT have a passphrase.
+# ssh_key_pair_name = "terraform"
+# ssh_key_pair_path = "~/.ssh/terraform.pem"
+
+# The region that droplets will be deployed to
+# region = "sfo3"
+
+# RKE2 version for the cluster; must be listed by the upstream Rancher
+# (Cluster Management > Create > Custom > Kubernetes Version)
+# rke2_version = "v1.36.4+rke2r1"
+
+# Ingress controller deployed in the cluster (nginx or traefik)
+# rke2_ingress = "nginx"
+
+# Kubernetes API audit log on the control-plane nodes. Records every API request, including
+# commands run in Rancher's kubectl shell (which bypass Rancher's own audit log).
+# None (disabled), Metadata (who, what, when), Request (+ request bodies), RequestResponse (+ response bodies)
+# Secrets, ConfigMaps and token reviews are always capped at Metadata.
+# kube_audit_level = "Metadata"
+# Or supply a complete audit Policy instead:
+# kube_audit_policy = file("audit-policy.yaml")
+# Authorized Cluster Endpoint: direct kubectl access to this cluster's API server with a
+# Rancher-issued kubeconfig, bypassing Rancher. Those requests are only in the Kubernetes audit log.
+# fqdn/ca_certs: optional load balancer name and its CA, instead of the per-node contexts
+# authorized_cluster_endpoint = { enabled = true }
+# authorized_cluster_endpoint = { enabled = true, fqdn = "k8s.example.com", ca_certs = file("ca.pem") }
+
+# Rotation of /var/lib/rancher/rke2/server/logs/audit.log
+# kube_audit_log_max_age    = 30
+# kube_audit_log_max_backup = 10
+# kube_audit_log_max_size   = 100
