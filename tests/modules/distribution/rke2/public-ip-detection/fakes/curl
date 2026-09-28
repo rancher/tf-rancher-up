@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Fake curl for run-tests.sh. CURL_SCRIPT is a space-separated list of results, one per call
+# (the last one repeats):
+#   ok    prints 203.0.113.10 and a newline, exit 0
+#   fail  exit 22 (what curl --fail returns on an HTTP error)
+#   html  prints an HTML error page, exit 0 (an error page served with HTTP 200)
+n=$(( $(cat "$CALLS_FILE" 2>/dev/null || echo 0) + 1 ))
+echo "$n" > "$CALLS_FILE"
+set -- $CURL_SCRIPT
+result=${!n:-${!#}}
+case $result in
+  ok)   printf '203.0.113.10\n' ;;
+  fail) exit 22 ;;
+  html) printf '<html><body>503 Service Unavailable</body></html>\n' ;;
+esac
