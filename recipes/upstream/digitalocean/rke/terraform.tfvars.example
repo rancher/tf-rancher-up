@@ -25,7 +25,7 @@
 # rancher_password = "at-least-12-characters"
 
 # Desired Rancher version
-# rancher_version = "2.6.13"
+# rancher_version = "2.11.3"
 
 # Switch on/off new ssh keypair generation for droplet/node ssh connections
 # Private keyfile will be stored at '${path.cwd}/${var.prefix}-ssh_private_key.pem' if 'ssh_private_key_path' is empty
