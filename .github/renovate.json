@@ -57,6 +57,37 @@
       "extends": [
         "github>rancher/renovate-config//rancher-2.11#release"
       ]
+    },
+    {
+      "description": "Group rancher2 across all modules and recipes so a provider bump lands atomically. The supported '~> 15.1' range resolves patch and minor releases on its own, so Renovate only opens a PR for a new provider major, which maps to a new Rancher minor line and fails scripts/check_rancher2_version.sh until the supported major is bumped deliberately.",
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchPackageNames": [
+        "rancher/rancher2"
+      ],
+      "groupName": "rancher2 provider",
+      "separateMajorMinor": true
+    },
+    {
+      "description": "RKE1 was dropped in Rancher 2.12. Hold the RKE1 modules and recipes, and the shared modules/rancher floor they depend on, below the 8.6.0 provider line: 8.5.0 is the last release with the full RKE1 resource set. See scripts/check_rancher2_version.sh.",
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchPackageNames": [
+        "rancher/rancher2"
+      ],
+      "matchFileNames": [
+        "modules/downstream/aws/rke/**",
+        "recipes/downstream/aws/rke/**",
+        "recipes/upstream/aws/rke/**",
+        "recipes/upstream/azure/rke/**",
+        "recipes/upstream/digitalocean/rke/**",
+        "recipes/upstream/google-cloud/rke/**",
+        "recipes/upstream/vmware/rke/**",
+        "modules/rancher/**"
+      ],
+      "allowedVersions": "< 8.6.0"
     }
   ]
 }
