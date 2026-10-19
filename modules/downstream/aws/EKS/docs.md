@@ -5,7 +5,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.0.0 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 8.0.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | ~> 15.1 |
 
 ## Providers
 
@@ -13,7 +13,7 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | >= 3.0.0 |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | ~> 15.1 |
 
 ## Modules
 
