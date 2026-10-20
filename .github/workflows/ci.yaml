@@ -23,6 +23,15 @@ jobs:
       - name: Rewrites all Terraform configuration files to a canonical format
         run: terraform fmt -diff -check -recursive
 
+  check_rancher2_provider:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Verify rancher2 provider constraints match their class
+        run: ./scripts/check_rancher2_version.sh
+
   generate_docs:
     runs-on: macos-latest
     steps:

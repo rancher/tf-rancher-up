@@ -48,7 +48,7 @@ kubernetes_version = "v1.31.7-rancher1-1"
 
 # Rancher Configuration
 
-rancher_version            = "v2.13.1"
+rancher_version            = "2.11.3"
 rancher_bootstrap_password = "initial-bootstrap-password"
 rancher_password           = "initial-bootstrap-password"
 rancher_replicas           = 3

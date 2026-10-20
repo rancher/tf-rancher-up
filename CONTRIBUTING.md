@@ -58,6 +58,14 @@ terraform fmt -recursive .
 ```bash
  terraform-docs markdown .
 ```
+- If you change a provider version constraint, keep it consistent with the other modules and recipes. `rancher2` constraints are enforced by `scripts/check_rancher2_version.sh`:
+
+  - supported modules and recipes: `~> 15.1`
+  - RKE1 modules and recipes (RKE1 was dropped in Rancher 2.12): `~> 8.5.0`
+  - shared `modules/rancher`: `>= 8.5`
+
+  Run the script before pushing. The supported `~>` range picks up patch and minor provider releases on its own, so Renovate only opens a PR for a new provider major, which maps to a new Rancher minor release. That PR fails this check until `SUPPORTED_RANCHER2_MAJOR` is bumped deliberately and `./scripts/generate_docs.sh` is re-run.
+
 - Commit your Changes.
 
 ```sh

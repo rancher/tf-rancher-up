@@ -11,7 +11,7 @@
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.23.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.4 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 3.0.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | ~> 8.5.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
 | <a name="requirement_rke"></a> [rke](#requirement\_rke) | >= 1.7.5 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1 |
@@ -60,7 +60,7 @@
 | <a name="input_rancher_helm_repository_username"></a> [rancher\_helm\_repository\_username](#input\_rancher\_helm\_repository\_username) | Rancher helm repository username | `string` | `null` | no |
 | <a name="input_rancher_password"></a> [rancher\_password](#input\_rancher\_password) | Password for the Rancher admin account (min 12 characters) | `string` | `null` | no |
 | <a name="input_rancher_replicas"></a> [rancher\_replicas](#input\_rancher\_replicas) | Number of Rancher replicas | `number` | `3` | no |
-| <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `"v2.10.1"` | no |
+| <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Rancher version to install | `string` | `"2.11.3"` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Path to the SSH private key | `string` | `"~/.ssh/id_rsa"` | no |
 | <a name="input_ssh_public_key_path"></a> [ssh\_public\_key\_path](#input\_ssh\_public\_key\_path) | Path to the SSH public key | `string` | `"~/.ssh/id_rsa.pub"` | no |
 | <a name="input_vm_cpus"></a> [vm\_cpus](#input\_vm\_cpus) | Number of CPUs for the VMs | `number` | `4` | no |

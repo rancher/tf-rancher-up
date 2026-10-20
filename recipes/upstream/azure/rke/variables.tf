@@ -217,7 +217,7 @@ variable "rancher_password" {
 variable "rancher_version" {
   description = "Rancher version to install"
   type        = string
-  default     = null
+  default     = "2.11.3"
 }
 
 variable "rancher_helm_repository" {

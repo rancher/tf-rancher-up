@@ -1,6 +1,8 @@
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | ~> 15.1 |
 
 ## Providers
 

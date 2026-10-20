@@ -21,7 +21,7 @@ prefix = "my-name-here"
 ###### !! Optional variables !! ######
 
 ## -- Rancher version to use when installing the Rancher helm chart, otherwise use the latest in the stable repository
-# rancher_version = "2.7.3"
+# rancher_version = "2.11.3"
 
 # Override the helm repository for the Rancher chart
 # rancher_helm_repository = "https://charts.example.com/rancher"

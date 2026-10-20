@@ -4,7 +4,7 @@
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.1.0 |
-| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | >= 8.0.0 |
+| <a name="requirement_rancher2"></a> [rancher2](#requirement\_rancher2) | ~> 15.1 |
 
 ## Providers
 
@@ -12,7 +12,7 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | >= 8.0.0 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | ~> 15.1 |
 
 ## Modules
 
