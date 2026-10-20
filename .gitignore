@@ -2,24 +2,51 @@
 **/.terraform/*
 **/terraform-provider*/*
 
-# .tfstate files
+# .tfstate files (contain every resource attribute, including secrets)
 *.tfstate
 *.tfstate.*
 *.terraform*
 
-# This file has personal secrets, so don't add
-terraform.tfvars
+# Plan files (contain variable values and secrets in plain text)
+*.tfplan
+*.tfplan.json
+tfplan
+
+# Variable files have personal secrets (tokens, passwords), so don't add them.
+# Only the *.tfvars.example templates are committed.
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+# SSH keys, certificates and credentials
+*.pem
+*.key
 *-key
 *-key.pub
+id_rsa*
+id_ed25519*
+*.p12
+*.pfx
+.env
+*.env
+
+# Kubeconfigs written by the recipes
 *kubeconfig.yaml
+*.kubeconfig
+*kube_config.yml*
+*kube_config.yaml*
+
+# Terraform CLI configuration (can contain API tokens)
+.terraformrc
+terraform.rc
 
 # Crash log files
 crash.log
+crash.*.log
 
 # RKE
 rke.log
-*kube_config.yml*
-*.pem
 
 # Temporary files
 **/*.swp
@@ -34,8 +61,8 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Allow
-!modules/distribution/gke/kubeconfig.yml.tmpl
+.idea
 myvalues.tfvars
 
-.idea
+# Allow
+!modules/distribution/gke/kubeconfig.yml.tmpl

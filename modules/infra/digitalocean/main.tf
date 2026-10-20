@@ -2,6 +2,11 @@
 locals {
   new_key_pair_path = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
   all_droplet_ids   = var.rke2_installation ? concat(digitalocean_droplet.droplet[*].id, var.extra_droplet_id) : digitalocean_droplet.droplet[*].id
+
+  # Use the caller's VPC when one is passed in; otherwise create one alongside the firewall
+  create_vpc   = var.vpc == null && var.create_firewall
+  vpc_uuid     = var.vpc != null ? var.vpc.id : (local.create_vpc ? digitalocean_vpc.k8s_cluster[0].id : null)
+  vpc_ip_range = var.vpc != null ? var.vpc.ip_range : (local.create_vpc ? digitalocean_vpc.k8s_cluster[0].ip_range : null)
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -22,6 +27,12 @@ resource "digitalocean_ssh_key" "key_pair" {
   public_key = tls_private_key.ssh_private_key[0].public_key_openssh
 }
 
+resource "digitalocean_vpc" "k8s_cluster" {
+  count  = local.create_vpc ? 1 : 0
+  name   = "${var.prefix}-vpc"
+  region = var.region
+}
+
 data "digitalocean_regions" "available" {
   filter {
     key    = "available"
@@ -34,10 +45,11 @@ resource "digitalocean_droplet" "droplet" {
   image      = var.os_type == "opensuse" ? data.digitalocean_image.opensuse[0].id : data.digitalocean_image.ubuntu[0].id
   size       = var.droplet_size
   name       = "${var.prefix}-${count.index + var.tag_begin}"
-  tags       = ["user:${var.prefix}", "creator:${var.prefix}"]
+  tags       = var.tags != null ? var.tags : ["user:${var.prefix}", "creator:${var.prefix}"]
   ssh_keys   = var.create_ssh_key_pair ? [digitalocean_ssh_key.key_pair[0].id] : [data.digitalocean_ssh_key.terraform.id]
   user_data  = var.user_data
   region     = var.region
+  vpc_uuid   = local.vpc_uuid
   depends_on = [tls_private_key.ssh_private_key, local_file.private_key_pem, digitalocean_ssh_key.key_pair]
 
   connection {
@@ -63,14 +75,16 @@ resource "digitalocean_droplet" "droplet" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [image]
+    # SSH keys are only injected at creation; a deferred key lookup must not force a rebuild
+    ignore_changes = [image, ssh_keys]
   }
 }
 
 resource "digitalocean_loadbalancer" "k8s_api_loadbalancer" {
-  count  = var.create_k8s_api_loadbalancer ? 1 : 0
-  name   = "${var.prefix}-6443-lb"
-  region = var.region
+  count    = var.create_k8s_api_loadbalancer ? 1 : 0
+  name     = "${var.prefix}-6443-lb"
+  region   = var.region
+  vpc_uuid = local.vpc_uuid
 
   forwarding_rule {
     entry_port     = 443
@@ -92,9 +106,10 @@ resource "digitalocean_loadbalancer" "k8s_api_loadbalancer" {
 }
 
 resource "digitalocean_loadbalancer" "https_loadbalancer" {
-  count  = var.create_https_loadbalancer ? 1 : 0
-  name   = "${var.prefix}-443-lb"
-  region = var.region
+  count    = var.create_https_loadbalancer ? 1 : 0
+  name     = "${var.prefix}-443-lb"
+  region   = var.region
+  vpc_uuid = local.vpc_uuid
 
   forwarding_rule {
     entry_port     = 443
@@ -120,6 +135,7 @@ resource "digitalocean_firewall" "k8s_cluster" {
   name  = "${var.prefix}-allow-nodes"
 
   droplet_ids = local.all_droplet_ids
+  depends_on  = [digitalocean_droplet.droplet]
 
   inbound_rule {
     protocol         = "tcp"
@@ -140,20 +156,26 @@ resource "digitalocean_firewall" "k8s_cluster" {
   }
 
   inbound_rule {
-    protocol           = "tcp"
-    port_range         = "1-65535"
-    source_droplet_ids = local.all_droplet_ids
+    protocol         = "tcp"
+    port_range       = "9345"
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
-    protocol           = "udp"
-    port_range         = "1-65535"
-    source_droplet_ids = local.all_droplet_ids
+    protocol         = "tcp"
+    port_range       = "1-65535"
+    source_addresses = [local.vpc_ip_range]
   }
 
   inbound_rule {
-    protocol           = "icmp"
-    source_droplet_ids = local.all_droplet_ids
+    protocol         = "udp"
+    port_range       = "1-65535"
+    source_addresses = [local.vpc_ip_range]
+  }
+
+  inbound_rule {
+    protocol         = "icmp"
+    source_addresses = [local.vpc_ip_range]
   }
 
   outbound_rule {
@@ -173,7 +195,6 @@ resource "digitalocean_firewall" "k8s_cluster" {
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 
-  depends_on = [digitalocean_droplet.droplet]
   lifecycle {
     create_before_destroy = true
   }
