@@ -23,7 +23,6 @@ module "master_nodes" {
   instance_security_group = var.instance_security_group
   vpc_id                  = var.vpc_id
   subnet_id               = var.subnet_id
-  lookup_default_vpc      = var.subnet_id == null
   bastion_host            = var.bastion_host
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key
@@ -59,7 +58,6 @@ module "worker_nodes" {
   instance_security_group = var.instance_security_group
   vpc_id                  = var.vpc_id
   subnet_id               = var.subnet_id
-  lookup_default_vpc      = var.subnet_id == null
   bastion_host            = var.bastion_host
   aws_access_key          = var.aws_access_key
   aws_secret_key          = var.aws_secret_key

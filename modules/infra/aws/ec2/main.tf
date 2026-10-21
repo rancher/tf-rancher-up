@@ -6,7 +6,9 @@ locals {
   selected_subnets       = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? local.provided_subnets : local.sorted_default_subnets)
   selected_vpc_id = var.create_vpc == true ? module.aws_vpc[0].vpc_id : (
     var.vpc_id != null ? var.vpc_id : (
-      var.create_security_group ? try(local.default_vpc_ids[0], null) : data.aws_security_group.sg[0].vpc_id
+      var.create_security_group ? (
+        var.subnet_id != null ? data.aws_subnet.provided[0].vpc_id : try(local.default_vpc_ids[0], null)
+      ) : data.aws_security_group.sg[0].vpc_id
     )
   )
 }

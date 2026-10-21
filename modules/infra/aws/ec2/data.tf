@@ -13,7 +13,7 @@ data "aws_security_group" "sg" {
 }
 
 locals {
-  should_lookup_default_vpc = var.create_vpc != true && var.lookup_default_vpc
+  should_lookup_default_vpc = var.create_vpc != true && var.lookup_default_vpc && var.subnet_id == null
   default_vpc_ids           = local.should_lookup_default_vpc ? tolist(data.aws_vpcs.default_vpcs[0].ids) : tolist([])
   default_vpc_available     = length(local.default_vpc_ids) > 0
 }
@@ -24,7 +24,7 @@ data "aws_vpcs" "default_vpcs" {
   count = local.should_lookup_default_vpc ? 1 : 0
 
   filter {
-    name   = "is-default"
+    name   = "isDefault"
     values = ["true"]
   }
 }
@@ -41,6 +41,11 @@ data "aws_subnets" "default_subnets" {
 data "aws_subnet" "default" {
   for_each = local.default_vpc_available ? toset(data.aws_subnets.default_subnets[0].ids) : toset([])
   id       = each.value
+}
+
+data "aws_subnet" "provided" {
+  count = var.create_vpc != true && var.vpc_id == null && var.create_security_group && var.subnet_id != null ? 1 : 0
+  id    = local.provided_subnets[0]
 }
 
 data "http" "client_public_ip" {
