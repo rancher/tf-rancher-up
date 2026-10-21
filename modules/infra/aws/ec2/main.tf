@@ -2,7 +2,8 @@ locals {
   new_key_pair_path      = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
   default_subnets_by_az  = { for s in data.aws_subnet.default : s.availability_zone => s.id }
   sorted_default_subnets = [for az in sort(keys(local.default_subnets_by_az)) : local.default_subnets_by_az[az]]
-  selected_subnets       = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : local.sorted_default_subnets)
+  provided_subnets       = var.subnet_id == null ? tolist([]) : try(tolist(var.subnet_id), [var.subnet_id])
+  selected_subnets       = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? local.provided_subnets : local.sorted_default_subnets)
   selected_vpc_id = var.create_vpc == true ? module.aws_vpc[0].vpc_id : (
     var.vpc_id != null ? var.vpc_id : (
       var.create_security_group ? try(local.default_vpc_ids[0], null) : data.aws_security_group.sg[0].vpc_id
