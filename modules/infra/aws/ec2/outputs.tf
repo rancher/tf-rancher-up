@@ -34,7 +34,7 @@ output "ssh_key_pair_name" {
 }
 
 output "public_subnets" {
-  value = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : local.sorted_default_subnets)
+  value = local.selected_subnets
 }
 
 output "private_subnets" {
@@ -42,7 +42,7 @@ output "private_subnets" {
 }
 
 output "vpc_id" {
-  value = var.create_vpc == true ? module.aws_vpc[0].vpc_id : data.aws_vpc.default_vpc[0].id
+  value = local.selected_vpc_id
 }
 
 output "sg-id" {
