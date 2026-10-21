@@ -206,7 +206,7 @@ variable "create_vpc" {
 
 variable "lookup_default_vpc" {
   type        = bool
-  description = "Look up the account's default VPC when create_vpc is false and no subnet_id is provided. Set to false to disable default VPC discovery entirely."
+  description = "Look up the account's default VPC when create_vpc is false. Set to false when supplying an existing VPC/subnet, or when DescribeVpcs is not permitted."
   default     = true
   nullable    = false
 }

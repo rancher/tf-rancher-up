@@ -38,6 +38,8 @@ module "rke2_first_server" {
   instance_security_group = var.instance_security_group
   restricted_access       = var.restricted_access
   create_vpc              = var.create_vpc
+  vpc_id                  = var.vpc_id
+  lookup_default_vpc      = var.vpc_id == null
   vpc_cidr                = var.vpc_cidr
   public_subnets          = var.public_subnets
   private_subnets         = var.private_subnets
