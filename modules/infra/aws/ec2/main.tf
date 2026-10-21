@@ -2,6 +2,12 @@ locals {
   new_key_pair_path      = var.ssh_private_key_path != null ? var.ssh_private_key_path : "${path.cwd}/${var.prefix}-ssh_private_key.pem"
   default_subnets_by_az  = { for s in data.aws_subnet.default : s.availability_zone => s.id }
   sorted_default_subnets = [for az in sort(keys(local.default_subnets_by_az)) : local.default_subnets_by_az[az]]
+  selected_subnets       = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : local.sorted_default_subnets)
+  selected_vpc_id = var.create_vpc == true ? module.aws_vpc[0].vpc_id : (
+    var.vpc_id != null ? var.vpc_id : (
+      var.create_security_group ? try(local.default_vpc_ids[0], null) : data.aws_security_group.sg[0].vpc_id
+    )
+  )
 }
 
 resource "tls_private_key" "ssh_private_key" {
@@ -33,13 +39,20 @@ module "aws_vpc" {
 }
 
 resource "random_shuffle" "subnet" {
-  input        = var.create_vpc == true ? module.aws_vpc[0].public_subnets : tolist(var.subnet_id != null ? var.subnet_id : local.sorted_default_subnets)
+  input        = local.selected_subnets
   result_count = var.instance_count
+
+  lifecycle {
+    precondition {
+      condition     = length(local.selected_subnets) > 0 || var.instance_count == 0
+      error_message = "No subnets available. Set create_vpc = true, provide subnet_id, or ensure the AWS account/region has a default VPC."
+    }
+  }
 }
 
 resource "aws_security_group" "sg_allowall" {
   count  = var.create_security_group ? 1 : 0
-  vpc_id = var.create_vpc == true ? module.aws_vpc[0].vpc_id : var.create_security_group ? null : data.aws_security_group.sg[0].vpc_id
+  vpc_id = local.selected_vpc_id
 
   name        = "${var.prefix}-allow-nodes"
   description = "Allow traffic for nodes in the cluster"
@@ -94,6 +107,13 @@ resource "aws_security_group" "sg_allowall" {
 
   tags = {
     Creator = var.prefix
+  }
+
+  lifecycle {
+    precondition {
+      condition     = local.selected_vpc_id != null
+      error_message = "No VPC available for the security group. Set create_vpc = true, or provide vpc_id when using an existing VPC."
+    }
   }
 }
 

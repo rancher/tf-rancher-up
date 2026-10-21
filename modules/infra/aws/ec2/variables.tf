@@ -80,6 +80,12 @@ variable "ubuntu_version" {
   nullable    = false
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "ID of an existing VPC to use for the security group and reported VPC. When not creating a VPC, provide this together with subnet_id."
+  default     = null
+}
+
 variable "subnet_id" {
   type        = any
   description = "VPC Subnet ID to create the instance(s) in"
@@ -196,6 +202,13 @@ variable "create_vpc" {
   type        = bool
   description = "Create a VPC"
   default     = false
+}
+
+variable "lookup_default_vpc" {
+  type        = bool
+  description = "Look up the account's default VPC when create_vpc is false and no subnet_id is provided. Set to false to avoid any default VPC lookups when supplying existing subnets."
+  default     = true
+  nullable    = false
 }
 
 variable "vpc_cidr" {

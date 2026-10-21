@@ -12,21 +12,34 @@ data "aws_security_group" "sg" {
   id    = var.instance_security_group
 }
 
-data "aws_vpc" "default_vpc" {
-  count   = var.create_vpc != true ? 1 : 0
-  default = true
+locals {
+  should_lookup_default_vpc = var.create_vpc != true && var.lookup_default_vpc
+  default_vpc_ids           = local.should_lookup_default_vpc ? tolist(data.aws_vpcs.default_vpcs[0].ids) : tolist([])
+  default_vpc_available     = length(local.default_vpc_ids) > 0
+}
+
+# Use the plural data source so a missing default VPC returns an empty list
+# instead of failing the plan in accounts where the default VPC was deleted.
+data "aws_vpcs" "default_vpcs" {
+  count = local.should_lookup_default_vpc ? 1 : 0
+
+  filter {
+    name   = "is-default"
+    values = ["true"]
+  }
 }
 
 data "aws_subnets" "default_subnets" {
-  count = var.create_vpc != true ? 1 : 0
+  count = local.default_vpc_available ? 1 : 0
+
   filter {
     name   = "vpc-id"
-    values = [data.aws_vpc.default_vpc[0].id]
+    values = local.default_vpc_ids
   }
 }
 
 data "aws_subnet" "default" {
-  for_each = toset(var.create_vpc != true ? data.aws_subnets.default_subnets[0].ids : [])
+  for_each = local.default_vpc_available ? toset(data.aws_subnets.default_subnets[0].ids) : toset([])
   id       = each.value
 }
 

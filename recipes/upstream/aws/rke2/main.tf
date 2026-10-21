@@ -79,6 +79,7 @@ module "rke2_additional_servers" {
   create_security_group   = false
   instance_security_group = module.rke2_first_server.sg-id
   create_vpc              = false
+  lookup_default_vpc      = false
   subnet_id               = module.rke2_first_server.public_subnets != null ? module.rke2_first_server.public_subnets : var.subnet_id
   user_data               = module.rke2_additional.rke2_user_data
   aws_access_key          = var.aws_access_key
@@ -106,6 +107,7 @@ module "rke2_workers" {
   create_security_group   = false
   instance_security_group = module.rke2_first_server.sg-id
   create_vpc              = false
+  lookup_default_vpc      = false
   subnet_id               = module.rke2_first_server.public_subnets != null ? module.rke2_first_server.public_subnets : var.subnet_id
   user_data               = module.rke2_additional.rke2_worker_user_data
   aws_access_key          = var.aws_access_key

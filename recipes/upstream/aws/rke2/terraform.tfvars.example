@@ -41,7 +41,7 @@ server_instance_count = 1
 server_spot_instances = false
 # worker_spot_instances = false
 
-## -- Create a VPC (will use the default VPC instead)
+## -- Create a VPC (if unset, the default VPC is used; set to true if there is no default VPC)
 # create_vpc      = false
 # vpc_cidr        = "10.0.0.0/16"
 # public_subnets  = true

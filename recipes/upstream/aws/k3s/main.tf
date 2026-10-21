@@ -79,6 +79,7 @@ module "k3s_additional_servers" {
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
   create_vpc              = false
+  lookup_default_vpc      = false
   subnet_id               = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
   user_data               = module.k3s_additional.k3s_server_user_data
   aws_access_key          = var.aws_access_key
@@ -105,6 +106,7 @@ module "k3s_workers" {
   create_security_group   = false
   instance_security_group = module.k3s_first_server.sg-id
   create_vpc              = false
+  lookup_default_vpc      = false
   subnet_id               = module.k3s_first_server.public_subnets != null ? module.k3s_first_server.public_subnets : var.subnet_id
   user_data               = module.k3s_additional.k3s_worker_user_data
   aws_access_key          = var.aws_access_key

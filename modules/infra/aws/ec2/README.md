@@ -44,6 +44,9 @@ module "upstream_cluster" {
   prefix                  = "example-rancher"
   instance_count          = 1
   vpc_id                  = "vpc-xxxxx"
-	subnet_id               = "subnet-xxxxxx"
+  subnet_id               = "subnet-xxxxxx"
+  lookup_default_vpc      = false
 }
 ```
+
+Setting `lookup_default_vpc = false` avoids reading default VPC data sources when using an existing VPC. If the target account has no default VPC, use `create_vpc = true` instead.
