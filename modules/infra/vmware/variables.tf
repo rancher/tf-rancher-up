@@ -49,11 +49,6 @@ variable "vsphere_resource_pool" {
   type        = string
   description = "vSphere resource pool (full path like 'cluster1/Resources/mypool'). Specify one: cluster, host, or resource_pool."
   default     = null
-
-  #  validation {
-  #    condition     = var.vsphere_cluster != null || var.vsphere_host != null || var.vsphere_resource_pool != null
-  #    error_message = "One of vsphere_cluster, vsphere_host, or vsphere_resource_pool must be specified"
-  #  }
 }
 
 variable "vsphere_folder" {
@@ -67,15 +62,55 @@ variable "vsphere_network" {
   description = "vSphere network name"
 }
 
-variable "vsphere_virtual_machine" {
-  type        = string
-  description = "VM template name (must have cloud-init support)"
-}
-
 variable "vsphere_firmware" {
   type        = string
-  description = "Firmware for the VM (bios or efi). Defaults to template value if null."
+  description = "Firmware for the VM (bios or efi). Defaults to template value for clone path, OVA value for OVF path."
   default     = null
+}
+
+# ── vCenter clone path (use_ovf_deploy = false, default) ─────────────────────
+variable "vsphere_virtual_machine" {
+  type        = string
+  description = "VM template name in vCenter (must have cloud-init support). Required when use_ovf_deploy = false."
+  default     = null
+}
+
+# ── Standalone ESXi / OVF deploy path (use_ovf_deploy = true) ────────────────
+variable "use_ovf_deploy" {
+  type        = bool
+  description = "Deploy VMs from an OVA/OVF file instead of cloning a vCenter template. Use this for standalone ESXi hosts without vCenter. When true, ova_url is required and vsphere_virtual_machine is ignored."
+  default     = false
+}
+
+variable "network_adapter_type" {
+  type        = string
+  description = "Network adapter type for OVF deploy path. Ignored when use_ovf_deploy = false (adapter type comes from the vCenter template). Standard cloud images (Ubuntu, RHEL) use vmxnet3."
+  default     = "vmxnet3"
+}
+
+variable "ova_url" {
+  type        = string
+  description = "URL or local path to the OVA/OVF to deploy. Required when use_ovf_deploy = true. Supports https:// (fetched at deploy time, no pre-download needed) or file:/// (local path, faster for repeated testing). Example: https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.ova"
+  default     = null
+}
+
+# Static IP Configuration (OVF path only — clone path uses template network settings)
+variable "ip_addresses" {
+  type        = list(string)
+  description = "Static IPv4 addresses in CIDR form (e.g. '10.5.105.105/22'), one per instance matched by index. Leave empty for DHCP. Only used when use_ovf_deploy = true."
+  default     = []
+}
+
+variable "ip_gateway" {
+  type        = string
+  description = "Default gateway for static IP configuration. Only used when use_ovf_deploy = true."
+  default     = null
+}
+
+variable "dns_servers" {
+  type        = list(string)
+  description = "DNS servers for static IP configuration. Only used when use_ovf_deploy = true."
+  default     = ["1.1.1.1", "8.8.8.8"]
 }
 
 # VM Configuration
@@ -110,7 +145,7 @@ variable "vm_memory" {
 
 variable "vm_disk" {
   type        = number
-  description = "Disk size in GB"
+  description = "Root disk size in GB. For clone path: sets disk size directly. For OVF path: resizes the OVA's native disk to this size after deploy."
   default     = 100
 }
 

@@ -23,6 +23,12 @@ output "ssh_public_key" {
   value       = var.create_ssh_key_pair ? tls_private_key.ssh_key[0].public_key_openssh : var.ssh_public_key
 }
 
+output "ssh_private_key" {
+  description = "SSH private key content (only populated when create_ssh_key_pair = true)"
+  value       = var.create_ssh_key_pair ? tls_private_key.ssh_key[0].private_key_openssh : null
+  sensitive   = true
+}
+
 output "dependency" {
   description = "Dependency output for chaining resources"
   value       = var.instance_count > 0 ? vsphere_virtual_machine.instance[0].id : null

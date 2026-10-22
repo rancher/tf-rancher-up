@@ -46,7 +46,11 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+# vCenter template — only used when use_ovf_deploy = false (default).
+# When use_ovf_deploy = true this data source has count = 0 and is never
+# fetched. vsphere_virtual_machine must be set when use_ovf_deploy = false.
 data "vsphere_virtual_machine" "template" {
+  count         = var.use_ovf_deploy ? 0 : 1
   name          = var.vsphere_virtual_machine
   datacenter_id = data.vsphere_datacenter.dc.id
 }
