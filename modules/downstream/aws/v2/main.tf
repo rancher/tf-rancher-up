@@ -1,7 +1,7 @@
 locals {
   ami = var.ami != null ? var.ami : (var.os_type == "ubuntu" ? data.aws_ssm_parameter.ubuntu[0].insecure_value : data.aws_ssm_parameter.sles[0].insecure_value)
 
-  use_custom_machine_pools = var.machine_pools != null && length(var.machine_pools) > 0
+  use_custom_machine_pools = var.machine_pools != null
 
   # Accept either an availability zone suffix ("a") or a full AZ name ("us-east-1a").
   default_zone = try(regex("([a-z])$", var.zone)[0], var.zone)
@@ -47,19 +47,18 @@ locals {
       drain_before_delete = pool.drain_before_delete
       zone                = pool.zone
       subnet_id           = pool.subnet_id
-      instance_type       = pool.instance_type
-      volume_size         = pool.volume_size
-      volume_type         = pool.volume_type
+      instance_type       = coalesce(pool.instance_type, var.instance_type)
+      volume_size         = coalesce(pool.volume_size, var.volume_size)
+      volume_type         = coalesce(pool.volume_type, var.volume_type)
       spot_instances      = pool.spot_instances
     }
   ]
 
   resolved_pool_zones = {
     for pool in local.custom_machine_pools : pool.name => (
-      pool.zone != null ? try(regex("([a-z])$", pool.zone)[0], pool.zone) : (
-        pool.subnet_id != null ? try(local.zone_suffix_by_subnet[pool.subnet_id], local.default_zone) : (
-          var.subnet_id != null ? try(local.zone_suffix_by_subnet[var.subnet_id], local.default_zone) : local.default_zone
-        )
+      pool.zone != null ? try(regex("([a-z])$", pool.zone)[0], pool.zone) : try(
+        local.zone_suffix_by_subnet[coalesce(pool.subnet_id, var.subnet_id)],
+        local.default_zone
       )
     )
   }
@@ -149,8 +148,10 @@ resource "rancher2_cluster_v2" "cluster" {
 
   lifecycle {
     precondition {
-      condition     = !local.use_custom_machine_pools || length(local.provided_subnet_vpc_ids) <= 1
-      error_message = "All subnet IDs used by machine_pools must belong to the same VPC."
+      condition = !local.use_custom_machine_pools || alltrue([
+        for subnet in data.aws_subnet.provided : subnet.vpc_id == local.effective_vpc_id
+      ])
+      error_message = "All subnet IDs used by machine_pools must belong to the effective VPC (vpc_id, the subnets' VPC, or the AWS default VPC)."
     }
     precondition {
       condition     = !local.use_custom_machine_pools || local.effective_vpc_id != null

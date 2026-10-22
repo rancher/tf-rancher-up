@@ -1,7 +1,7 @@
 locals {
-  # Only mock AWS credentials when an AMI is supplied and no AWS lookups are needed.
-  # Subnet discovery requires real credentials even when the AMI is pinned.
-  mock_aws_credentials = var.ami != null && !local.need_provided_subnet_lookup && !local.need_default_vpc_lookup && !local.need_subnet_lookup
+  # Machine pool subnet/AZ lookups always need real AWS credentials, so only
+  # mock credentials for the legacy pools when the AMI is pinned.
+  mock_aws_credentials = var.ami != null && !local.use_custom_machine_pools
 }
 
 provider "aws" {

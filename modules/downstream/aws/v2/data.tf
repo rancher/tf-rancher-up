@@ -9,15 +9,11 @@ data "aws_ssm_parameter" "ubuntu" {
 }
 
 locals {
+  # The global subnet only applies to pools that do not set their own.
   provided_subnet_ids = distinct(compact(concat(
-    [var.subnet_id],
-    [for pool in local.custom_machine_pools : pool.subnet_id]
+    [for pool in local.custom_machine_pools : pool.subnet_id],
+    anytrue([for pool in local.custom_machine_pools : pool.subnet_id == null]) ? [var.subnet_id] : []
   )))
-
-  need_provided_subnet_lookup = local.use_custom_machine_pools && (
-    var.vpc_id == null ||
-    anytrue([for pool in local.custom_machine_pools : pool.zone == null && (pool.subnet_id != null || var.subnet_id != null)])
-  )
 
   need_default_vpc_lookup = local.use_custom_machine_pools && var.vpc_id == null && length(local.provided_subnet_ids) == 0
 
@@ -30,13 +26,17 @@ data "aws_vpcs" "default" {
   count = local.need_default_vpc_lookup ? 1 : 0
 
   filter {
+    # Documented EC2 DescribeVpcs filter name:
+    # https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpcs.html
     name   = "is-default"
     values = ["true"]
   }
 }
 
+# Look up every subnet given to the pool configuration. Their AZ and VPC are
+# needed for zone resolution and for validating the pool placement.
 data "aws_subnet" "provided" {
-  for_each = local.need_provided_subnet_lookup ? toset(local.provided_subnet_ids) : toset([])
+  for_each = local.use_custom_machine_pools ? toset(local.provided_subnet_ids) : toset([])
   id       = each.value
 }
 

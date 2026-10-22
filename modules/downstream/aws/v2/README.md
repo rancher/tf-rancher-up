@@ -31,7 +31,7 @@ module "downstream_rke2" {
 
 ### Multiple machine pools across availability zones
 
-When `machine_pools` is set, it replaces the legacy cp/worker pools. Each pool creates its own machine config, so placement and sizing can differ per pool. Fields that are not set fall back to the module-level globals.
+When `machine_pools` is set, it replaces the legacy cp/worker pools. Each pool creates its own machine config, so placement and sizing can differ per pool. Fields that are not set fall back to the module-level globals. The list must not be empty — omit the variable to keep the legacy pools.
 
 ```terraform
 module "downstream_rke2" {

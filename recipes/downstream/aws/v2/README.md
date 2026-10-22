@@ -29,7 +29,7 @@ Once the deployment is successful, the terraform code will display the successfu
 
 ## Multiple machine pools
 
-`machine_pools` is optional. When set, it replaces the legacy `cp_*` and `worker_*` pool settings. Each pool declares its roles explicitly and creates its own machine config, allowing different placement and sizing per pool.
+`machine_pools` is optional. When set, it replaces the legacy `cp_*` and `worker_*` pool settings. Each pool declares its roles explicitly and creates its own machine config, allowing different placement and sizing per pool. The list must not be empty; omit the variable to keep the legacy pools.
 
 ```hcl
 machine_pools = [
@@ -87,7 +87,7 @@ Each pool must declare at least one role: `etcd`, `controlplane`, or `worker`.
 | `volume_type` | global `volume_type` (`gp3`) |
 | `spot_instances` | `false` (the global cp/worker spot flags only apply to legacy pools) |
 
-Comment out the global `subnet_id` to let each pool resolve a subnet by zone. Set a pool's `subnet_id` explicitly to pin it to a specific subnet.
+Comment out the global `subnet_id` to let each pool resolve a subnet by zone. Set a pool's `subnet_id` explicitly to pin it to a specific subnet. Subnets are validated against the effective VPC at plan time, and pools that set both `subnet_id` and `zone` must use a subnet in that zone.
 
 - Destroy the resources when cluster is no more needed.
 ```bash

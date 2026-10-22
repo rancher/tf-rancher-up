@@ -62,6 +62,7 @@ kubernetes_version = "v1.35.6+rke2r1"
 
 ### -- Multiple machine pools (optional)
 ## When machine_pools is set, the legacy cp_*/worker_* pool settings above are ignored.
+## Leave this unset to use the legacy pools; an empty list is not valid.
 ## Comment out the global subnet_id above to let each pool resolve a subnet by zone.
 ## Each pool must declare at least one role: etcd, controlplane, worker.
 # machine_pools = [

@@ -91,7 +91,7 @@ variable "worker_node_pool_name" {
 }
 
 variable "machine_pools" {
-  description = "Optional list of machine pools. When set, overrides the legacy cp_*/worker_* pool configuration. Each pool creates its own machine config, allowing per-pool placement and sizing"
+  description = "Optional list of machine pools. When set, replaces the legacy cp_*/worker_* pool configuration. Each pool creates its own machine config, allowing per-pool placement and sizing"
   default     = null
   type = list(object({
     name                = string
@@ -105,6 +105,11 @@ variable "machine_pools" {
     volume_type         = optional(string, null)
     spot_instances      = optional(bool, false)
   }))
+
+  validation {
+    condition     = var.machine_pools == null || length(var.machine_pools) > 0
+    error_message = "machine_pools must contain at least one pool. Omit the variable to use the legacy cp/worker pools."
+  }
 
   validation {
     condition     = var.machine_pools == null ? true : length(var.machine_pools) == length(distinct([for pool in var.machine_pools : pool.name]))
