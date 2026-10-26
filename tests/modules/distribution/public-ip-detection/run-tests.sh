@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# Tests the public/private IP detection at the top of the RKE2 user-data templates
-# (modules/distribution/rke2/*_config.yaml.tpl): everything before config.yaml is written.
+# Tests the public/private IP detection at the top of the k3s and RKE2 user-data templates
+# (modules/distribution/{k3s,rke2}/*_config.yaml.tpl): everything before config.yaml is written.
 # That block is plain bash with no template interpolation, so it runs directly with fake
 # curl, ip and sleep commands (./fakes). No cloud resources or Terraform needed.
 #
-# Usage: ./run-tests.sh [template ...]   (default: the server and worker templates)
+# Usage: ./run-tests.sh [template ...]   (default: the k3s and RKE2 server and worker templates)
 
 set -u
 DIR=$(cd "$(dirname "$0")" && pwd)
-REPO_ROOT=$(cd "$DIR/../../../../.." && pwd)
+REPO_ROOT=$(cd "$DIR/../../../.." && pwd)
 if [ $# -eq 0 ]; then
-  set -- "$REPO_ROOT/modules/distribution/rke2/server_config.yaml.tpl" \
+  set -- "$REPO_ROOT/modules/distribution/k3s/server_config.yaml.tpl" \
+         "$REPO_ROOT/modules/distribution/k3s/worker_config.yaml.tpl" \
+         "$REPO_ROOT/modules/distribution/rke2/server_config.yaml.tpl" \
          "$REPO_ROOT/modules/distribution/rke2/worker_config.yaml.tpl"
 fi
 
