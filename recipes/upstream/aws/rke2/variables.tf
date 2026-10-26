@@ -222,6 +222,12 @@ variable "ubuntu_version" {
   default     = null
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID to create the instance(s) and security group in. Provide this together with subnet_id when using an existing VPC."
+  default     = null
+}
+
 variable "subnet_id" {
   type        = any
   description = "VPC Subnet ID to create the instance(s) in"
