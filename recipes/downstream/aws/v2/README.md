@@ -27,6 +27,68 @@ terraform apply
 
 Once the deployment is successful, the terraform code will display the successful creation message.
 
+## Multiple machine pools
+
+`machine_pools` is optional. When set, it replaces the legacy `cp_*` and `worker_*` pool settings. Each pool declares its roles explicitly and creates its own machine config, allowing different placement and sizing per pool. The list must not be empty; omit the variable to keep the legacy pools.
+
+```hcl
+machine_pools = [
+  {
+    name  = "cp-a"
+    roles = ["etcd", "controlplane"]
+    zone  = "a"
+
+    # count               = 1            # optional; defaults to 1
+    # drain_before_delete = true         # optional; defaults to true
+    # subnet_id           = "subnet-aaa" # optional; falls back to the global subnet_id, then VPC/default VPC lookup
+    # instance_type       = "t3a.medium" # optional; defaults to the global instance_type
+    # volume_size         = 20           # optional; defaults to the global volume_size
+    # volume_type         = "gp3"        # optional; defaults to the global volume_type
+    # spot_instances      = false        # optional; defaults to false
+  },
+  {
+    name  = "cp-b"
+    roles = ["etcd", "controlplane"]
+    zone  = "b"
+  },
+  {
+    name  = "cp-c"
+    roles = ["etcd", "controlplane"]
+    zone  = "c"
+  },
+  {
+    name  = "w-a"
+    roles = ["worker"]
+    count = 2
+    zone  = "a"
+
+    # instance_type = "t3a.large" # optional; defaults to the global instance_type
+    # volume_size   = 80          # optional; defaults to the global volume_size
+  },
+  {
+    name  = "w-b"
+    roles = ["worker"]
+    count = 2
+    zone  = "b"
+  },
+]
+```
+
+Each pool must declare at least one role: `etcd`, `controlplane`, or `worker`.
+
+| Pool field | Fallback |
+|---|---|
+| `count` | `1` |
+| `drain_before_delete` | `true` |
+| `zone` | global `zone` |
+| `subnet_id` | global `subnet_id`, then VPC/default VPC lookup |
+| `instance_type` | global `instance_type` |
+| `volume_size` | global `volume_size` |
+| `volume_type` | global `volume_type` (`gp3`) |
+| `spot_instances` | `false` (the global cp/worker spot flags only apply to legacy pools) |
+
+Comment out the global `subnet_id` to let each pool resolve a subnet by zone. Set a pool's `subnet_id` explicitly to pin it to a specific subnet. Subnets are validated against the effective VPC at plan time, and pools that set both `subnet_id` and `zone` must use a subnet in that zone.
+
 - Destroy the resources when cluster is no more needed.
 ```bash
 terraform destroy

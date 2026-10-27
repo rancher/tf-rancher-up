@@ -17,8 +17,11 @@ module "downstream_rke2" {
 
   instance_type         = var.instance_type
   volume_size           = var.volume_size
+  volume_type           = var.volume_type
   cp_spot_instances     = var.cp_spot_instances
   worker_spot_instances = var.worker_spot_instances
+
+  machine_pools = var.machine_pools
 
   cluster_name          = var.cluster_name
   kubernetes_version    = var.kubernetes_version

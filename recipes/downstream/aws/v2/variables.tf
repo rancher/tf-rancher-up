@@ -78,7 +78,7 @@ variable "aws_region" {
 }
 
 variable "zone" {
-  description = "AWS zone to use for all resources"
+  description = "AWS availability zone suffix (e.g. a, b, c). Also used as the default zone for machine pools that do not set one"
   type        = string
   default     = "a"
 }
@@ -90,7 +90,7 @@ variable "cloud_credential_id" {
 }
 
 variable "subnet_id" {
-  description = "Subnet ID for all resources"
+  description = "Subnet ID for all resources. Also used as the default subnet for machine pools that do not set one"
   default     = null
   type        = string
 }
@@ -125,16 +125,73 @@ variable "worker_node_pool_name" {
   default     = "w"
 }
 
+variable "machine_pools" {
+  description = "Optional list of machine pools. When set, replaces the legacy cp_*/worker_* pool configuration. Each pool creates its own machine config, allowing per-pool placement and sizing"
+  default     = null
+  type = list(object({
+    name                = string
+    roles               = list(string)
+    count               = optional(number, 1)
+    drain_before_delete = optional(bool, true)
+    zone                = optional(string, null)
+    subnet_id           = optional(string, null)
+    instance_type       = optional(string, null)
+    volume_size         = optional(number, null)
+    volume_type         = optional(string, null)
+    spot_instances      = optional(bool, false)
+  }))
+
+  validation {
+    condition     = var.machine_pools == null || length(var.machine_pools) > 0
+    error_message = "machine_pools must contain at least one pool. Omit the variable to use the legacy cp/worker pools."
+  }
+
+  validation {
+    condition     = var.machine_pools == null ? true : length(var.machine_pools) == length(distinct([for pool in var.machine_pools : pool.name]))
+    error_message = "Machine pool names must be unique."
+  }
+
+  validation {
+    condition     = var.machine_pools == null ? true : alltrue([for pool in var.machine_pools : can(regex("^[a-z0-9]([-a-z0-9]{0,48}[a-z0-9])?$", pool.name))])
+    error_message = "Machine pool names must be lowercase DNS labels containing only letters, digits, and '-'."
+  }
+
+  validation {
+    condition = var.machine_pools == null ? true : alltrue([
+      for pool in var.machine_pools : length(pool.roles) > 0 && alltrue([
+        for role in pool.roles : contains(["etcd", "controlplane", "worker"], role)
+      ])
+    ])
+    error_message = "Each machine pool must declare at least one role. Valid roles are 'etcd', 'controlplane', and 'worker'."
+  }
+
+  validation {
+    condition     = var.machine_pools == null ? true : alltrue([for pool in var.machine_pools : pool.count >= 1])
+    error_message = "Each machine pool count must be at least 1."
+  }
+
+  validation {
+    condition     = var.machine_pools == null ? true : alltrue([for pool in var.machine_pools : pool.volume_size == null || pool.volume_size > 0])
+    error_message = "Machine pool volume_size must be greater than 0 when set."
+  }
+}
+
 variable "instance_type" {
   type        = string
-  description = "Instance type used for all EC2 instances"
+  description = "Instance type used for EC2 instances. Also used as the default for machine pools that do not set one"
   default     = "t3a.medium"
 }
 
 variable "volume_size" {
-  description = "Specify root volume size (GB)"
+  description = "Specify root volume size (GB). Also used as the default for machine pools that do not set one"
   default     = 20
   type        = number
+}
+
+variable "volume_type" {
+  description = "Specify volume type. Also used as the default for machine pools that do not set one"
+  default     = "gp3"
+  type        = string
 }
 
 variable "cni_provider" {

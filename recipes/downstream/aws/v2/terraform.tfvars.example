@@ -10,7 +10,7 @@
 # aws_region = "us-east-1"         # US, Virginia
 # aws_region = "us-west-2"         # US, Oregon
 # aws_region = "eu-west-1"         # EU, Ireland
-# aws_region = "eu-west-1"         # EU, Frankfurt
+# aws_region = "eu-central-1"      # EU, Frankfurt
 # aws_region = "ap-southeast-2"    # AU, Sydney
 # aws_region = "ap-south-1"        # IN, Mumbai
 
@@ -23,10 +23,11 @@ rancher_url = "https://xxx"
 # Enter the Rancher API token
 rancher_token = "token-xxxxx:yyyyy"
 
-# Enter an existing the VPC ID
+# Enter an existing VPC ID (used for subnet lookup when a machine pool does not set subnet_id)
 vpc_id = "vpc-xxx"
 
-# Enter an existing the subnet ID
+# Enter an existing subnet ID (required for the legacy cp/worker pools; comment
+# this out when using machine_pools so each pool can resolve its own subnet)
 subnet_id = "subnet-xxx"
 
 # Enter an existing security group name to use (not ID sg-*)
@@ -39,30 +40,78 @@ kubernetes_version = "v1.35.6+rke2r1"
 
 ###### !! Optional variables !! ######
 
+### -- Legacy control-plane and worker pools (ignored when machine_pools is set)
 # cp_node_pool_name = "cp"
 # cp_count = 1
-# cp_spot_instances     = false
+# cp_spot_instances = false
 
 # worker_node_pool_name = "w"
 # worker_count = 1
 # worker_spot_instances = false
 
+### -- Global pool defaults
+## Used by the legacy pools and as fallbacks for machine pool fields that are omitted.
+# zone = "a"                       # AWS availability zone suffix
+# instance_type = "t3a.medium"
+# volume_size = 20                 # root volume size (GB)
+# volume_type = "gp3"
+
 # cni_provider = "calico"
 # rke2_ingress = "traefik" # ingress-nginx or traefik
 # rancher_insecure = true # Allow insecure connections to Rancher
 
-# Enter the EC2 instance type
-# instance_type = "t3a.medium"
-
-# Specify root volume size (GB)
-# volume_size = "20"
+### -- Multiple machine pools (optional)
+## When machine_pools is set, the legacy cp_*/worker_* pool settings above are ignored.
+## Leave this unset to use the legacy pools; an empty list is not valid.
+## Comment out the global subnet_id above to let each pool resolve a subnet by zone.
+## Each pool must declare at least one role: etcd, controlplane, worker.
+# machine_pools = [
+#   {
+#     name  = "cp-a"
+#     roles = ["etcd", "controlplane"]
+#     zone  = "a"
+#
+#     # count               = 1            # optional; defaults to 1
+#     # drain_before_delete = true         # optional; defaults to true
+#     # subnet_id           = "subnet-aaa" # optional; falls back to the global subnet_id, then VPC/default VPC lookup
+#     # instance_type       = "t3a.medium" # optional; defaults to the global instance_type
+#     # volume_size         = 20           # optional; defaults to the global volume_size
+#     # volume_type         = "gp3"        # optional; defaults to the global volume_type
+#     # spot_instances      = false        # optional; defaults to false
+#   },
+#   {
+#     name  = "cp-b"
+#     roles = ["etcd", "controlplane"]
+#     zone  = "b"
+#   },
+#   {
+#     name  = "cp-c"
+#     roles = ["etcd", "controlplane"]
+#     zone  = "c"
+#   },
+#   {
+#     name  = "w-a"
+#     roles = ["worker"]
+#     count = 2
+#     zone  = "a"
+#
+#     # instance_type = "t3a.large" # optional; defaults to the global instance_type
+#     # volume_size   = 80          # optional; defaults to the global volume_size
+#   },
+#   {
+#     name  = "w-b"
+#     roles = ["worker"]
+#     count = 2
+#     zone  = "b"
+#   },
+# ]
 
 ### -- Use SLES or Ubuntu images when launching instances (sles or ubuntu) Note: "sles" may require accepting the user agreement in AWS
 # os_type = "sles"
 # sles_version = "15-sp7"
-# ubuntu_version = "24.02"
+# ubuntu_version = "24.04"
 
-## - SSH username (must match the SSH user for the AMI used)
-# ssh_username = "ec2-user"
+## - SSH username (must match the SSH user for the AMI used; ubuntu for Ubuntu, ec2-user for SLES)
+# ssh_user = "ubuntu"
 ## - Custom AMI to launch instances with
-# instance_ami = "ami-xxxx"
+# ami = "ami-xxxx"
