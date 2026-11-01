@@ -36,11 +36,15 @@ instance_count = 1
 ## -- Use spot instances
 # spot_instances = false
 
-## -- Create a VPC (will use the default VPC instead)
+## -- Create a VPC (if unset, the default VPC is used; set to true if there is no default VPC)
 # create_vpc      = false
 # vpc_cidr        = "10.0.0.0/16"
 # public_subnets  = true
 # private_subnets = false
+
+## -- Use an existing VPC/subnet instead (vpc_id and subnet_id must be provided together)
+# vpc_id    = "vpc-xxxxxxxx"
+# subnet_id = "subnet-xxxxxxxx"
 
 ## - Restrict access to SSH and kube-apiserver ports when creating the security group, allowing only the public IP of the client running terraform
 # restricted_access = false

@@ -17,6 +17,7 @@ module "rke" {
   spot_instances          = var.spot_instances
   install_docker          = var.install_docker
   docker_version          = var.docker_version
+  vpc_id                  = var.vpc_id
   subnet_id               = var.subnet_id
   create_ssh_key_pair     = var.create_ssh_key_pair
   create_security_group   = var.create_security_group
