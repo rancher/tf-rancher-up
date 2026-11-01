@@ -8,6 +8,7 @@ module "downstream_rke2" {
   vpc_id              = var.vpc_id
   zone                = var.zone
   subnet_id           = var.subnet_id
+  subnet_type         = var.subnet_type
   security_group_name = var.security_group_name
   ssh_user            = var.ssh_user
   ami                 = var.ami
@@ -17,8 +18,11 @@ module "downstream_rke2" {
 
   instance_type         = var.instance_type
   volume_size           = var.volume_size
+  volume_type           = var.volume_type
   cp_spot_instances     = var.cp_spot_instances
   worker_spot_instances = var.worker_spot_instances
+
+  machine_pools = var.machine_pools
 
   cluster_name          = var.cluster_name
   kubernetes_version    = var.kubernetes_version
