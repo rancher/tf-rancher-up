@@ -30,6 +30,10 @@ vpc_id = "vpc-xxx"
 # this out when using machine_pools so each pool can resolve its own subnet)
 subnet_id = "subnet-xxx"
 
+# Subnets to discover when a pool does not set subnet_id: public (default),
+# private, or any. public selects subnets with map_public_ip_on_launch = true.
+# subnet_type = "public"
+
 # Enter an existing security group name to use (not ID sg-*)
 security_group_name = "rancher-nodes"
 

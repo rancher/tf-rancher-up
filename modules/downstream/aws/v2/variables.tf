@@ -60,6 +60,17 @@ variable "subnet_id" {
   type        = string
 }
 
+variable "subnet_type" {
+  description = "Which subnets to discover when a machine pool does not set subnet_id: public (map_public_ip_on_launch = true), private (false), or any. Explicit subnet_id values are never filtered"
+  default     = "public"
+  type        = string
+
+  validation {
+    condition     = contains(["public", "private", "any"], var.subnet_type)
+    error_message = "subnet_type must be one of: public, private, any."
+  }
+}
+
 variable "cp_count" {
   description = "Control plane pool node count"
   default     = 1

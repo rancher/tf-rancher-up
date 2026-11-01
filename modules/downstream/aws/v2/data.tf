@@ -58,6 +58,15 @@ data "aws_subnets" "selected" {
     name   = "vpc-id"
     values = [local.effective_vpc_id]
   }
+
+  # map_public_ip_on_launch is the closest subnet-level signal for whether a
+  # node launched here can reach the internet. any means no filtering.
+  filter {
+    name = "map-public-ip-on-launch"
+    values = var.subnet_type == "any" ? ["true", "false"] : (
+      var.subnet_type == "public" ? ["true"] : ["false"]
+    )
+  }
 }
 
 data "aws_subnet" "discovered" {

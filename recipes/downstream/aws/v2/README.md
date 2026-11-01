@@ -81,13 +81,15 @@ Each pool must declare at least one role: `etcd`, `controlplane`, or `worker`.
 | `count` | `1` |
 | `drain_before_delete` | `true` |
 | `zone` | global `zone` |
-| `subnet_id` | global `subnet_id`, then VPC/default VPC lookup |
+| `subnet_id` | global `subnet_id`, then VPC/default VPC lookup filtered by `subnet_type` |
 | `instance_type` | global `instance_type` |
 | `volume_size` | global `volume_size` |
 | `volume_type` | global `volume_type` (`gp3`) |
 | `spot_instances` | `false` (the global cp/worker spot flags only apply to legacy pools) |
 
 Comment out the global `subnet_id` to let each pool resolve a subnet by zone. Set a pool's `subnet_id` explicitly to pin it to a specific subnet. Subnets are validated against the effective VPC at plan time, and pools that set both `subnet_id` and `zone` must use a subnet in that zone.
+
+Discovered subnets are filtered by `subnet_type`: `public` (the default) selects subnets with `map_public_ip_on_launch = true`, `private` selects subnets with it disabled, and `any` disables filtering. Explicit `subnet_id` values are never filtered.
 
 - Destroy the resources when cluster is no more needed.
 ```bash

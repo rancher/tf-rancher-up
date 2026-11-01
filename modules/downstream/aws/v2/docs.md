@@ -60,6 +60,7 @@ No modules.
 | <a name="input_sles_version"></a> [sles\_version](#input\_sles\_version) | Version of SLES to use for instances (ex: 15-sp6) | `string` | `"15-sp7"` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username used for SSH with sudo access | `string` | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID for all resources. Also used as the default subnet for machine pools that do not set one | `string` | `null` | no |
+| <a name="input_subnet_type"></a> [subnet\_type](#input\_subnet\_type) | Which subnets to discover when a machine pool does not set subnet\_id: public (map\_public\_ip\_on\_launch = true), private (false), or any. Explicit subnet\_id values are never filtered | `string` | `"public"` | no |
 | <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | Version of Ubuntu to use for instances (ex: 22.04) | `string` | `"24.04"` | no |
 | <a name="input_volume_size"></a> [volume\_size](#input\_volume\_size) | Specify root volume size (GB). Also used as the default for machine pools that do not set one | `number` | `20` | no |
 | <a name="input_volume_type"></a> [volume\_type](#input\_volume\_type) | Specify volume type. Also used as the default for machine pools that do not set one | `string` | `"gp3"` | no |

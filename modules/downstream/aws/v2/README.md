@@ -33,6 +33,8 @@ module "downstream_rke2" {
 
 When `machine_pools` is set, it replaces the legacy cp/worker pools. Each pool creates its own machine config, so placement and sizing can differ per pool. Fields that are not set fall back to the module-level globals. The list must not be empty — omit the variable to keep the legacy pools.
 
+When a pool does not set `subnet_id`, the module discovers a subnet in the pool's zone. Only subnets matching `subnet_type` are considered: `public` (the default) selects subnets with `map_public_ip_on_launch = true`, `private` selects subnets with it disabled, and `any` disables filtering. Set `subnet_id` explicitly if your public subnets do not auto-assign public IPs.
+
 ```terraform
 module "downstream_rke2" {
   source = "git::https://github.com/rancher/tf-rancher-up.git//modules/downstream/aws/v2/"

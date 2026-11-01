@@ -8,6 +8,7 @@ module "downstream_rke2" {
   vpc_id              = var.vpc_id
   zone                = var.zone
   subnet_id           = var.subnet_id
+  subnet_type         = var.subnet_type
   security_group_name = var.security_group_name
   ssh_user            = var.ssh_user
   ami                 = var.ami

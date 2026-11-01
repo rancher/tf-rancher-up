@@ -163,7 +163,7 @@ resource "rancher2_cluster_v2" "cluster" {
     }
     precondition {
       condition     = !local.use_custom_machine_pools || alltrue([for pool in local.resolved_custom_machine_pools : pool.subnet_id != null])
-      error_message = "Could not determine a subnet for every machine pool. Set subnet_id per pool, set the global subnet_id, or ensure the VPC has subnets in the requested zones."
+      error_message = "Could not determine a subnet for every machine pool. Set subnet_id per pool, set the global subnet_id, or ensure the VPC has subnets in the requested zones matching subnet_type (${var.subnet_type})."
     }
     precondition {
       condition     = !local.use_custom_machine_pools || alltrue([for pool in local.resolved_custom_machine_pools : try(local.zone_suffix_by_subnet[pool.subnet_id] == pool.zone, true)])
