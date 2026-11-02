@@ -33,7 +33,6 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Alias for custom\_user\_data. | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository"></a> [cert\_manager\_helm\_repository](#input\_cert\_manager\_helm\_repository) | Cert-manager Helm repository URL | `string` | `"https://charts.jetstack.io"` | no |
 | <a name="input_cert_manager_helm_repository_password"></a> [cert\_manager\_helm\_repository\_password](#input\_cert\_manager\_helm\_repository\_password) | Cert-manager Helm repository password | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_username"></a> [cert\_manager\_helm\_repository\_username](#input\_cert\_manager\_helm\_repository\_username) | Cert-manager Helm repository username | `string` | `null` | no |

@@ -41,8 +41,3 @@ variable "custom_user_data" {
   default     = null
 }
 
-variable "additional_user_data" {
-  type        = string
-  description = "Alias for custom_user_data."
-  default     = null
-}

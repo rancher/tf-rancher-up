@@ -164,12 +164,6 @@ variable "custom_user_data" {
   default     = null
 }
 
-variable "additional_user_data" {
-  type        = string
-  description = "Alias for custom_user_data."
-  default     = null
-}
-
 variable "k3s_ingress" {
   type        = string
   description = "Ingress controller mapped to Rancher values (default traefik for K3s usually, but leaving flexibility if modified through k3s_config)"

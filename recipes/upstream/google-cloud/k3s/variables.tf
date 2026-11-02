@@ -161,12 +161,6 @@ variable "custom_user_data" {
   default     = null
 }
 
-variable "additional_user_data" {
-  type        = string
-  description = "Alias for custom_user_data."
-  default     = null
-}
-
 variable "kube_config_path" {
   description = "The path to write the kubeconfig for the K3s cluster"
   type        = string

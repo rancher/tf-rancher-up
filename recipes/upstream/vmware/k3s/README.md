@@ -102,4 +102,4 @@
 
 ## Custom user data
 
-`custom_user_data` (and alias `additional_user_data`) is appended verbatim to the generated k3s user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.
+`custom_user_data` is appended verbatim to the generated k3s user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.
