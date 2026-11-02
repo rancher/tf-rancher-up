@@ -33,10 +33,12 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Alias for custom\_user\_data. | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository"></a> [cert\_manager\_helm\_repository](#input\_cert\_manager\_helm\_repository) | Cert-manager Helm repository URL | `string` | `"https://charts.jetstack.io"` | no |
 | <a name="input_cert_manager_helm_repository_password"></a> [cert\_manager\_helm\_repository\_password](#input\_cert\_manager\_helm\_repository\_password) | Cert-manager Helm repository password | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_username"></a> [cert\_manager\_helm\_repository\_username](#input\_cert\_manager\_helm\_repository\_username) | Cert-manager Helm repository username | `string` | `null` | no |
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Create new SSH key pair (if true, ssh\_private\_key\_path is ignored) | `bool` | `true` | no |
+| <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom shell commands appended to the generated k3s user data. Appended verbatim after provisioning; must not conflict with (reboot/reinstall/overwrite) existing provisioning steps. Default null. | `string` | `null` | no |
 | <a name="input_helm_timeout"></a> [helm\_timeout](#input\_helm\_timeout) | Timeout in seconds for Helm releases | `number` | `1800` | no |
 | <a name="input_instance_count"></a> [instance\_count](#input\_instance\_count) | Number of K3s server nodes (use odd numbers: 1, 3, 5 for HA) | `number` | `3` | no |
 | <a name="input_k3s_channel"></a> [k3s\_channel](#input\_k3s\_channel) | K3s channel to use (default: stable) | `string` | `"stable"` | no |

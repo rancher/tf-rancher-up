@@ -99,6 +99,18 @@ variable "rke2_config" {
   default     = null
 }
 
+variable "custom_user_data" {
+  type        = string
+  description = "Custom shell commands appended to the generated RKE2 user data. Appended verbatim after provisioning; must not conflict with (reboot/reinstall/overwrite) existing provisioning steps. Default null."
+  default     = null
+}
+
+variable "additional_user_data" {
+  type        = string
+  description = "Alias for custom_user_data."
+  default     = null
+}
+
 variable "bootstrap_rancher" {
   description = "Bootstrap the Rancher installation"
   type        = bool

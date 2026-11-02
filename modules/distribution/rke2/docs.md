@@ -22,6 +22,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Alias for custom\_user\_data. | `string` | `null` | no |
+| <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom shell commands appended to the generated RKE2 user data. Appended verbatim after provisioning; must not conflict with (reboot/reinstall/overwrite) existing provisioning steps. Default null. | `string` | `null` | no |
 | <a name="input_dependency"></a> [dependency](#input\_dependency) | An optional variable to add a dependency from another resource (not used) | `any` | `null` | no |
 | <a name="input_first_server_ip"></a> [first\_server\_ip](#input\_first\_server\_ip) | Internal IP address for the first rke2-server node | `string` | `null` | no |
 | <a name="input_rke2_config"></a> [rke2\_config](#input\_rke2\_config) | Additional RKE2 configuration to add to the config.yaml file | `string` | `null` | no |

@@ -13,11 +13,13 @@ locals {
 }
 
 module "rke2_first" {
-  source       = "../../../../modules/distribution/rke2"
-  rke2_token   = var.rke2_token
-  rke2_version = var.rke2_version
-  rke2_config  = var.rke2_config
-  rke2_ingress = local.rke2_ingress
+  source               = "../../../../modules/distribution/rke2"
+  rke2_token           = var.rke2_token
+  rke2_version         = var.rke2_version
+  rke2_config          = var.rke2_config
+  custom_user_data     = var.custom_user_data
+  additional_user_data = var.additional_user_data
+  rke2_ingress         = local.rke2_ingress
 }
 
 module "rke2_first_server" {
@@ -41,12 +43,14 @@ module "rke2_first_server" {
 }
 
 module "rke2_additional" {
-  source          = "../../../../modules/distribution/rke2"
-  rke2_token      = module.rke2_first.rke2_token
-  rke2_version    = var.rke2_version
-  rke2_config     = var.rke2_config
-  first_server_ip = module.rke2_first_server.instances_private_ip[0]
-  rke2_ingress    = local.rke2_ingress
+  source               = "../../../../modules/distribution/rke2"
+  rke2_token           = module.rke2_first.rke2_token
+  rke2_version         = var.rke2_version
+  rke2_config          = var.rke2_config
+  custom_user_data     = var.custom_user_data
+  additional_user_data = var.additional_user_data
+  first_server_ip      = module.rke2_first_server.instances_private_ip[0]
+  rke2_ingress         = local.rke2_ingress
 }
 
 module "rke2_additional_servers" {

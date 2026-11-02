@@ -1,5 +1,7 @@
 locals {
-  rke2_token = var.rke2_token == null && var.first_server_ip == null ? random_password.token.result : var.rke2_token
+  rke2_token              = var.rke2_token == null && var.first_server_ip == null ? random_password.token.result : var.rke2_token
+  custom_user_data        = coalesce(var.custom_user_data, var.additional_user_data)
+  custom_user_data_suffix = local.custom_user_data == null ? "" : "\n\n# --- Custom user data (appended) ---\n${local.custom_user_data}\n"
 }
 
 resource "random_password" "token" {

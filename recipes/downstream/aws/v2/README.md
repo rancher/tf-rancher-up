@@ -95,3 +95,8 @@ Discovered subnets are filtered by `subnet_type`: `public` (the default) selects
 ```bash
 terraform destroy
 ```
+
+
+## Custom user data
+
+`custom_user_data` is passed to the machine driver `userdata` field (Rancher interprets it).

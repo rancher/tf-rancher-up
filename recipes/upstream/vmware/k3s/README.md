@@ -98,3 +98,8 @@
 | <a name="output_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#output\_rancher\_bootstrap\_password) | Rancher initial Bootstrap Password. |
 | <a name="output_rancher_password"></a> [rancher\_password](#output\_rancher\_password) | Rancher Admin Password. |
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | The Rancher URL. |
+
+
+## Custom user data
+
+`custom_user_data` (and alias `additional_user_data`) is appended verbatim to the generated k3s user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.

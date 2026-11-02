@@ -38,6 +38,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Alias for custom\_user\_data. | `string` | `null` | no |
 | <a name="input_bootstrap_rancher"></a> [bootstrap\_rancher](#input\_bootstrap\_rancher) | Bootstrap the Rancher installation | `bool` | `true` | no |
 | <a name="input_cert_manager_helm_repository"></a> [cert\_manager\_helm\_repository](#input\_cert\_manager\_helm\_repository) | Helm repository for Cert Manager chart | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_password"></a> [cert\_manager\_helm\_repository\_password](#input\_cert\_manager\_helm\_repository\_password) | Private Cert Manager helm repository password | `string` | `null` | no |
@@ -47,6 +48,7 @@
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Specify if a new SSH key pair needs to be created for the instances | `bool` | `true` | no |
 | <a name="input_create_subnet"></a> [create\_subnet](#input\_create\_subnet) | Specifies whether a Virtual Subnet should be created for the instances. Default is 'true'. | `bool` | `true` | no |
 | <a name="input_create_vnet"></a> [create\_vnet](#input\_create\_vnet) | Specifies whether a Virtual Network should be created for the instances. Default is 'true'. | `bool` | `true` | no |
+| <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom shell commands appended to the generated k3s user data. Appended verbatim after provisioning; must not conflict with (reboot/reinstall/overwrite) existing provisioning steps. Default null. | `string` | `null` | no |
 | <a name="input_disk_type"></a> [disk\_type](#input\_disk\_type) | Specifies the type of the disks attached to each node ('Standard\_LRS, 'StandardSSD\_LRS', 'Premium\_LRS' or 'UltraSSD\_LRS'). Default is 'Premium\_LRS'. | `string` | `"Standard_LRS"` | no |
 | <a name="input_instance_disk_size"></a> [instance\_disk\_size](#input\_instance\_disk\_size) | Size of the disk attached to each node, specified in GB | `number` | `50` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The name of a Virtual Machine instance type | `string` | `"Standard_D2_v5"` | no |

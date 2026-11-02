@@ -38,3 +38,8 @@ See full argument list for each module in use:
   - Google Compute Engine: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/infra/google-cloud/compute-engine
   - K3s: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/k3s
   - Rancher: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/rancher
+
+
+## Custom user data
+
+`custom_user_data` (and alias `additional_user_data`) is appended verbatim to the generated k3s user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.

@@ -11,9 +11,9 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
-| <a name="provider_local"></a> [local](#provider\_local) | >= 2.1.0 |
-| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | ~> 15.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.71.0 |
+| <a name="provider_local"></a> [local](#provider\_local) | 2.9.1 |
+| <a name="provider_rancher2"></a> [rancher2](#provider\_rancher2) | 15.1.2 |
 
 ## Modules
 
@@ -48,6 +48,7 @@ No modules.
 | <a name="input_cp_count"></a> [cp\_count](#input\_cp\_count) | Control plane pool node count | `number` | `1` | no |
 | <a name="input_cp_node_pool_name"></a> [cp\_node\_pool\_name](#input\_cp\_node\_pool\_name) | Control plane pool name | `string` | `"cp"` | no |
 | <a name="input_cp_spot_instances"></a> [cp\_spot\_instances](#input\_cp\_spot\_instances) | Use spot instances for control plane nodes | `bool` | `false` | no |
+| <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom user data passed to the machine driver userdata field for v2 clusters. Rancher interprets the value (content is not appended by tf-rancher-up). Default null. | `string` | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type used for EC2 instances. Also used as the default for machine pools that do not set one | `string` | `"t3a.medium"` | no |
 | <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version to use for the RKE2/k3s cluster | `string` | `null` | no |
 | <a name="input_machine_pools"></a> [machine\_pools](#input\_machine\_pools) | Optional list of machine pools. When set, replaces the legacy cp\_*/worker\_* pool configuration. Each pool creates its own machine config, allowing per-pool placement and sizing | <pre>list(object({<br/>    name                = string<br/>    roles               = list(string)<br/>    count               = optional(number, 1)<br/>    drain_before_delete = optional(bool, true)<br/>    zone                = optional(string, null)<br/>    subnet_id           = optional(string, null)<br/>    instance_type       = optional(string, null)<br/>    volume_size         = optional(number, null)<br/>    volume_type         = optional(string, null)<br/>    spot_instances      = optional(bool, false)<br/>  }))</pre> | `null` | no |

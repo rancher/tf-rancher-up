@@ -37,6 +37,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Alias for custom\_user\_data. | `string` | `null` | no |
 | <a name="input_bootstrap_rancher"></a> [bootstrap\_rancher](#input\_bootstrap\_rancher) | Bootstrap the Rancher installation | `bool` | `true` | no |
 | <a name="input_cert_manager_helm_repository"></a> [cert\_manager\_helm\_repository](#input\_cert\_manager\_helm\_repository) | Helm repository for Cert Manager chart | `string` | `null` | no |
 | <a name="input_cert_manager_helm_repository_password"></a> [cert\_manager\_helm\_repository\_password](#input\_cert\_manager\_helm\_repository\_password) | Private Cert Manager helm repository password | `string` | `null` | no |
@@ -45,6 +46,7 @@
 | <a name="input_create_https_loadbalancer"></a> [create\_https\_loadbalancer](#input\_create\_https\_loadbalancer) | Specify if a loadbalancer for port 443 needs to be created for the instances | `bool` | `false` | no |
 | <a name="input_create_k8s_api_loadbalancer"></a> [create\_k8s\_api\_loadbalancer](#input\_create\_k8s\_api\_loadbalancer) | Specify if a loadbalancer for port 6443 needs to be created for the instances | `bool` | `false` | no |
 | <a name="input_create_ssh_key_pair"></a> [create\_ssh\_key\_pair](#input\_create\_ssh\_key\_pair) | Specify if a new SSH key pair needs to be created for the instances | `bool` | `true` | no |
+| <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom shell commands appended to the generated RKE2 user data. Appended verbatim after provisioning; must not conflict with (reboot/reinstall/overwrite) existing provisioning steps. Default null. | `string` | `null` | no |
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | DigitalOcean Authentication Token | `string` | `null` | no |
 | <a name="input_droplet_count"></a> [droplet\_count](#input\_droplet\_count) | Number of droplets to create | `number` | `3` | no |
 | <a name="input_droplet_image"></a> [droplet\_image](#input\_droplet\_image) | name of the OpenSUSE custom image uploaded to DigitalOcean account | `string` | `"openSUSE-Leap-15.6"` | no |
