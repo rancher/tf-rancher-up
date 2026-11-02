@@ -21,6 +21,7 @@ module "downstream_rke2" {
   volume_type           = var.volume_type
   cp_spot_instances     = var.cp_spot_instances
   worker_spot_instances = var.worker_spot_instances
+  custom_user_data      = var.custom_user_data
 
   machine_pools = var.machine_pools
 

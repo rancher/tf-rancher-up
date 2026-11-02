@@ -89,3 +89,9 @@
 # cert_manager_helm_repository          = "https://your-private-registry/cert-manager"
 # cert_manager_helm_repository_username = "username"
 # cert_manager_helm_repository_password = "password"
+
+
+## -- Custom shell commands appended to the generated RKE2 user data (runs after provisioning; must not conflict)
+# custom_user_data = <<-EOT
+#   echo "custom step"
+# EOT

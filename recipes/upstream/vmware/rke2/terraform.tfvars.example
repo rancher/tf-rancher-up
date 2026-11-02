@@ -70,3 +70,9 @@ rancher_helm_repository    = "https://charts.rancher.com/server-charts/prime"
 
 # kube_config_path               = null  # Defaults to current directory
 # wait                           = true
+
+
+## -- Custom shell commands appended to the generated RKE2 user data (runs after provisioning; must not conflict)
+# custom_user_data = <<-EOT
+#   echo "custom step"
+# EOT

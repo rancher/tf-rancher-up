@@ -104,6 +104,7 @@ resource "rancher2_machine_config_v2" "machine_config" {
     request_spot_instance = each.value.spot_instances
     http_protocol_ipv6    = "disabled"
     ssh_user              = var.ssh_user
+    userdata              = var.custom_user_data
   }
 }
 

@@ -245,3 +245,9 @@ variable "worker_spot_instances" {
   description = "Use spot instances for worker nodes"
   default     = false
 }
+
+variable "custom_user_data" {
+  type        = string
+  description = "Custom user data passed to the machine driver userdata field for v2 clusters. Rancher interprets the value (content is not appended by tf-rancher-up). Default null."
+  default     = null
+}

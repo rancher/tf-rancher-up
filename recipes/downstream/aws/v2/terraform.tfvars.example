@@ -119,3 +119,11 @@ kubernetes_version = "v1.35.6+rke2r1"
 # ssh_user = "ubuntu"
 ## - Custom AMI to launch instances with
 # ami = "ami-xxxx"
+
+
+## -- Custom user data passed to the machine driver userdata field for v2 clusters
+# custom_user_data = <<-EOT
+# #cloud-config
+# packages:
+#   - curl
+# EOT

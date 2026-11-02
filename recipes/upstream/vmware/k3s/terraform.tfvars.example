@@ -67,3 +67,9 @@ rancher_password           = "initial-bootstrap-password"
 # Advanced Options
 
 helm_timeout = 1800
+
+
+## -- Custom shell commands appended to the generated k3s user data (runs after provisioning; must not conflict)
+# custom_user_data = <<-EOT
+#   echo "custom step"
+# EOT
