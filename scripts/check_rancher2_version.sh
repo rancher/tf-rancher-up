@@ -34,11 +34,13 @@ SUPPORTED_PATHS="
 modules/downstream/aws/EKS/
 modules/downstream/aws/v2/
 modules/downstream/custom/
+modules/downstream/digitalocean/v2/
 modules/downstream/gcp/GKE/
 modules/downstream/imported/
 recipes/downstream/aws/EKS/
 recipes/downstream/aws/v2/
 recipes/downstream/custom/
+recipes/downstream/digitalocean/v2/
 recipes/downstream/gcp/GKE/
 recipes/downstream/imported/
 "
