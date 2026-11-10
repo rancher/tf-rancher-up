@@ -12,6 +12,7 @@
 
 | Name | Version |
 |------|---------|
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | >= 2.30.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_ssh"></a> [ssh](#provider\_ssh) | >= 2.7.0 |
 
@@ -30,9 +31,9 @@
 
 | Name | Type |
 |------|------|
+| [digitalocean_vpc.cluster](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/vpc) | resource |
 | [local_file.kube_config_yaml](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [ssh_resource.retrieve_kubeconfig](https://registry.terraform.io/providers/loafoe/ssh/latest/docs/resources/resource) | resource |
-| [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
@@ -57,6 +58,7 @@
 | <a name="input_kube_config_path"></a> [kube\_config\_path](#input\_kube\_config\_path) | The path to write the kubeconfig for the RKE cluster | `string` | `null` | no |
 | <a name="input_os_type"></a> [os\_type](#input\_os\_type) | Operating system type (opensuse or ubuntu) | `string` | `"opensuse"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix added to names of all resources | `string` | `"rancher-terraform"` | no |
+| <a name="input_private_network_interface"></a> [private\_network\_interface](#input\_private\_network\_interface) | Droplet interface attached to the VPC; Flannel's overlay network is pinned to it | `string` | `"eth1"` | no |
 | <a name="input_rancher_bootstrap_password"></a> [rancher\_bootstrap\_password](#input\_rancher\_bootstrap\_password) | Password to use when bootstrapping Rancher (min 12 characters) | `string` | `"initial-bootstrap-password"` | no |
 | <a name="input_rancher_helm_repository"></a> [rancher\_helm\_repository](#input\_rancher\_helm\_repository) | Helm repository for Rancher chart | `string` | `null` | no |
 | <a name="input_rancher_helm_repository_password"></a> [rancher\_helm\_repository\_password](#input\_rancher\_helm\_repository\_password) | Private Rancher helm repository password | `string` | `null` | no |

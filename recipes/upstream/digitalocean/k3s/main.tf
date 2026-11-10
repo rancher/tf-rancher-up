@@ -7,12 +7,19 @@ locals {
   rancher_replicas      = var.server_instance_count + var.worker_instance_count
 }
 
+# One VPC shared by every node so k3s traffic stays on the private network
+resource "digitalocean_vpc" "cluster" {
+  name   = "${var.prefix}-vpc"
+  region = var.region
+}
+
 module "k3s_first" {
-  source      = "../../../../modules/distribution/k3s"
-  k3s_token   = var.k3s_token
-  k3s_version = var.k3s_version
-  k3s_channel = var.k3s_channel
-  k3s_config  = var.k3s_config
+  source        = "../../../../modules/distribution/k3s"
+  k3s_token     = var.k3s_token
+  k3s_version   = var.k3s_version
+  k3s_channel   = var.k3s_channel
+  k3s_config    = var.k3s_config
+  flannel_iface = var.private_network_interface
 }
 
 module "k3s_first_server" {
@@ -33,6 +40,7 @@ module "k3s_first_server" {
   droplet_image               = var.droplet_image
   os_type                     = var.os_type
   rke2_installation           = local.rke2_installation
+  vpc                         = { id = digitalocean_vpc.cluster.id, ip_range = digitalocean_vpc.cluster.ip_range }
 }
 
 module "k3s_additional" {
@@ -41,7 +49,8 @@ module "k3s_additional" {
   k3s_version     = var.k3s_version
   k3s_channel     = var.k3s_channel
   k3s_config      = var.k3s_config
-  first_server_ip = module.k3s_first_server.droplets_public_ip[0]
+  first_server_ip = module.k3s_first_server.droplets_private_ip[0]
+  flannel_iface   = var.private_network_interface
 }
 
 module "k3s_additional_servers" {
@@ -62,6 +71,7 @@ module "k3s_additional_servers" {
   create_https_loadbalancer   = false
   create_k8s_api_loadbalancer = var.create_k8s_api_loadbalancer
   extra_droplet_id            = local.first_server_id
+  vpc                         = { id = digitalocean_vpc.cluster.id, ip_range = digitalocean_vpc.cluster.ip_range }
   droplet_image               = var.droplet_image
   os_type                     = var.os_type
   rke2_installation           = local.rke2_installation
@@ -85,14 +95,10 @@ module "k3s_additional_workers" {
   create_https_loadbalancer   = var.create_https_loadbalancer
   create_k8s_api_loadbalancer = false
   extra_droplet_id            = local.additional_servers_id
+  vpc                         = { id = digitalocean_vpc.cluster.id, ip_range = digitalocean_vpc.cluster.ip_range }
   droplet_image               = var.droplet_image
   os_type                     = var.os_type
   rke2_installation           = local.rke2_installation
-}
-
-data "local_file" "ssh_private_key" {
-  depends_on = [module.k3s_additional_servers]
-  filename   = module.k3s_first_server.ssh_key_path
 }
 
 resource "ssh_resource" "retrieve_kubeconfig" {
@@ -103,7 +109,9 @@ resource "ssh_resource" "retrieve_kubeconfig" {
     "sudo sed 's/127.0.0.1/${module.k3s_first_server.droplets_public_ip[0]}/g' /etc/rancher/k3s/k3s.yaml"
   ]
   user        = var.ssh_username
-  private_key = data.local_file.ssh_private_key.content
+  private_key = module.k3s_first_server.ssh_private_key
+  timeout     = "10m"
+  retry_delay = "10s"
 }
 
 resource "local_file" "kube_config_yaml" {
