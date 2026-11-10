@@ -256,3 +256,10 @@ variable "cert_manager_helm_repository_password" {
   type        = string
   sensitive   = true
 }
+
+variable "private_network_interface" {
+  description = "Droplet interface attached to the VPC; Flannel's overlay network is pinned to it"
+  type        = string
+  default     = "eth1"
+  nullable    = false
+}

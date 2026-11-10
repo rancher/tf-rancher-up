@@ -7,7 +7,8 @@ output "k3s_server_user_data" {
       k3s_channel = var.k3s_channel == null ? "stable" : var.k3s_channel,
       k3s_token   = local.k3s_token,
       k3s_version = var.k3s_version == null ? "false" : var.k3s_version,
-      server_ip   = var.first_server_ip == null ? "false" : var.first_server_ip
+      server_ip     = var.first_server_ip == null ? "false" : var.first_server_ip,
+      flannel_iface = var.flannel_iface == null ? "false" : var.flannel_iface
     }
   )
 }
@@ -21,7 +22,8 @@ output "k3s_worker_user_data" {
       k3s_channel = var.k3s_channel == null ? "stable" : var.k3s_channel,
       k3s_token   = local.k3s_token,
       k3s_version = var.k3s_version == null ? "false" : var.k3s_version,
-      server_ip   = var.first_server_ip == null ? "false" : var.first_server_ip
+      server_ip     = var.first_server_ip == null ? "false" : var.first_server_ip,
+      flannel_iface = var.flannel_iface == null ? "false" : var.flannel_iface
     }
   )
 }

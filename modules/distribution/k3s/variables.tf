@@ -34,3 +34,8 @@ variable "dependency" {
   description = "An optional variable to add a dependency from another resource (not used)"
   default     = null
 }
+variable "flannel_iface" {
+  type        = string
+  description = "Network interface for k3s Flannel (e.g. eth1). When null, k3s default is used"
+  default     = null
+}

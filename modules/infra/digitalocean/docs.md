@@ -25,6 +25,7 @@ No modules.
 | [digitalocean_loadbalancer.https_loadbalancer](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/loadbalancer) | resource |
 | [digitalocean_loadbalancer.k8s_api_loadbalancer](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/loadbalancer) | resource |
 | [digitalocean_ssh_key.key_pair](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/ssh_key) | resource |
+| [digitalocean_vpc.k8s_cluster](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/vpc) | resource |
 | [local_file.private_key_pem](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [tls_private_key.ssh_private_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [digitalocean_image.opensuse](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/image) | data source |
@@ -53,7 +54,9 @@ No modules.
 | <a name="input_ssh_key_pair_path"></a> [ssh\_key\_pair\_path](#input\_ssh\_key\_pair\_path) | Path to the SSH private key used as the key pair (that's already present in DigitalOcean) | `string` | `null` | no |
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | Path to write the generated SSH private key | `string` | `null` | no |
 | <a name="input_tag_begin"></a> [tag\_begin](#input\_tag\_begin) | Tag from this number when module is called more than once | `number` | `1` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags for the droplets. When null, defaults to ["user:<prefix>", "creator:<prefix>"] | `list(string)` | `null` | no |
 | <a name="input_user_data"></a> [user\_data](#input\_user\_data) | User data content for EC2 instance(s) | `string` | `null` | no |
+| <a name="input_vpc"></a> [vpc](#input\_vpc) | Existing VPC (id and ip\_range) to place the droplets and load balancers in. When null, a VPC is created if create\_firewall is true | <pre>object({<br/>    id       = string<br/>    ip_range = string<br/>  })</pre> | `null` | no |
 
 ## Outputs
 
@@ -68,3 +71,4 @@ No modules.
 | <a name="output_k8s_api_loadbalancer_ip"></a> [k8s\_api\_loadbalancer\_ip](#output\_k8s\_api\_loadbalancer\_ip) | n/a |
 | <a name="output_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#output\_ssh\_key\_pair\_name) | n/a |
 | <a name="output_ssh_key_path"></a> [ssh\_key\_path](#output\_ssh\_key\_path) | n/a |
+| <a name="output_ssh_private_key"></a> [ssh\_private\_key](#output\_ssh\_private\_key) | Private key for SSH access to the droplets (generated, or read from ssh\_key\_pair\_path) |

@@ -33,6 +33,9 @@ node-ip: $PRIVATE_IP
 %{ if k3s_config != "false" }
 ${k3s_config}
 %{ endif }
+%{ if flannel_iface != "false" }
+flannel-iface: ${flannel_iface}
+%{ endif }
 EOF
 
 %{ if k3s_version != "false" }
