@@ -15,13 +15,20 @@ terraform {
       version = ">= 2.23.0"
     }
 
+    # modules/rancher uses the helm v3 list syntax for `set`
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.10.0"
+      version = ">= 3.0.0"
+    }
+
+    local = {
+      source  = "hashicorp/local"
+      version = ">= 2.1.0"
     }
   }
 
-  required_version = ">= 0.14"
+  # Cross-variable validation rules need Terraform 1.9+
+  required_version = ">= 1.9"
 }
 
 provider "digitalocean" {
