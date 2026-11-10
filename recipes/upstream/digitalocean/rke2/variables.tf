@@ -1,15 +1,19 @@
 variable "do_token" {
   type        = string
   description = "DigitalOcean Authentication Token"
-  default     = null
+  nullable    = false
   sensitive   = true
 }
 
 variable "droplet_count" {
   type        = number
-  description = "Number of droplets to create"
+  description = "Number of droplets to create. Every node runs etcd, so use 1 or an odd number (3, 5) for HA"
   default     = 3
   nullable    = false
+  validation {
+    condition     = var.droplet_count == 1 || (var.droplet_count >= 3 && var.droplet_count % 2 == 1)
+    error_message = "droplet_count must be 1 or an odd number >= 3 so etcd keeps quorum."
+  }
 }
 
 variable "droplet_size" {
@@ -21,12 +25,17 @@ variable "droplet_size" {
 
 variable "prefix" {
   type        = string
-  description = "Prefix added to names of all resources"
+  description = "Prefix added to names of all resources. Must be unique in the DigitalOcean account (VPC names are account-wide) and a valid DNS label, as it becomes part of the Kubernetes node names"
   default     = "rancher-terraform"
+  nullable    = false
+  validation {
+    condition     = can(regex("^[a-z0-9]([a-z0-9-]{0,48}[a-z0-9])?$", var.prefix))
+    error_message = "prefix must be lowercase alphanumeric or '-', start and end with an alphanumeric, and be at most 50 characters."
+  }
 }
 
 variable "tag_begin" {
-  type        = string
+  type        = number
   description = "tag number added to DigitalOcean droplet"
   default     = 2
 }
@@ -36,6 +45,10 @@ variable "create_ssh_key_pair" {
   description = "Specify if a new SSH key pair needs to be created for the instances"
   default     = true
   nullable    = false
+  validation {
+    condition     = var.create_ssh_key_pair || (var.ssh_key_pair_name != null && var.ssh_key_pair_path != null)
+    error_message = "When create_ssh_key_pair is false, set both ssh_key_pair_name (key already in DigitalOcean) and ssh_key_pair_path (its private key, without a passphrase)."
+  }
 }
 
 variable "ssh_key_pair_name" {
@@ -46,7 +59,7 @@ variable "ssh_key_pair_name" {
 
 variable "ssh_key_pair_path" {
   type        = string
-  description = "Path to the SSH private key used as the key pair (that's already present in DigitalOcean)"
+  description = "Path to the private key of ssh_key_pair_name. Terraform cannot use a passphrase-protected key"
   default     = null
 }
 variable "ssh_private_key_path" {
@@ -106,9 +119,10 @@ variable "bootstrap_rancher" {
 }
 
 variable "rancher_hostname" {
-  description = "Hostname to set when installing Rancher"
+  description = "Hostname prefix for Rancher; the full hostname is <rancher_hostname>.<first node public IP>.sslip.io"
   type        = string
   default     = "rancher"
+  nullable    = false
 }
 
 variable "rancher_bootstrap_password" {
@@ -125,7 +139,6 @@ variable "rancher_bootstrap_password" {
 variable "rancher_password" {
   sensitive   = true
   description = "Password for the Rancher admin account (min 12 characters)"
-  default     = null
   type        = string
   validation {
     condition     = var.rancher_password == null ? true : length(var.rancher_password) >= 12
@@ -140,9 +153,20 @@ variable "rancher_version" {
 }
 
 variable "rancher_ingress_class_name" {
-  description = "Rancher ingressClassName value"
+  description = "Rancher ingressClassName value. Defaults to the class of the ingress selected by rke2_ingress"
   type        = string
-  default     = "nginx"
+  default     = null
+}
+
+variable "rancher_additional_helm_values" {
+  description = "Extra Rancher helm values, one \"key: value\" string each (e.g. \"replicas: 3\")"
+  type        = list(string)
+  default     = []
+  nullable    = false
+  validation {
+    condition     = alltrue([for v in var.rancher_additional_helm_values : can(regex("^[^:=]+:", v))])
+    error_message = "Each entry must use the \"key: value\" format, e.g. \"replicas: 3\"."
+  }
 }
 
 variable "rancher_service_type" {
@@ -247,4 +271,21 @@ variable "cert_manager_helm_repository_password" {
   default     = null
   type        = string
   sensitive   = true
+}
+
+variable "user_tag" {
+  description = "Name of the person deploying, set as the user: tag on every droplet (e.g. \"jdoe\"). Defaults to prefix"
+  type        = string
+  default     = null
+  validation {
+    condition     = var.user_tag == null || can(regex("^[A-Za-z0-9_-]+$", var.user_tag))
+    error_message = "user_tag may only contain letters, digits, '-' and '_'."
+  }
+}
+
+variable "private_network_interface" {
+  description = "Droplet interface attached to the VPC; Canal's overlay network is pinned to it"
+  type        = string
+  default     = "eth1"
+  nullable    = false
 }
