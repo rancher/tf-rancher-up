@@ -38,3 +38,8 @@ See full argument list for each module in use:
   - Azure Virtual Machine: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/infra/azure/virtual-machine
   - RKE2: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/distribution/rke2
   - Rancher: https://github.com/rancherlabs/tf-rancher-up/tree/main/modules/rancher
+
+
+## Custom user data
+
+`custom_user_data` is appended verbatim to the generated RKE2 user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.

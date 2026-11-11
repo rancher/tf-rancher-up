@@ -95,3 +95,8 @@ module "downstream_rke2" {
   ]
 }
 ```
+
+
+## Custom user data
+
+`custom_user_data` is passed to the machine driver `userdata` field. See docs.md.

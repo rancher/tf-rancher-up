@@ -82,3 +82,9 @@ create_ssh_key_pair = true
 ## -- Override the default (./${prefix}_kube_config.yml) kubeconfig path and filename
 # kube_config_path = "~/.kube"
 # kube_config_filename = "rancher-terraform.yml"
+
+
+## -- Custom shell commands appended to the generated k3s user data (runs after provisioning; must not conflict)
+# custom_user_data = <<-EOT
+#   echo "custom step"
+# EOT

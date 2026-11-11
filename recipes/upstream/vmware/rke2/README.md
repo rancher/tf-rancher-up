@@ -97,3 +97,8 @@
 | <a name="output_rancher_url"></a> [rancher\_url](#output\_rancher\_url) | Rancher UI URL |
 | <a name="output_rke2_token"></a> [rke2\_token](#output\_rke2\_token) | RKE2 cluster join token |
 | <a name="output_ssh_key_path"></a> [ssh\_key\_path](#output\_ssh\_key\_path) | Path to SSH private key |
+
+
+## Custom user data
+
+`custom_user_data` is appended verbatim to the generated RKE2 user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.

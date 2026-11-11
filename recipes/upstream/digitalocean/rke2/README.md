@@ -52,3 +52,7 @@ See full argument list for each module in use:
   - [RKE2](../../../../modules/distribution/rke2)
   - [Rancher](../../../../modules/rancher)
 
+
+## Custom user data
+
+`custom_user_data` is appended verbatim to the generated RKE2 user data after provisioning. Ensure it does not reboot/reinstall/overwrite provisioning steps.
