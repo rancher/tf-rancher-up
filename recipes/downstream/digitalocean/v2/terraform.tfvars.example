@@ -1,0 +1,88 @@
+###### !! Required variables !! ######
+
+# DigitalOcean access token (or use cloud_credential_id instead)
+# do_token = "dop_v1_xxx"
+
+# OR an existing Rancher cloud credential
+# cloud_credential_id = "cattle-global-data:cc-xxx"
+
+# Cluster name
+cluster_name = "tf-test"
+
+# Enter the Rancher server URL
+rancher_url = "https://xxx"
+
+# Enter the Rancher API token
+rancher_token = "token-xxxxx:yyyyy"
+
+# DigitalOcean region
+region = "sfo3"
+
+# Droplet size
+size = "s-2vcpu-4gb"
+
+# DigitalOcean image slug
+image = "ubuntu-24-04-x64"
+
+# Kubernetes version for the RKE2/k3s cluster
+# https://github.com/rancher/rke2/releases
+# https://github.com/k3s-io/k3s/tags
+kubernetes_version = "v1.35.6+rke2r1"
+
+###### !! Optional variables !! ######
+
+# cni_provider = "calico"
+# rke2_ingress = "traefik" # ingress-nginx or traefik
+# rancher_insecure = true # Allow insecure connections to Rancher
+
+# SSH user (root for DigitalOcean Ubuntu images)
+ssh_user = "root"
+
+# SSH key registered in DigitalOcean (optional)
+# ssh_key_fingerprint = "aa:bb:cc:..."
+
+# Tags applied to droplets (comma-separated, optional)
+# tags = "rancher-node"
+
+### -- Legacy control-plane and worker pools
+# cp_node_pool_name = "cp"
+# cp_count = 1
+# worker_node_pool_name = "w"
+# worker_count = 1
+
+### -- Global pool defaults
+# region/size/image above are used as defaults for machine pools
+
+### -- Multiple machine pools (optional)
+## When machine_pools is set, the legacy cp_*/worker_* pool settings above are ignored.
+## Leave this unset to use the legacy pools; an empty list is not valid.
+# machine_pools = [
+#   {
+#     name  = "cp-a"
+#     roles = ["etcd", "controlplane"]
+#
+#     # count               = 1            # optional; defaults to 1
+#     # drain_before_delete = true         # optional; defaults to true
+#     # region              = "sfo3"       # optional; defaults to global region
+#     # size                = "s-2vcpu-4gb" # optional; defaults to global size
+#     # image               = "ubuntu-24-04-x64" # optional; defaults to global image
+#   },
+#   {
+#     name  = "w-a"
+#     roles = ["worker"]
+#     count = 2
+#   },
+# ]
+
+### -- Droplet options
+# private_networking = true
+# ipv6 = false
+# monitoring = false
+# backups = false
+
+## -- Custom user data passed to the machine driver userdata field for v2 clusters
+# custom_user_data = <<-EOT
+# #cloud-config
+# packages:
+#   - curl
+# EOT
